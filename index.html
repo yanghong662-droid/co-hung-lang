@@ -5121,11 +5121,21 @@ const LESSONS = [
     );
     const pool = zhCN.length ? zhCN : zhOther;
     if (!pool.length) return null;
+    // ƯU TIÊN TUYỆT ĐỐI giọng "local" (cài sẵn trong máy, phát ổn định) hơn
+    // giọng "network" (ví dụ giọng "Google 普通话" có sẵn trên Chrome máy
+    // tính) — đã xác nhận qua báo cáo thực tế: dịch vụ giọng đọc qua mạng
+    // của Google dùng cho Web Speech API bị lỗi/ngừng hoạt động ổn định từ
+    // lâu, khiến speechSynthesis.speak() báo lỗi "canceled" và im lặng
+    // hoàn toàn mỗi khi bấm loa trên Chrome máy tính (điện thoại không bị
+    // vì luôn dùng giọng có sẵn trong máy). Chỉ dùng giọng mạng nếu máy
+    // hoàn toàn không có giọng nào cài sẵn.
+    const localPool = pool.filter((v) => v.localService);
+    const searchPool = localPool.length ? localPool : pool;
     for (const keyword of PREFERRED_ZH_VOICE_KEYWORDS) {
-      const match = pool.find((v) => v.name.toLowerCase().includes(keyword));
+      const match = searchPool.find((v) => v.name.toLowerCase().includes(keyword));
       if (match) return match;
     }
-    return pool[0];
+    return searchPool[0];
   }
   function initSpeechEngine() {
     if (!("speechSynthesis" in window)) return;
