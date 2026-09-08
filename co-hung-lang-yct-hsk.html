@@ -4949,6 +4949,7 @@ const LESSONS = [
         const merged = Object.assign({}, local[doc.id]);
         if (Object.prototype.hasOwnProperty.call(cloudOv, "quiz")) { merged.quiz = cloudOv.quiz; changed = true; }
         if (Object.prototype.hasOwnProperty.call(cloudOv, "mockExam")) { merged.mockExam = cloudOv.mockExam; changed = true; }
+        if (Object.prototype.hasOwnProperty.call(cloudOv, "mockExamAudio")) { merged.mockExamAudio = cloudOv.mockExamAudio; changed = true; }
         if (Object.prototype.hasOwnProperty.call(cloudOv, "videoQuiz")) { merged.videoQuiz = cloudOv.videoQuiz; changed = true; }
         if (Object.prototype.hasOwnProperty.call(cloudOv, "videoQuizzes")) { merged.videoQuizzes = cloudOv.videoQuizzes; changed = true; }
         local[doc.id] = merged;
@@ -4981,6 +4982,7 @@ const LESSONS = [
       const merged = Object.assign({}, l);
       if (ov.quiz) merged.quiz = ov.quiz;
       if (ov.mockExam) merged.mockExam = ov.mockExam;
+      if (ov.mockExamAudio) merged.mockExamAudio = ov.mockExamAudio;
       if (ov.videoQuiz) merged.videoQuiz = ov.videoQuiz;
       // "videoQuizzes" (mảng NHIỀU video/bài, tính năng mới) LUÔN được ưu
       // tiên hơn "videoQuiz" (1 video duy nhất, kiểu cũ) nếu cả 2 cùng có
@@ -7657,6 +7659,11 @@ const LESSONS = [
     if (!panel) return;
     panel.innerHTML =
       '<p class="text-xs mb-4" style="color:var(--ink-faint);">Soạn "Đề thi mô phỏng" (Dạng 6) cho bài này — kết hợp nhiều loại câu hỏi (Nghe/Đọc/Điền từ) trong CÙNG 1 bài thi liền mạch, chấm chung 1 điểm số. Chọn "Loại câu" cho từng câu: <b>Nghe</b> hiện nút loa 🔊 để học sinh nghe rồi chọn nghĩa; <b>Đọc</b> chỉ hiện chữ, không có nút loa; <b>Điền từ</b> giống Nghe nhưng câu hỏi có chỗ trống "___". Sau khi lưu, thay đổi hiện cho TẤT CẢ học sinh.</p>' +
+      '<div class="mb-4 p-3 rounded-xl border" style="border-color:var(--border); background:var(--surface-alt);">' +
+      '<label class="text-xs font-bold block mb-1" style="color:var(--ink-faint);"><i class="fa-solid fa-music mr-1"></i>Link file mp3 băng nghe (phát LIÊN TỤC từ Câu 1 đến hết, giống băng thi thật — KHÔNG tách theo từng câu):</label>' +
+      '<input type="text" id="mexedit-audio-url" class="form-input rounded-lg px-2.5 py-1.5 text-sm w-full" placeholder="Dán link file mp3 vào đây (để trống nếu chưa có / dùng nút loa đọc bằng giọng máy)">' +
+      '<p class="text-[11px] mt-1" style="color:var(--ink-faint);">Ví dụ: link file mp3 tải lên GitHub, Google Drive (đuôi tải trực tiếp), Dropbox... Học sinh bấm nút loa 🔊 trong bài thi để phát/tạm dừng, không bị tua lại khi chuyển câu.</p>' +
+      '</div>' +
       '<div id="mexedit-list" class="space-y-3 mb-4"></div>' +
       '<button type="button" id="btn-mexedit-add" class="text-sm font-bold px-3 py-2 rounded-lg border mb-4" style="border-color:var(--border); color:var(--jade);"><i class="fa-solid fa-plus mr-1"></i>Thêm câu hỏi</button>' +
       '<div class="flex flex-wrap items-center gap-3"><button type="button" id="btn-mexedit-save" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white" style="background:var(--jade);">Lưu thay đổi</button> ' +
@@ -7664,6 +7671,12 @@ const LESSONS = [
       '<div id="mexedit-error" class="hidden form-msg-error text-sm rounded-lg px-3 py-2 mt-3"></div>';
 
     let mockDraft = (lesson.mockExam || []).map((q) => Object.assign({ kind: "read" }, q, { options: q.options.slice() }));
+    let mockExamAudioDraft = lesson.mockExamAudio || "";
+    const audioUrlInput = document.getElementById("mexedit-audio-url");
+    if (audioUrlInput) {
+      audioUrlInput.value = mockExamAudioDraft;
+      audioUrlInput.addEventListener("input", (e) => { mockExamAudioDraft = e.target.value.trim(); });
+    }
 
     function renderMexeditList() {
       const listEl = document.getElementById("mexedit-list");
@@ -7740,12 +7753,15 @@ const LESSONS = [
       errEl.classList.add("hidden");
       const mockData = mockDraft.map((q) => ({ kind: q.kind || "read", audioText: q.audioText || "", prompt: q.prompt, options: q.options.slice(), answer: q.answer }));
       const overrides = loadJSON(LESSON_OVERRIDES_KEY, {});
-      overrides[lessonId] = Object.assign({}, overrides[lessonId], { mockExam: mockData });
+      overrides[lessonId] = Object.assign({}, overrides[lessonId], { mockExam: mockData, mockExamAudio: mockExamAudioDraft });
       saveJSON(LESSON_OVERRIDES_KEY, overrides);
       renderTeacherLessonList();
       const saveBtn = document.getElementById("btn-mexedit-save");
       saveBtn.disabled = true;
-      syncLessonOverrideToCloud(lessonId, "mockExam", mockData).then(() => {
+      Promise.all([
+        syncLessonOverrideToCloud(lessonId, "mockExam", mockData),
+        syncLessonOverrideToCloud(lessonId, "mockExamAudio", mockExamAudioDraft),
+      ]).then(() => {
         saveBtn.disabled = false;
         const msg = document.getElementById("mexedit-saved-msg");
         msg.classList.remove("hidden");
