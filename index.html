@@ -1055,9 +1055,14 @@
            được trên bất kỳ máy nào, không chỉ trên máy học sinh đã làm. -->
       <section id="teacher-panel-progress">
         <div class="flex justify-between items-center mb-3 gap-3 flex-wrap">
-          <select id="teacher-progress-lesson-filter" class="text-sm font-semibold px-3 py-2 rounded-lg border" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink);">
-            <option value="">Tất cả bài học</option>
-          </select>
+          <div class="flex gap-2 flex-wrap">
+            <select id="teacher-progress-class-filter" class="text-sm font-semibold px-3 py-2 rounded-lg border" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink);">
+              <option value="">Tất cả lớp</option>
+            </select>
+            <select id="teacher-progress-lesson-filter" class="text-sm font-semibold px-3 py-2 rounded-lg border" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink);">
+              <option value="">Tất cả bài học</option>
+            </select>
+          </div>
           <button type="button" id="btn-export-csv" class="text-sm font-bold px-4 py-2 rounded-lg border flex items-center gap-2" style="border-color:var(--border); background:var(--surface-alt); color:var(--jade);">
             <i class="fa-solid fa-file-csv"></i>Xuất dữ liệu (CSV)
           </button>
@@ -1066,7 +1071,7 @@
           <table class="data-table text-sm">
             <thead>
               <tr>
-                <th>Email học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Đề thi mô phỏng</th><th>Số lần làm</th><th>Lần gần nhất</th>
+                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Đề thi mô phỏng</th><th>Số lần làm</th><th>Lần gần nhất</th>
               </tr>
             </thead>
             <tbody id="teacher-progress-body"></tbody>
@@ -1138,6 +1143,7 @@
       <p class="text-sm mt-2 mb-4" style="color:var(--ink-soft);">Nhập email học sinh, tích chọn mục muốn mở khoá rồi bấm Lưu. Học sinh chỉ cần đăng nhập bằng đúng email này để vào học.</p>
 
       <form id="form-admin-grant" class="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center mb-3">
+        <input type="text" id="admin-grant-name" class="form-input w-full sm:w-40 rounded-lg px-3 py-2.5 text-sm" placeholder="Tên học sinh (tuỳ chọn)">
         <input type="email" id="admin-grant-email" required class="form-input w-full sm:flex-1 rounded-lg px-3 py-2.5 text-sm" placeholder="Email học sinh">
         <input type="text" id="admin-grant-class" class="form-input w-full sm:w-36 rounded-lg px-3 py-2.5 text-sm" placeholder="Lớp (tuỳ chọn)">
         <label class="perm-check-label"><input type="checkbox" id="admin-grant-yct"> YCT 1-6</label>
@@ -7661,6 +7667,46 @@ const LESSONS = [
     });
   }
 
+  // Tải map email -> {name, class} từ collection "permissions", dùng để
+  // hiện Tên + Lớp học sinh trong Dashboard Tiến độ (và lọc theo lớp),
+  // vì tên/lớp được lưu ở "permissions" chứ không phải "scores".
+  function fetchPermissionsMap() {
+    return window.__fbDb.collection(PERMISSIONS_COLLECTION).get().then(function (snap) {
+      var map = {};
+      snap.forEach(function (doc) {
+        var data = doc.data() || {};
+        map[doc.id] = { name: data.name || "", class: data.class || "" };
+      });
+      return map;
+    }).catch(function () {
+      return {};
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str === null || str === undefined ? "" : str).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // Vẽ ô "Học sinh" trong bảng Tiến độ: nếu đã có Tên (đặt ở Cấp quyền)
+  // thì hiện Tên trước, bấm vào mới hiện email (mặc định ẩn, đỡ rối khi
+  // xem cả lớp); học sinh nào CHƯA có tên thì vẫn hiện thẳng email như
+  // trước — không có gì để ẩn.
+  function renderStudentCell(email, permMap) {
+    var info = permMap && permMap[email];
+    var name = info && info.name;
+    if (!name) return "<td>" + escapeHtml(email) + "</td>";
+    return (
+      "<td>" +
+      '<button type="button" class="progress-name-toggle text-left font-bold" style="color:var(--ink); background:none; border:none; cursor:pointer; padding:0;">' +
+      escapeHtml(name) +
+      "</button>" +
+      '<div class="progress-email-reveal hidden text-xs" style="color:var(--ink-faint);">' + escapeHtml(email) + "</div>" +
+      "</td>"
+    );
+  }
+
   // Gộp "Số lần làm" (tổng cả 4 dạng) và "Lần gần nhất" (mới nhất trong 4
   // dạng) từ 1 bản ghi điểm của 1 bài học, dùng chung cho bảng + CSV.
   function scoreRowStats(record) {
@@ -7687,11 +7733,14 @@ const LESSONS = [
   // (bài học đã bị xoá thì xếp cuối, theo id); trong mỗi nhóm sắp xếp theo
   // email học sinh — để giáo viên xem "bài này ai đã làm" thay vì "học
   // sinh này đã làm những bài nào".
-  function groupScoreRowsByLesson(rows, allLessons) {
+  function groupScoreRowsByLesson(rows, allLessons, permMap, classFilter) {
     var orderIndex = {};
     allLessons.forEach(function (l, i) { orderIndex[l.id] = i; });
+    var filteredRows = classFilter
+      ? rows.filter(function (row) { return permMap && permMap[row.email] && permMap[row.email].class === classFilter; })
+      : rows;
     var byLessonId = {};
-    rows.forEach(function (row) {
+    filteredRows.forEach(function (row) {
       if (!byLessonId[row.lessonId]) byLessonId[row.lessonId] = [];
       byLessonId[row.lessonId].push(row);
     });
@@ -7736,22 +7785,44 @@ const LESSONS = [
     filterEl.value = allLessons.some(function (l) { return l.id === currentValue; }) ? currentValue : "";
   }
 
+  // Đổ danh sách LỚP (lấy từ field "class" trong permissions của những
+  // học sinh đã có điểm) vào bộ lọc "Xem theo lớp" — chỉ liệt kê lớp thực
+  // sự có học sinh đã làm bài, tránh danh sách dài toàn lớp rỗng.
+  function populateTeacherProgressClassFilter(filterEl, rows, permMap) {
+    if (!filterEl) return;
+    var currentValue = filterEl.value;
+    var classNames = [];
+    rows.forEach(function (row) {
+      var cls = permMap && permMap[row.email] && permMap[row.email].class;
+      if (cls && classNames.indexOf(cls) === -1) classNames.push(cls);
+    });
+    classNames.sort(function (a, b) { return a.localeCompare(b); });
+    var optionsHtml = ['<option value="">Tất cả lớp</option>'].concat(
+      classNames.map(function (c) { return '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + "</option>"; })
+    );
+    filterEl.innerHTML = optionsHtml.join("");
+    filterEl.value = classNames.indexOf(currentValue) !== -1 ? currentValue : "";
+  }
+
   function renderTeacherProgressTable() {
     var body = document.getElementById("teacher-progress-body");
     var empty = document.getElementById("teacher-progress-empty");
     var filterEl = document.getElementById("teacher-progress-lesson-filter");
+    var classFilterEl = document.getElementById("teacher-progress-class-filter");
 
     // Bộ lọc luôn được đổ đầy TOÀN BỘ bài học ngay khi có danh sách bài học
     // (getAllLessons() có sẵn ngay, không cần chờ Firestore trả điểm về).
     populateTeacherProgressLessonFilter(filterEl, getAllLessons());
 
     if (!teacherProgressCache) return;
+    populateTeacherProgressClassFilter(classFilterEl, teacherProgressCache.rows, teacherProgressCache.permMap);
     var filterLessonId = filterEl ? filterEl.value : "";
-    var groups = groupScoreRowsByLesson(teacherProgressCache.rows, teacherProgressCache.allLessons);
+    var filterClass = classFilterEl ? classFilterEl.value : "";
+    var groups = groupScoreRowsByLesson(teacherProgressCache.rows, teacherProgressCache.allLessons, teacherProgressCache.permMap, filterClass);
 
     if (!filterLessonId && groups.length === 0) {
       body.innerHTML = "";
-      empty.textContent = "Chưa có học sinh nào làm bài.";
+      empty.textContent = filterClass ? 'Chưa có học sinh lớp "' + filterClass + '" làm bài nào.' : "Chưa có học sinh nào làm bài.";
       empty.classList.remove("hidden");
       return;
     }
@@ -7759,15 +7830,16 @@ const LESSONS = [
     var visibleGroups = filterLessonId ? groups.filter(function (g) { return g.lessonId === filterLessonId; }) : groups;
 
     if (visibleGroups.length === 0) {
-      // Bài được chọn tồn tại trong chương trình nhưng chưa có ai làm.
+      // Bài được chọn tồn tại trong chương trình nhưng chưa có ai làm (hoặc lớp đã lọc chưa ai làm bài này).
       var pickedLesson = getAllLessons().find(function (l) { return l.id === filterLessonId; });
       var pickedLabel = pickedLesson ? lessonDisplayTitle(pickedLesson) + (pickedLesson.level ? " (" + pickedLesson.level + ")" : "") : filterLessonId;
       body.innerHTML = "";
-      empty.textContent = filterLessonId ? 'Chưa có học sinh nào làm bài "' + pickedLabel + '".' : "Chưa có học sinh nào làm bài.";
+      empty.textContent = filterLessonId ? ('Chưa có học sinh' + (filterClass ? ' lớp "' + filterClass + '"' : "") + ' làm bài "' + pickedLabel + '".') : "Chưa có học sinh nào làm bài.";
       empty.classList.remove("hidden");
       return;
     }
     empty.classList.add("hidden");
+    var permMap = teacherProgressCache.permMap;
     body.innerHTML = visibleGroups
       .map(function (g) {
         var headerRow =
@@ -7779,7 +7851,7 @@ const LESSONS = [
             var s = row.record;
             var stats = scoreRowStats(s);
             return (
-              "<tr><td>" + row.email + "</td><td>" +
+              "<tr>" + renderStudentCell(row.email, permMap) + "<td>" +
               (s.bestScore !== undefined && s.bestScore !== null ? s.bestScore + "/100" : "—") + "</td><td>" +
               (s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore + "/100" : "—") + "</td><td>" +
               (s.video && s.video.bestScore !== undefined && s.video.bestScore !== null ? s.video.bestScore + "/100" : "—") + "</td><td>" +
@@ -7793,6 +7865,13 @@ const LESSONS = [
       })
       .join("");
   }
+
+  document.getElementById("teacher-progress-body").addEventListener("click", function (e) {
+    var btn = e.target.closest(".progress-name-toggle");
+    if (!btn) return;
+    var reveal = btn.parentElement.querySelector(".progress-email-reveal");
+    if (reveal) reveal.classList.toggle("hidden");
+  });
 
   function renderTeacherProgress() {
     var body = document.getElementById("teacher-progress-body");
@@ -7810,13 +7889,13 @@ const LESSONS = [
     }
     empty.classList.add("hidden");
     body.innerHTML = '<tr><td colspan="8" class="text-center text-sm py-6" style="color:var(--ink-faint);">Đang tải...</td></tr>';
-    fetchAllScoreRows()
-      .then(function (rows) {
-        teacherProgressCache = { rows: rows, allLessons: allLessons };
+    Promise.all([fetchAllScoreRows(), fetchPermissionsMap()])
+      .then(function (results) {
+        teacherProgressCache = { rows: results[0], allLessons: allLessons, permMap: results[1] };
         renderTeacherProgressTable();
       })
       .catch(function (err) {
-        teacherProgressCache = { rows: [], allLessons: allLessons };
+        teacherProgressCache = { rows: [], allLessons: allLessons, permMap: {} };
         body.innerHTML = "";
         empty.textContent = "Không tải được tiến độ: " + (err.message || err.code);
         empty.classList.remove("hidden");
@@ -7826,6 +7905,10 @@ const LESSONS = [
   var elTeacherProgressLessonFilter = document.getElementById("teacher-progress-lesson-filter");
   if (elTeacherProgressLessonFilter) {
     elTeacherProgressLessonFilter.addEventListener("change", renderTeacherProgressTable);
+  }
+  var elTeacherProgressClassFilter = document.getElementById("teacher-progress-class-filter");
+  if (elTeacherProgressClassFilter) {
+    elTeacherProgressClassFilter.addEventListener("change", renderTeacherProgressTable);
   }
 
   function csvEscape(value) {
@@ -7840,17 +7923,22 @@ const LESSONS = [
       return;
     }
     var allLessons = getAllLessons();
-    fetchAllScoreRows().then(function (rows) {
+    Promise.all([fetchAllScoreRows(), fetchPermissionsMap()]).then(function (results) {
+    var rows = results[0];
+    var permMap = results[1];
     var groups = groupScoreRowsByLesson(rows, allLessons);
-    var header = ["Bài học", "Chương trình", "Email học sinh", "Điểm Điền từ", "Điểm Nghe hiểu", "Điểm Video", "Điểm Nghe đọc", "Điểm Đề thi mô phỏng", "Số lần làm", "Lần gần nhất"];
+    var header = ["Bài học", "Chương trình", "Tên học sinh", "Lớp", "Email học sinh", "Điểm Điền từ", "Điểm Nghe hiểu", "Điểm Video", "Điểm Nghe đọc", "Điểm Đề thi mô phỏng", "Số lần làm", "Lần gần nhất"];
     var lines = [header.map(csvEscape).join(",")];
     groups.forEach(function (g) {
       g.rows.forEach(function (row) {
         var s = row.record;
         var stats = scoreRowStats(s);
+        var info = permMap[row.email] || {};
         var line = [
           g.lessonLabel,
           g.programLabel,
+          info.name || "",
+          info.class || "",
           row.email,
           s.bestScore !== undefined && s.bestScore !== null ? s.bestScore : "",
           s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore : "",
@@ -8672,23 +8760,24 @@ const LESSONS = [
   function closeAdminPanel() { elAdminPanelOverlay.classList.add("hidden"); }
   document.getElementById("btn-admin-panel-close").addEventListener("click", closeAdminPanel);
 
-  function saveGrant(email, yct, hsk, className, onDone) {
+  function saveGrant(email, name, yct, hsk, className, onDone) {
     const key = (email || "").trim().toLowerCase();
     if (!key) return;
     if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
     window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(key)
-      .set({ yct: !!yct, hsk: !!hsk, class: (className || "").trim(), updatedAt: new Date().toISOString() }, { merge: true })
+      .set({ name: (name || "").trim(), yct: !!yct, hsk: !!hsk, class: (className || "").trim(), updatedAt: new Date().toISOString() }, { merge: true })
       .then(() => { if (onDone) onDone(key); })
       .catch((err) => alert("Lưu thất bại: " + (err.message || err.code)));
   }
 
   formAdminGrant.addEventListener("submit", (e) => {
     e.preventDefault();
+    const name = document.getElementById("admin-grant-name").value;
     const email = document.getElementById("admin-grant-email").value;
     const className = document.getElementById("admin-grant-class").value;
     const yct = document.getElementById("admin-grant-yct").checked;
     const hsk = document.getElementById("admin-grant-hsk").checked;
-    saveGrant(email, yct, hsk, className, (key) => {
+    saveGrant(email, name, yct, hsk, className, (key) => {
       elAdminGrantMsg.textContent = "Đã lưu quyền cho " + key + ".";
       elAdminGrantMsg.className = "form-msg-success text-sm rounded-lg px-3 py-2 mb-4";
       elAdminGrantMsg.classList.remove("hidden");
@@ -8765,7 +8854,7 @@ const LESSONS = [
       const rows = [];
       snap.forEach((doc) => {
         const data = doc.data() || {};
-        rows.push({ email: doc.id, yct: !!data.yct, hsk: !!data.hsk, class: data.class || "" });
+        rows.push({ email: doc.id, name: data.name || "", yct: !!data.yct, hsk: !!data.hsk, class: data.class || "" });
       });
       rows.sort((a, b) => a.email.localeCompare(b.email));
       renderAdminPermList(rows);
@@ -8828,17 +8917,18 @@ const LESSONS = [
         const div = document.createElement("div");
         div.className = "perm-row p-3 flex flex-wrap items-center gap-2.5";
         div.innerHTML =
-          '<span class="text-sm font-bold flex-1 min-w-[160px] break-all" style="color:var(--ink);">' + row.email + "</span>" +
+          '<div class="flex-1 min-w-[220px]"><input type="text" class="perm-row-name form-input rounded-lg px-2 py-1 text-sm font-bold w-full mb-0.5" placeholder="Tên học sinh" value="' + row.name.replace(/"/g, "&quot;") + '"><div class="text-xs break-all" style="color:var(--ink-faint);">' + row.email + "</div></div>" +
           '<input type="text" class="perm-row-class form-input rounded-lg px-2 py-1.5 text-xs w-28" placeholder="Lớp" value="' + row.class.replace(/"/g, "&quot;") + '">' +
           '<label class="perm-check-label"><input type="checkbox" class="perm-row-yct" ' + (row.yct ? "checked" : "") + '> YCT 1-6</label>' +
           '<label class="perm-check-label"><input type="checkbox" class="perm-row-hsk" ' + (row.hsk ? "checked" : "") + '> HSK 3.0</label>' +
           '<button type="button" class="perm-row-save text-xs font-bold px-3 py-1.5 rounded-lg text-white" style="background:var(--jade);">Lưu</button>' +
           '<button type="button" class="perm-row-delete text-xs font-bold px-3 py-1.5 rounded-lg border" style="border-color:var(--wrong); color:var(--wrong);">Xoá</button>';
         div.querySelector(".perm-row-save").addEventListener("click", () => {
+          const name = div.querySelector(".perm-row-name").value;
           const yct = div.querySelector(".perm-row-yct").checked;
           const hsk = div.querySelector(".perm-row-hsk").checked;
           const className = div.querySelector(".perm-row-class").value;
-          saveGrant(row.email, yct, hsk, className, () => {
+          saveGrant(row.email, name, yct, hsk, className, () => {
             loadAllPermissions();
           });
         });
