@@ -420,13 +420,19 @@
         </div>
         <div id="nav-hsk3-wrap" class="nav-dropdown-wrap">
           <button type="button" id="btn-nav-hsk3" class="nav-link text-sm font-bold flex items-center gap-1">HSK 3.0 <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
-          <div id="nav-hsk3-panel" class="nav-dropdown-panel hidden">
-            <div class="nav-dropdown-grid">
-              <button type="button" id="btn-nav-hsk3-all" class="nav-dropdown-item is-all">Xem tất cả</button>
+          <div id="nav-hsk3-panel" class="nav-dropdown-panel nav-dropdown-panel-wide hidden">
+            <div class="nav-dropdown-grid nav-dropdown-grid-3">
               <button type="button" data-hsk-level="HSK 1" class="nav-dropdown-item">HSK 1<span class="count-tag"></span></button>
               <button type="button" data-hsk-level="HSK 2" class="nav-dropdown-item">HSK 2<span class="count-tag"></span></button>
               <button type="button" data-hsk-level="HSK 3" class="nav-dropdown-item">HSK 3<span class="count-tag"></span></button>
+              <button type="button" data-hsk-level="HSK 4" class="nav-dropdown-item">HSK 4<span class="count-tag"></span></button>
+              <button type="button" data-hsk-level="HSK 5" class="nav-dropdown-item">HSK 5<span class="count-tag"></span></button>
+              <button type="button" data-hsk-level="HSK 6" class="nav-dropdown-item">HSK 6<span class="count-tag"></span></button>
+              <button type="button" data-hsk-level="HSK 7" class="nav-dropdown-item">HSK 7<span class="count-tag"></span></button>
+              <button type="button" data-hsk-level="HSK 8" class="nav-dropdown-item">HSK 8<span class="count-tag"></span></button>
+              <button type="button" data-hsk-level="HSK 9" class="nav-dropdown-item">HSK 9<span class="count-tag"></span></button>
             </div>
+            <button type="button" id="btn-nav-hsk3-all" class="nav-dropdown-item is-all nav-dropdown-item-wide">Xem tất cả</button>
           </div>
         </div>
         <button type="button" id="btn-nav-review" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-shuffle text-[11px]"></i> Ôn tập tổng hợp</button>
@@ -1123,7 +1129,7 @@
         <i class="fa-solid fa-lock"></i>
       </div>
       <h3 class="text-base font-extrabold mb-2" style="color:var(--jade);">Mục này chưa được kích hoạt</h3>
-      <p class="text-sm mb-5" style="color:var(--ink-soft);">Mục này chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!</p>
+      <p id="auth-locked-text" class="text-sm mb-5" style="color:var(--ink-soft);">Mục này chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!</p>
       <div class="flex flex-col gap-2.5">
         <a href="https://zalo.me/0914476685" target="_blank" rel="noopener" class="w-full py-2.5 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2" style="background:var(--blue);">
           <i class="fa-solid fa-comment-dots"></i> Nhắn Zalo cho cô
@@ -1142,13 +1148,27 @@
       </div>
       <p class="text-sm mt-2 mb-4" style="color:var(--ink-soft);">Nhập email học sinh, tích chọn mục muốn mở khoá rồi bấm Lưu. Học sinh chỉ cần đăng nhập bằng đúng email này để vào học.</p>
 
-      <form id="form-admin-grant" class="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center mb-3">
-        <input type="text" id="admin-grant-name" class="form-input w-full sm:w-40 rounded-lg px-3 py-2.5 text-sm" placeholder="Tên học sinh (tuỳ chọn)">
-        <input type="email" id="admin-grant-email" required class="form-input w-full sm:flex-1 rounded-lg px-3 py-2.5 text-sm" placeholder="Email học sinh">
-        <input type="text" id="admin-grant-class" class="form-input w-full sm:w-36 rounded-lg px-3 py-2.5 text-sm" placeholder="Lớp (tuỳ chọn)">
-        <label class="perm-check-label"><input type="checkbox" id="admin-grant-yct"> YCT 1-6</label>
-        <label class="perm-check-label"><input type="checkbox" id="admin-grant-hsk"> HSK 3.0</label>
-        <button type="submit" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0" style="background:var(--jade);">Lưu</button>
+      <form id="form-admin-grant" class="flex flex-col gap-2.5 mb-3">
+        <div class="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center">
+          <input type="text" id="admin-grant-name" class="form-input w-full sm:w-40 rounded-lg px-3 py-2.5 text-sm" placeholder="Tên học sinh (tuỳ chọn)">
+          <input type="email" id="admin-grant-email" required class="form-input w-full sm:flex-1 rounded-lg px-3 py-2.5 text-sm" placeholder="Email học sinh">
+          <input type="text" id="admin-grant-class" class="form-input w-full sm:w-36 rounded-lg px-3 py-2.5 text-sm" placeholder="Lớp (tuỳ chọn)">
+        </div>
+        <div class="flex flex-wrap gap-2 items-center">
+          <label class="perm-check-label"><input type="checkbox" id="admin-grant-yct"> YCT 1-6</label>
+          <span class="text-xs font-bold" style="color:var(--ink-faint);">HSK 3.0:</span>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="1"> HSK 1</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="2"> HSK 2</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="3"> HSK 3</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="4"> HSK 4</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="5"> HSK 5</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="6"> HSK 6</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="7"> HSK 7</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="8"> HSK 8</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="9"> HSK 9</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-grant-hsk-all"><b>Tất cả</b></label>
+          <button type="submit" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0 sm:ml-auto" style="background:var(--jade);">Lưu</button>
+        </div>
       </form>
       <div id="admin-grant-msg" class="hidden text-sm rounded-lg px-3 py-2 mb-4"></div>
 
@@ -1157,11 +1177,23 @@
         <div class="mt-3 space-y-2.5">
           <p class="text-xs" style="color:var(--ink-faint);">Dán danh sách email học sinh của 1 lớp (mỗi dòng 1 email, hoặc cách nhau bằng dấu phẩy), đặt tên lớp để sau này dễ xem lại và bật/tắt quyền cả lớp cùng lúc (ví dụ khi khoá học kết thúc).</p>
           <textarea id="admin-bulk-emails" rows="4" class="form-input w-full rounded-lg px-3 py-2.5 text-sm" placeholder="Ví dụ:&#10;an@gmail.com&#10;binh@gmail.com&#10;chi@gmail.com"></textarea>
-          <div class="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center">
-            <input type="text" id="admin-bulk-class" required class="form-input w-full sm:flex-1 rounded-lg px-3 py-2.5 text-sm" placeholder="Tên lớp (bắt buộc, vd: YCT1 - Lớp A - K15)">
-            <label class="perm-check-label"><input type="checkbox" id="admin-bulk-yct"> YCT 1-6</label>
-            <label class="perm-check-label"><input type="checkbox" id="admin-bulk-hsk"> HSK 3.0</label>
-            <button type="button" id="btn-admin-bulk-grant" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0" style="background:var(--jade);">Cấp quyền cả lớp</button>
+          <div class="flex flex-col gap-2.5">
+            <input type="text" id="admin-bulk-class" required class="form-input w-full rounded-lg px-3 py-2.5 text-sm" placeholder="Tên lớp (bắt buộc, vd: YCT1 - Lớp A - K15)">
+            <div class="flex flex-wrap gap-2 items-center">
+              <label class="perm-check-label"><input type="checkbox" id="admin-bulk-yct"> YCT 1-6</label>
+              <span class="text-xs font-bold" style="color:var(--ink-faint);">HSK 3.0:</span>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="1"> HSK 1</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="2"> HSK 2</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="3"> HSK 3</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="4"> HSK 4</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="5"> HSK 5</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="6"> HSK 6</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="7"> HSK 7</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="8"> HSK 8</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="9"> HSK 9</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-bulk-hsk-all"><b>Tất cả</b></label>
+              <button type="button" id="btn-admin-bulk-grant" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0 sm:ml-auto" style="background:var(--jade);">Cấp quyền cả lớp</button>
+            </div>
           </div>
           <div id="admin-bulk-msg" class="hidden text-sm rounded-lg px-3 py-2"></div>
         </div>
@@ -5730,7 +5762,7 @@ const LESSONS = [
   }
 
   function enterProgram(programId, levelFilter) {
-    if (!ensureProgramAccess(programId, () => enterProgram(programId, levelFilter))) return;
+    if (!ensureProgramAccess(programId, () => enterProgram(programId, levelFilter), levelFilter)) return;
     const program = getProgramById(programId);
     if (!program) return;
     state.program = program;
@@ -5770,7 +5802,7 @@ const LESSONS = [
   }
 
   function enterLesson(lesson, backTo) {
-    if (!ensureProgramAccess(lesson.program, () => enterLesson(lesson, backTo))) return;
+    if (!ensureProgramAccess(lesson.program, () => enterLesson(lesson, backTo), lesson.level)) return;
     state.lesson = lesson;
     state.deckIndex = 0;
     state.lessonBackTo = backTo || "program";
@@ -8612,20 +8644,54 @@ const LESSONS = [
   // trong danh sách này (vd "giao-tiep") coi như luôn mở, không cần cấp quyền.
   function permissionKeyForProgram(programId) {
     if (programId === "yct") return "yct";
-    if (programId === "hsk3") return "hsk";
+    if (programId === "hsk3") return "hsk"; // quyền cũ, trước khi tách theo cấp — vẫn giữ để tương thích ngược
     return null;
+  }
+  // HSK 3.0 được tách thành 9 cấp độ nhỏ (HSK 1 .. HSK 9), mỗi cấp cấp
+  // quyền riêng: field Firestore tương ứng là hsk1..hsk9. "HSK 4" -> "hsk4".
+  const HSK_LEVEL_COUNT = 9;
+  function hskLevelKey(level) {
+    const m = /^HSK\s*(\d+)$/.exec((level || "").trim());
+    return m ? "hsk" + m[1] : null;
   }
   function hasPermission(programId) {
     const key = permissionKeyForProgram(programId);
     if (!key) return true;
     return !!(currentPermissions && currentPermissions[key] === true);
   }
+  // Đã cấp quyền cho 1 cấp độ CỤ THỂ của HSK 3.0 chưa? Học sinh đã có quyền
+  // kiểu cũ (field "hsk" = true, trước khi tính năng chia nhỏ ra đời) được
+  // coi như có đủ cả 9 cấp, để không ai bị mất quyền đang có khi nâng cấp.
+  function hasLevelPermission(programId, level) {
+    if (programId !== "hsk3") return hasPermission(programId);
+    if (!level) return hasPermission(programId);
+    if (!currentPermissions) return false;
+    if (currentPermissions.hsk === true) return true; // quyền cũ (trọn bộ) vẫn còn hiệu lực
+    const key = hskLevelKey(level);
+    return !!(key && currentPermissions[key] === true);
+  }
+  // Đã có quyền với ÍT NHẤT 1 cấp độ của chương trình chưa (dùng khi duyệt
+  // danh sách bài học "Xem tất cả", chưa chọn riêng cấp nào)?
+  function hasAnyPermissionForProgram(programId) {
+    const key = permissionKeyForProgram(programId);
+    if (!key) return true;
+    if (!currentPermissions) return false;
+    if (currentPermissions[key] === true) return true;
+    if (programId === "hsk3") {
+      for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
+        if (currentPermissions["hsk" + i] === true) return true;
+      }
+    }
+    return false;
+  }
   /* Gọi ở đầu enterProgram()/enterLesson(): trả về true và cho đi tiếp
      ngay nếu đã đủ quyền; ngược lại tự mở modal đăng nhập/thông báo khoá
      phù hợp và trả về false để hàm gọi nó dừng lại. retryFn sẽ được gọi
      lại tự động ngay sau khi đăng nhập thành công (nếu lý do chặn là
-     "chưa đăng nhập"), để học sinh không phải bấm lại lần hai. */
-  function ensureProgramAccess(programId, retryFn) {
+     "chưa đăng nhập"), để học sinh không phải bấm lại lần hai. level (tuỳ
+     chọn): cấp độ CỤ THỂ cần vào (vd "HSK 4") — nếu bỏ trống, chỉ cần có
+     quyền với ít nhất 1 cấp độ của chương trình là qua được. */
+  function ensureProgramAccess(programId, retryFn, level) {
     const key = permissionKeyForProgram(programId);
     if (!key) return true;
     if (isAdminUser(currentUser)) return true;
@@ -8634,8 +8700,9 @@ const LESSONS = [
       openAuthModal();
       return false;
     }
-    if (hasPermission(programId)) return true;
-    openLockedModal();
+    const allowed = level ? hasLevelPermission(programId, level) : hasAnyPermissionForProgram(programId);
+    if (allowed) return true;
+    openLockedModal(level);
     return false;
   }
 
@@ -8711,7 +8778,15 @@ const LESSONS = [
 
   /* ---------------- Modal: Nội dung chưa được cấp quyền ---------------- */
   const elAuthLockedOverlay = document.getElementById("auth-locked-overlay");
-  function openLockedModal() { elAuthLockedOverlay.classList.remove("hidden"); }
+  const elAuthLockedText = document.getElementById("auth-locked-text");
+  function openLockedModal(level) {
+    if (elAuthLockedText) {
+      elAuthLockedText.textContent = level
+        ? 'Mục "' + level + '" chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!'
+        : "Mục này chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!";
+    }
+    elAuthLockedOverlay.classList.remove("hidden");
+  }
   function closeLockedModal() { elAuthLockedOverlay.classList.add("hidden"); }
   document.getElementById("btn-auth-locked-close").addEventListener("click", closeLockedModal);
 
@@ -8760,15 +8835,64 @@ const LESSONS = [
   function closeAdminPanel() { elAdminPanelOverlay.classList.add("hidden"); }
   document.getElementById("btn-admin-panel-close").addEventListener("click", closeAdminPanel);
 
-  function saveGrant(email, name, yct, hsk, className, onDone) {
+  // Sinh HTML cho 9 checkbox cấp độ HSK 1-9 (dùng ở form cấp quyền cá nhân,
+  // form cấp quyền hàng loạt, và từng dòng trong "Danh sách đã cấp quyền").
+  // checkedLevels: mảng số cấp đã được cấp (vd [1,2,5]); boxClass: class CSS
+  // gắn lên input để đọc lại giá trị đã tích qua readCheckedHskLevels().
+  function renderHskLevelCheckboxes(checkedLevels, boxClass) {
+    const checkedSet = new Set(checkedLevels || []);
+    let html = "";
+    for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
+      html +=
+        '<label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="' + boxClass + '" data-hsk-level="' + i + '" ' +
+        (checkedSet.has(i) ? "checked" : "") + "> HSK " + i + "</label>";
+    }
+    return html;
+  }
+  // Đọc lại các cấp HSK đã tích trong 1 vùng chứa (form hoặc 1 dòng học sinh).
+  function readCheckedHskLevels(container, boxClass) {
+    const levels = [];
+    container.querySelectorAll("." + boxClass).forEach((box) => {
+      if (box.checked) levels.push(Number(box.getAttribute("data-hsk-level")));
+    });
+    return levels;
+  }
+  // Gộp mảng số cấp HSK đã tích thành object { hsk1: true/false, ..., hsk9 }
+  // — đủ cả 9 field, dùng làm payload ghi Firestore (cấp không tích = false,
+  // để tắt quyền khi bỏ tích chứ không chỉ đơn thuần bỏ qua field đó).
+  function hskLevelsPayload(levels) {
+    const set = new Set(levels || []);
+    const payload = {};
+    for (let i = 1; i <= HSK_LEVEL_COUNT; i++) payload["hsk" + i] = set.has(i);
+    return payload;
+  }
+  function wireHskSelectAll(allBoxId, boxClass, scope) {
+    const allBox = document.getElementById(allBoxId);
+    if (!allBox) return;
+    allBox.addEventListener("change", () => {
+      (scope || document).querySelectorAll("." + boxClass).forEach((box) => { box.checked = allBox.checked; });
+    });
+  }
+
+  function saveGrant(email, name, yct, hskLevels, className, onDone) {
     const key = (email || "").trim().toLowerCase();
     if (!key) return;
     if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
+    const payload = Object.assign(
+      { name: (name || "").trim(), yct: !!yct, class: (className || "").trim(), updatedAt: new Date().toISOString() },
+      hskLevelsPayload(hskLevels)
+    );
+    // Xoá field "hsk" (quyền HSK 3.0 kiểu cũ, cấp trọn bộ 1 lần) ngay khi
+    // giáo viên lưu quyền qua giao diện mới theo từng cấp — từ đây quyền
+    // HSK 3.0 của học sinh này chỉ còn tính theo 9 field hsk1..hsk9.
+    payload.hsk = firebase.firestore.FieldValue.delete();
     window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(key)
-      .set({ name: (name || "").trim(), yct: !!yct, hsk: !!hsk, class: (className || "").trim(), updatedAt: new Date().toISOString() }, { merge: true })
+      .set(payload, { merge: true })
       .then(() => { if (onDone) onDone(key); })
       .catch((err) => alert("Lưu thất bại: " + (err.message || err.code)));
   }
+
+  wireHskSelectAll("admin-grant-hsk-all", "admin-grant-hsk-level", formAdminGrant);
 
   formAdminGrant.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -8776,8 +8900,8 @@ const LESSONS = [
     const email = document.getElementById("admin-grant-email").value;
     const className = document.getElementById("admin-grant-class").value;
     const yct = document.getElementById("admin-grant-yct").checked;
-    const hsk = document.getElementById("admin-grant-hsk").checked;
-    saveGrant(email, name, yct, hsk, className, (key) => {
+    const hskLevels = readCheckedHskLevels(formAdminGrant, "admin-grant-hsk-level");
+    saveGrant(email, name, yct, hskLevels, className, (key) => {
       elAdminGrantMsg.textContent = "Đã lưu quyền cho " + key + ".";
       elAdminGrantMsg.className = "form-msg-success text-sm rounded-lg px-3 py-2 mb-4";
       elAdminGrantMsg.classList.remove("hidden");
@@ -8802,9 +8926,10 @@ const LESSONS = [
     return { validEmails, invalidCount };
   }
 
-  function bulkSetPermission(emails, yct, hsk, className, onDone, onError) {
+  function bulkSetPermission(emails, yct, hskLevels, className, onDone, onError) {
     if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
-    const payload = { yct: !!yct, hsk: !!hsk, updatedAt: new Date().toISOString() };
+    const payload = Object.assign({ yct: !!yct, updatedAt: new Date().toISOString() }, hskLevelsPayload(hskLevels));
+    payload.hsk = firebase.firestore.FieldValue.delete();
     if (className !== undefined) payload.class = className;
     const refs = emails.map((email) => window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(email));
     if (typeof window.__fbDb.batch === "function") {
@@ -8817,11 +8942,12 @@ const LESSONS = [
   }
 
   const elAdminBulkMsg = document.getElementById("admin-bulk-msg");
+  wireHskSelectAll("admin-bulk-hsk-all", "admin-bulk-hsk-level");
   document.getElementById("btn-admin-bulk-grant").addEventListener("click", () => {
     const raw = document.getElementById("admin-bulk-emails").value;
     const className = document.getElementById("admin-bulk-class").value.trim();
     const yct = document.getElementById("admin-bulk-yct").checked;
-    const hsk = document.getElementById("admin-bulk-hsk").checked;
+    const hskLevels = readCheckedHskLevels(document, "admin-bulk-hsk-level");
     const showMsg = (text, kind) => {
       elAdminBulkMsg.textContent = text;
       elAdminBulkMsg.className = (kind === "error" ? "form-msg-error" : kind === "success" ? "form-msg-success" : "") + " text-sm rounded-lg px-3 py-2";
@@ -8831,7 +8957,7 @@ const LESSONS = [
     const { validEmails, invalidCount } = parseBulkEmails(raw);
     if (validEmails.length === 0) { showMsg("Không tìm thấy email hợp lệ nào trong danh sách đã dán.", "error"); return; }
     showMsg("Đang cấp quyền cho " + validEmails.length + " email...", "");
-    bulkSetPermission(validEmails, yct, hsk, className, () => {
+    bulkSetPermission(validEmails, yct, hskLevels, className, () => {
       showMsg(
         "Đã cấp quyền cho " + validEmails.length + ' email thuộc lớp "' + className + '"' +
           (invalidCount ? " (bỏ qua " + invalidCount + " dòng không hợp lệ)" : "") + ".",
@@ -8854,7 +8980,11 @@ const LESSONS = [
       const rows = [];
       snap.forEach((doc) => {
         const data = doc.data() || {};
-        rows.push({ email: doc.id, name: data.name || "", yct: !!data.yct, hsk: !!data.hsk, class: data.class || "" });
+        const hskLevels = [];
+        for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
+          if (data.hsk === true || data["hsk" + i] === true) hskLevels.push(i);
+        }
+        rows.push({ email: doc.id, name: data.name || "", yct: !!data.yct, hskLevels: hskLevels, class: data.class || "" });
       });
       rows.sort((a, b) => a.email.localeCompare(b.email));
       renderAdminPermList(rows);
@@ -8904,12 +9034,13 @@ const LESSONS = [
 
       if (g.className) {
         groupHeader.querySelector(".btn-class-enable").addEventListener("click", () => {
-          if (!confirm('Bật quyền YCT + HSK cho toàn bộ ' + g.rows.length + ' học sinh lớp "' + g.className + '"?')) return;
-          bulkSetPermission(emailsInGroup, true, true, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+          if (!confirm('Bật quyền YCT + toàn bộ 9 cấp HSK 3.0 cho ' + g.rows.length + ' học sinh lớp "' + g.className + '"?')) return;
+          const allLevels = Array.from({ length: HSK_LEVEL_COUNT }, (_, i) => i + 1);
+          bulkSetPermission(emailsInGroup, true, allLevels, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
         });
         groupHeader.querySelector(".btn-class-disable").addEventListener("click", () => {
           if (!confirm('Tắt quyền truy cập của toàn bộ ' + g.rows.length + ' học sinh lớp "' + g.className + '"? (Vẫn giữ lại danh sách email + tên lớp để cấp lại sau này nếu cần)')) return;
-          bulkSetPermission(emailsInGroup, false, false, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+          bulkSetPermission(emailsInGroup, false, [], undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
         });
       }
 
@@ -8920,15 +9051,18 @@ const LESSONS = [
           '<div class="flex-1 min-w-[220px]"><input type="text" class="perm-row-name form-input rounded-lg px-2 py-1 text-sm font-bold w-full mb-0.5" placeholder="Tên học sinh" value="' + row.name.replace(/"/g, "&quot;") + '"><div class="text-xs break-all" style="color:var(--ink-faint);">' + row.email + "</div></div>" +
           '<input type="text" class="perm-row-class form-input rounded-lg px-2 py-1.5 text-xs w-28" placeholder="Lớp" value="' + row.class.replace(/"/g, "&quot;") + '">' +
           '<label class="perm-check-label"><input type="checkbox" class="perm-row-yct" ' + (row.yct ? "checked" : "") + '> YCT 1-6</label>' +
-          '<label class="perm-check-label"><input type="checkbox" class="perm-row-hsk" ' + (row.hsk ? "checked" : "") + '> HSK 3.0</label>' +
+          '<div class="basis-full flex flex-wrap gap-1.5 items-center">' +
+            '<span class="text-xs font-bold" style="color:var(--ink-faint);">HSK 3.0:</span>' +
+            renderHskLevelCheckboxes(row.hskLevels, "perm-row-hsk-level") +
+          "</div>" +
           '<button type="button" class="perm-row-save text-xs font-bold px-3 py-1.5 rounded-lg text-white" style="background:var(--jade);">Lưu</button>' +
           '<button type="button" class="perm-row-delete text-xs font-bold px-3 py-1.5 rounded-lg border" style="border-color:var(--wrong); color:var(--wrong);">Xoá</button>';
         div.querySelector(".perm-row-save").addEventListener("click", () => {
           const name = div.querySelector(".perm-row-name").value;
           const yct = div.querySelector(".perm-row-yct").checked;
-          const hsk = div.querySelector(".perm-row-hsk").checked;
+          const hskLevels = readCheckedHskLevels(div, "perm-row-hsk-level");
           const className = div.querySelector(".perm-row-class").value;
-          saveGrant(row.email, name, yct, hsk, className, () => {
+          saveGrant(row.email, name, yct, hskLevels, className, () => {
             loadAllPermissions();
           });
         });
