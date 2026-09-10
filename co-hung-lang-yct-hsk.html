@@ -366,17 +366,22 @@
   }
   .perm-check-label input { accent-color: var(--jade); width: 1rem; height: 1rem; }
   .perm-row { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 0.85rem; }
-  .radical-word-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+  .radical-word-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  .radical-cell { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+  .radical-cell-pinyin { font-size: 0.75rem; font-weight: 700; color: var(--ink-faint); }
   .radical-box {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    width: 4.2rem; height: 4.6rem; border: 1px solid var(--border); border-radius: 0.6rem;
-    background: var(--surface); gap: 0.25rem;
+    position: relative; display: flex; align-items: center; justify-content: center;
+    width: 4.2rem; height: 4.2rem; border: 1px solid var(--border); border-radius: 0.4rem;
+    background: var(--surface); overflow: hidden;
   }
-  .radical-box-pinyin { font-size: 0.72rem; font-weight: 700; color: var(--ink-faint); }
-  .radical-box-hanzi { font-size: 1.9rem; line-height: 1; font-weight: 700; color: var(--ink); }
-  .radical-box-blank {
-    border: 2px dashed var(--accent); background: var(--accent-soft);
-  }
+  .radical-box::before, .radical-box::after { content: ""; position: absolute; background: var(--border); z-index: 0; }
+  .radical-box::before { left: 50%; top: 4%; bottom: 4%; width: 1px; }
+  .radical-box::after { top: 50%; left: 4%; right: 4%; height: 1px; }
+  .radical-box-hanzi { position: relative; z-index: 1; font-size: 1.9rem; line-height: 1; font-weight: 700; color: var(--ink); }
+  .radical-box-row { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 0.15rem; }
+  .radical-box-row .radical-box-hanzi { font-size: 1.55rem; flex: 0 0 auto; }
+  .radical-slot { flex: 0 0 40%; align-self: center; height: 58%; border: 2px dashed var(--accent-strong); border-radius: 0.25rem; background: var(--accent-soft); }
+  .radical-box-blank { border-color: var(--accent); background: var(--accent-soft); }
   .radical-box-blank .radical-box-hanzi { color: var(--accent-strong); }
 </style></head><body>
 
@@ -3298,10 +3303,10 @@ const LESSONS = [
       { kind: "read", prompt: "📖 到了西安，朋友来接我们，还给我们介绍了一家饭店。我们开车去了那里，菜都很好吃。\n★ 朋友介绍了什么？(Câu 22)", options: ["车", "饭店", "西安"], answer: "饭店" },
       { kind: "read", prompt: "📖 我在北京旅游的时候，一雪姐请我吃了烤鸭，还给我介绍了很多东西。现在，我们已经是好朋友了。\n★ 他在北京旅游时，一雪：(Câu 23)", options: ["请他吃饭", "开车接他", "不在北京"], answer: "请他吃饭" },
       { kind: "read", prompt: "📖 我家在北京，我爸爸现在在上海工作，他让我和妈妈这个星期六坐火车去上海看他。爸爸说，他会接我们。\n★ 爸爸现在在哪儿工作？(Câu 24)", options: ["北京", "上海", "西安"], answer: "上海" },
-      { kind: "fill", prompt: "✍️ Ví dụ: 亻么 (shén me)", boxWord: [{ hanzi: "亻", pinyin: "shén", blank: true }, { hanzi: "么", pinyin: "me" }], options: ["冫", "纟", "忄", "十"], answer: "十", isExample: true },
-      { kind: "fill", prompt: "✍️ 不董 (bù dǒng) (Câu 25)", boxWord: [{ hanzi: "不", pinyin: "bù" }, { hanzi: "董", pinyin: "dǒng", blank: true }], options: ["冫", "纟", "忄", "十"], answer: "忄" },
-      { kind: "fill", prompt: "✍️ 合他 (gěi tā) (Câu 26)", boxWord: [{ hanzi: "合", pinyin: "gěi", blank: true }, { hanzi: "他", pinyin: "tā" }], options: ["冫", "纟", "忄", "十"], answer: "纟" },
-      { kind: "fill", prompt: "✍️ 两欠 (liǎng cì) (Câu 27)", boxWord: [{ hanzi: "两", pinyin: "liǎng" }, { hanzi: "欠", pinyin: "cì", blank: true }], options: ["冫", "纟", "忄", "十"], answer: "冫" },
+      { kind: "fill", prompt: "✍️ Ví dụ: 亻么 (shén me)", boxWord: [{ hanzi: "亻", pinyin: "shén", blank: true, missingSide: "right" }, { hanzi: "么", pinyin: "me" }], options: ["冫", "纟", "忄", "十"], answer: "十", isExample: true },
+      { kind: "fill", prompt: "✍️ 不董 (bù dǒng) (Câu 25)", boxWord: [{ hanzi: "不", pinyin: "bù" }, { hanzi: "董", pinyin: "dǒng", blank: true, missingSide: "left" }], options: ["冫", "纟", "忄", "十"], answer: "忄" },
+      { kind: "fill", prompt: "✍️ 合他 (gěi tā) (Câu 26)", boxWord: [{ hanzi: "合", pinyin: "gěi", blank: true, missingSide: "left" }, { hanzi: "他", pinyin: "tā" }], options: ["冫", "纟", "忄", "十"], answer: "纟" },
+      { kind: "fill", prompt: "✍️ 两欠 (liǎng cì) (Câu 27)", boxWord: [{ hanzi: "两", pinyin: "liǎng" }, { hanzi: "欠", pinyin: "cì", blank: true, missingSide: "left" }], options: ["冫", "纟", "忄", "十"], answer: "冫" },
       { kind: "type", prompt: "✍️ Ví dụ: Điền chữ Hán đúng: 你想喝茶还是喝咖啡？(Nǐ xiǎng hē chá háishi hē kāfēi? — Bạn muốn uống trà hay cà phê?)", options: [], answer: "是", isExample: true },
       { kind: "type", prompt: "✍️ Điền chữ Hán đúng: 他（　　）时候不吃晚饭。(Tā ___ shíhou bù chī wǎnfàn — Câu 28)", options: [], answer: "有" },
       { kind: "type", prompt: "✍️ Điền chữ Hán đúng: 我现在（　　）经到北京了。(Wǒ xiànzài ___ jīng dào Běijīng le — Câu 29)", options: [], answer: "已" },
@@ -7506,12 +7511,17 @@ const LESSONS = [
     const hasSharedAudio = q.kind !== "read" && !!(state.lesson && state.lesson.mockExamAudio);
     btnMockPlay.classList.toggle("hidden", q.kind === "read" || (!q.audioText && !q.audioSrc && !hasSharedAudio));
     if (q.boxWord) {
-      elMockPrompt.innerHTML = '<span class="radical-word-row">' + q.boxWord.map((ch) =>
-        '<span class="radical-box' + (ch.blank ? ' radical-box-blank' : '') + '">' +
-        '<span class="radical-box-pinyin">' + ch.pinyin + '</span>' +
-        '<span class="radical-box-hanzi">' + ch.hanzi + '</span>' +
-        '</span>'
-      ).join('') + '</span>';
+      elMockPrompt.innerHTML = '<span class="radical-word-row">' + q.boxWord.map((ch) => {
+        const hanziSpan = '<span class="radical-box-hanzi">' + ch.hanzi + '</span>';
+        const slotSpan = '<span class="radical-slot"></span>';
+        const boxInner = ch.blank
+          ? '<span class="radical-box-row">' + (ch.missingSide === 'right' ? hanziSpan + slotSpan : slotSpan + hanziSpan) + '</span>'
+          : hanziSpan;
+        return '<span class="radical-cell">' +
+          '<span class="radical-cell-pinyin">' + ch.pinyin + '</span>' +
+          '<span class="radical-box' + (ch.blank ? ' radical-box-blank' : '') + '">' + boxInner + '</span>' +
+          '</span>';
+      }).join('') + '</span>';
     } else {
       elMockPrompt.textContent = q.prompt;
     }
