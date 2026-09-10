@@ -1104,6 +1104,28 @@
     </div>
   </div>
 
+  <!-- ============ MODAL: LỊCH SỬ LÀM BÀI CỦA HỌC SINH ============ -->
+  <div id="student-history-overlay" class="modal-overlay hidden">
+    <div class="modal-box card-shadow-lg p-5 sm:p-6 w-full max-w-4xl">
+      <div class="flex items-center justify-between mb-1">
+        <h3 class="text-lg font-extrabold" style="color:var(--jade);"><i class="fa-solid fa-clock-rotate-left mr-2"></i>Lịch sử làm bài của tôi</h3>
+        <button type="button" id="btn-student-history-close" class="w-8 h-8 rounded-full grid place-items-center" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p class="text-sm mt-2 mb-4" style="color:var(--ink-soft);">Điểm cao nhất từng đạt được và số lần bạn đã làm ở mỗi bài học, theo từng dạng bài tập.</p>
+      <div class="overflow-x-auto rounded-xl border" style="border-color:var(--border);">
+        <table class="data-table text-sm">
+          <thead>
+            <tr>
+              <th>Bài học</th><th>Điền từ</th><th>Nghe hiểu</th><th>Video</th><th>Nghe đọc</th><th>Đề thi mô phỏng</th><th>Số lần làm</th><th>Gần nhất</th>
+            </tr>
+          </thead>
+          <tbody id="student-history-body"></tbody>
+        </table>
+      </div>
+      <p id="student-history-empty" class="hidden text-sm text-center py-8" style="color:var(--ink-faint);">Bạn chưa làm bài tập nào.</p>
+    </div>
+  </div>
+
   <!-- ============ MODAL: ĐĂNG NHẬP / ĐĂNG KÝ NGẦM BẰNG EMAIL ============ -->
   <div id="auth-login-overlay" class="modal-overlay hidden">
     <div class="modal-box card-shadow-lg p-6 w-full max-w-sm">
@@ -7669,6 +7691,85 @@ const LESSONS = [
     return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() + " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
   }
 
+  /* =====================================================================
+     LỊCH SỬ LÀM BÀI CỦA HỌC SINH — mỗi học sinh tự xem lại điểm cao nhất
+     + số lần đã làm của CHÍNH MÌNH ở từng bài đã làm, theo từng dạng bài
+     tập (Điền từ / Nghe hiểu / Video / Nghe đọc / Đề thi mô phỏng). Dùng
+     lại đúng dữ liệu Firestore (collection "scores") mà Dashboard Giáo
+     viên đang đọc, chỉ lọc theo email của người đang đăng nhập — nên chỉ
+     thấy được các lần làm bài đã ĐỒNG BỘ lên mạng (lúc làm bài đã đăng
+     nhập), giống hệt những gì giáo viên xem được ở Dashboard.
+     ===================================================================== */
+  const elStudentHistoryOverlay = document.getElementById("student-history-overlay");
+  function openStudentHistory() {
+    elStudentHistoryOverlay.classList.remove("hidden");
+    renderStudentHistory();
+  }
+  function closeStudentHistory() { elStudentHistoryOverlay.classList.add("hidden"); }
+  const btnStudentHistoryClose = document.getElementById("btn-student-history-close");
+  if (btnStudentHistoryClose) btnStudentHistoryClose.addEventListener("click", closeStudentHistory);
+
+  function renderStudentHistory() {
+    const body = document.getElementById("student-history-body");
+    const empty = document.getElementById("student-history-empty");
+    if (!body || !empty) return;
+    if (!fbReady() || !currentUser) {
+      body.innerHTML = "";
+      empty.textContent = "Không tải được lịch sử làm bài.";
+      empty.classList.remove("hidden");
+      return;
+    }
+    empty.classList.add("hidden");
+    body.innerHTML = '<tr><td colspan="8" class="text-center text-sm py-6" style="color:var(--ink-faint);">Đang tải...</td></tr>';
+    const emailKey = currentUser.email.toLowerCase();
+    window.__fbDb.collection(SCORES_COLLECTION).doc(emailKey).get().then((doc) => {
+      const data = doc.exists ? doc.data() || {} : {};
+      const allLessons = getAllLessons();
+      const entries = Object.keys(data)
+        .filter((key) => key !== "_email")
+        .map((lessonId) => {
+          const lesson = allLessons.find((l) => l.id === lessonId);
+          const program = lesson ? getProgramById(lesson.program) : null;
+          const lessonLabel = lesson ? lessonDisplayTitle(lesson) + (lesson.level ? " (" + lesson.level + ")" : "") : lessonId + " (bài đã bị xoá)";
+          const programLabel = program ? program.name : "—";
+          const record = data[lessonId] || {};
+          const stats = scoreRowStats(record);
+          return { lessonLabel: lessonLabel, programLabel: programLabel, record: record, stats: stats };
+        });
+      entries.sort((a, b) => {
+        if (!a.stats.lastAt && !b.stats.lastAt) return 0;
+        if (!a.stats.lastAt) return 1;
+        if (!b.stats.lastAt) return -1;
+        return new Date(b.stats.lastAt) - new Date(a.stats.lastAt);
+      });
+      if (entries.length === 0) {
+        body.innerHTML = "";
+        empty.textContent = "Bạn chưa làm bài tập nào.";
+        empty.classList.remove("hidden");
+        return;
+      }
+      body.innerHTML = entries
+        .map((entry) => {
+          const s = entry.record;
+          const label = entry.lessonLabel + (entry.programLabel !== "—" ? " · " + entry.programLabel : "");
+          return (
+            '<tr><td class="font-semibold">' + label + "</td><td>" +
+            (s.bestScore !== undefined && s.bestScore !== null ? s.bestScore + "/100" : "—") + "</td><td>" +
+            (s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore + "/100" : "—") + "</td><td>" +
+            (s.video && s.video.bestScore !== undefined && s.video.bestScore !== null ? s.video.bestScore + "/100" : "—") + "</td><td>" +
+            (s.readlisten && s.readlisten.bestScore !== undefined && s.readlisten.bestScore !== null ? s.readlisten.bestScore + "/100" : "—") + "</td><td>" +
+            (s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore + "/100" : "—") + "</td><td>" +
+            entry.stats.totalAttempts + "</td><td>" + formatDateTime(entry.stats.lastAt) + "</td></tr>"
+          );
+        })
+        .join("");
+    }).catch((err) => {
+      body.innerHTML = "";
+      empty.textContent = "Không tải được lịch sử: " + (err.message || err.code);
+      empty.classList.remove("hidden");
+    });
+  }
+
   // Tải TOÀN BỘ điểm của TẤT CẢ học sinh từ Firestore (collection "scores",
   // 1 document/học sinh, id = email viết thường, mỗi field còn lại là
   // lessonId -> bản ghi điểm), rồi "làm phẳng" thành danh sách các dòng
@@ -8803,11 +8904,13 @@ const LESSONS = [
     if (admin) {
       html += '<button type="button" id="btn-open-admin" class="btn-auth-admin"><i class="fa-solid fa-user-shield"></i> Quản trị</button>';
     }
+    html += '<button type="button" id="btn-open-student-history" class="auth-chip-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử của tôi</button>';
     html += '<span class="auth-chip-email" title="' + currentUser.email + '">' + currentUser.email + '</span>';
     html += '<button type="button" id="btn-auth-logout" class="auth-chip-link">Đăng xuất</button>';
     html += '</div>';
     elAuthArea.innerHTML = html;
     document.getElementById("btn-auth-logout").addEventListener("click", () => { if (fbReady()) window.__fbAuth.signOut(); });
+    document.getElementById("btn-open-student-history").addEventListener("click", openStudentHistory);
     if (admin) document.getElementById("btn-open-admin").addEventListener("click", openAdminPanel);
   }
 
