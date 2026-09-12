@@ -420,7 +420,6 @@
 
       <nav class="hidden lg:flex items-center gap-6">
         <button type="button" id="btn-nav-home" class="nav-link is-active text-sm font-bold">Trang chủ</button>
-        <span class="nav-link text-sm font-semibold">214 Bộ thủ</span>
         <div id="nav-yct-wrap" class="nav-dropdown-wrap">
           <button type="button" id="btn-nav-yct" class="nav-link text-sm font-bold flex items-center gap-1">YCT 1-6 <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
           <div id="nav-yct-panel" class="nav-dropdown-panel nav-dropdown-panel-wide hidden">
@@ -454,7 +453,15 @@
         </div>
         <button type="button" id="btn-nav-review" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-shuffle text-[11px]"></i> Ôn tập tổng hợp</button>
         <span class="nav-link text-sm font-semibold flex items-center gap-1">Chuyên ngành <i class="fa-solid fa-chevron-down text-[10px]"></i></span>
-        <button type="button" id="btn-nav-test-hub" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-list-check text-[11px]"></i> Test học phần</button>
+        <div id="nav-testhub-wrap" class="nav-dropdown-wrap">
+          <button type="button" id="btn-nav-test-hub" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-list-check text-[11px]"></i> Test học phần <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
+          <div id="nav-testhub-panel" class="nav-dropdown-panel hidden">
+            <div class="nav-dropdown-grid">
+              <button type="button" data-test-folder="yct" class="nav-dropdown-item"><i class="fa-solid fa-folder mb-1"></i>YCT</button>
+              <button type="button" data-test-folder="hsk3" class="nav-dropdown-item"><i class="fa-solid fa-folder mb-1"></i>HSK 3.0</button>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <div id="auth-area" class="auth-area flex items-center"></div>
@@ -6906,9 +6913,24 @@ const LESSONS = [
     showView("testDetail");
   }
 
-  document.getElementById("btn-nav-test-hub").addEventListener("click", () => { renderTestHub(); showView("testHub"); });
+  (function registerTestNavDropdown() {
+    const wrap = document.getElementById("nav-testhub-wrap");
+    const panel = document.getElementById("nav-testhub-panel");
+    if (!wrap || !panel) return;
+    navDropdowns.push({ wrap, panel });
+    function closePanel() { panel.classList.add("hidden"); }
+    wrap.querySelector("button.nav-link").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const willOpen = panel.classList.contains("hidden");
+      navDropdowns.forEach((d) => d.panel.classList.add("hidden"));
+      if (willOpen) panel.classList.remove("hidden");
+    });
+    panel.querySelectorAll("[data-test-folder]").forEach((btn) => {
+      btn.addEventListener("click", () => { closePanel(); enterTestFolder(btn.getAttribute("data-test-folder")); });
+    });
+  })();
   document.getElementById("btn-back-home-testhub").addEventListener("click", () => showView("home"));
-  document.getElementById("btn-back-testhub").addEventListener("click", () => showView("testHub"));
+  document.getElementById("btn-back-testhub").addEventListener("click", () => showView("home"));
   document.getElementById("btn-back-testlevels").addEventListener("click", () => { if (testState.folder) renderTestLevelGrid(testState.folder); showView("testLevels"); });
 
 
