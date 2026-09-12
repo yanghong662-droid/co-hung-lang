@@ -1242,7 +1242,14 @@
           <input type="text" id="admin-grant-class" class="form-input w-full sm:w-36 rounded-lg px-3 py-2.5 text-sm" placeholder="Lớp (tuỳ chọn)">
         </div>
         <div class="flex flex-wrap gap-2 items-center">
-          <label class="perm-check-label"><input type="checkbox" id="admin-grant-yct"> YCT 1-6</label>
+          <span class="text-xs font-bold" style="color:var(--ink-faint);">YCT:</span>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-yct-level" data-yct-level="1"> YCT 1</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-yct-level" data-yct-level="2"> YCT 2</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-yct-level" data-yct-level="3"> YCT 3</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-yct-level" data-yct-level="4"> YCT 4</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-yct-level" data-yct-level="5"> YCT 5</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-yct-level" data-yct-level="6"> YCT 6</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-grant-yct-all"><b>Tất cả</b></label>
           <span class="text-xs font-bold" style="color:var(--ink-faint);">HSK 3.0:</span>
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="1"> HSK 1</label>
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="2"> HSK 2</label>
@@ -1267,7 +1274,14 @@
           <div class="flex flex-col gap-2.5">
             <input type="text" id="admin-bulk-class" required class="form-input w-full rounded-lg px-3 py-2.5 text-sm" placeholder="Tên lớp (bắt buộc, vd: YCT1 - Lớp A - K15)">
             <div class="flex flex-wrap gap-2 items-center">
-              <label class="perm-check-label"><input type="checkbox" id="admin-bulk-yct"> YCT 1-6</label>
+              <span class="text-xs font-bold" style="color:var(--ink-faint);">YCT:</span>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-yct-level" data-yct-level="1"> YCT 1</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-yct-level" data-yct-level="2"> YCT 2</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-yct-level" data-yct-level="3"> YCT 3</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-yct-level" data-yct-level="4"> YCT 4</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-yct-level" data-yct-level="5"> YCT 5</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-yct-level" data-yct-level="6"> YCT 6</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-bulk-yct-all"><b>Tất cả</b></label>
               <span class="text-xs font-bold" style="color:var(--ink-faint);">HSK 3.0:</span>
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="1"> HSK 1</label>
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="2"> HSK 2</label>
@@ -1932,50 +1946,50 @@ const LESSONS = [
       { audioText: "今天是星期天，我很喜欢。", prompt: "___ 是星期天，我很喜欢。", options: ["今天", "明天", "星期", "生日"], answer: "今天" },
     ],
     videoQuiz: {
-      youtubeId: "PqPxeuXu_bo",
-      title: "Mrs. Kelly's Class 32: What Do You Do (on Mondays)? (星期一你做什么?)",
+      youtubeId: "ZG5Wj7zNX8E",
+      title: "Mrs. Kelly's Class 31: What Day Is It? (今天星期几?)",
       questions: [
         {
-          prompt: "Video này (Mrs. Kelly's Class 32) chủ yếu luyện nói về điều gì?",
-          options: ["Các thứ trong tuần (星期一, 星期二…)", "Các tháng trong năm", "Các con số đếm", "Các màu sắc"],
-          answer: "Các thứ trong tuần (星期一, 星期二…)",
-          explanation: "Video lặp lại câu hỏi \"…你做什么？\" cho từng thứ trong tuần (星期一, 星期二…) — đúng chủ đề của Bài 9.",
+          prompt: "Trong video, Sally hỏi mẹ câu gì, lặp đi lặp lại nhiều lần?",
+          options: ["今天星期几？", "现在几点？", "你叫什么？", "你几岁？"],
+          answer: "今天星期几？",
+          explanation: "Sally hỏi mẹ \"今天星期几？\" (hôm nay thứ mấy?) nhiều lần trong video, mỗi lần vào một ngày khác nhau — đúng trọng tâm của Bài 9.",
         },
         {
-          prompt: "老师hỏi: \"星期一你做什么？\" 星期一 nghĩa là gì?",
-          options: ["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm"],
-          answer: "Thứ Hai",
-          explanation: "星期一 (xīngqīyī) nghĩa là Thứ Hai — ngày đầu tiên được nhắc đến trong video và cũng là từ vựng đầu tiên của Bài 9.",
-        },
-        {
-          prompt: "今天 ___ 几？(Jīntiān ___ jǐ?)",
-          options: ["星期 (xīngqī)", "生日 (shēngrì)", "号 (hào)", "月 (yuè)"],
-          answer: "星期 (xīngqī)",
-          explanation: "「今天星期几？」là câu hỏi trọng tâm của Bài 9, dùng để hỏi hôm nay là thứ mấy.",
-        },
-        {
-          prompt: "星期一后面是 ___。(Xīngqīyī hòumian shì ___.)",
-          options: ["星期二 (xīngqī'èr)", "星期天 (xīngqītiān)", "星期六 (xīngqīliù)", "星期五 (xīngqīwǔ)"],
+          prompt: "Lần đầu tiên trong video, mẹ Sally trả lời: \"今天是 ___。\"",
+          options: ["星期二 (xīngqī'èr)", "星期一 (xīngqīyī)", "星期三 (xīngqīsān)", "星期四 (xīngqīsì)"],
           answer: "星期二 (xīngqī'èr)",
-          explanation: "Các thứ trong tuần đi theo thứ tự tăng dần bằng số đếm: 星期一 (Thứ Hai) → 星期二 (Thứ Ba) → … — video hỏi lần lượt từng ngày theo đúng thứ tự này.",
+          explanation: "Câu trả lời đầu tiên của mẹ trong video là \"今天是星期二\" (hôm nay là thứ Ba).",
         },
         {
-          prompt: "Trong 7 ngày của tuần, thứ nào KHÔNG dùng số đếm mà dùng chữ「天」?",
-          options: ["星期天 (xīngqītiān)", "星期六 (xīngqīliù)", "星期五 (xīngqīwǔ)", "星期四 (xīngqīsì)"],
-          answer: "星期天 (xīngqītiān)",
-          explanation: "Từ Thứ Hai đến Thứ Bảy dùng số 1-6 sau「星期」(星期一…星期六), riêng Chủ nhật đặc biệt là「星期天」— đúng điểm ngữ pháp của Bài 9.",
+          prompt: "Theo đúng thứ tự các ngày Sally hỏi trong video, sau 星期二 (thứ Ba) là ngày nào?",
+          options: ["星期三 (xīngqīsān)", "星期五 (xīngqīwǔ)", "星期一 (xīngqīyī)", "星期六 (xīngqīliù)"],
+          answer: "星期三 (xīngqīsān)",
+          explanation: "Video kể lần lượt: 星期二 (thứ Ba) → 星期三 (thứ Tư) → 星期四 (thứ Năm) → 星期五 (thứ Sáu).",
         },
         {
-          prompt: "明天星期六，我 ___ 星期六。(Míngtiān xīngqīliù, wǒ ___ xīngqīliù.)",
-          options: ["喜欢 (xǐhuan)", "是 (shì)", "有 (yǒu)", "去 (qù)"],
-          answer: "喜欢 (xǐhuan)",
-          explanation: "喜欢 (xǐhuan, thích) dùng để nói cảm xúc về một ngày trong tuần, ví dụ 我喜欢星期六 (tôi thích thứ Bảy) — câu ví dụ chính của Bài 9.",
+          prompt: "Đến 星期四 (thứ Năm), Sally nói với chú chó Spike (斯派克): \"今天是星期四，我 ___。\"",
+          options: ["要去上学了 (phải đi học rồi)", "要去商店 (đi cửa hàng)", "喜欢星期六 (thích thứ Bảy)", "生日快乐 (sinh nhật vui vẻ)"],
+          answer: "要去上学了 (phải đi học rồi)",
+          explanation: "Sally nói với Spike rằng hôm nay thứ Năm, mình \"要去上学了\" (phải đi học rồi).",
         },
         {
-          prompt: "你的生日是几月几 ___？(Nǐ de shēngrì shì jǐ yuè jǐ ___?)",
-          options: ["号 (hào)", "星期 (xīngqī)", "点 (diǎn)", "岁 (suì)"],
-          answer: "号 (hào)",
-          explanation: "号 (hào) dùng để hỏi/nói ngày trong tháng, ví dụ 几月几号 (tháng mấy ngày mấy) — từ vựng của Bài 9 khi nói về ngày sinh nhật.",
+          prompt: "Đến 星期五 (thứ Sáu), Sally vui mừng reo lên điều gì?",
+          options: ["我放假了！(Tôi được nghỉ rồi!)", "我生日！(Tôi sinh nhật!)", "我很忙！(Tôi rất bận!)", "我不喜欢！(Tôi không thích!)"],
+          answer: "我放假了！(Tôi được nghỉ rồi!)",
+          explanation: "Thứ Sáu, Sally reo lên \"我放假了！\" (tôi được nghỉ rồi) vì không phải đi học.",
+        },
+        {
+          prompt: "Cuối video, Peter và Minwoo rủ Sally làm gì?",
+          options: ["我们一起玩吧！(Chúng ta cùng chơi nhé!)", "我们一起吃饭吧！(Chúng ta cùng ăn cơm nhé!)", "我们一起唱歌吧！(Chúng ta cùng hát nhé!)", "我们一起回家吧！(Chúng ta cùng về nhà nhé!)"],
+          answer: "我们一起玩吧！(Chúng ta cùng chơi nhé!)",
+          explanation: "Vì được nghỉ vào thứ Sáu, Peter và Minwoo rủ Sally \"我们一起玩吧！\" (chúng ta cùng chơi nhé!).",
+        },
+        {
+          prompt: "斯派克 (Sīpàikè) trong video là ai?",
+          options: ["Con chó của Sally", "Bạn cùng lớp của Sally", "Anh trai của Sally", "Thầy giáo"],
+          answer: "Con chó của Sally",
+          explanation: "Sally nói chuyện với 斯派克 (Spike) như với thú cưng của mình khi chuẩn bị đi học.",
         },
       ],
     },
@@ -2007,44 +2021,50 @@ const LESSONS = [
       { audioText: "早上好，老师！", prompt: "___ 好，老师！", options: ["早上", "现在", "明天", "今天"], answer: "早上" },
     ],
     videoQuiz: {
-      youtubeId: "PqPxeuXu_bo",
-      title: "Mrs. Kelly's Class 32: What Do You Do (on Mondays)? (星期一你做什么?)",
+      youtubeId: "KtyLmc1dc4Q",
+      title: "Mrs. Kelly's Class 30: What Time Is It? (几点了?)",
       questions: [
         {
-          prompt: "Video Mrs. Kelly's Class 32 luyện hỏi \"làm gì\" vào các ngày trong tuần. Còn muốn hỏi \"bây giờ là mấy giờ\", ta hỏi thế nào?",
-          options: ["现在几点？(Xiànzài jǐ diǎn?)", "今天星期几？(Jīntiān xīngqī jǐ?)", "你几岁？(Nǐ jǐ suì?)", "你叫什么？(Nǐ jiào shénme?)"],
-          answer: "现在几点？(Xiànzài jǐ diǎn?)",
-          explanation: "「现在几点？」là câu hỏi trọng tâm của Bài 10, khác với「今天星期几？」dùng để hỏi thứ trong tuần như video vừa nhắc.",
+          prompt: "Peter hỏi cô giáo Kelly điều gì khi bắt đầu video?",
+          options: ["现在几点了？", "今天星期几？", "这是什么？", "你叫什么？"],
+          answer: "现在几点了？",
+          explanation: "Peter hỏi \"现在几点了？\" (bây giờ là mấy giờ?) — đúng câu hỏi trọng tâm của Bài 10.",
         },
         {
-          prompt: "现在 ___ 点？(Xiànzài ___ diǎn?)",
-          options: ["几 (jǐ)", "什么 (shénme)", "谁 (shéi)", "怎么 (zěnme)"],
-          answer: "几 (jǐ)",
-          explanation: "几 (jǐ) dùng để hỏi số nhỏ, ví dụ 现在几点 (bây giờ mấy giờ) — mẫu câu chính của Bài 10.",
+          prompt: "Cô giáo trả lời Peter: \"现在 ___ 了。我们排队吧。\"",
+          options: ["一点 (yī diǎn)", "两点 (liǎng diǎn)", "三点 (sān diǎn)", "四点 (sì diǎn)"],
+          answer: "一点 (yī diǎn)",
+          explanation: "Cô giáo nói \"现在一点了\" (bây giờ là 1 giờ) rồi bảo các bạn xếp hàng (排队).",
         },
         {
-          prompt: "明天5 ___ 见。(Míngtiān wǔ ___ jiàn.)",
-          options: ["点 (diǎn)", "分 (fēn)", "号 (hào)", "岁 (suì)"],
-          answer: "点 (diǎn)",
-          explanation: "点 (diǎn, giờ) đặt sau số để chỉ giờ, ví dụ 5点见 (hẹn gặp lúc 5 giờ) — từ vựng của Bài 10.",
+          prompt: "Ai là người trả lời \"现在两点了。\" khi Minwoo hỏi giờ?",
+          options: ["Người quản lý sở thú", "Cô giáo Kelly", "Sally", "Peter"],
+          answer: "Người quản lý sở thú",
+          explanation: "Khi Minwoo hỏi giờ, người quản lý sở thú trả lời \"现在两点了\" (bây giờ là 2 giờ) — cho biết video diễn ra ở sở thú.",
         },
         {
-          prompt: "现在五点十 ___。(Xiànzài wǔ diǎn shí ___.)",
-          options: ["分 (fēn)", "点 (diǎn)", "号 (hào)", "星期 (xīngqī)"],
-          answer: "分 (fēn)",
-          explanation: "分 (fēn, phút) đặt sau số phút, ví dụ 五点十分 (5 giờ 10 phút) — khác với 点 dùng cho số giờ.",
+          prompt: "Theo đúng thứ tự thời gian trong video, sau 两点 (2 giờ) là mấy giờ?",
+          options: ["三点 (sān diǎn)", "一点 (yī diǎn)", "五点 (wǔ diǎn)", "十二点 (shí'èr diǎn)"],
+          answer: "三点 (sān diǎn)",
+          explanation: "Thời gian trong video tăng dần: 一点 (1 giờ) → 两点 (2 giờ) → 三点 (3 giờ) → 四点 (4 giờ).",
         },
         {
-          prompt: "早上5点，___ 了！(Zǎoshang wǔ diǎn, ___ le!)",
-          options: ["太早 (tài zǎo)", "现在 (xiànzài)", "见面 (jiànmiàn)", "喜欢 (xǐhuan)"],
-          answer: "太早 (tài zǎo)",
-          explanation: "太早了 (tài zǎo le, sớm quá!) dùng để than khi một mốc giờ quá sớm — cụm từ cảm thán của Bài 10.",
+          prompt: "Đến 四点 (4 giờ), cô giáo nói với các bạn nhỏ điều gì?",
+          options: ["该回家了 (đến lúc về nhà rồi)", "我们排队吧 (chúng ta xếp hàng nhé)", "我们去商店 (chúng ta đi cửa hàng)", "生日快乐 (sinh nhật vui vẻ)"],
+          answer: "该回家了 (đến lúc về nhà rồi)",
+          explanation: "Vào lúc 4 giờ, cô giáo nói \"现在四点了，该回家了\" (bây giờ 4 giờ rồi, đến lúc về nhà).",
         },
         {
-          prompt: "___ 好，老师！(___ hǎo, lǎoshī!)",
-          options: ["早上 (zǎoshang)", "现在 (xiànzài)", "明天 (míngtiān)", "今天 (jīntiān)"],
-          answer: "早上 (zǎoshang)",
-          explanation: "早上好 (zǎoshang hǎo) nghĩa là \"chào buổi sáng\" — 早上 (buổi sáng) là từ vựng của Bài 10.",
+          prompt: "Ai nói \"再见！\" ở cuối video?",
+          options: ["Người quản lý sở thú", "Cô giáo Kelly", "Peter", "Sally"],
+          answer: "Người quản lý sở thú",
+          explanation: "Khi các bạn ra về, người quản lý sở thú chào tạm biệt bằng câu \"再见！\".",
+        },
+        {
+          prompt: "Video này giúp luyện mẫu câu hỏi — đáp giờ giấc nào?",
+          options: ["现在几点了？... 现在 + Số + 点了。", "今天星期几？... 今天是 + 星期 + Số。", "你几岁？... 我 + Số + 岁。", "你喜欢什么？... 我喜欢 + N。"],
+          answer: "现在几点了？... 现在 + Số + 点了。",
+          explanation: "Cả video xoay quanh mẫu câu hỏi \"现在几点了？\" và trả lời \"现在 + số + 点了\" — đúng trọng tâm ngữ pháp Bài 10.",
         },
       ],
     },
@@ -2080,6 +2100,54 @@ const LESSONS = [
       { audioText: "妹妹爱吃面条。", prompt: "妹妹爱 ___ 面条。", options: ["吃", "喝", "爱", "是"], answer: "吃" },
       { audioText: "我爱吃苹果。", prompt: "我 ___ 吃苹果。", options: ["爱", "吃", "喝", "是"], answer: "爱" },
     ],
+    videoQuiz: {
+      youtubeId: "XAPitNPlXqg",
+      title: "Mrs. Kelly's Class 36: Do You Like Salad? (你喜欢沙拉吗?)",
+      questions: [
+        {
+          prompt: "Video bắt đầu bằng việc Minwoo nói gì với mẹ?",
+          options: ["妈妈，我们饿了。", "妈妈，我们要回家。", "妈妈，我喜欢沙拉。", "妈妈，现在几点了？"],
+          answer: "妈妈，我们饿了。",
+          explanation: "Minwoo nói \"妈妈，我们饿了\" (mẹ ơi, chúng con đói rồi) để mở đầu bữa trưa trong video.",
+        },
+        {
+          prompt: "Mẹ của Minwoo hỏi các bạn điều gì?",
+          options: ["你喜欢鸡肉吗？", "你喜欢沙拉吗？", "你喜欢面条吗？", "你喜欢苹果吗？"],
+          answer: "你喜欢鸡肉吗？",
+          explanation: "Mẹ hỏi \"你喜欢鸡肉吗？\" (con có thích thịt gà không?) để hỏi lần lượt từng bạn.",
+        },
+        {
+          prompt: "Ai trả lời \"我喜欢鸡肉。\" trong video?",
+          options: ["Sally", "Minwoo", "Peter", "Mẹ của Minwoo"],
+          answer: "Sally",
+          explanation: "Sally trả lời thích thịt gà, còn Minwoo thì nói \"我不喜欢鸡肉\" (không thích).",
+        },
+        {
+          prompt: "Peter thích ăn món gì trong video?",
+          options: ["沙拉 (shālā)", "鸡肉 (jīròu)", "面条 (miàntiáo)", "米饭 (mǐfàn)"],
+          answer: "沙拉 (shālā)",
+          explanation: "Peter nói \"我喜欢沙拉\" (tôi thích salad) — đúng chủ đề tên video.",
+        },
+        {
+          prompt: "Ai nói \"我不喜欢沙拉。\" trong video?",
+          options: ["Sally", "Peter", "Minwoo", "Mẹ của Minwoo"],
+          answer: "Sally",
+          explanation: "Sally nói \"我不喜欢沙拉\" (tôi không thích salad), ngược ý với Peter.",
+        },
+        {
+          prompt: "Đến món 面条 (mì), Sally nói gì?",
+          options: ["我要面条！(Tôi muốn ăn mì!)", "我不要面条。(Tôi không muốn ăn mì.)", "我喜欢沙拉。(Tôi thích salad.)", "我们饿了。(Chúng tôi đói rồi.)"],
+          answer: "我要面条！(Tôi muốn ăn mì!)",
+          explanation: "Sally reo lên \"我要面条！\" (tôi muốn ăn mì!) sau khi Minwoo nói thích mì; còn Peter thì nói \"不要面条\".",
+        },
+        {
+          prompt: "Cuối video, mẹ của Minwoo thông báo điều gì?",
+          options: ["午饭结束了！(Bữa trưa kết thúc rồi!)", "我们出去玩吧！(Chúng ta ra ngoài chơi nhé!)", "该睡觉了！(Đến giờ ngủ rồi!)", "生日快乐！(Chúc mừng sinh nhật!)"],
+          answer: "午饭结束了！(Bữa trưa kết thúc rồi!)",
+          explanation: "Mẹ kết thúc bữa trưa trong video bằng câu \"午饭结束了！\" (bữa trưa kết thúc rồi).",
+        },
+      ],
+    },
   },
   {
     id: "yct1-12", program: "yct", level: "YCT 1",
@@ -9633,20 +9701,39 @@ const LESSONS = [
     const m = /^HSK\s*(\d+)$/.exec((level || "").trim());
     return m ? "hsk" + m[1] : null;
   }
+  // YCT được tách thành 6 cấp độ nhỏ (YCT 1 .. YCT 6), mỗi cấp cấp quyền
+  // riêng: field Firestore tương ứng là yct1..yct6. "YCT 3" -> "yct3".
+  const YCT_LEVEL_COUNT = 6;
+  function yctLevelKey(level) {
+    const m = /^YCT\s*(\d+)$/.exec((level || "").trim());
+    return m ? "yct" + m[1] : null;
+  }
+  function programLevelKey(programId, level) {
+    if (programId === "hsk3") return hskLevelKey(level);
+    if (programId === "yct") return yctLevelKey(level);
+    return null;
+  }
+  function programLevelCount(programId) {
+    if (programId === "hsk3") return HSK_LEVEL_COUNT;
+    if (programId === "yct") return YCT_LEVEL_COUNT;
+    return 0;
+  }
   function hasPermission(programId) {
     const key = permissionKeyForProgram(programId);
     if (!key) return true;
     return !!(currentPermissions && currentPermissions[key] === true);
   }
-  // Đã cấp quyền cho 1 cấp độ CỤ THỂ của HSK 3.0 chưa? Học sinh đã có quyền
-  // kiểu cũ (field "hsk" = true, trước khi tính năng chia nhỏ ra đời) được
-  // coi như có đủ cả 9 cấp, để không ai bị mất quyền đang có khi nâng cấp.
+  // Đã cấp quyền cho 1 cấp độ CỤ THỂ của HSK 3.0 / YCT chưa? Học sinh đã có
+  // quyền kiểu cũ (field "hsk"/"yct" = true, trước khi tính năng chia nhỏ
+  // ra đời) được coi như có đủ mọi cấp, để không ai bị mất quyền đang có
+  // khi nâng cấp.
   function hasLevelPermission(programId, level) {
-    if (programId !== "hsk3") return hasPermission(programId);
+    if (programId !== "hsk3" && programId !== "yct") return hasPermission(programId);
     if (!level) return hasPermission(programId);
     if (!currentPermissions) return false;
-    if (currentPermissions.hsk === true) return true; // quyền cũ (trọn bộ) vẫn còn hiệu lực
-    const key = hskLevelKey(level);
+    const legacyKey = permissionKeyForProgram(programId);
+    if (currentPermissions[legacyKey] === true) return true; // quyền cũ (trọn bộ) vẫn còn hiệu lực
+    const key = programLevelKey(programId, level);
     return !!(key && currentPermissions[key] === true);
   }
   // Đã có quyền với ÍT NHẤT 1 cấp độ của chương trình chưa (dùng khi duyệt
@@ -9656,9 +9743,11 @@ const LESSONS = [
     if (!key) return true;
     if (!currentPermissions) return false;
     if (currentPermissions[key] === true) return true;
-    if (programId === "hsk3") {
-      for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
-        if (currentPermissions["hsk" + i] === true) return true;
+    if (programId === "hsk3" || programId === "yct") {
+      const prefix = programId === "hsk3" ? "hsk" : "yct";
+      const count = programLevelCount(programId);
+      for (let i = 1; i <= count; i++) {
+        if (currentPermissions[prefix + i] === true) return true;
       }
     }
     return false;
@@ -9847,6 +9936,32 @@ const LESSONS = [
     for (let i = 1; i <= HSK_LEVEL_COUNT; i++) payload["hsk" + i] = set.has(i);
     return payload;
   }
+  // Y hệt renderHskLevelCheckboxes/readCheckedHskLevels/hskLevelsPayload ở
+  // trên nhưng dành cho YCT (6 cấp: yct1..yct6) — tách hàm riêng để không
+  // đụng vào phần HSK đang chạy ổn định.
+  function renderYctLevelCheckboxes(checkedLevels, boxClass) {
+    const checkedSet = new Set(checkedLevels || []);
+    let html = "";
+    for (let i = 1; i <= YCT_LEVEL_COUNT; i++) {
+      html +=
+        '<label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="' + boxClass + '" data-yct-level="' + i + '" ' +
+        (checkedSet.has(i) ? "checked" : "") + "> YCT " + i + "</label>";
+    }
+    return html;
+  }
+  function readCheckedYctLevels(container, boxClass) {
+    const levels = [];
+    container.querySelectorAll("." + boxClass).forEach((box) => {
+      if (box.checked) levels.push(Number(box.getAttribute("data-yct-level")));
+    });
+    return levels;
+  }
+  function yctLevelsPayload(levels) {
+    const set = new Set(levels || []);
+    const payload = {};
+    for (let i = 1; i <= YCT_LEVEL_COUNT; i++) payload["yct" + i] = set.has(i);
+    return payload;
+  }
   function wireHskSelectAll(allBoxId, boxClass, scope) {
     const allBox = document.getElementById(allBoxId);
     if (!allBox) return;
@@ -9855,17 +9970,20 @@ const LESSONS = [
     });
   }
 
-  function saveGrant(email, name, yct, hskLevels, className, onDone) {
+  function saveGrant(email, name, yctLevels, hskLevels, className, onDone) {
     const key = (email || "").trim().toLowerCase();
     if (!key) return;
     if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
     const payload = Object.assign(
-      { name: (name || "").trim(), yct: !!yct, class: (className || "").trim(), updatedAt: new Date().toISOString() },
+      { name: (name || "").trim(), class: (className || "").trim(), updatedAt: new Date().toISOString() },
+      yctLevelsPayload(yctLevels),
       hskLevelsPayload(hskLevels)
     );
-    // Xoá field "hsk" (quyền HSK 3.0 kiểu cũ, cấp trọn bộ 1 lần) ngay khi
+    // Xoá field "yct"/"hsk" (quyền kiểu cũ, cấp trọn bộ 1 lần) ngay khi
     // giáo viên lưu quyền qua giao diện mới theo từng cấp — từ đây quyền
-    // HSK 3.0 của học sinh này chỉ còn tính theo 9 field hsk1..hsk9.
+    // YCT/HSK 3.0 của học sinh này chỉ còn tính theo các field yct1..yct6 /
+    // hsk1..hsk9.
+    payload.yct = firebase.firestore.FieldValue.delete();
     payload.hsk = firebase.firestore.FieldValue.delete();
     window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(key)
       .set(payload, { merge: true })
@@ -9874,15 +9992,16 @@ const LESSONS = [
   }
 
   wireHskSelectAll("admin-grant-hsk-all", "admin-grant-hsk-level", formAdminGrant);
+  wireHskSelectAll("admin-grant-yct-all", "admin-grant-yct-level", formAdminGrant);
 
   formAdminGrant.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("admin-grant-name").value;
     const email = document.getElementById("admin-grant-email").value;
     const className = document.getElementById("admin-grant-class").value;
-    const yct = document.getElementById("admin-grant-yct").checked;
+    const yctLevels = readCheckedYctLevels(formAdminGrant, "admin-grant-yct-level");
     const hskLevels = readCheckedHskLevels(formAdminGrant, "admin-grant-hsk-level");
-    saveGrant(email, name, yct, hskLevels, className, (key) => {
+    saveGrant(email, name, yctLevels, hskLevels, className, (key) => {
       elAdminGrantMsg.textContent = "Đã lưu quyền cho " + key + ".";
       elAdminGrantMsg.className = "form-msg-success text-sm rounded-lg px-3 py-2 mb-4";
       elAdminGrantMsg.classList.remove("hidden");
@@ -9907,9 +10026,10 @@ const LESSONS = [
     return { validEmails, invalidCount };
   }
 
-  function bulkSetPermission(emails, yct, hskLevels, className, onDone, onError) {
+  function bulkSetPermission(emails, yctLevels, hskLevels, className, onDone, onError) {
     if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
-    const payload = Object.assign({ yct: !!yct, updatedAt: new Date().toISOString() }, hskLevelsPayload(hskLevels));
+    const payload = Object.assign({ updatedAt: new Date().toISOString() }, yctLevelsPayload(yctLevels), hskLevelsPayload(hskLevels));
+    payload.yct = firebase.firestore.FieldValue.delete();
     payload.hsk = firebase.firestore.FieldValue.delete();
     if (className !== undefined) payload.class = className;
     const refs = emails.map((email) => window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(email));
@@ -9924,10 +10044,11 @@ const LESSONS = [
 
   const elAdminBulkMsg = document.getElementById("admin-bulk-msg");
   wireHskSelectAll("admin-bulk-hsk-all", "admin-bulk-hsk-level");
+  wireHskSelectAll("admin-bulk-yct-all", "admin-bulk-yct-level");
   document.getElementById("btn-admin-bulk-grant").addEventListener("click", () => {
     const raw = document.getElementById("admin-bulk-emails").value;
     const className = document.getElementById("admin-bulk-class").value.trim();
-    const yct = document.getElementById("admin-bulk-yct").checked;
+    const yctLevels = readCheckedYctLevels(document, "admin-bulk-yct-level");
     const hskLevels = readCheckedHskLevels(document, "admin-bulk-hsk-level");
     const showMsg = (text, kind) => {
       elAdminBulkMsg.textContent = text;
@@ -9938,7 +10059,7 @@ const LESSONS = [
     const { validEmails, invalidCount } = parseBulkEmails(raw);
     if (validEmails.length === 0) { showMsg("Không tìm thấy email hợp lệ nào trong danh sách đã dán.", "error"); return; }
     showMsg("Đang cấp quyền cho " + validEmails.length + " email...", "");
-    bulkSetPermission(validEmails, yct, hskLevels, className, () => {
+    bulkSetPermission(validEmails, yctLevels, hskLevels, className, () => {
       showMsg(
         "Đã cấp quyền cho " + validEmails.length + ' email thuộc lớp "' + className + '"' +
           (invalidCount ? " (bỏ qua " + invalidCount + " dòng không hợp lệ)" : "") + ".",
@@ -9961,11 +10082,15 @@ const LESSONS = [
       const rows = [];
       snap.forEach((doc) => {
         const data = doc.data() || {};
+        const yctLevels = [];
+        for (let i = 1; i <= YCT_LEVEL_COUNT; i++) {
+          if (data.yct === true || data["yct" + i] === true) yctLevels.push(i);
+        }
         const hskLevels = [];
         for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
           if (data.hsk === true || data["hsk" + i] === true) hskLevels.push(i);
         }
-        rows.push({ email: doc.id, name: data.name || "", yct: !!data.yct, hskLevels: hskLevels, class: data.class || "" });
+        rows.push({ email: doc.id, name: data.name || "", yctLevels: yctLevels, hskLevels: hskLevels, class: data.class || "" });
       });
       rows.sort((a, b) => a.email.localeCompare(b.email));
       renderAdminPermList(rows);
@@ -10015,13 +10140,14 @@ const LESSONS = [
 
       if (g.className) {
         groupHeader.querySelector(".btn-class-enable").addEventListener("click", () => {
-          if (!confirm('Bật quyền YCT + toàn bộ 9 cấp HSK 3.0 cho ' + g.rows.length + ' học sinh lớp "' + g.className + '"?')) return;
+          if (!confirm('Bật quyền toàn bộ 6 cấp YCT + toàn bộ 9 cấp HSK 3.0 cho ' + g.rows.length + ' học sinh lớp "' + g.className + '"?')) return;
+          const allYctLevels = Array.from({ length: YCT_LEVEL_COUNT }, (_, i) => i + 1);
           const allLevels = Array.from({ length: HSK_LEVEL_COUNT }, (_, i) => i + 1);
-          bulkSetPermission(emailsInGroup, true, allLevels, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+          bulkSetPermission(emailsInGroup, allYctLevels, allLevels, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
         });
         groupHeader.querySelector(".btn-class-disable").addEventListener("click", () => {
           if (!confirm('Tắt quyền truy cập của toàn bộ ' + g.rows.length + ' học sinh lớp "' + g.className + '"? (Vẫn giữ lại danh sách email + tên lớp để cấp lại sau này nếu cần)')) return;
-          bulkSetPermission(emailsInGroup, false, [], undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+          bulkSetPermission(emailsInGroup, [], [], undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
         });
       }
 
@@ -10031,7 +10157,10 @@ const LESSONS = [
         div.innerHTML =
           '<div class="flex-1 min-w-[220px]"><input type="text" class="perm-row-name form-input rounded-lg px-2 py-1 text-sm font-bold w-full mb-0.5" placeholder="Tên học sinh" value="' + row.name.replace(/"/g, "&quot;") + '"><div class="text-xs break-all" style="color:var(--ink-faint);">' + row.email + "</div></div>" +
           '<input type="text" class="perm-row-class form-input rounded-lg px-2 py-1.5 text-xs w-28" placeholder="Lớp" value="' + row.class.replace(/"/g, "&quot;") + '">' +
-          '<label class="perm-check-label"><input type="checkbox" class="perm-row-yct" ' + (row.yct ? "checked" : "") + '> YCT 1-6</label>' +
+          '<div class="basis-full flex flex-wrap gap-1.5 items-center">' +
+            '<span class="text-xs font-bold" style="color:var(--ink-faint);">YCT:</span>' +
+            renderYctLevelCheckboxes(row.yctLevels, "perm-row-yct-level") +
+          "</div>" +
           '<div class="basis-full flex flex-wrap gap-1.5 items-center">' +
             '<span class="text-xs font-bold" style="color:var(--ink-faint);">HSK 3.0:</span>' +
             renderHskLevelCheckboxes(row.hskLevels, "perm-row-hsk-level") +
@@ -10040,10 +10169,10 @@ const LESSONS = [
           '<button type="button" class="perm-row-delete text-xs font-bold px-3 py-1.5 rounded-lg border" style="border-color:var(--wrong); color:var(--wrong);">Xoá</button>';
         div.querySelector(".perm-row-save").addEventListener("click", () => {
           const name = div.querySelector(".perm-row-name").value;
-          const yct = div.querySelector(".perm-row-yct").checked;
+          const yctLevels = readCheckedYctLevels(div, "perm-row-yct-level");
           const hskLevels = readCheckedHskLevels(div, "perm-row-hsk-level");
           const className = div.querySelector(".perm-row-class").value;
-          saveGrant(row.email, name, yct, hskLevels, className, () => {
+          saveGrant(row.email, name, yctLevels, hskLevels, className, () => {
             loadAllPermissions();
           });
         });
