@@ -454,7 +454,7 @@
         </div>
         <button type="button" id="btn-nav-review" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-shuffle text-[11px]"></i> Ôn tập tổng hợp</button>
         <span class="nav-link text-sm font-semibold flex items-center gap-1">Chuyên ngành <i class="fa-solid fa-chevron-down text-[10px]"></i></span>
-        <span class="nav-link text-sm font-semibold flex items-center gap-1">Học liệu <i class="fa-solid fa-chevron-down text-[10px]"></i></span>
+        <button type="button" id="btn-nav-test-hub" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-list-check text-[11px]"></i> Test học phần</button>
       </nav>
 
       <div id="auth-area" class="auth-area flex items-center"></div>
@@ -1017,6 +1017,47 @@
         <div class="flex justify-center">
           <button type="button" id="btn-review-start" disabled class="btn-disabled-look px-7 py-3 rounded-full font-bold text-sm text-white flex items-center gap-2" style="background:var(--jade);">
             Bắt đầu ôn tập <i class="fa-solid fa-arrow-right"></i>
+
+    <!-- ============ TEST HỌC PHẦN: CHỌN CHƯƠNG TRÌNH ============ -->
+    <div id="view-test-hub" class="hidden py-8 sm:py-12">
+      <button type="button" id="btn-back-home-testhub" class="flex items-center gap-2 text-sm font-bold px-3.5 py-2 rounded-lg border mb-6" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
+        <i class="fa-solid fa-arrow-left"></i> Về trang chủ
+      </button>
+      <div class="mb-8">
+        <span class="badge-pill" style="background:var(--accent-soft); color:var(--accent-strong);">
+          <i class="fa-solid fa-list-check mr-1"></i>Test học phần
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-extrabold mt-3" style="color:var(--jade);">Chọn chương trình</h1>
+        <p class="text-sm sm:text-base mt-2 max-w-xl" style="color:var(--ink-soft);">Mỗi cấp độ có 1 bài test tổng hợp riêng, gộp câu hỏi từ tất cả các bài học trong cấp đó.</p>
+      </div>
+      <div id="test-hub-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+    </div>
+
+    <!-- ============ TEST HỌC PHẦN: CHỌN CẤP ĐỘ ============ -->
+    <div id="view-test-levels" class="hidden py-8 sm:py-12">
+      <button type="button" id="btn-back-testhub" class="flex items-center gap-2 text-sm font-bold px-3.5 py-2 rounded-lg border mb-6" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
+        <i class="fa-solid fa-arrow-left"></i> Quay lại
+      </button>
+      <div class="mb-8">
+        <span id="test-levels-badge" class="badge-pill" style="background:var(--accent-soft); color:var(--accent-strong);"></span>
+        <h1 id="test-levels-title" class="text-2xl sm:text-3xl font-extrabold mt-3" style="color:var(--jade);"></h1>
+        <p id="test-levels-desc" class="text-sm sm:text-base mt-2 max-w-xl" style="color:var(--ink-soft);"></p>
+      </div>
+      <div id="test-levels-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- ============ TEST HỌC PHẦN: CHI TIẾT 1 CẤP ============ -->
+    <div id="view-test-detail" class="hidden py-8 sm:py-12">
+      <button type="button" id="btn-back-testlevels" class="flex items-center gap-2 text-sm font-bold px-3.5 py-2 rounded-lg border mb-6" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
+        <i class="fa-solid fa-arrow-left"></i> Quay lại
+      </button>
+      <div class="mb-6">
+        <span id="test-detail-badge" class="badge-pill" style="background:var(--accent-soft); color:var(--accent-strong);"></span>
+        <h1 id="test-detail-title" class="text-2xl sm:text-3xl font-extrabold mt-3" style="color:var(--jade);"></h1>
+      </div>
+      <div id="test-detail-body" class="p-6 rounded-2xl border card-shadow text-center" style="border-color:var(--border); background:var(--surface);"></div>
+    </div>
+
           </button>
         </div>
       </div>
@@ -1361,6 +1402,23 @@ const PROGRAMS = [
   { id: "giao-tiep", name: "Giao tiếp cơ bản", shortLabel: "GT", desc: "Tiếng Trung giao tiếp thực tế cho người đi làm, đi du lịch, giao dịch hằng ngày.", colorVar: "--green" },
 ];
 
+
+// ---- "Test học phần": 1 bài test tổng hợp riêng cho MỖI CẤP ĐỘ (khác với
+// "Ôn tập tổng hợp" ở trên vốn để HỌC SINH tự ôn xáo trộn — mục này dành
+// cho 1 bài TEST cố định do cô biên soạn cho từng cấp). Cấu trúc 2 tầng:
+// chọn CHƯƠNG TRÌNH (YCT / HSK 3.0) rồi chọn CẤP ĐỘ cụ thể bên trong. ----
+const TEST_FOLDERS = [
+  { id: "yct", name: "YCT", desc: "Bài test tổng hợp riêng cho từng cấp — từ YCT 1 đến YCT 6.", colorVar: "--blue", levels: ["YCT 1", "YCT 2", "YCT 3", "YCT 4", "YCT 5", "YCT 6"] },
+  { id: "hsk3", name: "HSK 3.0", desc: "Bài test tổng hợp riêng cho từng cấp — từ HSK 1 đến HSK 9.", colorVar: "--accent", levels: ["HSK 1", "HSK 2", "HSK 3", "HSK 4", "HSK 5", "HSK 6", "HSK 7", "HSK 8", "HSK 9"] },
+];
+
+// Nội dung bài test cho từng cấp — KEY phải khớp đúng chuỗi "level" ở trên
+// (vd "YCT 1", "HSK 3"). Cấp nào CHƯA có key trong object này sẽ tự hiện
+// thông báo "đang biên soạn" cho học sinh, không bị lỗi. Khi cô có nội
+// dung, thêm vào đây theo khuôn: LEVEL_TESTS["YCT 1"] = { quiz: [ { audioText, prompt, options: [4 phương án], answer }, ... ] }.
+const LEVEL_TESTS = {};
+
+
 const LESSONS = [
   // =====================================================================
   // NHÓM "YCT" — nội dung biên soạn trực tiếp từ sách "YCT标准教程 Standard
@@ -1697,6 +1755,106 @@ const LESSONS = [
       { audioText: "那儿有很多小鸟。", prompt: "___ 有很多小鸟。", options: ["那儿", "这儿", "哪儿", "那是"], answer: "那儿" },
       { audioText: "你看，这儿有猫。", prompt: "你看，这儿有 ___。", options: ["猫", "狗", "鱼", "鸟"], answer: "猫" },
     ],
+    videoQuizzes: [
+      {
+        id: "v1",
+        youtubeId: "2KcO78CAFwg",
+        title: "Mrs. Kelly's Class 20: What's That? (那是什么?)",
+        questions: [
+          {
+            prompt: "Video \"那是什么?\" chủ yếu luyện hỏi về điều gì?",
+            options: ["Hỏi tên của một vật ở xa", "Hỏi tên người", "Hỏi giá tiền", "Hỏi màu sắc"],
+            answer: "Hỏi tên của một vật ở xa",
+            explanation: "「那是什么？」nghĩa là \"kia là cái gì?\", dùng「那」để chỉ vật ở xa người nói — đúng trọng tâm ngữ pháp 这/那 của Bài 7.",
+          },
+          {
+            prompt: "那 ___ 什么？(Nà ___ shénme?)",
+            options: ["是 (shì)", "看 (kàn)", "有 (yǒu)", "叫 (jiào)"],
+            answer: "是 (shì)",
+            explanation: "「那是什么？」dùng động từ 是 (là) để hỏi một vật ở xa là cái gì.",
+          },
+          {
+            prompt: "「那」dùng để chỉ vật/người ở đâu?",
+            options: ["Ở xa (kia, đó)", "Ở gần (này, đây)", "Ở trên cao", "Ở dưới thấp"],
+            answer: "Ở xa (kia, đó)",
+            explanation: "「那」(nà) dùng để chỉ vật/người ở xa, ngược lại với「这」(zhè) dùng để chỉ vật/người ở gần — đúng điểm ngữ pháp của Bài 7.",
+          },
+          {
+            prompt: "那是谁的 ___？(Nà shì shéi de ___?)",
+            options: ["猫 (māo)", "狗 (gǒu)", "鱼 (yú)", "鸟 (niǎo)"],
+            answer: "猫 (māo)",
+            explanation: "猫 (māo, mèo) là từ vựng của Bài 7, dùng trong câu hỏi mẫu \"那是谁的猫？\" (kia là con mèo của ai?).",
+          },
+          {
+            prompt: "你看，___ 有很多小鸟。(Nǐ kàn, ___ yǒu hěn duō xiǎo niǎo.)",
+            options: ["那儿 (nàr)", "这儿 (zhèr)", "哪儿 (nǎr)", "那是 (nà shì)"],
+            answer: "那儿 (nàr)",
+            explanation: "那儿 (nàr, ở kia/ở đó) dùng để chỉ một nơi xa — cùng gốc「那」với video \"那是什么?\".",
+          },
+          {
+            prompt: "你 ___，那儿有很多小鸟。(Nǐ ___, nàr yǒu hěn duō xiǎo niǎo.)",
+            options: ["看 (kàn)", "是 (shì)", "去 (qù)", "吃 (chī)"],
+            answer: "看 (kàn)",
+            explanation: "看 (kàn, nhìn/xem) dùng để mời ai đó nhìn theo, ví dụ 你看 (bạn nhìn xem) — từ vựng của Bài 7.",
+          },
+          {
+            prompt: "那儿有很多小 ___。(Nàr yǒu hěn duō xiǎo ___.)",
+            options: ["狗 (gǒu)", "猫 (māo)", "鱼 (yú)", "鸟 (niǎo)"],
+            answer: "狗 (gǒu)",
+            explanation: "狗 (gǒu, chó) là từ vựng của Bài 7, dùng trong câu \"那儿有很多小狗\" (ở đó có rất nhiều chó con).",
+          },
+        ],
+      },
+          {
+        id: "v2",
+        youtubeId: "_NSQyG66Osg",
+        title: "Mrs. Kelly's Class 3: What's This? (这是什么?)",
+        questions: [
+          {
+            prompt: "Video \"这是什么?\" chủ yếu luyện hỏi về điều gì?",
+            options: ["Hỏi tên của một vật ở gần", "Hỏi tên người", "Hỏi giá tiền", "Hỏi màu sắc"],
+            answer: "Hỏi tên của một vật ở gần",
+            explanation: "「这是什么？」nghĩa là \"đây là cái gì?\", dùng「这」để chỉ vật ở gần người nói — đúng trọng tâm ngữ pháp 这/那 của Bài 7.",
+          },
+          {
+            prompt: "这 ___ 什么？(Zhè ___ shénme?)",
+            options: ["是 (shì)", "看 (kàn)", "有 (yǒu)", "叫 (jiào)"],
+            answer: "是 (shì)",
+            explanation: "「这是什么？」dùng động từ 是 (là) để hỏi một vật ở gần là cái gì.",
+          },
+          {
+            prompt: "「这」dùng để chỉ vật/người ở đâu?",
+            options: ["Ở gần (này, đây)", "Ở xa (kia, đó)", "Ở trên cao", "Ở dưới thấp"],
+            answer: "Ở gần (này, đây)",
+            explanation: "「这」(zhè) dùng để chỉ vật/người ở gần, ngược lại với「那」(nà) dùng để chỉ vật/người ở xa mà video \"那是什么?\" đã luyện.",
+          },
+          {
+            prompt: "这是谁的 ___？(Zhè shì shéi de ___?)",
+            options: ["狗 (gǒu)", "猫 (māo)", "鱼 (yú)", "鸟 (niǎo)"],
+            answer: "狗 (gǒu)",
+            explanation: "狗 (gǒu, chó) là từ vựng của Bài 7, dùng trong câu hỏi mẫu chính của bài \"这是谁的狗？\" (đây là con chó của ai?).",
+          },
+          {
+            prompt: "___ 是我的猫。(___ shì wǒ de māo.)",
+            options: ["这 (zhè)", "那 (nà)", "谁 (shéi)", "哪 (nǎ)"],
+            answer: "这 (zhè)",
+            explanation: "这 (zhè, này/đây) dùng khi vật ở gần, ví dụ 这是我的猫 (đây là con mèo của tôi) — từ vựng của Bài 7.",
+          },
+          {
+            prompt: "我的鱼在 ___。(Wǒ de yú zài ___.)",
+            options: ["这儿 (zhèr)", "那儿 (nàr)", "哪儿 (nǎr)", "那是 (nà shì)"],
+            answer: "这儿 (zhèr)",
+            explanation: "这儿 (zhèr, ở đây) dùng để chỉ một nơi gần — cùng gốc「这」với video \"这是什么?\".",
+          },
+          {
+            prompt: "___ 有很多小鱼。(___ yǒu hěn duō xiǎo yú.)",
+            options: ["这儿 (zhèr)", "那儿 (nàr)", "哪儿 (nǎr)", "这是 (zhè shì)"],
+            answer: "这儿 (zhèr)",
+            explanation: "这儿 (zhèr, ở đây) dùng trong câu \"这儿有很多小鱼\" (ở đây có rất nhiều cá con) — câu ví dụ chính của Bài 7.",
+          },
+        ],
+      },
+],
   },
   {
     id: "yct1-8", program: "yct", level: "YCT 1",
@@ -1766,6 +1924,54 @@ const LESSONS = [
       { audioText: "我的生日是三月十号。", prompt: "我的生日是三月十 ___。", options: ["号", "月", "星期", "天"], answer: "号" },
       { audioText: "今天是星期天，我很喜欢。", prompt: "___ 是星期天，我很喜欢。", options: ["今天", "明天", "星期", "生日"], answer: "今天" },
     ],
+    videoQuiz: {
+      youtubeId: "PqPxeuXu_bo",
+      title: "Mrs. Kelly's Class 32: What Do You Do (on Mondays)? (星期一你做什么?)",
+      questions: [
+        {
+          prompt: "Video này (Mrs. Kelly's Class 32) chủ yếu luyện nói về điều gì?",
+          options: ["Các thứ trong tuần (星期一, 星期二…)", "Các tháng trong năm", "Các con số đếm", "Các màu sắc"],
+          answer: "Các thứ trong tuần (星期一, 星期二…)",
+          explanation: "Video lặp lại câu hỏi \"…你做什么？\" cho từng thứ trong tuần (星期一, 星期二…) — đúng chủ đề của Bài 9.",
+        },
+        {
+          prompt: "老师hỏi: \"星期一你做什么？\" 星期一 nghĩa là gì?",
+          options: ["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm"],
+          answer: "Thứ Hai",
+          explanation: "星期一 (xīngqīyī) nghĩa là Thứ Hai — ngày đầu tiên được nhắc đến trong video và cũng là từ vựng đầu tiên của Bài 9.",
+        },
+        {
+          prompt: "今天 ___ 几？(Jīntiān ___ jǐ?)",
+          options: ["星期 (xīngqī)", "生日 (shēngrì)", "号 (hào)", "月 (yuè)"],
+          answer: "星期 (xīngqī)",
+          explanation: "「今天星期几？」là câu hỏi trọng tâm của Bài 9, dùng để hỏi hôm nay là thứ mấy.",
+        },
+        {
+          prompt: "星期一后面是 ___。(Xīngqīyī hòumian shì ___.)",
+          options: ["星期二 (xīngqī'èr)", "星期天 (xīngqītiān)", "星期六 (xīngqīliù)", "星期五 (xīngqīwǔ)"],
+          answer: "星期二 (xīngqī'èr)",
+          explanation: "Các thứ trong tuần đi theo thứ tự tăng dần bằng số đếm: 星期一 (Thứ Hai) → 星期二 (Thứ Ba) → … — video hỏi lần lượt từng ngày theo đúng thứ tự này.",
+        },
+        {
+          prompt: "Trong 7 ngày của tuần, thứ nào KHÔNG dùng số đếm mà dùng chữ「天」?",
+          options: ["星期天 (xīngqītiān)", "星期六 (xīngqīliù)", "星期五 (xīngqīwǔ)", "星期四 (xīngqīsì)"],
+          answer: "星期天 (xīngqītiān)",
+          explanation: "Từ Thứ Hai đến Thứ Bảy dùng số 1-6 sau「星期」(星期一…星期六), riêng Chủ nhật đặc biệt là「星期天」— đúng điểm ngữ pháp của Bài 9.",
+        },
+        {
+          prompt: "明天星期六，我 ___ 星期六。(Míngtiān xīngqīliù, wǒ ___ xīngqīliù.)",
+          options: ["喜欢 (xǐhuan)", "是 (shì)", "有 (yǒu)", "去 (qù)"],
+          answer: "喜欢 (xǐhuan)",
+          explanation: "喜欢 (xǐhuan, thích) dùng để nói cảm xúc về một ngày trong tuần, ví dụ 我喜欢星期六 (tôi thích thứ Bảy) — câu ví dụ chính của Bài 9.",
+        },
+        {
+          prompt: "你的生日是几月几 ___？(Nǐ de shēngrì shì jǐ yuè jǐ ___?)",
+          options: ["号 (hào)", "星期 (xīngqī)", "点 (diǎn)", "岁 (suì)"],
+          answer: "号 (hào)",
+          explanation: "号 (hào) dùng để hỏi/nói ngày trong tháng, ví dụ 几月几号 (tháng mấy ngày mấy) — từ vựng của Bài 9 khi nói về ngày sinh nhật.",
+        },
+      ],
+    },
   },
   {
     id: "yct1-10", program: "yct", level: "YCT 1",
@@ -1793,6 +1999,48 @@ const LESSONS = [
       { audioText: "现在五点十分。", prompt: "现在五点十 ___。", options: ["分", "点", "号", "现在"], answer: "分" },
       { audioText: "早上好，老师！", prompt: "___ 好，老师！", options: ["早上", "现在", "明天", "今天"], answer: "早上" },
     ],
+    videoQuiz: {
+      youtubeId: "PqPxeuXu_bo",
+      title: "Mrs. Kelly's Class 32: What Do You Do (on Mondays)? (星期一你做什么?)",
+      questions: [
+        {
+          prompt: "Video Mrs. Kelly's Class 32 luyện hỏi \"làm gì\" vào các ngày trong tuần. Còn muốn hỏi \"bây giờ là mấy giờ\", ta hỏi thế nào?",
+          options: ["现在几点？(Xiànzài jǐ diǎn?)", "今天星期几？(Jīntiān xīngqī jǐ?)", "你几岁？(Nǐ jǐ suì?)", "你叫什么？(Nǐ jiào shénme?)"],
+          answer: "现在几点？(Xiànzài jǐ diǎn?)",
+          explanation: "「现在几点？」là câu hỏi trọng tâm của Bài 10, khác với「今天星期几？」dùng để hỏi thứ trong tuần như video vừa nhắc.",
+        },
+        {
+          prompt: "现在 ___ 点？(Xiànzài ___ diǎn?)",
+          options: ["几 (jǐ)", "什么 (shénme)", "谁 (shéi)", "怎么 (zěnme)"],
+          answer: "几 (jǐ)",
+          explanation: "几 (jǐ) dùng để hỏi số nhỏ, ví dụ 现在几点 (bây giờ mấy giờ) — mẫu câu chính của Bài 10.",
+        },
+        {
+          prompt: "明天5 ___ 见。(Míngtiān wǔ ___ jiàn.)",
+          options: ["点 (diǎn)", "分 (fēn)", "号 (hào)", "岁 (suì)"],
+          answer: "点 (diǎn)",
+          explanation: "点 (diǎn, giờ) đặt sau số để chỉ giờ, ví dụ 5点见 (hẹn gặp lúc 5 giờ) — từ vựng của Bài 10.",
+        },
+        {
+          prompt: "现在五点十 ___。(Xiànzài wǔ diǎn shí ___.)",
+          options: ["分 (fēn)", "点 (diǎn)", "号 (hào)", "星期 (xīngqī)"],
+          answer: "分 (fēn)",
+          explanation: "分 (fēn, phút) đặt sau số phút, ví dụ 五点十分 (5 giờ 10 phút) — khác với 点 dùng cho số giờ.",
+        },
+        {
+          prompt: "早上5点，___ 了！(Zǎoshang wǔ diǎn, ___ le!)",
+          options: ["太早 (tài zǎo)", "现在 (xiànzài)", "见面 (jiànmiàn)", "喜欢 (xǐhuan)"],
+          answer: "太早 (tài zǎo)",
+          explanation: "太早了 (tài zǎo le, sớm quá!) dùng để than khi một mốc giờ quá sớm — cụm từ cảm thán của Bài 10.",
+        },
+        {
+          prompt: "___ 好，老师！(___ hǎo, lǎoshī!)",
+          options: ["早上 (zǎoshang)", "现在 (xiànzài)", "明天 (míngtiān)", "今天 (jīntiān)"],
+          answer: "早上 (zǎoshang)",
+          explanation: "早上好 (zǎoshang hǎo) nghĩa là \"chào buổi sáng\" — 早上 (buổi sáng) là từ vựng của Bài 10.",
+        },
+      ],
+    },
   },
   {
     id: "yct1-11", program: "yct", level: "YCT 1",
@@ -2173,6 +2421,60 @@ const LESSONS = [
       { audioText: "这只熊猫真漂亮！", prompt: "这只 ___ 真漂亮！", options: ["熊猫", "香蕉", "水果", "小狗"], answer: "熊猫" },
       { audioText: "我没画熊猫。", prompt: "我 ___ 画熊猫。", options: ["没", "不", "了", "也"], answer: "没" },
     ],
+    videoQuiz: {
+      youtubeId: "PqPxeuXu_bo",
+      title: "Mrs. Kelly's Class 32: What Do You Do (on Mondays)? (星期一你做什么?)",
+      questions: [
+        {
+          prompt: "Video này (Mrs. Kelly's Class 32) chủ yếu luyện cách hỏi điều gì?",
+          options: ["Hỏi \"làm gì\" vào các ngày trong tuần", "Hỏi tên đồ vật", "Hỏi giá tiền", "Hỏi con vật gì"],
+          answer: "Hỏi \"làm gì\" vào các ngày trong tuần",
+          explanation: "Video luyện mẫu câu hỏi \"…你做什么？\" (…bạn làm gì?) cho từng ngày trong tuần — đúng với chủ đề \"làm gì\" của Bài 9.",
+        },
+        {
+          prompt: "星期一你 ___ 什么？(Xīngqīyī nǐ ___ shénme?)",
+          options: ["做 (zuò)", "是 (shì)", "有 (yǒu)", "去 (qù)"],
+          answer: "做 (zuò)",
+          explanation: "做 (zuò, làm) là động từ trung tâm trong câu hỏi \"…你做什么？\" mà video lặp lại nhiều lần cho từng ngày trong tuần.",
+        },
+        {
+          prompt: "你今天做什么 ___？(Nǐ jīntiān zuò shénme ___?)",
+          options: ["了 (le)", "吗 (ma)", "呢 (ne)", "的 (de)"],
+          answer: "了 (le)",
+          explanation: "「了」đặt cuối câu hỏi \"你今天做什么了？\" để hỏi về việc đã xảy ra — đây chính là trọng tâm ngữ pháp của Bài 9.",
+        },
+        {
+          prompt: "我今天 ___ 了一个香蕉。(Wǒ jīntiān ___ le yí ge xiāngjiāo.)",
+          options: ["吃 (chī)", "画 (huà)", "买 (mǎi)", "做 (zuò)"],
+          answer: "吃 (chī)",
+          explanation: "吃 (chī, ăn) + 了 dùng khi nói về một hành động ăn uống đã xảy ra, ví dụ 吃了一个香蕉 (đã ăn một quả chuối) — từ vựng của Bài 9.",
+        },
+        {
+          prompt: "我 ___ 画熊猫，我画了小狗。(Wǒ ___ huà xióngmāo, wǒ huàle xiǎo gǒu.)",
+          options: ["没 (méi)", "不 (bù)", "很 (hěn)", "了 (le)"],
+          answer: "没 (méi)",
+          explanation: "没 (méi) phủ định một hành động trong quá khứ và KHÔNG đi cùng 了, ví dụ 没画熊猫 (không vẽ gấu trúc) — đúng điểm ngữ pháp phủ định của Bài 9.",
+        },
+        {
+          prompt: "香蕉、苹果都是 ___。(Xiāngjiāo, píngguǒ dōu shì ___.)",
+          options: ["水果 (shuǐguǒ)", "颜色 (yánsè)", "名字 (míngzi)", "天气 (tiānqì)"],
+          answer: "水果 (shuǐguǒ)",
+          explanation: "水果 (shuǐguǒ, trái cây) là từ chung cho các loại quả như 香蕉 (chuối) — từ vựng đã học ở Bài 9.",
+        },
+        {
+          prompt: "视频里，星期一、星期二……这些词是用来说什么的？(Đây là các từ dùng để nói về điều gì?)",
+          options: ["Các ngày trong tuần", "Các tháng trong năm", "Bộ phận cơ thể", "Màu sắc"],
+          answer: "Các ngày trong tuần",
+          explanation: "星期一 (Thứ Hai), 星期二 (Thứ Ba)… là các ngày trong tuần, được video dùng lặp lại để hỏi \"làm gì vào ngày đó\".",
+        },
+        {
+          prompt: "你今天做什么了？我 ___ 画儿了。(Nǐ jīntiān zuò shénme le? Wǒ ___ huàr le.)",
+          options: ["画 (huà)", "吃 (chī)", "买 (mǎi)", "没 (méi)"],
+          answer: "画 (huà)",
+          explanation: "画 (huà, vẽ) + 了 dùng để trả lời câu hỏi \"làm gì rồi\", ví dụ 我画画儿了 (tôi đã vẽ tranh) — đúng câu trả lời mẫu của Bài 9.",
+        },
+      ],
+    },
   },
   { id: "yct2-10", program: "yct", level: "YCT 2",
     title: "你怎么了？", pinyin: "Nǐ zěnme le?", meaning: "Bạn làm sao vậy?",
@@ -6186,12 +6488,18 @@ const LESSONS = [
   const elViewProgram = document.getElementById("view-program");
   const elViewLesson = document.getElementById("view-lesson");
   const elViewReviewSetup = document.getElementById("view-review-setup");
+  const elViewTestHub = document.getElementById("view-test-hub");
+  const elViewTestLevels = document.getElementById("view-test-levels");
+  const elViewTestDetail = document.getElementById("view-test-detail");
 
   function showView(name) {
     elViewHome.classList.toggle("hidden", name !== "home");
     elViewProgram.classList.toggle("hidden", name !== "program");
     elViewLesson.classList.toggle("hidden", name !== "lesson");
     elViewReviewSetup.classList.toggle("hidden", name !== "reviewSetup");
+    elViewTestHub.classList.toggle("hidden", name !== "testHub");
+    elViewTestLevels.classList.toggle("hidden", name !== "testLevels");
+    elViewTestDetail.classList.toggle("hidden", name !== "testDetail");
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   }
 
@@ -6523,6 +6831,86 @@ const LESSONS = [
     const current = tabButtons.find((b) => b.getAttribute("aria-selected") === "true");
     if (current) moveUnderline(current);
   });
+
+
+  /* =====================================================================
+     TEST HỌC PHẦN — thay cho mục "Học liệu" cũ trên thanh nav (trước đây
+     chưa hoạt động). Bấm vào nav sẽ vào "test-hub" (chọn YCT hay HSK 3.0),
+     rồi vào "test-levels" (chọn cấp cụ thể), rồi vào "test-detail" (bài
+     test tổng hợp của cấp đó — hiện tạm thời là khung rỗng, cô soạn nội
+     dung sau bằng cách thêm vào object LEVEL_TESTS ở trên). ===================================================================== */
+  const testState = { folder: null };
+  const elTestHubGrid = document.getElementById("test-hub-grid");
+  const elTestLevelsGrid = document.getElementById("test-levels-grid");
+
+  function renderTestHub() {
+    elTestHubGrid.innerHTML = "";
+    TEST_FOLDERS.forEach((f) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "review-level-card text-left p-5 rounded-2xl border card-shadow";
+      card.style.borderColor = "var(--border)";
+      card.style.background = "var(--surface)";
+      card.innerHTML =
+        '<span class="program-icon w-12 h-12 grid place-items-center text-white text-xs font-bold mb-3" style="background:var(' + f.colorVar + ');"><i class="fa-solid fa-folder"></i></span>' +
+        '<span class="block text-base font-extrabold mb-1" style="color:var(--jade);">' + f.name + "</span>" +
+        '<span class="block text-xs" style="color:var(--ink-faint);">' + f.desc + "</span>";
+      card.addEventListener("click", () => enterTestFolder(f.id));
+      elTestHubGrid.appendChild(card);
+    });
+  }
+
+  function enterTestFolder(folderId) {
+    const folder = TEST_FOLDERS.find((f) => f.id === folderId);
+    if (!folder) return;
+    testState.folder = folder;
+    document.getElementById("test-levels-badge").innerHTML = '<i class="fa-solid fa-list-check mr-1"></i>Test học phần';
+    document.getElementById("test-levels-title").textContent = folder.name;
+    document.getElementById("test-levels-desc").textContent = folder.desc;
+    renderTestLevelGrid(folder);
+    showView("testLevels");
+  }
+
+  function renderTestLevelGrid(folder) {
+    elTestLevelsGrid.innerHTML = "";
+    folder.levels.forEach((level) => {
+      const hasContent = Object.prototype.hasOwnProperty.call(LEVEL_TESTS, level);
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "review-level-card text-left p-5 rounded-2xl border card-shadow";
+      card.style.borderColor = "var(--border)";
+      card.style.background = "var(--surface)";
+      card.innerHTML =
+        '<span class="program-icon w-12 h-12 grid place-items-center text-white text-xs font-bold mb-3" style="background:var(' + folder.colorVar + ');"><i class="fa-solid fa-file-lines"></i></span>' +
+        '<span class="block text-base font-extrabold mb-1" style="color:var(--jade);">' + level + "</span>" +
+        '<span class="block text-xs" style="color:var(--ink-faint);">' + (hasContent ? "Đã có bài test" : "Đang biên soạn") + "</span>";
+      card.addEventListener("click", () => enterTestLevel(folder, level));
+      elTestLevelsGrid.appendChild(card);
+    });
+  }
+
+  function enterTestLevel(folder, level) {
+    document.getElementById("test-detail-badge").innerHTML = '<i class="fa-solid fa-list-check mr-1"></i>' + folder.name;
+    document.getElementById("test-detail-title").textContent = "Test tổng hợp — " + level;
+    const body = document.getElementById("test-detail-body");
+    const testData = LEVEL_TESTS[level];
+    if (!testData) {
+      body.innerHTML =
+        '<i class="fa-solid fa-pen-ruler text-3xl mb-3" style="color:var(--ink-faint);"></i>' +
+        '<p class="text-sm font-bold mb-1" style="color:var(--jade);">Bài test cho ' + level + " đang được biên soạn</p>" +
+        '<p class="text-xs" style="color:var(--ink-faint);">Cô sẽ bổ sung nội dung sau, học viên quay lại kiểm tra sau nhé.</p>';
+    } else {
+      // TODO: khi LEVEL_TESTS có dữ liệu thật, dựng giao diện làm bài (câu hỏi trắc nghiệm + chấm điểm) ở đây.
+      body.innerHTML = '<p class="text-sm" style="color:var(--ink-faint);">Nội dung bài test sẽ hiển thị ở đây.</p>';
+    }
+    showView("testDetail");
+  }
+
+  document.getElementById("btn-nav-test-hub").addEventListener("click", () => { renderTestHub(); showView("testHub"); });
+  document.getElementById("btn-back-home-testhub").addEventListener("click", () => showView("home"));
+  document.getElementById("btn-back-testhub").addEventListener("click", () => showView("testHub"));
+  document.getElementById("btn-back-testlevels").addEventListener("click", () => { if (testState.folder) renderTestLevelGrid(testState.folder); showView("testLevels"); });
+
 
   /* =====================================================================
      TAB 1: FLASHCARD TỪ VỰNG
