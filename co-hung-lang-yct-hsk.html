@@ -6351,6 +6351,7 @@ const LESSONS = [
 
   let currentAudio = null; // giữ file audio Azure đang phát (để dừng nếu bấm loa liên tiếp)
   let zhVoice = null; // giọng đọc tiếng Trung tốt nhất tìm được trên máy học sinh, dùng làm giọng dự phòng
+  let speakRequestSeq = 0; // đếm số lần bấm loa; dùng để nhận biết & bỏ qua các yêu cầu đọc cũ khi có yêu cầu mới hơn
 
   // ---------------- "Mở khoá" âm thanh trên điện thoại ----------------
   // Trên điện thoại (đặc biệt iPhone/Safari, và cả Android Chrome), trình
@@ -6448,7 +6449,8 @@ const LESSONS = [
 
   // Chỉ gọi khi giọng đọc online (Baidu) không phát được — đọc bằng giọng máy
   // sẵn có của trình duyệt để học sinh vẫn luôn nghe được, không bị im lặng.
-  function speakWithBrowserFallback(text) {
+  function speakWithBrowserFallback(text, mySeq) {
+    if (typeof mySeq === "number" && mySeq !== speakRequestSeq) return; // đã có yêu cầu đọc mới hơn -> bỏ qua, tránh chồng tiếng
     if (!("speechSynthesis" in window)) return;
     if (!zhVoice) pickBestZhVoice(window.speechSynthesis.getVoices());
     const doSpeak = () => {
@@ -6493,24 +6495,36 @@ const LESSONS = [
   function speak(text) {
     if (!text) return;
 
+    // Đánh số thứ tự cho lần bấm loa này — nếu có một lần bấm loa MỚI HƠN
+    // xảy ra trước khi lần này tải/phát xong (ví dụ bấm sang câu khác trong
+    // lúc Azure còn đang tải), lần cũ sẽ tự biết mình đã "lỗi thời" và
+    // không phát ra nữa, tránh bị chồng 2 giọng đọc khác nội dung nhau.
+    const mySeq = ++speakRequestSeq;
+
     // Dừng âm thanh Azure đang phát dở (nếu bấm loa liên tiếp), tránh chồng tiếng.
     if (currentAudio) {
       currentAudio.pause();
       currentAudio.src = "";
       currentAudio = null;
     }
+    // Dừng luôn giọng đọc dự phòng của trình duyệt nếu đang đọc dở.
+    try {
+      if ("speechSynthesis" in window && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) {
+        window.speechSynthesis.cancel();
+      }
+    } catch (err) { /* bỏ qua nếu trình duyệt không hỗ trợ */ }
 
     // Đã có sẵn trong bộ nhớ đệm (đã tải từ Azure ở lần bấm trước) -> phát
     // lại ngay, không gọi mạng nữa, đỡ tốn hạn mức miễn phí của Azure.
     if (ttsAudioCache.has(text)) {
-      playAzureAudio(ttsAudioCache.get(text), text);
+      playAzureAudio(ttsAudioCache.get(text), text, mySeq);
       return;
     }
 
     // Chưa điền Key Azure -> dùng ngay giọng máy dự phòng (giữ nguyên hành
     // vi trang vẫn chạy tốt như trước khi có Azure).
     if (!AZURE_TTS_KEY || !AZURE_TTS_REGION) {
-      speakWithBrowserFallback(text);
+      speakWithBrowserFallback(text, mySeq);
       return;
     }
 
@@ -6524,28 +6538,29 @@ const LESSONS = [
       .then((blob) => {
         const url = URL.createObjectURL(blob);
         ttsAudioCache.set(text, url);
-        playAzureAudio(url, text);
+        playAzureAudio(url, text, mySeq);
       })
       .catch((err) => {
         console.warn("[speak] Azure TTS loi, chuyen sang giong may du phong:", err);
-        speakWithBrowserFallback(text);
+        speakWithBrowserFallback(text, mySeq);
       });
   }
 
   // Phát file âm thanh (mp3) đã tải từ Azure. Nếu chính việc PHÁT bị lỗi
   // (hiếm khi xảy ra, ví dụ file mp3 hỏng) thì cũng rơi về giọng máy dự
   // phòng, không để học sinh bị câm tiếng.
-  function playAzureAudio(url, text) {
+  function playAzureAudio(url, text, mySeq) {
+    if (typeof mySeq === "number" && mySeq !== speakRequestSeq) return; // đã có yêu cầu đọc mới hơn -> bỏ qua, tránh chồng tiếng
     currentAudio = new Audio(url);
     currentAudio.onerror = (e) => {
       console.error("[speak] loi phat audio Azure:", e);
-      speakWithBrowserFallback(text);
+      speakWithBrowserFallback(text, mySeq);
     };
     const p = currentAudio.play();
     if (p && typeof p.catch === "function") {
       p.catch((err) => {
         console.warn("[speak] Audio.play() bi chan, chuyen sang giong may du phong:", err);
-        speakWithBrowserFallback(text);
+        speakWithBrowserFallback(text, mySeq);
       });
     }
   }
