@@ -2178,6 +2178,21 @@ const LESSONS = [
       { audioText: "小小三岁。", prompt: "小小三 ___。", options: ["岁", "号", "月", "个"], answer: "岁" },
       { audioText: "小小的耳朵很长。", prompt: "小小的耳朵很 ___。", options: ["长", "小", "大", "高"], answer: "长" },
     ],
+    mockExam: [
+      { kind: "listen", image: "assets/mockexam/mock_ex1.jpg", prompt: "🎧 Ví dụ: 三个苹果 (sān gè píngguǒ — three apples)", options: ["A", "B", "C"], answer: "C", isExample: true },
+      { kind: "listen", image: "assets/mockexam/mock_yct1_12_q1.jpg", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "A" },
+      { kind: "listen", image: "assets/mockexam/mock_yct1_12_q2.jpg", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "B" },
+      { kind: "listen", image: "assets/mockexam/mock_yct1_12_q3.jpg", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "C" },
+      { kind: "listen", image: "assets/mockexam/mock_yct1_12_q678.jpg", prompt: "🎧 Ví dụ: 女：你好！\n男：你好，很高兴认识你！(nǚ: Nǐ hǎo! nán: Nǐ hǎo, hěn gāoxìng rènshi nǐ!)", options: ["A", "B", "C", "D"], answer: "A", isExample: true },
+      { kind: "listen", image: "assets/mockexam/mock_yct1_12_q678.jpg", prompt: "🎧 Nghe đoạn hội thoại và chọn bức tranh phù hợp nhất", options: ["A", "B", "C", "D"], answer: "C" },
+      { kind: "listen", image: "assets/mockexam/mock_yct1_12_q678.jpg", prompt: "🎧 Nghe đoạn hội thoại và chọn bức tranh phù hợp nhất", options: ["A", "B", "C", "D"], answer: "B" },
+      { kind: "listen", image: "assets/mockexam/mock_yct1_12_q678.jpg", prompt: "🎧 Nghe đoạn hội thoại và chọn bức tranh phù hợp nhất", options: ["A", "B", "C", "D"], answer: "D" },
+      { kind: "read", image: "assets/mockexam/mock_yct1_12_q111213.jpg", prompt: "📖 Ví dụ: 我很喜欢看书。(Wǒ hěn xǐhuan kàn shū — Tôi rất thích đọc sách.)\n(Chọn bức tranh phù hợp nhất)", options: ["A", "B", "C", "D"], answer: "A", isExample: true },
+      { kind: "read", image: "assets/mockexam/mock_yct1_12_q111213.jpg", prompt: "📖 今天是妹妹的生日，我们一起吃蛋糕。(Jīntiān shì mèimei de shēngrì, wǒmen yìqǐ chī dàngāo.)\n(Chọn bức tranh phù hợp nhất)", options: ["A", "B", "C", "D"], answer: "B" },
+      { kind: "read", image: "assets/mockexam/mock_yct1_12_q111213.jpg", prompt: "📖 我们的教室在这儿，很大。(Wǒmen de jiàoshì zài zhèr, hěn dà.)\n(Chọn bức tranh phù hợp nhất)", options: ["A", "B", "C", "D"], answer: "C" },
+      { kind: "read", image: "assets/mockexam/mock_yct1_12_q111213.jpg", prompt: "📖 小白兔的耳朵很长。(Xiǎo bái tù de ěrduo hěn cháng.)\n(Chọn bức tranh phù hợp nhất)", options: ["A", "B", "C", "D"], answer: "D" },
+    ],
+    mockExamAudio: "assets/audio/yct1-12/mock-nghe.mp3", // 1 file mp3 duy nhất, phát liên tục Câu 1-6 (Câu 7-9 là bài đọc, không có audio)
   },
   // ---- 1 bài mẫu (khung sườn) cho mỗi cấp YCT 2 → YCT 6 — khi có sách, cô
   // gửi PDF hoặc tự điền tiếp theo đúng khuôn của YCT 1 ở trên ----
