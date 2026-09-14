@@ -8652,7 +8652,7 @@ const LESSONS = [
   let mockAudioEl = null;
 
   function buildMockExam() {
-    if (mockAudioEl) { mockAudioEl.pause(); mockAudioEl.currentTime = 0; }
+    if (mockAudioEl) { mockAudioEl.pause(); mockAudioEl.currentTime = 0; mockAudioEl = null; }
     const items = (state.lesson && state.lesson.mockExam) || [];
     const scoredTotal = items.filter((q) => !q.isExample).length;
     mockState.index = 0;
