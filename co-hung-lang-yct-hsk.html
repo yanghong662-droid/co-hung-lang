@@ -1236,7 +1236,7 @@
         <h3 class="text-lg font-extrabold" style="color:var(--jade);"><i class="fa-solid fa-user-shield mr-2"></i>Cấp quyền học sinh</h3>
         <button type="button" id="btn-admin-panel-close" class="w-8 h-8 rounded-full grid place-items-center" style="color:var(--ink-faint);"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <p class="text-sm mt-2 mb-4" style="color:var(--ink-soft);">Nhập email học sinh, tích chọn mục muốn mở khoá rồi bấm Lưu. Học sinh chỉ cần đăng nhập bằng đúng email này để vào học.</p>
+      <p class="text-sm mt-2 mb-4" style="color:var(--ink-soft);">Nhập email học sinh, tích chọn mục muốn mở khoá rồi bấm Lưu. Học sinh chỉ cần đăng nhập bằng đúng email này để vào học. Quyền "Test học phần" (Test Y1-6, Test H1-9) TÁCH RIÊNG với quyền học bài — có quyền học 1 cấp không tự động được làm test cấp đó.</p>
 
       <form id="form-admin-grant" class="flex flex-col gap-2.5 mb-3">
         <div class="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center">
@@ -1264,6 +1264,25 @@
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="8"> HSK 8</label>
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-hsk-level" data-hsk-level="9"> HSK 9</label>
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-grant-hsk-all"><b>Tất cả</b></label>
+          <span class="text-xs font-bold" style="color:var(--blue);">Test Y:</span>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-yct-level" data-yct-level="1"> Test Y1</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-yct-level" data-yct-level="2"> Test Y2</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-yct-level" data-yct-level="3"> Test Y3</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-yct-level" data-yct-level="4"> Test Y4</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-yct-level" data-yct-level="5"> Test Y5</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-yct-level" data-yct-level="6"> Test Y6</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-grant-test-yct-all"><b>Tất cả</b></label>
+          <span class="text-xs font-bold" style="color:var(--accent);">Test H:</span>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="1"> Test H1</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="2"> Test H2</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="3"> Test H3</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="4"> Test H4</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="5"> Test H5</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="6"> Test H6</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="7"> Test H7</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="8"> Test H8</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-test-hsk-level" data-hsk-level="9"> Test H9</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-grant-test-hsk-all"><b>Tất cả</b></label>
           <button type="submit" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0 sm:ml-auto" style="background:var(--jade);">Lưu</button>
         </div>
       </form>
@@ -1296,6 +1315,25 @@
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="8"> HSK 8</label>
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-hsk-level" data-hsk-level="9"> HSK 9</label>
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-bulk-hsk-all"><b>Tất cả</b></label>
+              <span class="text-xs font-bold" style="color:var(--blue);">Test Y:</span>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-yct-level" data-yct-level="1"> Test Y1</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-yct-level" data-yct-level="2"> Test Y2</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-yct-level" data-yct-level="3"> Test Y3</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-yct-level" data-yct-level="4"> Test Y4</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-yct-level" data-yct-level="5"> Test Y5</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-yct-level" data-yct-level="6"> Test Y6</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-bulk-test-yct-all"><b>Tất cả</b></label>
+              <span class="text-xs font-bold" style="color:var(--accent);">Test H:</span>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="1"> Test H1</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="2"> Test H2</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="3"> Test H3</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="4"> Test H4</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="5"> Test H5</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="6"> Test H6</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="7"> Test H7</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="8"> Test H8</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-test-hsk-level" data-hsk-level="9"> Test H9</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-bulk-test-hsk-all"><b>Tất cả</b></label>
               <button type="button" id="btn-admin-bulk-grant" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0 sm:ml-auto" style="background:var(--jade);">Cấp quyền cả lớp</button>
             </div>
           </div>
@@ -7589,6 +7627,7 @@ const LESSONS = [
   }
 
   function enterTestLevel(folder, level) {
+    if (!ensureTestAccess(folder.id, level, () => enterTestLevel(folder, level))) return;
     document.getElementById("test-detail-badge").innerHTML = '<i class="fa-solid fa-list-check mr-1"></i>' + folder.name;
     document.getElementById("test-detail-title").textContent = "Test tổng hợp — " + level;
     const body = document.getElementById("test-detail-body");
@@ -10379,6 +10418,36 @@ const LESSONS = [
     }
     return false;
   }
+  /* =====================================================================
+     QUYỀN RIÊNG CHO "TEST HỌC PHẦN" — tách biệt hoàn toàn với quyền học
+     bài ở trên (yct1..yct6 / hsk1..hsk9). Có quyền học 1 cấp KHÔNG tự
+     động có quyền làm bài test cấp đó — cô phải cấp riêng ở khu Admin,
+     mục "Test học phần", để tiện bật/tắt khi tổ chức thi. Field Firestore
+     riêng: test_yct1..test_yct6, test_hsk1..test_hsk9.
+     ===================================================================== */
+  function testProgramLevelKey(folderId, level) {
+    const base = programLevelKey(folderId, level);
+    return base ? "test_" + base : null;
+  }
+  function hasTestLevelPermission(folderId, level) {
+    if (!currentPermissions || !level) return false;
+    const key = testProgramLevelKey(folderId, level);
+    return !!(key && currentPermissions[key] === true);
+  }
+  /* Gọi ở đầu enterTestLevel(): giống ensureProgramAccess() ở dưới nhưng
+     dùng bộ quyền test_* riêng — hoàn toàn không liên quan quyền học bài. */
+  function ensureTestAccess(folderId, level, retryFn) {
+    if (isAdminUser(currentUser)) return true;
+    if (!currentUser) {
+      pendingAccessAction = retryFn;
+      openAuthModal();
+      return false;
+    }
+    if (hasTestLevelPermission(folderId, level)) return true;
+    openLockedModal(level, "Bài test");
+    return false;
+  }
+
   /* Gọi ở đầu enterProgram()/enterLesson(): trả về true và cho đi tiếp
      ngay nếu đã đủ quyền; ngược lại tự mở modal đăng nhập/thông báo khoá
      phù hợp và trả về false để hàm gọi nó dừng lại. retryFn sẽ được gọi
@@ -10474,11 +10543,12 @@ const LESSONS = [
   /* ---------------- Modal: Nội dung chưa được cấp quyền ---------------- */
   const elAuthLockedOverlay = document.getElementById("auth-locked-overlay");
   const elAuthLockedText = document.getElementById("auth-locked-text");
-  function openLockedModal(level) {
+  function openLockedModal(level, itemLabel) {
+    const lbl = itemLabel || "Mục";
     if (elAuthLockedText) {
       elAuthLockedText.textContent = level
-        ? 'Mục "' + level + '" chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!'
-        : "Mục này chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!";
+        ? lbl + ' "' + level + '" chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!'
+        : lbl + " này chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!";
     }
     elAuthLockedOverlay.classList.remove("hidden");
   }
@@ -10589,6 +10659,43 @@ const LESSONS = [
     for (let i = 1; i <= YCT_LEVEL_COUNT; i++) payload["yct" + i] = set.has(i);
     return payload;
   }
+  // Y hệt renderHskLevelCheckboxes/renderYctLevelCheckboxes/*LevelsPayload
+  // ở trên nhưng dành riêng cho quyền TEST HỌC PHẦN (field test_hsk1..
+  // test_hsk9 / test_yct1..test_yct6) — tách biệt hoàn toàn với quyền học
+  // bài. Dùng chung readCheckedHskLevels/readCheckedYctLevels (chỉ khác
+  // boxClass truyền vào), chỉ cần thêm hàm render + payload riêng.
+  function renderTestHskLevelCheckboxes(checkedLevels, boxClass) {
+    const checkedSet = new Set(checkedLevels || []);
+    let html = "";
+    for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
+      html +=
+        '<label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="' + boxClass + '" data-hsk-level="' + i + '" ' +
+        (checkedSet.has(i) ? "checked" : "") + "> Test H" + i + "</label>";
+    }
+    return html;
+  }
+  function testHskLevelsPayload(levels) {
+    const set = new Set(levels || []);
+    const payload = {};
+    for (let i = 1; i <= HSK_LEVEL_COUNT; i++) payload["test_hsk" + i] = set.has(i);
+    return payload;
+  }
+  function renderTestYctLevelCheckboxes(checkedLevels, boxClass) {
+    const checkedSet = new Set(checkedLevels || []);
+    let html = "";
+    for (let i = 1; i <= YCT_LEVEL_COUNT; i++) {
+      html +=
+        '<label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="' + boxClass + '" data-yct-level="' + i + '" ' +
+        (checkedSet.has(i) ? "checked" : "") + "> Test Y" + i + "</label>";
+    }
+    return html;
+  }
+  function testYctLevelsPayload(levels) {
+    const set = new Set(levels || []);
+    const payload = {};
+    for (let i = 1; i <= YCT_LEVEL_COUNT; i++) payload["test_yct" + i] = set.has(i);
+    return payload;
+  }
   function wireHskSelectAll(allBoxId, boxClass, scope) {
     const allBox = document.getElementById(allBoxId);
     if (!allBox) return;
@@ -10597,7 +10704,7 @@ const LESSONS = [
     });
   }
 
-  function saveGrant(email, name, yctLevels, hskLevels, className, onDone) {
+  function saveGrant(email, name, yctLevels, hskLevels, testYctLevels, testHskLevels, className, onDone) {
     const key = (email || "").trim().toLowerCase();
     if (!key) return;
     if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
@@ -10606,6 +10713,11 @@ const LESSONS = [
       yctLevelsPayload(yctLevels),
       hskLevelsPayload(hskLevels)
     );
+    // testYctLevels/testHskLevels = undefined → KHÔNG đụng vào quyền test
+    // hiện có (dùng khi bật/tắt nhanh quyền HỌC cả lớp, không liên quan
+    // quyền test); truyền mảng (kể cả mảng rỗng) → ghi đè đúng các cấp đó.
+    if (testYctLevels !== undefined) Object.assign(payload, testYctLevelsPayload(testYctLevels));
+    if (testHskLevels !== undefined) Object.assign(payload, testHskLevelsPayload(testHskLevels));
     // Xoá field "yct"/"hsk" (quyền kiểu cũ, cấp trọn bộ 1 lần) ngay khi
     // giáo viên lưu quyền qua giao diện mới theo từng cấp — từ đây quyền
     // YCT/HSK 3.0 của học sinh này chỉ còn tính theo các field yct1..yct6 /
@@ -10620,6 +10732,8 @@ const LESSONS = [
 
   wireHskSelectAll("admin-grant-hsk-all", "admin-grant-hsk-level", formAdminGrant);
   wireHskSelectAll("admin-grant-yct-all", "admin-grant-yct-level", formAdminGrant);
+  wireHskSelectAll("admin-grant-test-hsk-all", "admin-grant-test-hsk-level", formAdminGrant);
+  wireHskSelectAll("admin-grant-test-yct-all", "admin-grant-test-yct-level", formAdminGrant);
 
   formAdminGrant.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -10628,7 +10742,9 @@ const LESSONS = [
     const className = document.getElementById("admin-grant-class").value;
     const yctLevels = readCheckedYctLevels(formAdminGrant, "admin-grant-yct-level");
     const hskLevels = readCheckedHskLevels(formAdminGrant, "admin-grant-hsk-level");
-    saveGrant(email, name, yctLevels, hskLevels, className, (key) => {
+    const testYctLevels = readCheckedYctLevels(formAdminGrant, "admin-grant-test-yct-level");
+    const testHskLevels = readCheckedHskLevels(formAdminGrant, "admin-grant-test-hsk-level");
+    saveGrant(email, name, yctLevels, hskLevels, testYctLevels, testHskLevels, className, (key) => {
       elAdminGrantMsg.textContent = "Đã lưu quyền cho " + key + ".";
       elAdminGrantMsg.className = "form-msg-success text-sm rounded-lg px-3 py-2 mb-4";
       elAdminGrantMsg.classList.remove("hidden");
@@ -10653,9 +10769,11 @@ const LESSONS = [
     return { validEmails, invalidCount };
   }
 
-  function bulkSetPermission(emails, yctLevels, hskLevels, className, onDone, onError) {
+  function bulkSetPermission(emails, yctLevels, hskLevels, testYctLevels, testHskLevels, className, onDone, onError) {
     if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
     const payload = Object.assign({ updatedAt: new Date().toISOString() }, yctLevelsPayload(yctLevels), hskLevelsPayload(hskLevels));
+    if (testYctLevels !== undefined) Object.assign(payload, testYctLevelsPayload(testYctLevels));
+    if (testHskLevels !== undefined) Object.assign(payload, testHskLevelsPayload(testHskLevels));
     payload.yct = firebase.firestore.FieldValue.delete();
     payload.hsk = firebase.firestore.FieldValue.delete();
     if (className !== undefined) payload.class = className;
@@ -10672,11 +10790,15 @@ const LESSONS = [
   const elAdminBulkMsg = document.getElementById("admin-bulk-msg");
   wireHskSelectAll("admin-bulk-hsk-all", "admin-bulk-hsk-level");
   wireHskSelectAll("admin-bulk-yct-all", "admin-bulk-yct-level");
+  wireHskSelectAll("admin-bulk-test-hsk-all", "admin-bulk-test-hsk-level");
+  wireHskSelectAll("admin-bulk-test-yct-all", "admin-bulk-test-yct-level");
   document.getElementById("btn-admin-bulk-grant").addEventListener("click", () => {
     const raw = document.getElementById("admin-bulk-emails").value;
     const className = document.getElementById("admin-bulk-class").value.trim();
     const yctLevels = readCheckedYctLevels(document, "admin-bulk-yct-level");
     const hskLevels = readCheckedHskLevels(document, "admin-bulk-hsk-level");
+    const testYctLevels = readCheckedYctLevels(document, "admin-bulk-test-yct-level");
+    const testHskLevels = readCheckedHskLevels(document, "admin-bulk-test-hsk-level");
     const showMsg = (text, kind) => {
       elAdminBulkMsg.textContent = text;
       elAdminBulkMsg.className = (kind === "error" ? "form-msg-error" : kind === "success" ? "form-msg-success" : "") + " text-sm rounded-lg px-3 py-2";
@@ -10686,7 +10808,7 @@ const LESSONS = [
     const { validEmails, invalidCount } = parseBulkEmails(raw);
     if (validEmails.length === 0) { showMsg("Không tìm thấy email hợp lệ nào trong danh sách đã dán.", "error"); return; }
     showMsg("Đang cấp quyền cho " + validEmails.length + " email...", "");
-    bulkSetPermission(validEmails, yctLevels, hskLevels, className, () => {
+    bulkSetPermission(validEmails, yctLevels, hskLevels, testYctLevels, testHskLevels, className, () => {
       showMsg(
         "Đã cấp quyền cho " + validEmails.length + ' email thuộc lớp "' + className + '"' +
           (invalidCount ? " (bỏ qua " + invalidCount + " dòng không hợp lệ)" : "") + ".",
@@ -10717,7 +10839,15 @@ const LESSONS = [
         for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
           if (data.hsk === true || data["hsk" + i] === true) hskLevels.push(i);
         }
-        rows.push({ email: doc.id, name: data.name || "", yctLevels: yctLevels, hskLevels: hskLevels, class: data.class || "" });
+        const testYctLevels = [];
+        for (let i = 1; i <= YCT_LEVEL_COUNT; i++) {
+          if (data["test_yct" + i] === true) testYctLevels.push(i);
+        }
+        const testHskLevels = [];
+        for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
+          if (data["test_hsk" + i] === true) testHskLevels.push(i);
+        }
+        rows.push({ email: doc.id, name: data.name || "", yctLevels: yctLevels, hskLevels: hskLevels, testYctLevels: testYctLevels, testHskLevels: testHskLevels, class: data.class || "" });
       });
       rows.sort((a, b) => a.email.localeCompare(b.email));
       renderAdminPermList(rows);
@@ -10770,11 +10900,11 @@ const LESSONS = [
           if (!confirm('Bật quyền toàn bộ 6 cấp YCT + toàn bộ 9 cấp HSK 3.0 cho ' + g.rows.length + ' học sinh lớp "' + g.className + '"?')) return;
           const allYctLevels = Array.from({ length: YCT_LEVEL_COUNT }, (_, i) => i + 1);
           const allLevels = Array.from({ length: HSK_LEVEL_COUNT }, (_, i) => i + 1);
-          bulkSetPermission(emailsInGroup, allYctLevels, allLevels, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+          bulkSetPermission(emailsInGroup, allYctLevels, allLevels, undefined, undefined, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
         });
         groupHeader.querySelector(".btn-class-disable").addEventListener("click", () => {
           if (!confirm('Tắt quyền truy cập của toàn bộ ' + g.rows.length + ' học sinh lớp "' + g.className + '"? (Vẫn giữ lại danh sách email + tên lớp để cấp lại sau này nếu cần)')) return;
-          bulkSetPermission(emailsInGroup, [], [], undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+          bulkSetPermission(emailsInGroup, [], [], undefined, undefined, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
         });
       }
 
@@ -10792,14 +10922,24 @@ const LESSONS = [
             '<span class="text-xs font-bold" style="color:var(--ink-faint);">HSK 3.0:</span>' +
             renderHskLevelCheckboxes(row.hskLevels, "perm-row-hsk-level") +
           "</div>" +
+          '<div class="basis-full flex flex-wrap gap-1.5 items-center">' +
+            '<span class="text-xs font-bold" style="color:var(--blue);">Test Y:</span>' +
+            renderTestYctLevelCheckboxes(row.testYctLevels, "perm-row-test-yct-level") +
+          "</div>" +
+          '<div class="basis-full flex flex-wrap gap-1.5 items-center">' +
+            '<span class="text-xs font-bold" style="color:var(--accent);">Test H:</span>' +
+            renderTestHskLevelCheckboxes(row.testHskLevels, "perm-row-test-hsk-level") +
+          "</div>" +
           '<button type="button" class="perm-row-save text-xs font-bold px-3 py-1.5 rounded-lg text-white" style="background:var(--jade);">Lưu</button>' +
           '<button type="button" class="perm-row-delete text-xs font-bold px-3 py-1.5 rounded-lg border" style="border-color:var(--wrong); color:var(--wrong);">Xoá</button>';
         div.querySelector(".perm-row-save").addEventListener("click", () => {
           const name = div.querySelector(".perm-row-name").value;
           const yctLevels = readCheckedYctLevels(div, "perm-row-yct-level");
           const hskLevels = readCheckedHskLevels(div, "perm-row-hsk-level");
+          const testYctLevels = readCheckedYctLevels(div, "perm-row-test-yct-level");
+          const testHskLevels = readCheckedHskLevels(div, "perm-row-test-hsk-level");
           const className = div.querySelector(".perm-row-class").value;
-          saveGrant(row.email, name, yctLevels, hskLevels, className, () => {
+          saveGrant(row.email, name, yctLevels, hskLevels, testYctLevels, testHskLevels, className, () => {
             loadAllPermissions();
           });
         });
