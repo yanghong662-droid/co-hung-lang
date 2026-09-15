@@ -1505,6 +1505,66 @@ LEVEL_TESTS["YCT 1"] = {
   audio: "",
 };
 
+LEVEL_TESTS["HSK 1"] = {
+  quiz: [
+    // ===== 听力 Part 1 (Q1-5): photo + audio phrase, mark correct(✓) / wrong(✗) =====
+    { kind: "listen", prompt: "下雨。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q1.png" },
+    { kind: "listen", prompt: "这个鞋很漂亮。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q2.png" },
+    { kind: "listen", prompt: "我喜欢吃苹果。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q3.png" },
+    { kind: "listen", prompt: "他们在跳舞。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q4.png" },
+    { kind: "listen", prompt: "他在学校看书。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q5.png" },
+
+    // ===== 听力 Part 2 (Q6-10): audio phrase + 3 photos A/B/C =====
+    { kind: "listen", prompt: "现在几点？", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q6.png" },
+    { kind: "listen", prompt: "他坐飞机去北京。", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q7.png" },
+    { kind: "listen", prompt: "我家有五口人。", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q8.png" },
+    { kind: "listen", prompt: "今天天气很热。", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/test-hsk1-l2-q9.png" },
+    { kind: "listen", prompt: "她是医生。", options: ["A", "B", "C"], answer: "B", image: "assets/mockexam/test-hsk1-l2-q10.png" },
+
+    // ===== 听力 Part 3 (Q11-15): shared 6-photo bank A-F, match dialogue to image =====
+    { kind: "listen", prompt: "男：你喝什么？女：我喝茶，谢谢。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-l3-bank.png" },
+    { kind: "listen", prompt: "女：你的衣服真好看。男：谢谢，这是我妈妈买的。", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-l3-bank.png" },
+    { kind: "listen", prompt: "男：你好，认识你很高兴。女：认识你我也很高兴。", options: ["A", "B", "C", "D", "E", "F"], answer: "F", image: "assets/mockexam/test-hsk1-l3-bank.png" },
+    { kind: "listen", prompt: "女：火车几点到？男：晚上八点。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-l3-bank.png" },
+    { kind: "listen", prompt: "男：这些菜真好吃。女：多吃一点儿。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-l3-bank.png" },
+
+    // ===== 听力 Part 4 (Q16-20): audio narrative + printed text options (no images) =====
+    { kind: "listen", prompt: "我们下午三点在学校门口见面，你别迟到。问：他们几点见面？", options: ["A. 早上", "B. 中午", "C. 下午"], answer: "C" },
+    { kind: "listen", prompt: "我妹妹今年八岁了，在这个学校上一年级。问：妹妹在做什么？", options: ["A. 工作", "B. 上学", "C. 睡觉"], answer: "B" },
+    { kind: "listen", prompt: "外面在下雨，你出门要带伞。问：外面天气怎么样？", options: ["A. 下雨", "B. 晴天", "C. 下雪"], answer: "A" },
+    { kind: "listen", prompt: "这件衣服太贵了，我们去看看别的吧。问：这件衣服怎么样？", options: ["A. 很便宜", "B. 很漂亮", "C. 很贵"], answer: "C" },
+    { kind: "listen", prompt: "我爸爸是医生，他每天工作很忙。问：爸爸是做什么的？", options: ["A. 老师", "B. 医生", "C. 司机"], answer: "B" },
+
+    // ===== 阅读 Part 1 (Q21-25): photo + printed word/pinyin, mark ✓/✗ =====
+    { kind: "read", prompt: "māo\n猫", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q21.png" },
+    { kind: "read", prompt: "shuìjiào\n睡觉", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q22.png" },
+    { kind: "read", prompt: "chī miànbāo\n吃面包", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q23.png" },
+    { kind: "read", prompt: "tī zú qiú\n踢足球", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q24.png" },
+    { kind: "read", prompt: "gāoxìng\n高兴", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q25.png" },
+
+    // ===== 阅读 Part 2 (Q26-30): shared 6-photo bank A-F, match sentence to image =====
+    { kind: "read", prompt: "他是我们的老师。", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-r2-bank.png" },
+    { kind: "read", prompt: "这是中国地图。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-r2-bank.png" },
+    { kind: "read", prompt: "服务员，我要一杯水。", options: ["A", "B", "C", "D", "E", "F"], answer: "C", image: "assets/mockexam/test-hsk1-r2-bank.png" },
+    { kind: "read", prompt: "妈妈每天很早起床。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-r2-bank.png" },
+    { kind: "read", prompt: "这个女孩儿很漂亮。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-r2-bank.png" },
+
+    // ===== 阅读 Part 3 (Q31-35): pure text matching (no images) =====
+    { kind: "read", prompt: "你叫什么名字？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "A" },
+    { kind: "read", prompt: "你好吗？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "E" },
+    { kind: "read", prompt: "你的生日是几月几号？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "D" },
+    { kind: "read", prompt: "你的工作是什么？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "C" },
+    { kind: "read", prompt: "这件衣服怎么样？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "F" },
+
+    // ===== 阅读 Part 4 (Q36-40): fill-in-blank with 6 given options (no images) =====
+    { kind: "read", prompt: "我每天坐公共汽车（___）学校。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "B" },
+    { kind: "read", prompt: "桌子上（___）有一本书和一支笔。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "E" },
+    { kind: "read", prompt: "我（___）弟弟都喜欢踢足球。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "C" },
+    { kind: "read", prompt: "你是学生（___）？", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "D" },
+    { kind: "read", prompt: "学校（___）有一个商店。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "F" },
+  ],
+  audio: "assets/audio/test-hsk1-de2/mock-nghe.mp3",
+};
 
 const LESSONS = [
   // =====================================================================
