@@ -1476,9 +1476,35 @@ const TEST_FOLDERS = [
 
 // Nội dung bài test cho từng cấp — KEY phải khớp đúng chuỗi "level" ở trên
 // (vd "YCT 1", "HSK 3"). Cấp nào CHƯA có key trong object này sẽ tự hiện
-// thông báo "đang biên soạn" cho học sinh, không bị lỗi. Khi cô có nội
-// dung, thêm vào đây theo khuôn: LEVEL_TESTS["YCT 1"] = { quiz: [ { audioText, prompt, options: [4 phương án], answer }, ... ] }.
+// thông báo "đang biên soạn" cho học sinh, không bị lỗi. Học sinh LÀM BÀI
+// THẬT (chọn đáp án, chấm điểm, xem lại đáp án, pháo hoa khi 100đ...) y
+// hệt trải nghiệm "Đề thi mô phỏng" của từng bài học — cùng 1 bộ máy chấm
+// bài (xem enterTestLevel() + buildMockExam()). Khi cô có nội dung, thêm
+// vào đây theo khuôn (mỗi câu trong "quiz" viết ĐÚNG format như 1 câu
+// trong "mockExam" của bài học — xem chú thích ở khu "ĐỀ THI MÔ PHỎNG"):
+//   LEVEL_TESTS["YCT 1"] = {
+//     quiz: [
+//       { kind: "listen", prompt: "...", options: ["A", "B", "C"], answer: "A", isExample: true },
+//       { kind: "read", prompt: "...", options: [...], answer: "..." },
+//       ...
+//     ],
+//     audio: "assets/audio/.../mock-nghe.mp3", // tuỳ chọn — 1 file mp3 duy nhất cho phần Nghe, để trống nếu không có
+//   };
 const LEVEL_TESTS = {};
+
+// ---- DEMO tạm thời để cô xem thử giao diện "Test học phần" chạy thật
+// (chọn đáp án, chấm điểm, xem lại...) trước khi gửi đề thật cho Claude
+// soạn — xoá khối này đi (hoặc để Claude xoá giúp) khi đã có đề thật cho
+// YCT 1. ----
+LEVEL_TESTS["YCT 1"] = {
+  quiz: [
+    { kind: "listen", prompt: "🎧 (DEMO) Ví dụ: 你好。(Xin chào.)", options: ["你好", "再见", "谢谢"], answer: "你好", audioText: "你好", isExample: true },
+    { kind: "listen", prompt: "🎧 (DEMO) Nghe và chọn đáp án đúng", options: ["谢谢", "再见", "对不起"], answer: "谢谢", audioText: "谢谢" },
+    { kind: "read", prompt: "📖 (DEMO) “妈妈” nghĩa là gì?", options: ["Mẹ", "Bố", "Anh trai"], answer: "Mẹ" },
+    { kind: "fill", prompt: "✏️ (DEMO) 我（　　）中国人。(Tôi là người Trung Quốc.)", options: ["是", "不", "吗"], answer: "是" },
+  ],
+  audio: "",
+};
 
 
 const LESSONS = [
@@ -7301,6 +7327,7 @@ const LESSONS = [
 
   function enterLesson(lesson, backTo) {
     if (!ensureProgramAccess(lesson.program, () => enterLesson(lesson, backTo), lesson.level)) return;
+    ensureMockPanelAtHome(); // phòng khi học sinh vừa làm Test học phần xong quay lại đây — trả khung "Đề thi mô phỏng" về đúng vị trí
     state.lesson = lesson;
     state.deckIndex = 0;
     state.lessonBackTo = backTo || "program";
@@ -7632,14 +7659,29 @@ const LESSONS = [
     document.getElementById("test-detail-title").textContent = "Test tổng hợp — " + level;
     const body = document.getElementById("test-detail-body");
     const testData = LEVEL_TESTS[level];
-    if (!testData) {
+    if (!testData || !testData.quiz || !testData.quiz.length) {
       body.innerHTML =
         '<i class="fa-solid fa-pen-ruler text-3xl mb-3" style="color:var(--ink-faint);"></i>' +
         '<p class="text-sm font-bold mb-1" style="color:var(--jade);">Bài test cho ' + level + " đang được biên soạn</p>" +
         '<p class="text-xs" style="color:var(--ink-faint);">Cô sẽ bổ sung nội dung sau, học viên quay lại kiểm tra sau nhé.</p>';
     } else {
-      // TODO: khi LEVEL_TESTS có dữ liệu thật, dựng giao diện làm bài (câu hỏi trắc nghiệm + chấm điểm) ở đây.
-      body.innerHTML = '<p class="text-sm" style="color:var(--ink-faint);">Nội dung bài test sẽ hiển thị ở đây.</p>';
+      // Làm bài THẬT ngay tại đây — dùng LẠI nguyên bộ máy "Đề thi mô
+      // phỏng" (buildMockExam/renderMockQuestion/gradeAndShowMockResult ở
+      // khu TAB 3, đọc dữ liệu từ "state.lesson.mockExam"). Gán tạm
+      // state.lesson = 1 object giả lập chứa đúng dữ liệu của cấp này, rồi
+      // chuyển hẳn khung #subpanel-mock sang đây và build lại như bình
+      // thường — không cần viết lại giao diện làm bài riêng cho Test học
+      // phần. Id giả "__test__..." chỉ dùng để lưu điểm riêng (không trùng
+      // id bài học thật nào), không hiện ra ngoài giao diện.
+      body.innerHTML = "";
+      state.lesson = {
+        id: "__test__" + folder.id + "__" + level,
+        mockExam: testData.quiz,
+        mockExamAudio: testData.audio || "",
+        isReview: false,
+      };
+      moveMockExamPanelInto(body);
+      buildMockExam();
     }
     showView("testDetail");
   }
@@ -8111,6 +8153,35 @@ const LESSONS = [
   const elSubpanelVideo = document.getElementById("subpanel-video");
   const elSubpanelReadlisten = document.getElementById("subpanel-readlisten");
   const elSubpanelMock = document.getElementById("subpanel-mock");
+
+  /* =====================================================================
+     TÁI SỬ DỤNG khung "Đề thi mô phỏng" (#subpanel-mock, cùng toàn bộ cơ
+     chế chấm điểm/xem lại/pháo hoa của buildMockExam() ở dưới) cho cả
+     "Test học phần" — thay vì viết lại 1 bộ giao diện làm bài riêng. Khi
+     học sinh vào 1 cấp có bài test thật (enterTestLevel()), ta DI CHUYỂN
+     hẳn node DOM #subpanel-mock sang bên trong "#test-detail-body" rồi gọi
+     lại buildMockExam() như bình thường (đọc dữ liệu từ "state.lesson" —
+     lúc này state.lesson tạm được gán 1 object giả lập chứa nội dung bài
+     test của LEVEL_TESTS). Khi học sinh mở LẠI 1 bài học thật (enterLesson
+     ()), ensureMockPanelAtHome() sẽ trả node này về đúng vị trí gốc trong
+     trang bài học trước khi buildMockExam() chạy lại cho bài học đó. */
+  const mockPanelHomeParent = elSubpanelMock ? elSubpanelMock.parentNode : null;
+  const mockPanelHomeNext = elSubpanelMock ? elSubpanelMock.nextSibling : null;
+  function ensureMockPanelAtHome() {
+    if (!elSubpanelMock || !mockPanelHomeParent) return;
+    if (elSubpanelMock.parentNode === mockPanelHomeParent) return; // đã ở đúng chỗ, không cần làm gì
+    if (mockPanelHomeNext && mockPanelHomeNext.parentNode === mockPanelHomeParent) {
+      mockPanelHomeParent.insertBefore(elSubpanelMock, mockPanelHomeNext);
+    } else {
+      mockPanelHomeParent.appendChild(elSubpanelMock);
+    }
+    elSubpanelMock.classList.add("hidden"); // về nhà thì ẩn lại (Dạng mặc định đang hiện là "fill", không phải "mock")
+  }
+  function moveMockExamPanelInto(container) {
+    if (!elSubpanelMock || !container) return;
+    elSubpanelMock.classList.remove("hidden");
+    container.appendChild(elSubpanelMock);
+  }
 
   function switchListenSubtab(which) {
     elSubpanelFill.classList.toggle("hidden", which !== "fill");
