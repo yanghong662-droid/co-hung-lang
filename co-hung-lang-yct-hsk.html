@@ -261,6 +261,11 @@
 
   /* ---------- Luyện tập: Dạng 1 - Điền từ (trắc nghiệm) ---------- */
   .quiz-opt-picked { border-color: var(--jade) !important; background: var(--jade-soft) !important; }
+  .mock-nav-btn { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface-alt); color: var(--ink-soft); font-size: 12px; font-weight: 700; display: grid; place-items: center; cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease; }
+  .mock-nav-btn:hover { border-color: var(--jade); }
+  .mock-nav-btn.is-answered { background: var(--jade-soft); border-color: var(--jade); color: var(--jade); }
+  .mock-nav-btn.is-current { background: var(--jade); border-color: var(--jade); color: #fff; box-shadow: 0 0 0 2px var(--jade-soft); }
+  .mock-nav-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; }
   .btn-disabled-look:disabled { opacity: 0.4; cursor: not-allowed; }
   .review-row-correct { border-left: 3px solid var(--jade); }
   .review-row-wrong { border-left: 3px solid var(--wrong); }
@@ -940,6 +945,16 @@
           <i class="fa-solid fa-file-signature text-2xl mb-2 block"></i>Bài này chưa có Đề thi mô phỏng. Cô vào Dashboard Giáo viên để soạn đề.
         </div>
         <div id="mock-active">
+          <div class="mock-layout" style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+            <div id="mock-nav-panel" class="rounded-2xl border p-3" style="border-color:var(--border); background:var(--surface); width:100%; max-width:220px;">
+              <p class="text-[11px] font-bold uppercase tracking-wide mb-2" style="color:var(--ink-faint);"><i class="fa-solid fa-list-check mr-1"></i>Cấu trúc đề thi</p>
+              <div id="mock-nav-grid" class="grid grid-cols-6 sm:grid-cols-5 gap-1.5"></div>
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 text-[11px]" style="color:var(--ink-faint);">
+                <span class="flex items-center gap-1.5"><span class="mock-nav-dot" style="background:var(--jade-soft); border:1px solid var(--jade);"></span>Đã làm</span>
+                <span class="flex items-center gap-1.5"><span class="mock-nav-dot" style="background:var(--surface-alt); border:1px solid var(--border);"></span>Chưa làm</span>
+              </div>
+            </div>
+            <div style="flex:1 1 320px; min-width:0;">
           <div class="flex items-center justify-between mb-3">
             <p class="text-sm font-bold" style="color:var(--ink-faint);">Câu <span id="mock-index">1</span> / <span id="mock-total">3</span></p>
             <div class="h-2 w-28 sm:w-36 rounded-full overflow-hidden" style="background:var(--surface-alt);">
@@ -965,6 +980,8 @@
             <button type="button" id="btn-mock-submit" class="hidden px-5 py-2.5 rounded-xl font-bold text-sm btn-disabled-look" style="background:var(--accent); color:#fff;">
               <i class="fa-solid fa-paper-plane mr-1.5"></i>Nộp bài
             </button>
+          </div>
+            </div>
           </div>
         </div>
 
@@ -9142,6 +9159,7 @@ const LESSONS = [
   const elMockPrompt = document.getElementById("mock-prompt");
   const elMockImage = document.getElementById("mock-image");
   const elMockOptions = document.getElementById("mock-options");
+  const elMockNavGrid = document.getElementById("mock-nav-grid");
   const btnMockPrev = document.getElementById("btn-mock-prev");
   const btnMockNext = document.getElementById("btn-mock-next");
   const btnMockSubmit = document.getElementById("btn-mock-submit");
@@ -9236,6 +9254,7 @@ const LESSONS = [
           const val = input.value.trim();
           mockState.answers[mockState.index] = val === "" ? null : val;
           btnMockSubmit.disabled = mockState.answers.some((a) => a === null);
+          renderMockNav();
         });
       }
       elMockOptions.appendChild(input);
@@ -9268,6 +9287,26 @@ const LESSONS = [
     btnMockNext.classList.toggle("hidden", isLastQuestion);
     btnMockSubmit.classList.toggle("hidden", !isLastQuestion);
     btnMockSubmit.disabled = mockState.answers.some((a) => a === null);
+    renderMockNav();
+  }
+
+  // Thanh "Cấu trúc đề thi" bên trái (giống giao diện HSK chính thức): mỗi
+  // số là 1 câu, bấm vào để nhảy thẳng tới câu đó. Trong lúc làm bài chỉ tô
+  // màu "đã làm / chưa làm" — KHÔNG lộ đúng/sai (chỉ lộ sau khi bấm Nộp bài).
+  function renderMockNav() {
+    if (!elMockNavGrid || !state.lesson || !state.lesson.mockExam) return;
+    const items = state.lesson.mockExam;
+    elMockNavGrid.innerHTML = "";
+    items.forEach((q, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = q.isExample ? "VD" : String(items.slice(0, i + 1).filter((it) => !it.isExample).length);
+      const isAnswered = mockState.answers[i] !== null && mockState.answers[i] !== undefined;
+      btn.className = "mock-nav-btn" + (i === mockState.index ? " is-current" : "") + (isAnswered ? " is-answered" : "");
+      btn.title = q.isExample ? "Câu ví dụ" : "Câu " + btn.textContent;
+      btn.addEventListener("click", () => { mockState.index = i; renderMockQuestion(); });
+      elMockNavGrid.appendChild(btn);
+    });
   }
 
   btnMockPlay.addEventListener("click", () => {
