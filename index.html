@@ -268,7 +268,12 @@
   .mock-nav-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; }
   .mock-nav-tab { padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-alt); color: var(--ink-soft); font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
   .mock-nav-tab.is-active { background: var(--jade); border-color: var(--jade); color: #fff; }
-  .mock-nav-part-label { font-size: 10px; font-weight: 700; letter-spacing: .02em; color: var(--ink-faint); margin-bottom: 6px; }
+  .mock-nav-part-group:not(:first-child) { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .mock-nav-part-header { display: flex; align-items: center; gap: 4px; cursor: pointer; margin-bottom: 6px; user-select: none; }
+  .mock-nav-part-chevron { display: inline-block; font-size: 9px; line-height: 1; color: var(--ink-faint); transition: transform .15s ease; }
+  .mock-nav-part-group.is-collapsed .mock-nav-part-chevron { transform: rotate(-90deg); }
+  .mock-nav-part-group.is-collapsed .mock-nav-part-grid { display: none; }
+  .mock-nav-part-label { font-size: 10px; font-weight: 700; letter-spacing: .02em; color: var(--ink-faint); margin: 0; }
   .btn-disabled-look:disabled { opacity: 0.4; cursor: not-allowed; }
   .review-row-correct { border-left: 3px solid var(--jade); }
   .review-row-wrong { border-left: 3px solid var(--wrong); }
@@ -9358,15 +9363,23 @@ const LESSONS = [
     parts.sort((a, b) => a.part - b.part);
     parts.forEach((group) => {
       const wrap = document.createElement("div");
-      wrap.className = "mb-2.5";
+      wrap.className = "mock-nav-part-group";
       if (parts.length > 1) {
+        const header = document.createElement("div");
+        header.className = "mock-nav-part-header";
+        const chevron = document.createElement("span");
+        chevron.className = "mock-nav-part-chevron";
+        chevron.textContent = "\u25BE";
         const label = document.createElement("p");
         label.className = "mock-nav-part-label";
-        label.textContent = "第" + (MOCK_PART_HANZI[group.part] || group.part) + "部分";
-        wrap.appendChild(label);
+        label.textContent = "\u7B2C" + (MOCK_PART_HANZI[group.part] || group.part) + "\u90E8\u5206";
+        header.appendChild(chevron);
+        header.appendChild(label);
+        header.addEventListener("click", () => { wrap.classList.toggle("is-collapsed"); });
+        wrap.appendChild(header);
       }
       const grid = document.createElement("div");
-      grid.className = "grid grid-cols-6 sm:grid-cols-5 gap-1.5";
+      grid.className = "mock-nav-part-grid grid grid-cols-6 sm:grid-cols-5 gap-1.5";
       group.indices.forEach((i) => grid.appendChild(makeBtn(i, items[i])));
       wrap.appendChild(grid);
       elMockNavGrid.appendChild(wrap);
