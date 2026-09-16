@@ -266,6 +266,9 @@
   .mock-nav-btn.is-answered { background: var(--jade-soft); border-color: var(--jade); color: var(--jade); }
   .mock-nav-btn.is-current { background: var(--jade); border-color: var(--jade); color: #fff; box-shadow: 0 0 0 2px var(--jade-soft); }
   .mock-nav-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; }
+  .mock-nav-tab { padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-alt); color: var(--ink-soft); font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .mock-nav-tab.is-active { background: var(--jade); border-color: var(--jade); color: #fff; }
+  .mock-nav-part-label { font-size: 10px; font-weight: 700; letter-spacing: .02em; color: var(--ink-faint); margin-bottom: 6px; }
   .btn-disabled-look:disabled { opacity: 0.4; cursor: not-allowed; }
   .review-row-correct { border-left: 3px solid var(--jade); }
   .review-row-wrong { border-left: 3px solid var(--wrong); }
@@ -946,9 +949,10 @@
         </div>
         <div id="mock-active">
           <div class="mock-layout" style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-            <div id="mock-nav-panel" class="rounded-2xl border p-3" style="border-color:var(--border); background:var(--surface); width:100%; max-width:220px;">
+            <div id="mock-nav-panel" class="rounded-2xl border p-3" style="border-color:var(--border); background:var(--surface); width:100%; max-width:240px;">
               <p class="text-[11px] font-bold uppercase tracking-wide mb-2" style="color:var(--ink-faint);"><i class="fa-solid fa-list-check mr-1"></i>Cấu trúc đề thi</p>
-              <div id="mock-nav-grid" class="grid grid-cols-6 sm:grid-cols-5 gap-1.5"></div>
+              <div id="mock-nav-tabs" class="hidden flex flex-wrap gap-1.5 mb-2.5"></div>
+              <div id="mock-nav-grid"></div>
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 text-[11px]" style="color:var(--ink-faint);">
                 <span class="flex items-center gap-1.5"><span class="mock-nav-dot" style="background:var(--jade-soft); border:1px solid var(--jade);"></span>Đã làm</span>
                 <span class="flex items-center gap-1.5"><span class="mock-nav-dot" style="background:var(--surface-alt); border:1px solid var(--border);"></span>Chưa làm</span>
@@ -1524,60 +1528,60 @@ LEVEL_TESTS["YCT 1"] = {
 LEVEL_TESTS["HSK 1"] = {
   quiz: [
     // ===== 听力 Part 1 (Q1-5): photo + audio phrase, mark correct(✓) / wrong(✗) =====
-    { kind: "listen", prompt: "下雨。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q1.jpg" },
-    { kind: "listen", prompt: "这个鞋很漂亮。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q2.jpg" },
-    { kind: "listen", prompt: "我喜欢吃苹果。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q3.jpg" },
-    { kind: "listen", prompt: "他们在跳舞。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q4.jpg" },
-    { kind: "listen", prompt: "他在学校看书。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q5.jpg" },
+    { kind: "listen", prompt: "下雨。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q1.jpg" , section: "listen", part: 1 },
+    { kind: "listen", prompt: "这个鞋很漂亮。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q2.jpg" , section: "listen", part: 1 },
+    { kind: "listen", prompt: "我喜欢吃苹果。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q3.jpg" , section: "listen", part: 1 },
+    { kind: "listen", prompt: "他们在跳舞。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q4.jpg" , section: "listen", part: 1 },
+    { kind: "listen", prompt: "他在学校看书。", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-l1-q5.jpg" , section: "listen", part: 1 },
 
     // ===== 听力 Part 2 (Q6-10): audio phrase + 3 photos A/B/C =====
-    { kind: "listen", prompt: "现在几点？", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q6.jpg" },
-    { kind: "listen", prompt: "他坐飞机去北京。", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q7.jpg" },
-    { kind: "listen", prompt: "我家有五口人。", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q8.jpg" },
-    { kind: "listen", prompt: "今天天气很热。", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/test-hsk1-l2-q9.jpg" },
-    { kind: "listen", prompt: "她是医生。", options: ["A", "B", "C"], answer: "B", image: "assets/mockexam/test-hsk1-l2-q10.jpg" },
+    { kind: "listen", prompt: "现在几点？", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q6.jpg" , section: "listen", part: 2 },
+    { kind: "listen", prompt: "他坐飞机去北京。", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q7.jpg" , section: "listen", part: 2 },
+    { kind: "listen", prompt: "我家有五口人。", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-l2-q8.jpg" , section: "listen", part: 2 },
+    { kind: "listen", prompt: "今天天气很热。", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/test-hsk1-l2-q9.jpg" , section: "listen", part: 2 },
+    { kind: "listen", prompt: "她是医生。", options: ["A", "B", "C"], answer: "B", image: "assets/mockexam/test-hsk1-l2-q10.jpg" , section: "listen", part: 2 },
 
     // ===== 听力 Part 3 (Q11-15): shared 6-photo bank A-F, match dialogue to image =====
-    { kind: "listen", prompt: "男：你喝什么？女：我喝茶，谢谢。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-l3-bank.jpg" },
-    { kind: "listen", prompt: "女：你的衣服真好看。男：谢谢，这是我妈妈买的。", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-l3-bank.jpg" },
-    { kind: "listen", prompt: "男：你好，认识你很高兴。女：认识你我也很高兴。", options: ["A", "B", "C", "D", "E", "F"], answer: "F", image: "assets/mockexam/test-hsk1-l3-bank.jpg" },
-    { kind: "listen", prompt: "女：火车几点到？男：晚上八点。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-l3-bank.jpg" },
-    { kind: "listen", prompt: "男：这些菜真好吃。女：多吃一点儿。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-l3-bank.jpg" },
+    { kind: "listen", prompt: "男：你喝什么？女：我喝茶，谢谢。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-l3-bank.jpg" , section: "listen", part: 3 },
+    { kind: "listen", prompt: "女：你的衣服真好看。男：谢谢，这是我妈妈买的。", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-l3-bank.jpg" , section: "listen", part: 3 },
+    { kind: "listen", prompt: "男：你好，认识你很高兴。女：认识你我也很高兴。", options: ["A", "B", "C", "D", "E", "F"], answer: "F", image: "assets/mockexam/test-hsk1-l3-bank.jpg" , section: "listen", part: 3 },
+    { kind: "listen", prompt: "女：火车几点到？男：晚上八点。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-l3-bank.jpg" , section: "listen", part: 3 },
+    { kind: "listen", prompt: "男：这些菜真好吃。女：多吃一点儿。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-l3-bank.jpg" , section: "listen", part: 3 },
 
     // ===== 听力 Part 4 (Q16-20): audio narrative + printed text options (no images) =====
-    { kind: "listen", prompt: "我们下午三点在学校门口见面，你别迟到。问：他们几点见面？", options: ["A. 早上", "B. 中午", "C. 下午"], answer: "C" },
-    { kind: "listen", prompt: "我妹妹今年八岁了，在这个学校上一年级。问：妹妹在做什么？", options: ["A. 工作", "B. 上学", "C. 睡觉"], answer: "B" },
-    { kind: "listen", prompt: "外面在下雨，你出门要带伞。问：外面天气怎么样？", options: ["A. 下雨", "B. 晴天", "C. 下雪"], answer: "A" },
-    { kind: "listen", prompt: "这件衣服太贵了，我们去看看别的吧。问：这件衣服怎么样？", options: ["A. 很便宜", "B. 很漂亮", "C. 很贵"], answer: "C" },
-    { kind: "listen", prompt: "我爸爸是医生，他每天工作很忙。问：爸爸是做什么的？", options: ["A. 老师", "B. 医生", "C. 司机"], answer: "B" },
+    { kind: "listen", prompt: "我们下午三点在学校门口见面，你别迟到。问：他们几点见面？", options: ["A. 早上", "B. 中午", "C. 下午"], answer: "C" , section: "listen", part: 4 },
+    { kind: "listen", prompt: "我妹妹今年八岁了，在这个学校上一年级。问：妹妹在做什么？", options: ["A. 工作", "B. 上学", "C. 睡觉"], answer: "B" , section: "listen", part: 4 },
+    { kind: "listen", prompt: "外面在下雨，你出门要带伞。问：外面天气怎么样？", options: ["A. 下雨", "B. 晴天", "C. 下雪"], answer: "A" , section: "listen", part: 4 },
+    { kind: "listen", prompt: "这件衣服太贵了，我们去看看别的吧。问：这件衣服怎么样？", options: ["A. 很便宜", "B. 很漂亮", "C. 很贵"], answer: "C" , section: "listen", part: 4 },
+    { kind: "listen", prompt: "我爸爸是医生，他每天工作很忙。问：爸爸是做什么的？", options: ["A. 老师", "B. 医生", "C. 司机"], answer: "B" , section: "listen", part: 4 },
 
     // ===== 阅读 Part 1 (Q21-25): photo + printed word/pinyin, mark ✓/✗ =====
-    { kind: "read", prompt: "māo\n猫", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q21.jpg" },
-    { kind: "read", prompt: "shuìjiào\n睡觉", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q22.jpg" },
-    { kind: "read", prompt: "chī miànbāo\n吃面包", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q23.jpg" },
-    { kind: "read", prompt: "tī zú qiú\n踢足球", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q24.jpg" },
-    { kind: "read", prompt: "gāoxìng\n高兴", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q25.jpg" },
+    { kind: "read", prompt: "māo\n猫", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q21.jpg" , section: "read", part: 1 },
+    { kind: "read", prompt: "shuìjiào\n睡觉", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q22.jpg" , section: "read", part: 1 },
+    { kind: "read", prompt: "chī miànbāo\n吃面包", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q23.jpg" , section: "read", part: 1 },
+    { kind: "read", prompt: "tī zú qiú\n踢足球", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q24.jpg" , section: "read", part: 1 },
+    { kind: "read", prompt: "gāoxìng\n高兴", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-r1-q25.jpg" , section: "read", part: 1 },
 
     // ===== 阅读 Part 2 (Q26-30): shared 6-photo bank A-F, match sentence to image =====
-    { kind: "read", prompt: "他是我们的老师。", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-r2-bank.jpg" },
-    { kind: "read", prompt: "这是中国地图。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-r2-bank.jpg" },
-    { kind: "read", prompt: "服务员，我要一杯水。", options: ["A", "B", "C", "D", "E", "F"], answer: "C", image: "assets/mockexam/test-hsk1-r2-bank.jpg" },
-    { kind: "read", prompt: "妈妈每天很早起床。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-r2-bank.jpg" },
-    { kind: "read", prompt: "这个女孩儿很漂亮。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-r2-bank.jpg" },
+    { kind: "read", prompt: "他是我们的老师。", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-r2-bank.jpg" , section: "read", part: 2 },
+    { kind: "read", prompt: "这是中国地图。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-r2-bank.jpg" , section: "read", part: 2 },
+    { kind: "read", prompt: "服务员，我要一杯水。", options: ["A", "B", "C", "D", "E", "F"], answer: "C", image: "assets/mockexam/test-hsk1-r2-bank.jpg" , section: "read", part: 2 },
+    { kind: "read", prompt: "妈妈每天很早起床。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-r2-bank.jpg" , section: "read", part: 2 },
+    { kind: "read", prompt: "这个女孩儿很漂亮。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-r2-bank.jpg" , section: "read", part: 2 },
 
     // ===== 阅读 Part 3 (Q31-35): pure text matching (no images) =====
-    { kind: "read", prompt: "你叫什么名字？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "A" },
-    { kind: "read", prompt: "你好吗？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "E" },
-    { kind: "read", prompt: "你的生日是几月几号？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "D" },
-    { kind: "read", prompt: "你的工作是什么？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "C" },
-    { kind: "read", prompt: "这件衣服怎么样？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "F" },
+    { kind: "read", prompt: "你叫什么名字？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "A" , section: "read", part: 3 },
+    { kind: "read", prompt: "你好吗？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "E" , section: "read", part: 3 },
+    { kind: "read", prompt: "你的生日是几月几号？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "D" , section: "read", part: 3 },
+    { kind: "read", prompt: "你的工作是什么？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "C" , section: "read", part: 3 },
+    { kind: "read", prompt: "这件衣服怎么样？", options: ["A. 我叫王明。", "B. 谢谢你。", "C. 我是老师。", "D. 八月十号。", "E. 很好，你呢？", "F. 我很喜欢。"], answer: "F" , section: "read", part: 3 },
 
     // ===== 阅读 Part 4 (Q36-40): fill-in-blank with 6 given options (no images) =====
-    { kind: "read", prompt: "我每天坐公共汽车（___）学校。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "B" },
-    { kind: "read", prompt: "桌子上（___）有一本书和一支笔。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "E" },
-    { kind: "read", prompt: "我（___）弟弟都喜欢踢足球。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "C" },
-    { kind: "read", prompt: "你是学生（___）？", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "D" },
-    { kind: "read", prompt: "学校（___）有一个商店。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "F" },
+    { kind: "read", prompt: "我每天坐公共汽车（___）学校。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "B" , section: "read", part: 4 },
+    { kind: "read", prompt: "桌子上（___）有一本书和一支笔。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "E" , section: "read", part: 4 },
+    { kind: "read", prompt: "我（___）弟弟都喜欢踢足球。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "C" , section: "read", part: 4 },
+    { kind: "read", prompt: "你是学生（___）？", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "D" , section: "read", part: 4 },
+    { kind: "read", prompt: "学校（___）有一个商店。", options: ["A. 在", "B. 去", "C. 和", "D. 吗", "E. 都", "F. 前面"], answer: "F" , section: "read", part: 4 },
   ],
   audio: "assets/audio/test-hsk1-de2/mock-nghe.mp3",
 };
@@ -9160,6 +9164,7 @@ const LESSONS = [
   const elMockImage = document.getElementById("mock-image");
   const elMockOptions = document.getElementById("mock-options");
   const elMockNavGrid = document.getElementById("mock-nav-grid");
+  const elMockNavTabs = document.getElementById("mock-nav-tabs");
   const btnMockPrev = document.getElementById("btn-mock-prev");
   const btnMockNext = document.getElementById("btn-mock-next");
   const btnMockSubmit = document.getElementById("btn-mock-submit");
@@ -9175,6 +9180,7 @@ const LESSONS = [
   const MOCK_KIND_LABELS = { listen: "🎧 Nghe", read: "📖 Đọc", fill: "✏️ Điền từ", type: "⌨️ Gõ chữ" };
   const mockState = { index: 0, answers: [], optionOrder: [], startedAt: 0 };
   let mockAudioEl = null;
+  let mockNavActiveSection = null;
 
   function buildMockExam() {
     if (mockAudioEl) { mockAudioEl.pause(); mockAudioEl.currentTime = 0; mockAudioEl = null; }
@@ -9293,19 +9299,75 @@ const LESSONS = [
   // Thanh "Cấu trúc đề thi" bên trái (giống giao diện HSK chính thức): mỗi
   // số là 1 câu, bấm vào để nhảy thẳng tới câu đó. Trong lúc làm bài chỉ tô
   // màu "đã làm / chưa làm" — KHÔNG lộ đúng/sai (chỉ lộ sau khi bấm Nộp bài).
+  const MOCK_SECTION_LABELS = { listen: "听力", read: "阅读", write: "写作" };
+  const MOCK_PART_HANZI = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
   function renderMockNav() {
     if (!elMockNavGrid || !state.lesson || !state.lesson.mockExam) return;
     const items = state.lesson.mockExam;
-    elMockNavGrid.innerHTML = "";
-    items.forEach((q, i) => {
+    const numberOf = (i) => items.slice(0, i + 1).filter((it) => !it.isExample).length;
+    const makeBtn = (i, q) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.textContent = q.isExample ? "VD" : String(items.slice(0, i + 1).filter((it) => !it.isExample).length);
+      btn.textContent = q.isExample ? "例" : String(numberOf(i));
       const isAnswered = mockState.answers[i] !== null && mockState.answers[i] !== undefined;
       btn.className = "mock-nav-btn" + (i === mockState.index ? " is-current" : "") + (isAnswered ? " is-answered" : "");
-      btn.title = q.isExample ? "Câu ví dụ" : "Câu " + btn.textContent;
+      btn.title = q.isExample ? "Câu ví dụ" : "Câu " + numberOf(i);
       btn.addEventListener("click", () => { mockState.index = i; renderMockQuestion(); });
-      elMockNavGrid.appendChild(btn);
+      return btn;
+    };
+    const hasSections = items.some((q) => q.section);
+    if (!hasSections) {
+      if (elMockNavTabs) elMockNavTabs.classList.add("hidden");
+      elMockNavGrid.innerHTML = "";
+      const grid = document.createElement("div");
+      grid.className = "grid grid-cols-6 sm:grid-cols-5 gap-1.5";
+      items.forEach((q, i) => grid.appendChild(makeBtn(i, q)));
+      elMockNavGrid.appendChild(grid);
+      return;
+    }
+    const sectionsPresent = [];
+    items.forEach((q) => { if (q.section && !sectionsPresent.includes(q.section)) sectionsPresent.push(q.section); });
+    const currentSection = items[mockState.index] && items[mockState.index].section;
+    if (currentSection) mockNavActiveSection = currentSection;
+    if (!sectionsPresent.includes(mockNavActiveSection)) mockNavActiveSection = sectionsPresent[0];
+    if (elMockNavTabs) {
+      elMockNavTabs.classList.toggle("hidden", sectionsPresent.length < 2);
+      elMockNavTabs.innerHTML = "";
+      sectionsPresent.forEach((sec) => {
+        const tab = document.createElement("button");
+        tab.type = "button";
+        tab.textContent = MOCK_SECTION_LABELS[sec] || sec;
+        tab.className = "mock-nav-tab" + (sec === mockNavActiveSection ? " is-active" : "");
+        tab.addEventListener("click", () => {
+          mockNavActiveSection = sec;
+          const firstIdx = items.findIndex((q) => q.section === sec);
+          if (firstIdx !== -1) { mockState.index = firstIdx; renderMockQuestion(); } else { renderMockNav(); }
+        });
+        elMockNavTabs.appendChild(tab);
+      });
+    }
+    elMockNavGrid.innerHTML = "";
+    const parts = [];
+    items.forEach((q, i) => {
+      if (q.section !== mockNavActiveSection) return;
+      const partKey = q.part || 1;
+      let group = parts.find((p) => p.part === partKey);
+      if (!group) { group = { part: partKey, indices: [] }; parts.push(group); }
+      group.indices.push(i);
+    });
+    parts.sort((a, b) => a.part - b.part);
+    parts.forEach((group) => {
+      const wrap = document.createElement("div");
+      wrap.className = "mb-2.5";
+      const label = document.createElement("p");
+      label.className = "mock-nav-part-label";
+      label.textContent = "第" + (MOCK_PART_HANZI[group.part] || group.part) + "部分";
+      wrap.appendChild(label);
+      const grid = document.createElement("div");
+      grid.className = "grid grid-cols-6 sm:grid-cols-5 gap-1.5";
+      group.indices.forEach((i) => grid.appendChild(makeBtn(i, items[i])));
+      wrap.appendChild(grid);
+      elMockNavGrid.appendChild(wrap);
     });
   }
 
