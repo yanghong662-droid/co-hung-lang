@@ -11438,6 +11438,45 @@ const LESSONS = [
     }
   }
 
+  // Cấp/xoá quyền cho ĐÚNG 1 MỤC (1 cấp YCT / HSK / Test YCT / Test HSK)
+  // cho cả 1 lớp cùng lúc — khác với bulkSetPermission() ở chỗ chỉ ghi ĐÚNG
+  // 1 field (merge: true), KHÔNG đụng tới các cấp/mục khác học sinh đã
+  // được cấp trước đó. Dùng cho nút "Cấp mục này" / "Xoá mục này" ở mỗi
+  // nhóm lớp trong "Danh sách đã cấp quyền" — nhanh hơn phải dán lại email
+  // + tick lại toàn bộ checkbox mỗi khi chỉ cần bật/tắt 1 cấp cho cả lớp.
+  function bulkSetSingleItem(emails, fieldName, value, onDone, onError) {
+    if (!fbReady()) { alert(friendlyAuthError({ code: "auth/not-configured" })); return; }
+    const payload = { updatedAt: new Date().toISOString() };
+    payload[fieldName] = value;
+    const refs = emails.map((email) => window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(email));
+    if (typeof window.__fbDb.batch === "function") {
+      const batch = window.__fbDb.batch();
+      refs.forEach((ref) => batch.set(ref, payload, { merge: true }));
+      batch.commit().then(onDone).catch(onError);
+    } else {
+      Promise.all(refs.map((ref) => ref.set(payload, { merge: true }))).then(onDone).catch(onError);
+    }
+  }
+
+  // Danh sách <optgroup>/<option> cho select "Cấp/xoá 1 mục cho cả lớp":
+  // gộp cả 4 nhóm quyền hiện có (YCT học, HSK 3.0 học, Test YCT, Test HSK)
+  // thành 1 dropdown duy nhất, value = đúng tên field Firestore tương ứng.
+  const CLASS_ITEM_OPTIONS_HTML = (function () {
+    const groups = [
+      { label: "YCT (học)", prefix: "yct", count: YCT_LEVEL_COUNT },
+      { label: "HSK 3.0 (học)", prefix: "hsk", count: HSK_LEVEL_COUNT },
+      { label: "Test học phần YCT", prefix: "test_yct", count: YCT_LEVEL_COUNT },
+      { label: "Test học phần HSK 3.0", prefix: "test_hsk", count: HSK_LEVEL_COUNT },
+    ];
+    return groups
+      .map((g) => {
+        let opts = "";
+        for (let i = 1; i <= g.count; i++) opts += '<option value="' + g.prefix + i + '">' + g.label + " " + i + "</option>";
+        return '<optgroup label="' + g.label + '">' + opts + "</optgroup>";
+      })
+      .join("");
+  })();
+
   const elAdminBulkMsg = document.getElementById("admin-bulk-msg");
   wireHskSelectAll("admin-bulk-hsk-all", "admin-bulk-hsk-level");
   wireHskSelectAll("admin-bulk-yct-all", "admin-bulk-yct-level");
@@ -11556,6 +11595,26 @@ const LESSONS = [
         groupHeader.querySelector(".btn-class-disable").addEventListener("click", () => {
           if (!confirm('Tắt quyền truy cập của toàn bộ ' + g.rows.length + ' học sinh lớp "' + g.className + '"? (Vẫn giữ lại danh sách email + tên lớp để cấp lại sau này nếu cần)')) return;
           bulkSetPermission(emailsInGroup, [], [], undefined, undefined, undefined, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+        });
+
+        const itemRow = document.createElement("div");
+        itemRow.className = "basis-full flex flex-wrap items-center gap-2 px-1 pb-2 -mt-1";
+        itemRow.innerHTML =
+          '<span class="text-xs font-bold" style="color:var(--ink-faint);">Cấp/xoá 1 mục cho cả lớp:</span>' +
+          '<select class="class-item-select form-input rounded-lg px-2 py-1 text-xs">' + CLASS_ITEM_OPTIONS_HTML + "</select>" +
+          '<button type="button" class="btn-class-item-grant text-xs font-bold px-2.5 py-1 rounded-lg border" style="border-color:var(--jade); color:var(--jade);">Cấp mục này</button>' +
+          '<button type="button" class="btn-class-item-revoke text-xs font-bold px-2.5 py-1 rounded-lg border" style="border-color:var(--wrong); color:var(--wrong);">Xoá mục này</button>';
+        elAdminPermList.appendChild(itemRow);
+        const itemSelect = itemRow.querySelector(".class-item-select");
+        itemRow.querySelector(".btn-class-item-grant").addEventListener("click", () => {
+          const opt = itemSelect.selectedOptions[0];
+          if (!confirm('Cấp quyền "' + opt.textContent + '" cho ' + g.rows.length + ' học sinh lớp "' + g.className + '"?')) return;
+          bulkSetSingleItem(emailsInGroup, opt.value, true, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
+        });
+        itemRow.querySelector(".btn-class-item-revoke").addEventListener("click", () => {
+          const opt = itemSelect.selectedOptions[0];
+          if (!confirm('Xoá quyền "' + opt.textContent + '" của ' + g.rows.length + ' học sinh lớp "' + g.className + '"?')) return;
+          bulkSetSingleItem(emailsInGroup, opt.value, false, loadAllPermissions, (err) => alert("Lỗi: " + (err.message || err.code)));
         });
       }
 
