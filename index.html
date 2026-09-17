@@ -1756,12 +1756,12 @@ LEVEL_TESTS["YCT 4"] = {
     { kind: "read", prompt: "地址要写在信封的上面，不要写在中间，名字应该写在中间，懂了吗？\n★信封的中间写什么？", options: ["名字", "心情", "知识"], answer: "名字", section: "read", part: 4 },
     { kind: "read", prompt: "给孩子一块儿糖或者一个玩具，他就会觉得很幸福。但是想让大人觉得生活幸福就很难了。\n★小孩子更容易觉得：", options: ["紧张", "难过", "快乐"], answer: "快乐", section: "read", part: 4 },
     // ===== 书写 Part 1 (Q71-75, sắp xếp các từ/cụm từ thành câu đúng) =====
-    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["他", "把", "手表", "丢", "了。"], answer: "他把手表丢了。", isExample: true, section: "write", part: 1 },
-    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["她们俩是", "第一次", "见面。"], answer: "她们俩是第一次见面。", section: "write", part: 1 },
-    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["王医生", "和我们", "住", "一个楼。"], answer: "王医生和我们住一个楼。", section: "write", part: 1 },
-    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["请", "给我拿一张", "中国", "地图。"], answer: "请给我拿一张中国地图。", section: "write", part: 1 },
-    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["明天", "9点", "准时", "出发。"], answer: "明天9点准时出发。", section: "write", part: 1 },
-    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["猴子", "喜欢", "吃", "桃。"], answer: "猴子喜欢吃桃。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["他", "把", "手表", "丢", "了"], answer: "他把手表丢了。", isExample: true, section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["她们俩是", "第一次", "见面"], answer: "她们俩是第一次见面。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["王医生", "和我们", "住", "一个楼"], answer: "王医生和我们住一个楼。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["请", "给我拿一张", "中国", "地图"], answer: "请给我拿一张中国地图。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["明天", "9点", "准时", "出发"], answer: "明天9点准时出发。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["猴子", "喜欢", "吃", "桃"], answer: "猴子喜欢吃桃。", section: "write", part: 1 },
 
     // ===== 书写 Part 2 (Q76-80, đọc câu và phiên âm gợi ý, gõ đúng chữ Hán còn thiếu) =====
     { kind: "type", prompt: "guān\n你出去的时候，别忘了（　）灯。", options: [], answer: "关", isExample: true, section: "write", part: 2 },
@@ -9650,7 +9650,9 @@ const LESSONS = [
           chip.addEventListener("click", () => {
             workIdx.push(idx);
             if (workIdx.length === chunks.length) {
-              mockState.answers[mockState.index] = workIdx.map((i2) => chunks[i2]).join("");
+              const built = workIdx.map((i2) => chunks[i2]).join("");
+              const endPunct = (q.answer.match(/[\u3002\uFF01\uFF1F]+$/) || [""])[0];
+              mockState.answers[mockState.index] = built.endsWith(endPunct) || !endPunct ? built : built + endPunct;
             } else {
               mockState.answers[mockState.index] = null;
             }
