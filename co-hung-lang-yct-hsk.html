@@ -274,6 +274,13 @@
   .mock-nav-part-group.is-collapsed .mock-nav-part-chevron { transform: rotate(-90deg); }
   .mock-nav-part-group.is-collapsed .mock-nav-part-grid { display: none; }
   .mock-nav-part-label { font-size: 10px; font-weight: 700; letter-spacing: .02em; color: var(--ink-faint); margin: 0; }
+  .order-strip { display: flex; flex-wrap: wrap; gap: 8px; min-height: 52px; padding: 10px; border-radius: 12px; border: 1px dashed var(--border); background: var(--surface-alt); margin-bottom: 14px; }
+  .order-hint { color: var(--ink-faint); font-size: 13px; font-weight: 600; align-self: center; }
+  .order-pool { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .order-chip { padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); cursor: pointer; transition: background .15s ease, border-color .15s ease, transform .1s ease; }
+  .order-chip:hover:not(:disabled) { border-color: var(--jade); transform: translateY(-1px); }
+  .order-chip:disabled { cursor: default; }
+  .order-chip-picked { background: var(--jade); border-color: var(--jade); color: #fff; }
   .btn-disabled-look:disabled { opacity: 0.4; cursor: not-allowed; }
   .review-row-correct { border-left: 3px solid var(--jade); }
   .review-row-wrong { border-left: 3px solid var(--wrong); }
@@ -1748,6 +1755,21 @@ LEVEL_TESTS["YCT 4"] = {
     { kind: "read", prompt: "中国人把爱读书的人叫做“书虫”。因为我孙女特别喜欢看书，所以我们都叫她“小书虫”。\n★他孙女特别喜欢：", options: ["读书", "看电视", "上网聊天儿"], answer: "读书", section: "read", part: 4 },
     { kind: "read", prompt: "地址要写在信封的上面，不要写在中间，名字应该写在中间，懂了吗？\n★信封的中间写什么？", options: ["名字", "心情", "知识"], answer: "名字", section: "read", part: 4 },
     { kind: "read", prompt: "给孩子一块儿糖或者一个玩具，他就会觉得很幸福。但是想让大人觉得生活幸福就很难了。\n★小孩子更容易觉得：", options: ["紧张", "难过", "快乐"], answer: "快乐", section: "read", part: 4 },
+    // ===== 书写 Part 1 (Q71-75, sắp xếp các từ/cụm từ thành câu đúng) =====
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["他", "把", "手表", "丢", "了。"], answer: "他把手表丢了。", isExample: true, section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["她们俩是", "第一次", "见面。"], answer: "她们俩是第一次见面。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["王医生", "和我们", "住", "一个楼。"], answer: "王医生和我们住一个楼。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["请", "给我拿一张", "中国", "地图。"], answer: "请给我拿一张中国地图。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["明天", "9点", "准时", "出发。"], answer: "明天9点准时出发。", section: "write", part: 1 },
+    { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["猴子", "喜欢", "吃", "桃。"], answer: "猴子喜欢吃桃。", section: "write", part: 1 },
+
+    // ===== 书写 Part 2 (Q76-80, đọc câu và phiên âm gợi ý, gõ đúng chữ Hán còn thiếu) =====
+    { kind: "type", prompt: "guān\n你出去的时候，别忘了（　）灯。", options: [], answer: "关", isExample: true, section: "write", part: 2 },
+    { kind: "type", prompt: "xī\n中午没吃什么东（　），饿了吧？", options: [], answer: "西", section: "write", part: 2 },
+    { kind: "type", prompt: "diàn\n一边开车一边打（　）话，这样很危险。", options: [], answer: "电", section: "write", part: 2 },
+    { kind: "type", prompt: "huǒ\n坐15个小时的（　）车？真让人受不了。", options: [], answer: "火", section: "write", part: 2 },
+    { kind: "type", prompt: "yuè\n那个小弟弟说他妈妈做的饺子像（　）亮。", options: [], answer: "月", section: "write", part: 2 },
+    { kind: "type", prompt: "shàng\n她坐飞机去（　）海。", options: [], answer: "上", section: "write", part: 2 },
   ],
   audio: "assets/audio/yct4/yct4-de-listening.mp3",
 };
@@ -9494,7 +9516,7 @@ const LESSONS = [
   const elMockReviewList = document.getElementById("mock-review-list");
   const elFireworksCanvasMock = document.getElementById("fireworks-canvas-mock");
 
-  const MOCK_KIND_LABELS = { listen: "🎧 Nghe", read: "📖 Đọc", fill: "✏️ Điền từ", type: "⌨️ Gõ chữ" };
+  const MOCK_KIND_LABELS = { listen: "🎧 Nghe", read: "📖 Đọc", fill: "✏️ Điền từ", type: "⌨️ Gõ chữ", order: "🔤 Sắp xếp câu" };
   const mockState = { index: 0, answers: [], optionOrder: [], startedAt: 0 };
   let mockAudioEl = null;
   let mockNavActiveSection = null;
@@ -9505,7 +9527,8 @@ const LESSONS = [
     const scoredTotal = items.filter((q) => !q.isExample).length;
     mockState.index = 0;
     mockState.answers = items.map((q) => (q.isExample ? q.answer : null));
-    mockState.optionOrder = items.map((q) => shuffle(q.options));
+    mockState.optionOrder = items.map((q) => (q.kind === "order" ? shuffle(q.chunks.map((_, idx) => idx)) : shuffle(q.options || [])));
+    mockState.orderWork = items.map((q) => (q.kind === "order" ? (q.isExample ? q.chunks.map((_, idx) => idx) : []) : null));
     mockState.startedAt = Date.now();
     elMockTotal.textContent = scoredTotal;
     elMockResult.classList.add("hidden");
@@ -9533,7 +9556,7 @@ const LESSONS = [
     }
     elMockProgress.style.width = ((mockState.index + 1) / total) * 100 + "%";
     elMockKindBadge.textContent = (q.isExample ? "✅ Ví dụ (không tính điểm) — " : "") + (MOCK_KIND_LABELS[q.kind] || MOCK_KIND_LABELS.read);
-    const hasSharedAudio = q.kind !== "read" && !!(state.lesson && state.lesson.mockExamAudio);
+    const hasSharedAudio = q.kind === "listen" && !!(state.lesson && state.lesson.mockExamAudio);
     btnMockPlay.classList.toggle("hidden", q.kind === "read" || (!q.audioText && !q.audioSrc && !hasSharedAudio));
     if (q.boxWord) {
       elMockPrompt.innerHTML = '<span class="radical-word-row">' + q.boxWord.map((ch) => {
@@ -9581,6 +9604,63 @@ const LESSONS = [
         });
       }
       elMockOptions.appendChild(input);
+    } else if (q.kind === "order") {
+      const chunks = q.chunks || [];
+      if (!mockState.orderWork[mockState.index]) mockState.orderWork[mockState.index] = [];
+      const workIdx = mockState.orderWork[mockState.index];
+      const wrap = document.createElement("div");
+      wrap.style.gridColumn = "1 / -1";
+      const strip = document.createElement("div");
+      strip.className = "order-strip";
+      if (workIdx.length === 0) {
+        const hint = document.createElement("span");
+        hint.className = "order-hint";
+        hint.textContent = "Chạm vào các từ bên dưới theo đúng thứ tự…";
+        strip.appendChild(hint);
+      } else {
+        workIdx.forEach((idx, pos) => {
+          const chip = document.createElement("button");
+          chip.type = "button";
+          chip.textContent = chunks[idx];
+          chip.className = "order-chip order-chip-picked";
+          if (q.isExample) {
+            chip.disabled = true;
+          } else {
+            chip.addEventListener("click", () => {
+              workIdx.splice(pos, 1);
+              mockState.answers[mockState.index] = null;
+              renderMockQuestion();
+            });
+          }
+          strip.appendChild(chip);
+        });
+      }
+      wrap.appendChild(strip);
+      const pool = document.createElement("div");
+      pool.className = "order-pool";
+      mockState.optionOrder[mockState.index].forEach((idx) => {
+        if (workIdx.includes(idx)) return;
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.textContent = chunks[idx];
+        chip.className = "order-chip";
+        if (q.isExample) {
+          chip.disabled = true;
+        } else {
+          chip.addEventListener("click", () => {
+            workIdx.push(idx);
+            if (workIdx.length === chunks.length) {
+              mockState.answers[mockState.index] = workIdx.map((i2) => chunks[i2]).join("");
+            } else {
+              mockState.answers[mockState.index] = null;
+            }
+            renderMockQuestion();
+          });
+        }
+        pool.appendChild(chip);
+      });
+      wrap.appendChild(pool);
+      elMockOptions.appendChild(wrap);
     } else {
       mockState.optionOrder[mockState.index].forEach((opt) => {
         const btn = document.createElement("button");
