@@ -281,6 +281,8 @@
   .order-chip:hover:not(:disabled) { border-color: var(--jade); transform: translateY(-1px); }
   .order-chip:disabled { cursor: default; }
   .order-chip-picked { background: var(--jade); border-color: var(--jade); color: #fff; }
+  .type-blank-ruby { ruby-position: over; }
+  .type-blank-ruby rt { font-size: 12px; font-weight: 700; color: var(--ink-faint); user-select: none; }
   .btn-disabled-look:disabled { opacity: 0.4; cursor: not-allowed; }
   .review-row-correct { border-left: 3px solid var(--jade); }
   .review-row-wrong { border-left: 3px solid var(--wrong); }
@@ -1764,12 +1766,12 @@ LEVEL_TESTS["YCT 4"] = {
     { kind: "order", prompt: "📝 Sắp xếp các từ dưới đây thành câu hoàn chỉnh", chunks: ["猴子", "喜欢", "吃", "桃"], answer: "猴子喜欢吃桃。", section: "write", part: 1 },
 
     // ===== 书写 Part 2 (Q76-80, đọc câu và phiên âm gợi ý, gõ đúng chữ Hán còn thiếu) =====
-    { kind: "type", prompt: "guān\n你出去的时候，别忘了（　）灯。", options: [], answer: "关", isExample: true, section: "write", part: 2 },
-    { kind: "type", prompt: "xī\n中午没吃什么东（　），饿了吧？", options: [], answer: "西", section: "write", part: 2 },
-    { kind: "type", prompt: "diàn\n一边开车一边打（　）话，这样很危险。", options: [], answer: "电", section: "write", part: 2 },
-    { kind: "type", prompt: "huǒ\n坐15个小时的（　）车？真让人受不了。", options: [], answer: "火", section: "write", part: 2 },
-    { kind: "type", prompt: "yuè\n那个小弟弟说他妈妈做的饺子像（　）亮。", options: [], answer: "月", section: "write", part: 2 },
-    { kind: "type", prompt: "shàng\n她坐飞机去（　）海。", options: [], answer: "上", section: "write", part: 2 },
+    { kind: "type", prompt: "你出去的时候，别忘了（　）灯。", pinyinHint: "guān", options: [], answer: "关", isExample: true, section: "write", part: 2 },
+    { kind: "type", prompt: "中午没吃什么东（　），饿了吧？", pinyinHint: "xī", options: [], answer: "西", section: "write", part: 2 },
+    { kind: "type", prompt: "一边开车一边打（　）话，这样很危险。", pinyinHint: "diàn", options: [], answer: "电", section: "write", part: 2 },
+    { kind: "type", prompt: "坐15个小时的（　）车？真让人受不了。", pinyinHint: "huǒ", options: [], answer: "火", section: "write", part: 2 },
+    { kind: "type", prompt: "那个小弟弟说他妈妈做的饺子像（　）亮。", pinyinHint: "yuè", options: [], answer: "月", section: "write", part: 2 },
+    { kind: "type", prompt: "她坐飞机去（　）海。", pinyinHint: "shàng", options: [], answer: "上", section: "write", part: 2 },
   ],
   audio: "assets/audio/yct4/yct4-de-listening.mp3",
 };
@@ -9573,6 +9575,16 @@ const LESSONS = [
           '<span class="radical-box' + (ch.blank ? ' radical-box-blank' : '') + '">' + boxInner + '</span>' +
           '</span>';
       }).join('') + '</span>';
+    } else if (q.pinyinHint) {
+      const marker = "（　）";
+      const idx = q.prompt.indexOf(marker);
+      if (idx === -1) {
+        elMockPrompt.textContent = q.prompt;
+      } else {
+        const before = q.prompt.slice(0, idx);
+        const after = q.prompt.slice(idx + marker.length);
+        elMockPrompt.innerHTML = before + '<ruby class="type-blank-ruby">' + marker + '<rt>' + q.pinyinHint + '</rt></ruby>' + after;
+      }
     } else {
       elMockPrompt.textContent = q.prompt;
     }
@@ -9847,7 +9859,7 @@ const LESSONS = [
       row.className = "rounded-lg px-3 py-2.5 text-sm " + (isCorrect ? "review-row-correct" : "review-row-wrong");
       row.style.background = "var(--surface-alt)";
       row.innerHTML =
-        '<p class="font-semibold mb-1">' + displayNum + ". " + (MOCK_KIND_LABELS[q.kind] || "") + " — " + q.prompt + "</p>" +
+        '<p class="font-semibold mb-1">' + displayNum + ". " + (MOCK_KIND_LABELS[q.kind] || "") + " — " + q.prompt + (q.pinyinHint ? " (" + q.pinyinHint + ")" : "") + "</p>" +
         '<p style="color:' + (isCorrect ? "var(--jade)" : "var(--wrong)") + ';">' +
         "Học sinh chọn: <b>" + (mockState.answers[i] || "—") + "</b>" +
         (isCorrect ? "" : " · Đáp án đúng: <b>" + q.answer + "</b>") +
