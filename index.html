@@ -596,6 +596,9 @@
                 <i class="fa-solid fa-volume-high text-lg"></i>
               </button>
               <span id="card-hanzi" class="font-hanzi font-bold hanzi-display leading-none" style="font-size:clamp(4rem,13vw,6.5rem); color:var(--jade);"></span>
+              <div id="stroke-order-section" class="hidden">
+                <div id="stroke-order-grid" class="flex flex-wrap gap-2 justify-center"></div>
+              </div>
               <p class="text-xs sm:text-sm font-medium" style="color:var(--ink-faint);">Chạm để xem pinyin &amp; nghĩa</p>
             </div>
             <div class="flip-face flip-face-back border card-shadow-lg px-6 py-6 gap-3" style="background:var(--surface); border-color:var(--border);" id="card-back">
@@ -621,15 +624,6 @@
           <button type="button" id="btn-next" aria-label="Từ tiếp theo" class="w-11 h-11 shrink-0 rounded-full border grid place-items-center card-shadow" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
-        </div>
-
-        <!-- HƯỚNG DẪN VIẾT NÉT (hoạt hình thứ tự nét chữ Hán của từ đang xem,
-             dựng bằng thư viện Hanzi Writer — chỉ bật cho YCT 1 lúc này) -->
-        <div id="stroke-order-section" class="pt-2 hidden">
-          <p class="text-xs font-bold uppercase tracking-wide mb-3" style="color:var(--accent);">
-            <i class="fa-solid fa-pen-nib mr-1"></i>Hướng dẫn viết nét
-          </p>
-          <div id="stroke-order-grid" class="flex flex-wrap gap-3 justify-center"></div>
         </div>
 
         <!-- DANH SÁCH TỪ VỰNG (xem toàn bộ từ của bài trong 1 danh sách, bên
@@ -8189,12 +8183,12 @@ const LESSONS = [
       const box = document.createElement("div");
       box.className = "stroke-char-box";
       box.id = "stroke-char-" + i;
-      box.style.width = "84px";
-      box.style.height = "84px";
+      box.style.width = "64px";
+      box.style.height = "64px";
       elStrokeGrid.appendChild(box);
       try {
         const writer = HanziWriter.create(box.id, ch, {
-          width: 84, height: 84, padding: 6,
+          width: 64, height: 64, padding: 4,
           strokeColor: "#C1652E", radicalColor: "#1F4B3D",
           strokeAnimationSpeed: 1, delayBetweenStrokes: 250, showOutline: true,
         });
