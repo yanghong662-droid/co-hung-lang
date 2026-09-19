@@ -19,6 +19,7 @@
   };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
 
 <!-- ============================================================
      FIREBASE — ĐĂNG NHẬP EMAIL & PHÂN QUYỀN HỌC SINH
@@ -363,6 +364,13 @@
 
   /* ---------- Đăng nhập / Phân quyền học sinh ---------- */
   .auth-area { flex-shrink: 0; margin-left: auto; }
+  .stroke-char-box {
+    position: relative; border-radius: 12px; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+  }
+  .stroke-char-box::before, .stroke-char-box::after { content: ""; position: absolute; background: var(--border); }
+  .stroke-char-box::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+  .stroke-char-box::after { top: 50%; left: 0; right: 0; height: 1px; }
   .btn-auth-login {
     background: var(--jade); color: #F6FBF8; font-weight: 800; font-size: 0.8125rem;
     padding: 0.55rem 1.1rem; border-radius: 999px; display: inline-flex; align-items: center; gap: 0.4rem;
@@ -613,6 +621,15 @@
           <button type="button" id="btn-next" aria-label="Từ tiếp theo" class="w-11 h-11 shrink-0 rounded-full border grid place-items-center card-shadow" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
+        </div>
+
+        <!-- HƯỚNG DẪN VIẾT NÉT (hoạt hình thứ tự nét chữ Hán của từ đang xem,
+             dựng bằng thư viện Hanzi Writer — chỉ bật cho YCT 1 lúc này) -->
+        <div id="stroke-order-section" class="pt-2 hidden">
+          <p class="text-xs font-bold uppercase tracking-wide mb-3" style="color:var(--accent);">
+            <i class="fa-solid fa-pen-nib mr-1"></i>Hướng dẫn viết nét
+          </p>
+          <div id="stroke-order-grid" class="flex flex-wrap gap-3 justify-center"></div>
         </div>
 
         <!-- DANH SÁCH TỪ VỰNG (xem toàn bộ từ của bài trong 1 danh sách, bên
@@ -8149,7 +8166,42 @@ const LESSONS = [
   const elDeckCounter = document.getElementById("deck-counter");
   const elDeckDots = document.getElementById("deck-dots");
   const elVocabList = document.getElementById("vocab-list");
+  const elStrokeSection = document.getElementById("stroke-order-section");
+  const elStrokeGrid = document.getElementById("stroke-order-grid");
 
+  function STROKE_ORDER_SCOPE(lesson) {
+    return !!lesson && lesson.program === "yct" && lesson.level === "YCT 1";
+  }
+  function renderStrokeOrder(w) {
+    if (!elStrokeSection || !elStrokeGrid) return;
+    if (!STROKE_ORDER_SCOPE(state.lesson) || typeof HanziWriter === "undefined" || !w || !w.hanzi) {
+      elStrokeSection.classList.add("hidden");
+      return;
+    }
+    const chars = Array.from(w.hanzi).filter((c) => /[\u4e00-\u9fff]/.test(c));
+    if (chars.length === 0) {
+      elStrokeSection.classList.add("hidden");
+      return;
+    }
+    elStrokeGrid.innerHTML = "";
+    elStrokeSection.classList.remove("hidden");
+    chars.forEach((ch, i) => {
+      const box = document.createElement("div");
+      box.className = "stroke-char-box";
+      box.id = "stroke-char-" + i;
+      box.style.width = "84px";
+      box.style.height = "84px";
+      elStrokeGrid.appendChild(box);
+      try {
+        const writer = HanziWriter.create(box.id, ch, {
+          width: 84, height: 84, padding: 6,
+          strokeColor: "#C1652E", radicalColor: "#1F4B3D",
+          strokeAnimationSpeed: 1, delayBetweenStrokes: 250, showOutline: true,
+        });
+        writer.animateCharacter();
+      } catch (e) { /* ký tự hiếm chưa có trong bộ dữ liệu nét mở — bỏ qua */ }
+    });
+  }
   function renderDots() {
     elDeckDots.innerHTML = "";
     if (state.lesson.vocabulary.length > 60) return; // bộ từ ôn tập gộp quá lớn — chỉ cần xem số thứ tự ở "deck-counter", không cần chấm tròn
@@ -8186,6 +8238,7 @@ const LESSONS = [
     elExPinyin.textContent = w.example.pinyin;
     elExMeaning.textContent = w.example.meaning;
     elDeckCounter.textContent = (state.deckIndex + 1) + " / " + words.length;
+    renderStrokeOrder(w);
     renderDots();
     renderVocabList();
   }
