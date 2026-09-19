@@ -362,7 +362,7 @@
   .qedit-row { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 0.85rem; }
 
   /* ---------- Đăng nhập / Phân quyền học sinh ---------- */
-  .auth-area { flex-shrink: 0; }
+  .auth-area { flex-shrink: 0; margin-left: auto; }
   .btn-auth-login {
     background: var(--jade); color: #F6FBF8; font-weight: 800; font-size: 0.8125rem;
     padding: 0.55rem 1.1rem; border-radius: 999px; display: inline-flex; align-items: center; gap: 0.4rem;
@@ -445,7 +445,7 @@
         </span>
       </button>
 
-      <nav class="hidden lg:flex flex-wrap items-center gap-6">
+      <nav class="hidden lg:flex items-center gap-6">
         <button type="button" id="btn-nav-home" class="nav-link is-active text-sm font-bold">Trang chủ</button>
         <div id="nav-yct-wrap" class="nav-dropdown-wrap">
           <button type="button" id="btn-nav-yct" class="nav-link text-sm font-bold flex items-center gap-1">YCT 1-6 <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
@@ -479,7 +479,6 @@
           </div>
         </div>
         <button type="button" id="btn-nav-review" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-shuffle text-[11px]"></i> Ôn tập tổng hợp</button>
-        <div class="nav-line-break" aria-hidden="true"></div>
         <div id="nav-testhub-wrap" class="nav-dropdown-wrap">
           <button type="button" id="btn-nav-test-hub" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-list-check text-[11px]"></i> Test học phần <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
           <div id="nav-testhub-panel" class="nav-dropdown-panel hidden">
