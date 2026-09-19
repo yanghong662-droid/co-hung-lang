@@ -7808,6 +7808,9 @@ const LESSONS = [
     // trình HSK 3.0 (kể cả bài Ôn tập tổng hợp gộp từ HSK, vì hàm
     // buildReviewLesson() gán lesson.program = "hsk3" cho nhóm này).
     btnSubtabVideo.classList.toggle("hidden", lesson.program === "hsk3");
+    // YCT 1-6 không còn dạng ⑥ "Đề thi mô phỏng" trong tab Luyện tập — ẩn nút
+    // (khung #subpanel-mock vẫn giữ nguyên vì HSK 3.0 và Test học phần còn dùng).
+    btnSubtabMock.classList.toggle("hidden", lesson.program === "yct");
     switchListenSubtab("fill");
     matchState.needsRebuild = true; // bài học đổi → lần sau mở "Nối thẻ" sẽ tạo ván mới
 
@@ -10245,7 +10248,7 @@ const LESSONS = [
       if (vids.length > 0) parts.push("video");
     }
     if (sentCount >= 2) parts.push("readlisten");
-    if (lesson && Array.isArray(lesson.mockExam) && lesson.mockExam.length > 0) parts.push("mockexam");
+    if (lesson && lesson.program !== "yct" && Array.isArray(lesson.mockExam) && lesson.mockExam.length > 0) parts.push("mockexam");
     return parts;
   }
 
