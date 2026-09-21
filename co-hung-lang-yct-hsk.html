@@ -1970,6 +1970,77 @@ LEVEL_TESTS["HSK 1"] = {
   audio: "assets/audio/test-hsk1-de2/mock-nghe.mp3",
 };
 
+// =====================================================================
+// "TEST TỔNG HỢP" trong mục Ôn tập tổng hợp (Bước 2 · thẻ thứ 5). Khoá là key của REVIEW_GROUPS
+// (yct / hsk1 / hsk2 / hsk3). Cấp nào chưa khai báo ở đây thì thẻ vẫn hiện nhưng báo "đang biên soạn".
+// Cấu trúc mỗi câu y hệt LEVEL_TESTS (dùng chung bộ máy Đề thi mô phỏng).
+// =====================================================================
+const REVIEW_TESTS = {
+  hsk1: {
+    quiz: [
+      // ===== 听力 Part 1 (Q1-5): tranh + nghe, đánh dấu đúng (✓) / sai (✗) =====
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-th-l1-ex1.jpg", isExample: true, section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/test-hsk1-th-l1-ex2.jpg", isExample: true, section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/test-hsk1-th-l1-q1.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-th-l1-q2.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-th-l1-q3.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/test-hsk1-th-l1-q4.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/test-hsk1-th-l1-q5.jpg", section: "listen", part: 1 },
+      // ===== 听力 Part 2 (Q6-10): nghe + chọn 1 trong 3 tranh A/B/C =====
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-th-l2-ex.jpg", isExample: true, section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/test-hsk1-th-l2-q6.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/test-hsk1-th-l2-q7.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "B", image: "assets/mockexam/test-hsk1-th-l2-q8.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/test-hsk1-th-l2-q9.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "B", image: "assets/mockexam/test-hsk1-th-l2-q10.jpg", section: "listen", part: 2 },
+      // ===== 听力 Part 3 (Q11-15): bảng 6 tranh A-F dùng chung =====
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "C", image: "assets/mockexam/test-hsk1-th-l3-bank.jpg", isExample: true, section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-th-l3-bank.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-th-l3-bank.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-th-l3-bank.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-th-l3-bank.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "F", image: "assets/mockexam/test-hsk1-th-l3-bank.jpg", section: "listen", part: 3 },
+      // ===== 听力 Part 4 (Q16-20): nghe + chọn đáp án in sẵn (không tranh) =====
+      { kind: "listen", prompt: "Xiàwǔ wǒ qù shāngdiàn, wǒ xiǎng mǎi yìxiē shuǐguǒ.\n下午我去商店，我想买一些水果。\nTā xiàwǔ qù nǎlǐ?\n问：她下午去哪里？", options: ["商店", "医院", "学校"], answer: "商店", isExample: true, section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["星期二", "星期三", "星期五"], answer: "星期三", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["开车", "做饭", "说汉语"], answer: "说汉语", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["老师", "妈妈", "朋友"], answer: "老师", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["4", "7", "10"], answer: "4", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["很好", "很热", "很冷"], answer: "很冷", section: "listen", part: 4 },
+      // ===== 阅读 Part 1 (Q21-25): tranh + từ, đánh dấu ✓/✗ =====
+      { kind: "read", prompt: "diànshì\n电视", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/test-hsk1-th-r1-ex1.jpg", isExample: true, section: "read", part: 1 },
+      { kind: "read", prompt: "fēijī\n飞机", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-th-r1-ex2.jpg", isExample: true, section: "read", part: 1 },
+      { kind: "read", prompt: "māo\n猫", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/test-hsk1-th-r1-q21.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "yīfu\n衣服", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-th-r1-q22.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "shuǐguǒ\n水果", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-th-r1-q23.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "zuò\n坐", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/test-hsk1-th-r1-q24.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "mǐfàn\n米饭", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/test-hsk1-th-r1-q25.jpg", section: "read", part: 1 },
+      // ===== 阅读 Part 2 (Q26-30): bảng 6 tranh A-F dùng chung =====
+      { kind: "read", prompt: "Wǒ hěn xǐhuan zhè běn shū.\n我很喜欢这本书。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/test-hsk1-th-r2-bank.jpg", isExample: true, section: "read", part: 2 },
+      { kind: "read", prompt: "Tā zài shuìjiào ne.\n他在睡觉呢。", options: ["A", "B", "C", "D", "E", "F"], answer: "F", image: "assets/mockexam/test-hsk1-th-r2-bank.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Tā míngtiān zuò huǒchē qù.\n她明天坐火车去。", options: ["A", "B", "C", "D", "E", "F"], answer: "C", image: "assets/mockexam/test-hsk1-th-r2-bank.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Tā zài yīyuàn gōngzuò, shì ge yīshēng.\n他在医院工作，是个医生。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/test-hsk1-th-r2-bank.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Wǒ xiǎng hē yì bēi chá.\n我想喝一杯茶。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/test-hsk1-th-r2-bank.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Tāmen shì tóngxué.\n他们是同学。", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/test-hsk1-th-r2-bank.jpg", section: "read", part: 2 },
+      // ===== 阅读 Part 3 (Q31-35): ghép câu hỏi với câu trả lời (chữ) =====
+      { kind: "read", prompt: "Nǐ hē shuǐ ma?\n你喝水吗？", options: ["中国人。", "7点了。", "苹果。", "20块。", "坐出租车。", "好的，谢谢！"], answer: "好的，谢谢！", isExample: true, section: "read", part: 3 },
+      { kind: "read", prompt: "Nǐ zěnme qù nàge fàndiàn?\n你怎么去那个饭店？", options: ["中国人。", "7点了。", "苹果。", "20块。", "坐出租车。", "好的，谢谢！"], answer: "坐出租车。", section: "read", part: 3 },
+      { kind: "read", prompt: "Xiànzài jǐ diǎn le?\n现在几点了？", options: ["中国人。", "7点了。", "苹果。", "20块。", "坐出租车。", "好的，谢谢！"], answer: "7点了。", section: "read", part: 3 },
+      { kind: "read", prompt: "Nǐ ài chī shénme shuǐguǒ?\n你爱吃什么水果？", options: ["中国人。", "7点了。", "苹果。", "20块。", "坐出租车。", "好的，谢谢！"], answer: "苹果。", section: "read", part: 3 },
+      { kind: "read", prompt: "Zhège xiǎo bēizi duōshao qián?\n这个小杯子多少钱？", options: ["中国人。", "7点了。", "苹果。", "20块。", "坐出租车。", "好的，谢谢！"], answer: "20块。", section: "read", part: 3 },
+      { kind: "read", prompt: "Nǐ shì nǎ guó rén?\n你是哪国人？", options: ["中国人。", "7点了。", "苹果。", "20块。", "坐出租车。", "好的，谢谢！"], answer: "中国人。", section: "read", part: 3 },
+      // ===== 阅读 Part 4 (Q36-40): điền từ với 6 từ cho sẵn (chữ) =====
+      { kind: "read", prompt: "Nǐ jiào shénme\n你叫什么（　　）？", options: ["家", "火车站", "对不起", "名字", "看见", "学习"], answer: "名字", isExample: true, section: "read", part: 4 },
+      { kind: "read", prompt: "Tā shàngwǔ zài xuéxiào ＿＿.\n她上午在学校（　　）。", options: ["家", "火车站", "对不起", "名字", "看见", "学习"], answer: "学习", section: "read", part: 4 },
+      { kind: "read", prompt: "Wǒ 7 diǎn 30 fēn qù ＿＿, 10 diǎn qián huílai.\n我7点30分去（　　），10点前回来。", options: ["家", "火车站", "对不起", "名字", "看见", "学习"], answer: "火车站", section: "read", part: 4 },
+      { kind: "read", prompt: "Wéi, Zhāng xiānsheng zài ＿＿ ma?\n喂，张先生在（　　）吗？", options: ["家", "火车站", "对不起", "名字", "看见", "学习"], answer: "家", section: "read", part: 4 },
+      { kind: "read", prompt: "＿＿, wǒ jīntiān bù néng hé nǐ qù kàn yīshēng le.\n女：（　　），我今天不能和你去看医生了。\nMéi guānxi.\n男：没关系。", options: ["家", "火车站", "对不起", "名字", "看见", "学习"], answer: "对不起", section: "read", part: 4 },
+      { kind: "read", prompt: "Nǐ ＿＿ bàba de yīfu le ma?\n男：你（　　）爸爸的衣服了吗？\nZài zhuōzi hòumiàn.\n女：在桌子后面。", options: ["家", "火车站", "对不起", "名字", "看见", "学习"], answer: "看见", section: "read", part: 4 },
+    ],
+    audio: "assets/audio/test-hsk1-th/mock-nghe.mp3",
+  },
+};
+
 const LESSONS = [
   // =====================================================================
   // NHÓM "YCT" — nội dung biên soạn trực tiếp từ sách "YCT标准教程 Standard
@@ -7899,9 +7970,8 @@ const LESSONS = [
     { key: "vocab", label: "Chỉ Từ vựng", icon: "fa-solid fa-id-card", desc: "Ôn Thẻ ghi nhớ + Nối thẻ + Nghe hiểu bằng từ vựng gộp." },
     { key: "grammar", label: "Chỉ Ngữ pháp", icon: "fa-solid fa-book", desc: "Xem lại toàn bộ điểm ngữ pháp đã học, xếp thành danh sách." },
     { key: "quiz", label: "Chỉ Điền từ", icon: "fa-solid fa-pen-to-square", desc: "Trắc nghiệm điền từ gộp, chấm điểm tự động theo thang 100." },
-    // comingSoon: chưa có nội dung — chọn được nhưng nút "Bắt đầu ôn tập" bị khoá và hiện thông báo "đang biên soạn".
-    // Khi có nội dung: xoá cờ comingSoon rồi bổ sung cách dựng bài trong buildReviewLesson().
-    { key: "test", label: "Test tổng hợp", icon: "fa-solid fa-list-check", desc: "Bài test tổng hợp cho cấp độ đã chọn (đang biên soạn).", comingSoon: true },
+    // Nội dung lấy từ REVIEW_TESTS[key nhóm]; nhóm nào chưa có thì chọn được nhưng nút "Bắt đầu ôn tập" bị khoá và hiện thông báo "đang biên soạn".
+    { key: "test", label: "Test tổng hợp", icon: "fa-solid fa-list-check", desc: "Bài test tổng hợp Nghe + Đọc cho cấp độ đã chọn, chấm điểm tự động." },
   ];
   const REVIEW_SAMPLE_SIZE = 30; // gộp cả trăm câu/từ thì quá dài — mỗi buổi chỉ lấy ngẫu nhiên tối đa 30, bấm ôn lại sẽ ra bộ khác
 
@@ -8030,14 +8100,44 @@ const LESSONS = [
     Array.from(elReviewCategoryGrid.children).forEach((c) => c.classList.remove("review-card-selected"));
     btnEl.classList.add("review-card-selected");
     const meta = REVIEW_CATEGORIES.find((c) => c.key === categoryKey);
-    const soon = !!(meta && meta.comingSoon);
+    const soon = categoryKey === "test" && !(REVIEW_TESTS[reviewState.groupKey] && REVIEW_TESTS[reviewState.groupKey].quiz.length);
     if (elReviewCategoryNote) elReviewCategoryNote.classList.toggle("hidden", !soon);
     btnReviewStart.disabled = soon;
     btnReviewStart.classList.toggle("btn-disabled-look", soon);
   }
 
+  // Cờ: đang mở "Test tổng hợp" (dùng lại màn hình Test học phần) — để nút Quay lại về đúng trang Ôn tập tổng hợp.
+  let reviewTestActive = false;
+  function enterReviewTest(groupKey) {
+    const group = getReviewGroupById(groupKey);
+    const data = REVIEW_TESTS[groupKey];
+    if (!group || !data || !data.quiz || !data.quiz.length) return;
+    const lesson = {
+      id: "__reviewtest__" + groupKey,
+      program: group.key === "yct" ? "yct" : "hsk3",
+      permLevel: group.permLevel,
+      level: group.label + " · Ôn tập",
+      title: "Test tổng hợp (" + group.label + ")",
+      mockExam: data.quiz,
+      mockExamAudio: data.audio || "",
+      isReview: true, // không tính vào tiến độ từng bài học (giống các buổi Ôn tập tổng hợp khác)
+    };
+    if (!ensureProgramAccess(lesson.program, () => enterReviewTest(groupKey), lesson.permLevel)) return;
+    ensureMockPanelAtHome();
+    document.getElementById("test-detail-badge").innerHTML = '<i class="fa-solid fa-list-check mr-1"></i>' + group.label + " · Ôn tập";
+    document.getElementById("test-detail-title").textContent = "Test tổng hợp — " + group.label;
+    const body = document.getElementById("test-detail-body");
+    body.innerHTML = "";
+    state.lesson = lesson;
+    reviewTestActive = true;
+    moveMockExamPanelInto(body);
+    buildMockExam();
+    showView("testDetail");
+  }
+
   btnReviewStart.addEventListener("click", () => {
     if (!reviewState.groupKey || !reviewState.category) return;
+    if (reviewState.category === "test") { enterReviewTest(reviewState.groupKey); return; }
     const lesson = buildReviewLesson(reviewState.groupKey, reviewState.category);
     enterLesson(lesson, "reviewSetup");
     const startTab = reviewState.category === "grammar" ? "grammar" : reviewState.category === "quiz" ? "listen" : "vocab";
@@ -8128,6 +8228,7 @@ const LESSONS = [
   }
 
   function enterTestLevel(folder, level) {
+    reviewTestActive = false;
     if (!ensureTestAccess(folder.id, level, () => enterTestLevel(folder, level))) return;
     document.getElementById("test-detail-badge").innerHTML = '<i class="fa-solid fa-list-check mr-1"></i>' + folder.name;
     document.getElementById("test-detail-title").textContent = "Test tổng hợp — " + level;
@@ -8178,7 +8279,7 @@ const LESSONS = [
   })();
   document.getElementById("btn-back-home-testhub").addEventListener("click", () => showView("home"));
   document.getElementById("btn-back-testhub").addEventListener("click", () => showView("home"));
-  document.getElementById("btn-back-testlevels").addEventListener("click", () => { if (testState.folder) renderTestLevelGrid(testState.folder); showView("testLevels"); });
+  document.getElementById("btn-back-testlevels").addEventListener("click", () => { if (reviewTestActive) { reviewTestActive = false; showView("reviewSetup"); return; } if (testState.folder) renderTestLevelGrid(testState.folder); showView("testLevels"); });
 
 
   /* =====================================================================
