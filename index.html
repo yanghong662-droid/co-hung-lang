@@ -553,6 +553,10 @@
           <button type="button" id="btn-home-review-cta" class="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm border" style="border-color:var(--accent); color:var(--accent);">
             <i class="fa-solid fa-shuffle"></i> Ôn tập tổng hợp theo cấp độ
           </button>
+          <!-- Nút vào "Test học phần" cho điện thoại/iPad (thanh menu trên chỉ hiện từ màn hình lớn trở lên) -->
+          <button type="button" id="btn-home-test-cta" class="mt-3 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm border" style="border-color:var(--accent); color:var(--accent);">
+            <i class="fa-solid fa-list-check"></i> Test học phần (kiểm tra cuối khoá)
+          </button>
           <p class="lock-hint mt-3 justify-center"><i class="fa-solid fa-lock-open"></i> Xem thoải mái — chỉ cần đăng nhập khi bắt đầu học một bài cụ thể.</p>
         </div>
       </div>
@@ -7885,6 +7889,7 @@ const LESSONS = [
   });
   document.getElementById("btn-nav-review").addEventListener("click", () => { renderReviewSetup(); showView("reviewSetup"); });
   document.getElementById("btn-home-review-cta").addEventListener("click", () => { renderReviewSetup(); showView("reviewSetup"); });
+  document.getElementById("btn-home-test-cta").addEventListener("click", () => { renderTestHub(); showView("testHub"); });
   document.getElementById("btn-logo-home").addEventListener("click", () => showView("home"));
   document.getElementById("btn-hero-explore").addEventListener("click", () => {
     document.querySelector(".roadmap-card").scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "center" });
