@@ -1210,7 +1210,7 @@
           <table class="data-table text-sm">
             <thead>
               <tr>
-                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Đề thi mô phỏng</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
+                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Đề thi mô phỏng / Test học phần</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
               </tr>
             </thead>
             <tbody id="teacher-progress-body"></tbody>
@@ -1249,7 +1249,7 @@
         <table class="data-table text-sm">
           <thead>
             <tr>
-              <th>Bài học</th><th>Điền từ</th><th>Nghe hiểu</th><th>Video</th><th>Nghe đọc</th><th>Đề thi mô phỏng</th><th>Số lần làm</th><th>Gần nhất</th>
+              <th>Bài học</th><th>Điền từ</th><th>Nghe hiểu</th><th>Video</th><th>Nghe đọc</th><th>Đề thi mô phỏng / Test học phần</th><th>Số lần làm</th><th>Gần nhất</th>
             </tr>
           </thead>
           <tbody id="student-history-body"></tbody>
@@ -7407,6 +7407,24 @@ const LESSONS = [
     return num ? num + ": " + lesson.title : lesson.title;
   }
 
+  // "Bài học ảo" cho MỖI bài Test học phần đã có nội dung (LEVEL_TESTS) — chỉ
+  // dùng ở Dashboard Giáo viên để xem/lọc/xuất CSV điểm Test học phần. Id
+  // PHẢI khớp đúng id mà enterTestLevel() dùng khi lưu điểm của học sinh
+  // ("__test__" + id chương trình + "__" + cấp độ). Không đưa vào
+  // getAllLessons() để không lẫn vào danh sách bài học của học sinh.
+  function getTestPseudoLessons() {
+    var out = [];
+    TEST_FOLDERS.forEach(function (f) {
+      f.levels.forEach(function (level) {
+        var t = LEVEL_TESTS[level];
+        if (!t || !t.quiz || !t.quiz.length) return;
+        out.push({ id: "__test__" + f.id + "__" + level, title: "Test học phần — " + level, program: f.id, level: "", isTest: true, isReview: false });
+      });
+    });
+    return out;
+  }
+  function getDashboardLessons() { return getAllLessons().concat(getTestPseudoLessons()); }
+
   const state = { program: null, lesson: null, deckIndex: 0 };
 
   /* ---------------- Phát âm: Azure TTS (chính) + giọng máy (dự phòng) ----------------
@@ -10085,7 +10103,7 @@ const LESSONS = [
     const emailKey = currentUser.email.toLowerCase();
     window.__fbDb.collection(SCORES_COLLECTION).doc(emailKey).get().then((doc) => {
       const data = doc.exists ? doc.data() || {} : {};
-      const allLessons = getAllLessons();
+      const allLessons = getDashboardLessons();
       const entries = Object.keys(data)
         .filter((key) => key !== "_email")
         .map((lessonId) => {
@@ -10119,7 +10137,7 @@ const LESSONS = [
             (s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore + "/100" : "—") + "</td><td>" +
             (s.video && s.video.bestScore !== undefined && s.video.bestScore !== null ? s.video.bestScore + "/100" : "—") + "</td><td>" +
             (s.readlisten && s.readlisten.bestScore !== undefined && s.readlisten.bestScore !== null ? s.readlisten.bestScore + "/100" : "—") + "</td><td>" +
-            (s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore + "/100" : "—") + "</td><td>" +
+            (s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore + "/100" + (s.mockexam.lastScore !== undefined && s.mockexam.lastScore !== null && s.mockexam.lastScore !== s.mockexam.bestScore ? ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + s.mockexam.lastScore + ")</span>" : "") : "—") + "</td><td>" +
             entry.stats.totalAttempts + "</td><td>" + formatDateTime(entry.stats.lastAt) + "</td></tr>"
           );
         })
@@ -10246,6 +10264,7 @@ const LESSONS = [
   // buildVideoQuiz()/buildReadListenQuiz()/buildMockExam() đang dùng để
   // quyết định hiện bài tập hay hiện màn hình rỗng.
   function lessonApplicableParts(lesson) {
+    if (lesson && lesson.isTest) return ["mockexam"]; // Test học phần chỉ có 1 phần làm bài
     var parts = [];
     if (lesson && Array.isArray(lesson.quiz) && lesson.quiz.length > 0) parts.push("quiz");
     var sentCount = countReadableSentences(lesson);
@@ -10375,16 +10394,26 @@ const LESSONS = [
   function populateTeacherProgressLessonFilter(filterEl, allLessons) {
     if (!filterEl) return;
     var currentValue = filterEl.value;
-    var optionsHtml = ['<option value="">Tất cả bài học</option>'];
+    var lessonOpts = [];
+    var testOpts = [];
     allLessons
       .filter(function (l) { return !l.isReview; })
       .forEach(function (l) {
         var program = getProgramById(l.program);
         var label = lessonDisplayTitle(l) + (l.level ? " (" + l.level + ")" : "") + (program ? " · " + program.name : "");
-        optionsHtml.push('<option value="' + l.id + '">' + label + "</option>");
+        (l.isTest ? testOpts : lessonOpts).push('<option value="' + l.id + '">' + label + "</option>");
       });
+    // Test học phần (bài kiểm tra cuối khoá) đặt LÊN ĐẦU để giáo viên chọn
+    // nhanh: "Tất cả Test học phần" xem gộp mọi cấp, hoặc chọn riêng 1 cấp.
+    var optionsHtml = ['<option value="">Tất cả bài học</option>'];
+    if (testOpts.length) {
+      optionsHtml.push('<option value="__all_tests__">📝 Tất cả Test học phần (cuối khoá)</option>');
+      optionsHtml.push('<optgroup label="Test học phần (cuối khoá)">' + testOpts.join("") + "</optgroup>");
+    }
+    optionsHtml.push('<optgroup label="Bài học">' + lessonOpts.join("") + "</optgroup>");
     filterEl.innerHTML = optionsHtml.join("");
-    filterEl.value = allLessons.some(function (l) { return l.id === currentValue; }) ? currentValue : "";
+    var keep = (currentValue === "__all_tests__" && testOpts.length > 0) || allLessons.some(function (l) { return l.id === currentValue; });
+    filterEl.value = keep ? currentValue : "";
   }
 
   // Đổ danh sách LỚP (lấy từ field "class" trong permissions của những
@@ -10414,7 +10443,7 @@ const LESSONS = [
 
     // Bộ lọc luôn được đổ đầy TOÀN BỘ bài học ngay khi có danh sách bài học
     // (getAllLessons() có sẵn ngay, không cần chờ Firestore trả điểm về).
-    populateTeacherProgressLessonFilter(filterEl, getAllLessons());
+    populateTeacherProgressLessonFilter(filterEl, getDashboardLessons());
 
     if (!teacherProgressCache) return;
     // Bộ lọc "Xem theo lớp" đổ từ TOÀN BỘ lớp đã cấp quyền (permissions),
@@ -10438,12 +10467,14 @@ const LESSONS = [
       return;
     }
 
-    var visibleGroups = filterLessonId ? groups.filter(function (g) { return g.lessonId === filterLessonId; }) : groups;
+    var visibleGroups = filterLessonId === "__all_tests__"
+      ? groups.filter(function (g) { return g.lessonId.indexOf("__test__") === 0; })
+      : filterLessonId ? groups.filter(function (g) { return g.lessonId === filterLessonId; }) : groups;
 
     if (visibleGroups.length === 0) {
       // Bài được chọn tồn tại trong chương trình nhưng chưa có ai làm (hoặc lớp đã lọc chưa ai làm bài này).
-      var pickedLesson = getAllLessons().find(function (l) { return l.id === filterLessonId; });
-      var pickedLabel = pickedLesson ? lessonDisplayTitle(pickedLesson) + (pickedLesson.level ? " (" + pickedLesson.level + ")" : "") : filterLessonId;
+      var pickedLesson = getDashboardLessons().find(function (l) { return l.id === filterLessonId; });
+      var pickedLabel = filterLessonId === "__all_tests__" ? "Test học phần" : pickedLesson ? lessonDisplayTitle(pickedLesson) + (pickedLesson.level ? " (" + pickedLesson.level + ")" : "") : filterLessonId;
       body.innerHTML = "";
       empty.textContent = filterLessonId ? ('Chưa có học sinh' + (filterClass ? ' lớp "' + filterClass + '"' : "") + ' làm bài "' + pickedLabel + '".') : "Chưa có học sinh nào làm bài.";
       empty.classList.remove("hidden");
@@ -10473,7 +10504,7 @@ const LESSONS = [
               (s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore + "/100" : "—") + "</td><td>" +
               (s.video && s.video.bestScore !== undefined && s.video.bestScore !== null ? s.video.bestScore + "/100" : "—") + "</td><td>" +
               (s.readlisten && s.readlisten.bestScore !== undefined && s.readlisten.bestScore !== null ? s.readlisten.bestScore + "/100" : "—") + "</td><td>" +
-              (s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore + "/100" : "—") + "</td><td>" +
+              (s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore + "/100" + (s.mockexam.lastScore !== undefined && s.mockexam.lastScore !== null && s.mockexam.lastScore !== s.mockexam.bestScore ? ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + s.mockexam.lastScore + ")</span>" : "") : "—") + "</td><td>" +
               (pct === null ? "—" : pct + "%") + "</td><td>" +
               stats.totalAttempts + "</td><td>" + formatDateTime(stats.lastAt) + "</td></tr>"
             );
@@ -10495,7 +10526,7 @@ const LESSONS = [
     var body = document.getElementById("teacher-progress-body");
     var empty = document.getElementById("teacher-progress-empty");
     var filterEl = document.getElementById("teacher-progress-lesson-filter");
-    var allLessons = getAllLessons();
+    var allLessons = getDashboardLessons();
     // Đổ bộ lọc NGAY LẬP TỨC bằng danh sách bài học có sẵn trong code, để
     // giáo viên bấm chọn được dù Firestore đang tải hay lỡ tải lỗi.
     populateTeacherProgressLessonFilter(filterEl, allLessons);
@@ -10540,7 +10571,7 @@ const LESSONS = [
       alert("Không kết nối được Firebase — không thể xuất dữ liệu.");
       return;
     }
-    var allLessons = getAllLessons();
+    var allLessons = getDashboardLessons();
     Promise.all([fetchAllScoreRows(), fetchPermissionsMap()]).then(function (results) {
     var rows = results[0];
     var permMap = results[1];
