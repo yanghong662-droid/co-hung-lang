@@ -1407,7 +1407,11 @@
       </details>
 
       <p class="text-xs font-bold uppercase tracking-wide mb-2" style="color:var(--ink-faint);">Danh sách đã cấp quyền</p>
-      <div id="admin-perm-list" class="space-y-2 max-h-[360px] overflow-y-auto pr-1"></div>
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <input type="search" id="admin-perm-search" autocomplete="off" class="form-input rounded-lg px-3 py-2 text-sm flex-1 min-w-[200px]" placeholder="🔍 Tìm tên lớp để cấp/xoá quyền cả lớp (vd: yct1 k15)">
+        <span id="admin-perm-count" class="text-xs font-bold" style="color:var(--ink-faint);"></span>
+      </div>
+      <div id="admin-perm-list" class="space-y-2 max-h-[420px] overflow-y-auto pr-1"></div>
       <p id="admin-perm-empty" class="hidden text-sm text-center py-8" style="color:var(--ink-faint);">Chưa cấp quyền cho học sinh nào.</p>
     </div>
   </div>
@@ -9883,6 +9887,8 @@ const LESSONS = [
         mockAudioEl.src = sharedSrc;
         if (elMockAudioToolbar) {
           elMockAudioToolbar.controls = isPracticeMode;
+          // Thanh tua dài full khung CHỈ ở bài luyện tập (Đề thi mô phỏng); Test học phần giữ nguyên mặc định 320px.
+          elMockAudioToolbar.style.maxWidth = isPracticeMode ? "100%" : "320px";
           elMockAudioToolbar.classList.toggle("hidden", !isPracticeMode);
         }
         mockAudioEl.addEventListener("play", () => btnMockPlay.classList.add("is-playing"));
@@ -11758,6 +11764,21 @@ const LESSONS = [
   // quyền) — lớp có tên xếp trước theo bảng chữ cái, học sinh CHƯA gán
   // lớp (từ trước khi có tính năng này) gom vào 1 nhóm "(Chưa gán lớp)"
   // ở cuối, để giáo viên vẫn thấy đủ chứ không bị mất khỏi danh sách.
+  // Ô "Tìm tên lớp": lọc các nhóm lớp theo tên (không phân biệt hoa/thường,
+  // không cần gõ dấu; gõ nhiều từ thì lớp phải chứa TẤT CẢ các từ). CHỈ lọc
+  // việc HIỂN THỊ nhóm — nút "Bật/Tắt quyền cả lớp" và "Cấp/xoá 1 mục" vẫn
+  // luôn áp dụng cho TOÀN BỘ học sinh của lớp đó, không bị ảnh hưởng bởi
+  // bộ lọc. Danh sách học sinh từng lớp mặc định thu gọn (bấm "Xem học
+  // sinh" để mở); lớp nào đang mở được nhớ lại sau mỗi lần cấp/xoá quyền.
+  let adminPermRows = [];
+  const adminPermExpanded = new Set();
+  const elAdminPermSearch = document.getElementById("admin-perm-search");
+  const elAdminPermCount = document.getElementById("admin-perm-count");
+  function foldForSearch(str) {
+    return String(str || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+  }
+  if (elAdminPermSearch) elAdminPermSearch.addEventListener("input", () => renderAdminPermList(adminPermRows));
+
   function groupPermissionsByClass(rows) {
     const byClass = {};
     rows.forEach((row) => {
@@ -11777,9 +11798,21 @@ const LESSONS = [
   }
 
   function renderAdminPermList(rows) {
+    adminPermRows = rows;
     elAdminPermList.innerHTML = "";
     elAdminPermEmpty.classList.toggle("hidden", rows.length > 0);
-    const groups = groupPermissionsByClass(rows);
+    const allGroups = groupPermissionsByClass(rows);
+    const searchTokens = foldForSearch(elAdminPermSearch ? elAdminPermSearch.value : "").split(/\s+/).filter(Boolean);
+    const groups = searchTokens.length === 0
+      ? allGroups
+      : allGroups.filter((g) => {
+          const folded = foldForSearch(g.className || "(Chưa gán lớp)");
+          return searchTokens.every((t) => folded.indexOf(t) !== -1);
+        });
+    if (elAdminPermCount) elAdminPermCount.textContent = rows.length ? (searchTokens.length ? groups.length + "/" + allGroups.length + " lớp" : allGroups.length + " lớp") : "";
+    if (rows.length > 0 && groups.length === 0) {
+      elAdminPermList.innerHTML = '<p class="text-sm text-center py-6" style="color:var(--ink-faint);">Không có lớp nào khớp với từ khoá đang tìm.</p>';
+    }
     groups.forEach((g) => {
       const emailsInGroup = g.rows.map((r) => r.email);
       const classLabel = g.className || "(Chưa gán lớp)";
@@ -11792,6 +11825,17 @@ const LESSONS = [
           ? '<span class="flex gap-2"><button type="button" class="btn-class-enable text-xs font-bold px-2.5 py-1 rounded-lg border" style="border-color:var(--jade); color:var(--jade);">Bật quyền cả lớp</button><button type="button" class="btn-class-disable text-xs font-bold px-2.5 py-1 rounded-lg border" style="border-color:var(--wrong); color:var(--wrong);">Tắt quyền cả lớp</button></span>'
           : "");
       elAdminPermList.appendChild(groupHeader);
+      const isExpanded = adminPermExpanded.has(g.className);
+      const toggleStudentsBtn = document.createElement("button");
+      toggleStudentsBtn.type = "button";
+      toggleStudentsBtn.className = "ml-2 text-xs font-bold px-2 py-0.5 rounded-lg border";
+      toggleStudentsBtn.style.cssText = "border-color:var(--border); color:var(--ink-soft); text-transform:none;";
+      toggleStudentsBtn.textContent = isExpanded ? "Ẩn học sinh ▴" : "Xem học sinh ▾";
+      toggleStudentsBtn.addEventListener("click", () => {
+        if (adminPermExpanded.has(g.className)) adminPermExpanded.delete(g.className); else adminPermExpanded.add(g.className);
+        renderAdminPermList(adminPermRows);
+      });
+      groupHeader.querySelector("span").appendChild(toggleStudentsBtn);
 
       if (g.className) {
         groupHeader.querySelector(".btn-class-enable").addEventListener("click", () => {
@@ -11826,7 +11870,7 @@ const LESSONS = [
         });
       }
 
-      g.rows.forEach((row) => {
+      (isExpanded ? g.rows : []).forEach((row) => {
         const div = document.createElement("div");
         div.className = "perm-row p-3 flex flex-wrap items-center gap-2.5";
         div.innerHTML =
