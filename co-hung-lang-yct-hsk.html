@@ -695,7 +695,7 @@
             <i class="fa-solid fa-book-open-reader"></i>⑤ Nghe đọc
           </button>
           <button type="button" id="btn-subtab-mock" class="subtab-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5">
-            <i class="fa-solid fa-file-signature"></i><span id="btn-subtab-mock-label">⑥ Đề thi mô phỏng</span>
+            <i class="fa-solid fa-file-signature"></i>⑥ Đề thi mô phỏng
           </button>
         </div>
 
@@ -992,9 +992,9 @@
 
         <!-- ---- Dạng 6: ĐỀ THI MÔ PHỎNG (kết hợp Nghe/Đọc/Điền từ do giáo viên tự soạn) ---- -->
         <div id="subpanel-mock" class="hidden space-y-5">
-        <p id="mock-intro" class="text-xs mb-1" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>Đề thi mô phỏng do giáo viên tự soạn cho bài này, kết hợp nhiều dạng câu hỏi (Nghe/Đọc/Điền từ). Trả lời hết rồi bấm "Nộp bài" để chấm điểm.</p>
+        <p class="text-xs mb-1" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>Đề thi mô phỏng do giáo viên tự soạn cho bài này, kết hợp nhiều dạng câu hỏi (Nghe/Đọc/Điền từ). Trả lời hết rồi bấm "Nộp bài" để chấm điểm.</p>
         <div id="mock-empty" class="hidden rounded-2xl border p-8 text-center text-sm" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink-faint);">
-          <i class="fa-solid fa-file-signature text-2xl mb-2 block"></i><span id="mock-empty-text">Bài này chưa có Đề thi mô phỏng. Cô vào Dashboard Giáo viên để soạn đề.</span>
+          <i class="fa-solid fa-file-signature text-2xl mb-2 block"></i>Bài này chưa có Đề thi mô phỏng. Cô vào Dashboard Giáo viên để soạn đề.
         </div>
         <div id="mock-active">
           <div class="mock-layout" style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
@@ -1093,7 +1093,8 @@
 
       <div id="review-category-section" class="hidden">
         <p class="text-xs font-bold uppercase tracking-wide mb-3" style="color:var(--ink-faint);">Bước 2 · Chọn mục ôn tập</p>
-        <div id="review-category-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"></div>
+        <div id="review-category-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8"></div>
+        <p id="review-category-note" class="hidden text-sm text-center mb-6" style="color:var(--ink-faint);"><i class="fa-solid fa-pen-ruler mr-1"></i>Mục "Test tổng hợp" đang được biên soạn — nội dung sẽ được bổ sung sau.</p>
         <div class="flex justify-center">
           <button type="button" id="btn-review-start" disabled class="btn-disabled-look px-7 py-3 rounded-full font-bold text-sm text-white flex items-center gap-2" style="background:var(--jade);">
             Bắt đầu ôn tập <i class="fa-solid fa-arrow-right"></i>
@@ -1451,7 +1452,7 @@
       (mỗi bài có "program" trỏ tới "id" của 1 phần tử trong PROGRAMS):
    {
      id:      "duy nhất, không dấu",       // vd "yct-1"
-     program: "id chương trình (yct / hsk3 / giao-tiep)",
+     program: "id chương trình (yct / hsk3)",
      level:   "Nhãn cấp độ hiện ở badge",  // vd "YCT 1" hoặc "HSK 1"
      title:   "Tiêu đề chữ Hán của bài",
      pinyin:  "Phiên âm cả câu tiêu đề",
@@ -1534,7 +1535,6 @@
 const PROGRAMS = [
   { id: "yct", name: "Tiếng Trung trẻ em", shortLabel: "YCT", desc: "Làm quen tiếng Trung qua hình ảnh, bài hát và trò chơi — dành cho các em nhỏ mới bắt đầu.", colorVar: "--blue" },
   { id: "hsk3", name: "HSK 3.0", shortLabel: "HSK 3.0", desc: "Lộ trình luyện thi HSK 3.0 bài bản, bám sát cấu trúc đề thi mới nhất.", colorVar: "--accent" },
-  { id: "giao-tiep", name: "Giao tiếp cơ bản", shortLabel: "GT", desc: "Tiếng Trung giao tiếp thực tế cho người đi làm, đi du lịch, giao dịch hằng ngày.", colorVar: "--green" },
 ];
 
 
@@ -7178,31 +7178,6 @@ const LESSONS = [
       { audioText: "我相信，他以后一定会发展得更好。", prompt: "我相信，他以后一定会___得更好。", options: ["发展", "进步", "提高", "成长"], answer: "发展" },
     ],
   },
-
-  {
-    id: "gt-1", program: "giao-tiep", level: "Giao tiếp 1",
-    title: "多少钱？", pinyin: "Duōshao qián?", meaning: "Bao nhiêu tiền?",
-    vocabulary: [
-      { hanzi: "多少", pinyin: "duōshao", meaning: "Bao nhiêu", wordType: "Đại từ nghi vấn", example: { hanzi: "这个多少钱？", pinyin: "Zhège duōshao qián?", meaning: "Cái này bao nhiêu tiền?" } },
-      { hanzi: "钱", pinyin: "qián", meaning: "Tiền", wordType: "Danh từ", example: { hanzi: "我没有钱。", pinyin: "Wǒ méiyǒu qián.", meaning: "Tôi không có tiền." } },
-      { hanzi: "便宜", pinyin: "piányi", meaning: "Rẻ", wordType: "Tính từ", example: { hanzi: "这件衣服很便宜。", pinyin: "Zhè jiàn yīfu hěn piányi.", meaning: "Chiếc áo này rất rẻ." } },
-      { hanzi: "贵", pinyin: "guì", meaning: "Đắt", wordType: "Tính từ", example: { hanzi: "这个太贵了。", pinyin: "Zhège tài guì le.", meaning: "Cái này đắt quá." } },
-      { hanzi: "买", pinyin: "mǎi", meaning: "Mua", wordType: "Động từ", example: { hanzi: "我想买这个。", pinyin: "Wǒ xiǎng mǎi zhège.", meaning: "Tôi muốn mua cái này." } },
-    ],
-    grammar: {
-      point: "多少钱？ (Hỏi giá tiền)", structure: "Đồ vật + 多少钱？",
-      explanation: "Cụm「多少钱」dùng để hỏi giá cả, đặt sau danh từ chỉ đồ vật đang muốn mua.",
-      examples: [
-        { hanzi: "这个包多少钱？", pinyin: "Zhège bāo duōshao qián?", meaning: "Cái túi này bao nhiêu tiền?" },
-        { hanzi: "一斤苹果多少钱？", pinyin: "Yì jīn píngguǒ duōshao qián?", meaning: "Một cân táo bao nhiêu tiền?" },
-      ],
-    },
-    quiz: [
-      { audioText: "多少钱", prompt: "Câu vừa nghe có nghĩa là gì?", options: ["Bao nhiêu tiền?", "Ở đâu?", "Mấy giờ?", "Ai vậy?"], answer: "Bao nhiêu tiền?" },
-      { audioText: "便宜", prompt: "Từ vừa nghe có nghĩa là gì?", options: ["Rẻ", "Đắt", "Mới", "Cũ"], answer: "Rẻ" },
-      { audioText: "买", prompt: "Từ vừa nghe có nghĩa là gì?", options: ["Mua", "Bán", "Cho", "Mượn"], answer: "Mua" },
-    ],
-  },
 ];
 
 /* =====================================================================
@@ -7839,7 +7814,6 @@ const LESSONS = [
     btnSubtabVideo.classList.toggle("hidden", lesson.program === "hsk3");
     // HSK 3.0 cũng không dùng Dạng 5 "Nghe đọc" trong tab Luyện tập (YCT vẫn giữ).
     btnSubtabReadlisten.classList.toggle("hidden", lesson.program === "hsk3");
-    applyMockPanelNaming(isMockNamedReadListen(lesson));
     // YCT 1-6 không còn dạng ⑥ "Đề thi mô phỏng" trong tab Luyện tập — ẩn nút
     // (khung #subpanel-mock vẫn giữ nguyên vì HSK 3.0 và Test học phần còn dùng).
     btnSubtabMock.classList.toggle("hidden", lesson.program === "yct");
@@ -7900,7 +7874,7 @@ const LESSONS = [
 
   /* =====================================================================
      ÔN TẬP TỔNG HỢP — gộp bài tập của nhiều bài học lại thành 1 buổi ôn
-     tập lớn theo CẤP ĐỘ (YCT / HSK 2 / HSK 3.0 / Giao tiếp), và cho phép
+     tập lớn theo CẤP ĐỘ (YCT / HSK 1 / HSK 2 / HSK 3), và cho phép
      chọn ôn RIÊNG từng mục (chỉ Từ vựng / chỉ Ngữ pháp / chỉ Điền từ) thay
      vì phải ôn cả 3 mục cùng lúc. Cách làm: dựng ra 1 "bài học ảo" gộp dữ
      liệu (vocabulary/grammar/quiz) từ nhiều bài học thật rồi gọi thẳng
@@ -7914,18 +7888,20 @@ const LESSONS = [
     // permLevel: cấp độ cụ thể dùng để so quyền (giống hệt field Firestore
     // yct1..yct6 / hsk1..hsk9) — null nghĩa là "chỉ cần có quyền với ÍT
     // NHẤT 1 cấp độ thuộc chương trình này" (áp dụng cho nhóm gộp nhiều
-    // cấp như YCT, và cho Giao tiếp cơ bản vốn không có hệ thống quyền).
+    // cấp như YCT).
     { key: "yct", label: "YCT (Thiếu nhi)", shortLabel: "YCT", colorVar: "--blue", match: (l) => l.program === "yct", permLevel: null },
     { key: "hsk1", label: "HSK 1", shortLabel: "HSK 1", colorVar: "--purple", match: (l) => l.program === "hsk3" && l.level === "HSK 1", permLevel: "HSK 1" },
     { key: "hsk2", label: "HSK 2", shortLabel: "HSK 2", colorVar: "--gold", match: (l) => l.program === "hsk3" && l.level === "HSK 2", permLevel: "HSK 2" },
     { key: "hsk3", label: "HSK 3.0", shortLabel: "HSK 3.0", colorVar: "--accent", match: (l) => l.program === "hsk3" && l.level === "HSK 3", permLevel: "HSK 3" },
-    { key: "giao-tiep", label: "Giao tiếp cơ bản", shortLabel: "GT", colorVar: "--green", match: (l) => l.program === "giao-tiep", permLevel: null },
   ];
   const REVIEW_CATEGORIES = [
     { key: "all", label: "Tổng hợp tất cả", icon: "fa-solid fa-layer-group", desc: "Từ vựng + Ngữ pháp + Điền từ trộn chung, xem đủ 3 tab." },
     { key: "vocab", label: "Chỉ Từ vựng", icon: "fa-solid fa-id-card", desc: "Ôn Thẻ ghi nhớ + Nối thẻ + Nghe hiểu bằng từ vựng gộp." },
     { key: "grammar", label: "Chỉ Ngữ pháp", icon: "fa-solid fa-book", desc: "Xem lại toàn bộ điểm ngữ pháp đã học, xếp thành danh sách." },
     { key: "quiz", label: "Chỉ Điền từ", icon: "fa-solid fa-pen-to-square", desc: "Trắc nghiệm điền từ gộp, chấm điểm tự động theo thang 100." },
+    // comingSoon: chưa có nội dung — chọn được nhưng nút "Bắt đầu ôn tập" bị khoá và hiện thông báo "đang biên soạn".
+    // Khi có nội dung: xoá cờ comingSoon rồi bổ sung cách dựng bài trong buildReviewLesson().
+    { key: "test", label: "Test tổng hợp", icon: "fa-solid fa-list-check", desc: "Bài test tổng hợp cho cấp độ đã chọn (đang biên soạn).", comingSoon: true },
   ];
   const REVIEW_SAMPLE_SIZE = 30; // gộp cả trăm câu/từ thì quá dài — mỗi buổi chỉ lấy ngẫu nhiên tối đa 30, bấm ôn lại sẽ ra bộ khác
 
@@ -7970,7 +7946,7 @@ const LESSONS = [
 
     return {
       id: "review-" + groupKey + "-" + category + "-" + Date.now(),
-      program: group.key === "yct" ? "yct" : (group.key === "giao-tiep" ? "giao-tiep" : "hsk3"),
+      program: group.key === "yct" ? "yct" : "hsk3",
       colorVar: group.colorVar,
       level: group.label + " · Ôn tập",
       permLevel: group.permLevel,
@@ -7990,11 +7966,13 @@ const LESSONS = [
   const elReviewCategorySection = document.getElementById("review-category-section");
   const elReviewCategoryGrid = document.getElementById("review-category-grid");
   const btnReviewStart = document.getElementById("btn-review-start");
+  const elReviewCategoryNote = document.getElementById("review-category-note");
 
   function renderReviewSetup() {
     reviewState.groupKey = null;
     reviewState.category = null;
     elReviewCategorySection.classList.add("hidden");
+    if (elReviewCategoryNote) elReviewCategoryNote.classList.add("hidden");
     btnReviewStart.disabled = true;
     btnReviewStart.classList.add("btn-disabled-look");
     elReviewLevelGrid.innerHTML = "";
@@ -8002,13 +7980,12 @@ const LESSONS = [
       const stats = reviewGroupStats(g.key);
       const card = document.createElement("button");
       card.type = "button";
-      card.className = "review-level-card text-left p-5 rounded-2xl border card-shadow";
+      card.className = "review-level-card flex items-center justify-center p-6 rounded-2xl border card-shadow";
       card.style.borderColor = "var(--border)";
       card.style.background = "var(--surface)";
+      card.setAttribute("aria-label", g.label);
       card.innerHTML =
-        '<span class="program-icon w-12 h-12 grid place-items-center text-white text-xs font-bold mb-3" style="background:var(' + g.colorVar + ');">' + g.shortLabel + "</span>" +
-        '<span class="block text-base font-extrabold mb-1" style="color:var(--jade);">' + g.label + "</span>" +
-        '<span class="block text-xs" style="color:var(--ink-faint);">' + stats.lessonCount + " bài học · " + stats.vocabCount + " từ vựng · " + stats.quizCount + " câu điền từ</span>";
+        '<span class="program-icon h-16 min-w-[7rem] px-5 grid place-items-center text-white text-lg font-extrabold text-center whitespace-nowrap" style="background:var(' + g.colorVar + ');">' + g.shortLabel + "</span>";
       if (stats.lessonCount === 0) {
         card.disabled = true;
         card.classList.add("opacity-40");
@@ -8026,6 +8003,7 @@ const LESSONS = [
     cardEl.classList.add("review-card-selected");
     renderReviewCategories();
     elReviewCategorySection.classList.remove("hidden");
+    if (elReviewCategoryNote) elReviewCategoryNote.classList.add("hidden");
     btnReviewStart.disabled = true;
     btnReviewStart.classList.add("btn-disabled-look");
   }
@@ -8051,8 +8029,11 @@ const LESSONS = [
     reviewState.category = categoryKey;
     Array.from(elReviewCategoryGrid.children).forEach((c) => c.classList.remove("review-card-selected"));
     btnEl.classList.add("review-card-selected");
-    btnReviewStart.disabled = false;
-    btnReviewStart.classList.remove("btn-disabled-look");
+    const meta = REVIEW_CATEGORIES.find((c) => c.key === categoryKey);
+    const soon = !!(meta && meta.comingSoon);
+    if (elReviewCategoryNote) elReviewCategoryNote.classList.toggle("hidden", !soon);
+    btnReviewStart.disabled = soon;
+    btnReviewStart.classList.toggle("btn-disabled-look", soon);
   }
 
   btnReviewStart.addEventListener("click", () => {
@@ -8173,7 +8154,6 @@ const LESSONS = [
         mockExamAudio: testData.audio || "",
         isReview: false,
       };
-      applyMockPanelNaming(false); // Test học phần luôn dùng tên gốc, không mang tên "Nghe đọc" của bài HSK 1
       moveMockExamPanelInto(body);
       buildMockExam();
     }
@@ -8688,26 +8668,6 @@ const LESSONS = [
   const elSubpanelVideo = document.getElementById("subpanel-video");
   const elSubpanelReadlisten = document.getElementById("subpanel-readlisten");
   const elSubpanelMock = document.getElementById("subpanel-mock");
-
-  // Bài HSK 1: dạng ⑥ "Đề thi mô phỏng" được ĐỔI TÊN thành "Nghe đọc" (và đánh
-  // số ④ vì HSK 3.0 đã bỏ Trắc nghiệm Video + Nghe đọc tự động). Khung làm
-  // bài bên trong giữ nguyên. Các cấp/chương trình khác giữ tên cũ.
-  const elMockTabLabel = document.getElementById("btn-subtab-mock-label");
-  const elMockIntro = document.getElementById("mock-intro");
-  const elMockEmptyText = document.getElementById("mock-empty-text");
-  function isMockNamedReadListen(lesson) {
-    return !!lesson && lesson.program === "hsk3" && lesson.level === "HSK 1" && !lesson.isReview;
-  }
-  function applyMockPanelNaming(readListen) {
-    if (elMockTabLabel) elMockTabLabel.textContent = readListen ? "④ Nghe đọc" : "⑥ Đề thi mô phỏng";
-    if (elMockIntro && elMockIntro.lastChild) {
-      elMockIntro.lastChild.textContent = (readListen ? "Bài Nghe đọc" : "Đề thi mô phỏng") +
-        ' do giáo viên tự soạn cho bài này, kết hợp nhiều dạng câu hỏi (Nghe/Đọc/Điền từ). Trả lời hết rồi bấm "Nộp bài" để chấm điểm.';
-    }
-    if (elMockEmptyText) {
-      elMockEmptyText.textContent = "Bài này chưa có " + (readListen ? "bài Nghe đọc" : "Đề thi mô phỏng") + ". Cô vào Dashboard Giáo viên để soạn đề.";
-    }
-  }
 
   /* =====================================================================
      TÁI SỬ DỤNG khung "Đề thi mô phỏng" (#subpanel-mock, cùng toàn bộ cơ
@@ -10672,13 +10632,12 @@ const LESSONS = [
     const showVideoTab = lesson.program !== "hsk3";
     // YCT 1-6 không còn Dạng 6 "Đề thi mô phỏng" (đã ẩn ở tab Luyện tập của học sinh) nên ẩn luôn tab soạn đề.
     const showMockTab = lesson.program !== "yct";
-    const mockTabName = isMockNamedReadListen(lesson) ? "Nghe đọc" : "Đề thi mô phỏng";
     editor.innerHTML =
       '<h4 class="text-sm font-extrabold mb-1"><span class="font-hanzi" style="color:var(--jade);">' + lessonDisplayTitle(lesson) + "</span></h4>" +
       '<div class="flex flex-wrap gap-4 border-b mb-4" style="border-color:var(--border);" id="ledit-tabs">' +
       '<button type="button" data-ledit-tab="quiz" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="true">Dạng 1 · Điền từ</button>' +
       (showVideoTab ? '<button type="button" data-ledit-tab="video" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="false">Dạng 4 · Trắc nghiệm Video</button>' : "") +
-      (showMockTab ? '<button type="button" data-ledit-tab="mockexam" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="false">Dạng 6 · ' + mockTabName + '</button>' : "") +
+      (showMockTab ? '<button type="button" data-ledit-tab="mockexam" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="false">Dạng 6 · Đề thi mô phỏng</button>' : "") +
       "</div>" +
       '<div id="ledit-panel-quiz"></div>' +
       (showVideoTab ? '<div id="ledit-panel-video" class="hidden"></div>' : "") +
@@ -10835,7 +10794,7 @@ const LESSONS = [
     const panel = document.getElementById("ledit-panel-mockexam");
     if (!panel) return;
     panel.innerHTML =
-      '<p class="text-xs mb-4" style="color:var(--ink-faint);">Soạn "' + (isMockNamedReadListen(lesson) ? "Nghe đọc" : "Đề thi mô phỏng") + '" (Dạng 6) cho bài này — kết hợp nhiều loại câu hỏi (Nghe/Đọc/Điền từ) trong CÙNG 1 bài thi liền mạch, chấm chung 1 điểm số. Chọn "Loại câu" cho từng câu: <b>Nghe</b> hiện nút loa 🔊 để học sinh nghe rồi chọn nghĩa; <b>Đọc</b> chỉ hiện chữ, không có nút loa; <b>Điền từ</b> giống Nghe nhưng câu hỏi có chỗ trống "___". Sau khi lưu, thay đổi hiện cho TẤT CẢ học sinh.</p>' +
+      '<p class="text-xs mb-4" style="color:var(--ink-faint);">Soạn "Đề thi mô phỏng" (Dạng 6) cho bài này — kết hợp nhiều loại câu hỏi (Nghe/Đọc/Điền từ) trong CÙNG 1 bài thi liền mạch, chấm chung 1 điểm số. Chọn "Loại câu" cho từng câu: <b>Nghe</b> hiện nút loa 🔊 để học sinh nghe rồi chọn nghĩa; <b>Đọc</b> chỉ hiện chữ, không có nút loa; <b>Điền từ</b> giống Nghe nhưng câu hỏi có chỗ trống "___". Sau khi lưu, thay đổi hiện cho TẤT CẢ học sinh.</p>' +
       '<div class="mb-4 p-3 rounded-xl border" style="border-color:var(--border); background:var(--surface-alt);">' +
       '<label class="text-xs font-bold block mb-1" style="color:var(--ink-faint);"><i class="fa-solid fa-music mr-1"></i>Link file mp3 băng nghe (phát LIÊN TỤC từ Câu 1 đến hết, giống băng thi thật — KHÔNG tách theo từng câu):</label>' +
       '<input type="text" id="mexedit-audio-url" class="form-input rounded-lg px-2.5 py-1.5 text-sm w-full" placeholder="Dán link file mp3 vào đây (để trống nếu chưa có / dùng nút loa đọc bằng giọng máy)">' +
@@ -11290,7 +11249,7 @@ const LESSONS = [
     return !!(user && user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
   }
   // Ánh xạ chương trình → "mục quyền" cần kiểm tra. Chương trình không có
-  // trong danh sách này (vd "giao-tiep") coi như luôn mở, không cần cấp quyền.
+  // trong danh sách này coi như luôn mở, không cần cấp quyền.
   function permissionKeyForProgram(programId) {
     if (programId === "yct") return "yct";
     if (programId === "hsk3") return "hsk"; // quyền cũ, trước khi tách theo cấp — vẫn giữ để tương thích ngược
