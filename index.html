@@ -625,6 +625,7 @@
             </div>
             <div class="flip-face flip-face-back border card-shadow-lg px-6 py-6 gap-3" style="background:var(--surface); border-color:var(--border);" id="card-back">
               <div class="text-center">
+                <img id="card-image" class="hidden mx-auto mb-2 rounded-2xl" style="width:72px; height:72px; object-fit:contain;" alt="" />
                 <span id="card-wordtype" class="badge-pill" style="background:var(--blue-soft); color:var(--blue);"></span>
                 <p id="card-pinyin" class="text-2xl sm:text-3xl font-bold mt-1.5" style="color:var(--accent);"></p>
                 <p id="card-meaning" class="text-lg sm:text-xl font-semibold mt-1"></p>
@@ -2321,20 +2322,20 @@ const LESSONS = [
     id: "yct1-1", program: "yct", level: "YCT 1",
     title: "你好！", pinyin: "Nǐ hǎo!", meaning: "Xin chào!",
     vocabulary: [
-      { hanzi: "你", pinyin: "nǐ", meaning: "Bạn / anh / chị (ngôi thứ 2 số ít)", wordType: "Đại từ", example: { hanzi: "你好。", pinyin: "Nǐ hǎo.", meaning: "Xin chào." } },
-      { hanzi: "好", pinyin: "hǎo", meaning: "Tốt / khoẻ / được", wordType: "Tính từ", example: { hanzi: "你好。", pinyin: "Nǐ hǎo.", meaning: "Xin chào." } },
-      { hanzi: "老师", pinyin: "lǎoshī", meaning: "Giáo viên / thầy, cô", wordType: "Danh từ", example: { hanzi: "老师好。", pinyin: "Lǎoshī hǎo.", meaning: "Em chào cô/thầy ạ." } },
-      { hanzi: "再见", pinyin: "zàijiàn", meaning: "Tạm biệt", wordType: "Thán từ", example: { hanzi: "再见！", pinyin: "Zàijiàn!", meaning: "Tạm biệt!" } },
-      { hanzi: "一", pinyin: "yī", meaning: "Một (1)", wordType: "Số từ", example: { hanzi: "一个人", pinyin: "yí ge rén", meaning: "Một người" } },
-      { hanzi: "二", pinyin: "èr", meaning: "Hai (2)", wordType: "Số từ", example: { hanzi: "二个人", pinyin: "èr ge rén", meaning: "Hai người" } },
-      { hanzi: "三", pinyin: "sān", meaning: "Ba (3)", wordType: "Số từ", example: { hanzi: "三个人", pinyin: "sān ge rén", meaning: "Ba người" } },
-      { hanzi: "四", pinyin: "sì", meaning: "Bốn (4)", wordType: "Số từ", example: { hanzi: "四口人", pinyin: "sì kǒu rén", meaning: "Bốn người (trong nhà)" } },
-      { hanzi: "五", pinyin: "wǔ", meaning: "Năm (5)", wordType: "Số từ", example: { hanzi: "五个人", pinyin: "wǔ ge rén", meaning: "Năm người" } },
-      { hanzi: "六", pinyin: "liù", meaning: "Sáu (6)", wordType: "Số từ", example: { hanzi: "六个人", pinyin: "liù ge rén", meaning: "Sáu người" } },
-      { hanzi: "七", pinyin: "qī", meaning: "Bảy (7)", wordType: "Số từ", example: { hanzi: "七个人", pinyin: "qī ge rén", meaning: "Bảy người" } },
-      { hanzi: "八", pinyin: "bā", meaning: "Tám (8)", wordType: "Số từ", example: { hanzi: "八个人", pinyin: "bā ge rén", meaning: "Tám người" } },
-      { hanzi: "九", pinyin: "jiǔ", meaning: "Chín (9)", wordType: "Số từ", example: { hanzi: "九个人", pinyin: "jiǔ ge rén", meaning: "Chín người" } },
-      { hanzi: "十", pinyin: "shí", meaning: "Mười (10)", wordType: "Số từ", example: { hanzi: "十个人", pinyin: "shí ge rén", meaning: "Mười người" } },
+      { hanzi: "你", pinyin: "nǐ", meaning: "Bạn / anh / chị (ngôi thứ 2 số ít)", wordType: "Đại từ", example: { hanzi: "你好。", pinyin: "Nǐ hǎo.", meaning: "Xin chào." } , image: "assets/vocab-icons/yct1-1/ni.svg" },
+      { hanzi: "好", pinyin: "hǎo", meaning: "Tốt / khoẻ / được", wordType: "Tính từ", example: { hanzi: "你好。", pinyin: "Nǐ hǎo.", meaning: "Xin chào." } , image: "assets/vocab-icons/yct1-1/hao.svg" },
+      { hanzi: "老师", pinyin: "lǎoshī", meaning: "Giáo viên / thầy, cô", wordType: "Danh từ", example: { hanzi: "老师好。", pinyin: "Lǎoshī hǎo.", meaning: "Em chào cô/thầy ạ." } , image: "assets/vocab-icons/yct1-1/laoshi.svg" },
+      { hanzi: "再见", pinyin: "zàijiàn", meaning: "Tạm biệt", wordType: "Thán từ", example: { hanzi: "再见！", pinyin: "Zàijiàn!", meaning: "Tạm biệt!" } , image: "assets/vocab-icons/yct1-1/zaijian.svg" },
+      { hanzi: "一", pinyin: "yī", meaning: "Một (1)", wordType: "Số từ", example: { hanzi: "一个人", pinyin: "yí ge rén", meaning: "Một người" } , image: "assets/vocab-icons/yct1-1/yi.svg" },
+      { hanzi: "二", pinyin: "èr", meaning: "Hai (2)", wordType: "Số từ", example: { hanzi: "二个人", pinyin: "èr ge rén", meaning: "Hai người" } , image: "assets/vocab-icons/yct1-1/er.svg" },
+      { hanzi: "三", pinyin: "sān", meaning: "Ba (3)", wordType: "Số từ", example: { hanzi: "三个人", pinyin: "sān ge rén", meaning: "Ba người" } , image: "assets/vocab-icons/yct1-1/san.svg" },
+      { hanzi: "四", pinyin: "sì", meaning: "Bốn (4)", wordType: "Số từ", example: { hanzi: "四口人", pinyin: "sì kǒu rén", meaning: "Bốn người (trong nhà)" } , image: "assets/vocab-icons/yct1-1/si.svg" },
+      { hanzi: "五", pinyin: "wǔ", meaning: "Năm (5)", wordType: "Số từ", example: { hanzi: "五个人", pinyin: "wǔ ge rén", meaning: "Năm người" } , image: "assets/vocab-icons/yct1-1/wu.svg" },
+      { hanzi: "六", pinyin: "liù", meaning: "Sáu (6)", wordType: "Số từ", example: { hanzi: "六个人", pinyin: "liù ge rén", meaning: "Sáu người" } , image: "assets/vocab-icons/yct1-1/liu.svg" },
+      { hanzi: "七", pinyin: "qī", meaning: "Bảy (7)", wordType: "Số từ", example: { hanzi: "七个人", pinyin: "qī ge rén", meaning: "Bảy người" } , image: "assets/vocab-icons/yct1-1/qi.svg" },
+      { hanzi: "八", pinyin: "bā", meaning: "Tám (8)", wordType: "Số từ", example: { hanzi: "八个人", pinyin: "bā ge rén", meaning: "Tám người" } , image: "assets/vocab-icons/yct1-1/ba.svg" },
+      { hanzi: "九", pinyin: "jiǔ", meaning: "Chín (9)", wordType: "Số từ", example: { hanzi: "九个人", pinyin: "jiǔ ge rén", meaning: "Chín người" } , image: "assets/vocab-icons/yct1-1/jiu.svg" },
+      { hanzi: "十", pinyin: "shí", meaning: "Mười (10)", wordType: "Số từ", example: { hanzi: "十个人", pinyin: "shí ge rén", meaning: "Mười người" } , image: "assets/vocab-icons/yct1-1/shi.svg" },
     ],
     grammar: {
       point: "好 dùng để chào hỏi lịch sự", structure: "Đối tượng + 好！",
@@ -8588,6 +8589,7 @@ const LESSONS = [
   const elWordType = document.getElementById("card-wordtype");
   const elPinyin = document.getElementById("card-pinyin");
   const elMeaning = document.getElementById("card-meaning");
+  const elCardImage = document.getElementById("card-image");
   const elExHanzi = document.getElementById("card-ex-hanzi");
   const elExPinyin = document.getElementById("card-ex-pinyin");
   const elExMeaning = document.getElementById("card-ex-meaning");
@@ -8665,6 +8667,14 @@ const LESSONS = [
     const w = words[state.deckIndex];
     elHanzi.textContent = w.hanzi;
     elWordType.textContent = w.wordType;
+    if (w.image) {
+      elCardImage.src = w.image;
+      elCardImage.alt = w.hanzi;
+      elCardImage.classList.remove("hidden");
+    } else {
+      elCardImage.removeAttribute("src");
+      elCardImage.classList.add("hidden");
+    }
     elPinyin.textContent = w.pinyin;
     elMeaning.textContent = w.meaning;
     elExHanzi.textContent = w.example.hanzi;
