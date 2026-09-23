@@ -1201,6 +1201,11 @@
       <section id="teacher-panel-progress">
         <div class="flex justify-between items-center mb-3 gap-3 flex-wrap">
           <div class="flex gap-2 flex-wrap">
+            <select id="teacher-progress-kind-filter" class="text-sm font-bold px-3 py-2 rounded-lg border" style="border-color:var(--jade); background:var(--surface-alt); color:var(--jade);">
+              <option value="lessons">📘 Bài học</option>
+              <option value="tests">📝 Test học phần</option>
+              <option value="mocks">🧩 Đề thi mô phỏng</option>
+            </select>
             <select id="teacher-progress-class-filter" class="text-sm font-semibold px-3 py-2 rounded-lg border" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink);">
               <option value="">Tất cả lớp</option>
             </select>
@@ -1215,8 +1220,8 @@
         <div class="overflow-x-auto rounded-xl border" style="border-color:var(--border);">
           <table class="data-table text-sm">
             <thead>
-              <tr>
-                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Bài tập tổng hợp / Test học phần / Đề thi mô phỏng</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
+              <tr id="teacher-progress-head">
+                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Bài tập tổng hợp</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
               </tr>
             </thead>
             <tbody id="teacher-progress-body"></tbody>
@@ -13025,53 +13030,60 @@ const LESSONS = [
     return { key: lv || "Khác", label: lv ? "Học phần " + lv : "Khác", rank: rank };
   }
 
-  function populateTeacherProgressLessonFilter(filterEl, allLessons) {
+  // Loại nội dung đang xem trong tab Tiến độ: "lessons" (bài học) / "tests" (Test học phần) / "mocks" (Đề thi mô phỏng).
+  // Mỗi loại có bộ lọc và các cột RIÊNG — không trộn lẫn với nhau.
+  function dashboardKindOf(lessonId) {
+    var id = String(lessonId || "");
+    if (id.indexOf("__test__") === 0) return "tests";
+    if (id.indexOf("__reviewtest__") === 0) return "mocks";
+    return "lessons";
+  }
+  function getTeacherProgressKind() {
+    var el = document.getElementById("teacher-progress-kind-filter");
+    var v = el ? el.value : "lessons";
+    return v === "tests" || v === "mocks" ? v : "lessons";
+  }
+
+  function populateTeacherProgressLessonFilter(filterEl, allLessons, kind) {
     if (!filterEl) return;
+    kind = kind || getTeacherProgressKind();
     var currentValue = filterEl.value;
-    var lessonOpts = [];
-    var moduleOpts = {}; // key học phần → { label, rank, opts[] }
-    var testOpts = [];
-    var mockOpts = [];
-    allLessons
-      .filter(function (l) { return !l.isReview; })
-      .forEach(function (l) {
-        var program = getProgramById(l.program);
-        var label = lessonDisplayTitle(l) + (l.level ? " (" + l.level + ")" : "") + (program ? " · " + program.name : "");
-        var optHtml = '<option value="' + l.id + '">' + label + "</option>";
-        if (l.isMock) mockOpts.push(optHtml);
-        else if (l.isTest) testOpts.push(optHtml);
-        else {
-          var mod = dashboardModuleOf(l);
-          if (!moduleOpts[mod.key]) moduleOpts[mod.key] = { label: mod.label, rank: mod.rank, opts: [] };
-          moduleOpts[mod.key].opts.push(optHtml);
-          lessonOpts.push(optHtml);
-        }
+    var validValues = [""];
+    var optionsHtml = [];
+    var items = allLessons.filter(function (l) { return !l.isReview && dashboardKindOf(l.id) === kind; });
+    function optOf(l) {
+      var program = getProgramById(l.program);
+      var label = kind === "lessons"
+        ? lessonDisplayTitle(l) + (l.level ? " (" + l.level + ")" : "") + (program ? " · " + program.name : "")
+        : l.title;
+      validValues.push(l.id);
+      return '<option value="' + l.id + '">' + escapeHtml(label) + "</option>";
+    }
+    if (kind === "lessons") {
+      optionsHtml.push('<option value="">Tất cả bài học</option>');
+      // Nhóm theo HỌC PHẦN (YCT 1 → YCT 6, HSK 1 → ...), kèm lựa chọn "Cả học phần ...".
+      var moduleOpts = {};
+      items.forEach(function (l) {
+        var mod = dashboardModuleOf(l);
+        if (!moduleOpts[mod.key]) moduleOpts[mod.key] = { label: mod.label, rank: mod.rank, opts: [] };
+        moduleOpts[mod.key].opts.push(optOf(l));
       });
-    // Test học phần (bài kiểm tra cuối khoá) đặt LÊN ĐẦU để giáo viên chọn
-    // nhanh: "Tất cả Test học phần" xem gộp mọi cấp, hoặc chọn riêng 1 cấp.
-    var optionsHtml = ['<option value="">Tất cả bài học</option>'];
-    if (testOpts.length) {
-      optionsHtml.push('<option value="__all_tests__">📝 Tất cả Test học phần (cuối khoá)</option>');
-      optionsHtml.push('<optgroup label="Test học phần (cuối khoá)">' + testOpts.join("") + "</optgroup>");
+      var moduleKeys = Object.keys(moduleOpts).sort(function (a, b) { return moduleOpts[a].rank - moduleOpts[b].rank || a.localeCompare(b); });
+      if (moduleKeys.length) {
+        optionsHtml.push('<optgroup label="Xem cả học phần">' + moduleKeys.map(function (k) {
+          validValues.push("__module__" + k);
+          return '<option value="__module__' + escapeHtml(k) + '">📚 Cả ' + escapeHtml(moduleOpts[k].label) + " (" + moduleOpts[k].opts.length + " bài)</option>";
+        }).join("") + "</optgroup>");
+      }
+      moduleKeys.forEach(function (k) {
+        optionsHtml.push('<optgroup label="' + escapeHtml(moduleOpts[k].label) + '">' + moduleOpts[k].opts.join("") + "</optgroup>");
+      });
+    } else {
+      optionsHtml.push('<option value="">' + (kind === "tests" ? "Tất cả Test học phần" : "Tất cả Đề thi mô phỏng") + "</option>");
+      optionsHtml.push(items.map(optOf).join(""));
     }
-    if (mockOpts.length) {
-      optionsHtml.push('<option value="__all_mocks__">🧩 Tất cả Đề thi mô phỏng (Ôn tập tổng hợp)</option>');
-      optionsHtml.push('<optgroup label="Đề thi mô phỏng (Ôn tập tổng hợp)">' + mockOpts.join("") + "</optgroup>");
-    }
-    // Bài học được NHÓM THEO HỌC PHẦN (YCT 1 → YCT 6, HSK 1 → ...): mỗi học phần 1
-    // nhóm riêng, kèm lựa chọn "Cả học phần ..." để xem gộp mọi bài của học phần đó.
-    var moduleKeys = Object.keys(moduleOpts).sort(function (a, b) { return moduleOpts[a].rank - moduleOpts[b].rank || a.localeCompare(b); });
-    if (moduleKeys.length) {
-      optionsHtml.push('<optgroup label="Xem cả học phần">' + moduleKeys.map(function (k) {
-        return '<option value="__module__' + escapeHtml(k) + '">📚 Cả ' + escapeHtml(moduleOpts[k].label) + " (" + moduleOpts[k].opts.length + " bài)</option>";
-      }).join("") + "</optgroup>");
-    }
-    moduleKeys.forEach(function (k) {
-      optionsHtml.push('<optgroup label="' + escapeHtml(moduleOpts[k].label) + '">' + moduleOpts[k].opts.join("") + "</optgroup>");
-    });
     filterEl.innerHTML = optionsHtml.join("");
-    var keep = (currentValue === "__all_tests__" && testOpts.length > 0) || (currentValue.indexOf("__module__") === 0 && moduleOpts.hasOwnProperty(currentValue.slice(10))) || (currentValue === "__all_mocks__" && mockOpts.length > 0) || allLessons.some(function (l) { return l.id === currentValue; });
-    filterEl.value = keep ? currentValue : "";
+    filterEl.value = validValues.indexOf(currentValue) !== -1 ? currentValue : "";
   }
 
   // Đổ danh sách LỚP (lấy từ field "class" trong permissions của những
@@ -13093,61 +13105,85 @@ const LESSONS = [
     filterEl.value = classNames.indexOf(currentValue) !== -1 ? currentValue : "";
   }
 
+  // Cột điểm theo từng dạng bài (chỉ dùng cho loại "Bài học").
+  var DASH_PART_COLS = [
+    { part: "quiz", label: "Điểm Điền từ" },
+    { part: "listen", label: "Điểm Nghe hiểu" },
+    { part: "video", label: "Điểm Video" },
+    { part: "readlisten", label: "Điểm Nghe đọc" },
+    { part: "mockexam", label: "Điểm Bài tập tổng hợp" },
+  ];
+  function dashPartScoreCell(s, part) {
+    var r = part === "quiz" ? s : s && s[part];
+    if (!r || r.bestScore === undefined || r.bestScore === null) return "—";
+    var out = r.bestScore + "/100";
+    if (part === "mockexam" && r.lastScore !== undefined && r.lastScore !== null && r.lastScore !== r.bestScore) {
+      out += ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + r.lastScore + ")</span>";
+    }
+    return out;
+  }
+
   function renderTeacherProgressTable() {
     var body = document.getElementById("teacher-progress-body");
     var empty = document.getElementById("teacher-progress-empty");
+    var headRow = document.getElementById("teacher-progress-head");
     var filterEl = document.getElementById("teacher-progress-lesson-filter");
     var classFilterEl = document.getElementById("teacher-progress-class-filter");
+    var kind = getTeacherProgressKind();
 
-    // Bộ lọc luôn được đổ đầy TOÀN BỘ bài học ngay khi có danh sách bài học
-    // (getAllLessons() có sẵn ngay, không cần chờ Firestore trả điểm về).
-    populateTeacherProgressLessonFilter(filterEl, getDashboardLessons());
+    // Bộ lọc luôn được đổ đầy ngay (không cần chờ Firestore trả điểm về) — chỉ gồm mục thuộc loại đang xem.
+    populateTeacherProgressLessonFilter(filterEl, getDashboardLessons(), kind);
 
     if (!teacherProgressCache) return;
-    // Bộ lọc "Xem theo lớp" đổ từ TOÀN BỘ lớp đã cấp quyền (permissions),
-    // không chỉ những lớp đã có học sinh làm bài — để chọn được cả 1 lớp
-    // mới toanh, chưa ai làm bài nào, và vẫn thấy đủ danh sách.
     populateTeacherProgressClassFilter(classFilterEl, teacherProgressCache.permMap);
     var filterLessonId = filterEl ? filterEl.value : "";
     var filterClass = classFilterEl ? classFilterEl.value : "";
-    // Đã chọn đúng 1 lớp cụ thể → hiện ĐỦ danh sách học sinh lớp đó (kể cả
-    // CHƯA làm bài) theo từng bài học; chưa chọn lớp (xem "Tất cả lớp") →
-    // giữ hành vi cũ, chỉ liệt kê học sinh thực sự đã làm (tránh dựng 1
-    // bảng khổng lồ gồm mọi học sinh × mọi bài học khi chưa lọc theo lớp).
     var groups = filterClass
       ? buildLessonRosterGroups(teacherProgressCache.rows, teacherProgressCache.allLessons, teacherProgressCache.permMap, filterClass)
       : groupScoreRowsByLesson(teacherProgressCache.rows, teacherProgressCache.allLessons, teacherProgressCache.permMap, filterClass);
 
-    if (!filterLessonId && groups.length === 0) {
-      body.innerHTML = "";
-      empty.textContent = filterClass ? 'Lớp "' + filterClass + '" chưa có học sinh nào được cấp quyền.' : "Chưa có học sinh nào làm bài.";
-      empty.classList.remove("hidden");
-      return;
-    }
-
     var dashLessonById = {};
     getDashboardLessons().forEach(function (l) { dashLessonById[l.id] = l; });
-    var visibleGroups = filterLessonId === "__all_tests__"
-      ? groups.filter(function (g) { return g.lessonId.indexOf("__test__") === 0; })
-      : filterLessonId === "__all_mocks__"
-      ? groups.filter(function (g) { return g.lessonId.indexOf("__reviewtest__") === 0; })
-      : filterLessonId.indexOf("__module__") === 0
-      ? groups.filter(function (g) { var ll = dashLessonById[g.lessonId]; return !!ll && !ll.isTest && dashboardModuleOf(ll).key === filterLessonId.slice(10); })
+    // 1) Chỉ giữ đúng loại đang xem (Bài học / Test học phần / Đề thi mô phỏng).
+    groups = groups.filter(function (g) { return dashboardKindOf(g.lessonId) === kind; });
+    // 2) Lọc theo bài / học phần đã chọn.
+    var visibleGroups = filterLessonId.indexOf("__module__") === 0
+      ? groups.filter(function (g) { var ll = dashLessonById[g.lessonId]; return !!ll && dashboardModuleOf(ll).key === filterLessonId.slice(10); })
       : filterLessonId ? groups.filter(function (g) { return g.lessonId === filterLessonId; }) : groups;
 
+    // 3) Cột hiển thị: Bài học → chỉ những dạng bài thực sự có trong các bài đang xem;
+    //    Test học phần / Đề thi mô phỏng → chỉ 1 cột điểm của bài thi.
+    var partCols = [];
+    if (kind === "lessons") {
+      var used = {};
+      visibleGroups.forEach(function (g) { (g.applicableParts || []).forEach(function (p) { used[p] = true; }); });
+      partCols = DASH_PART_COLS.filter(function (c) { return used[c.part]; });
+      if (!partCols.length) partCols = DASH_PART_COLS.slice();
+    }
+    var scoreLabel = kind === "tests" ? "Điểm Test học phần" : "Điểm Đề thi mô phỏng";
+    var headCells = ["Học sinh"]
+      .concat(kind === "lessons" ? partCols.map(function (c) { return c.label; }).concat(["% Hoàn thành"]) : [scoreLabel])
+      .concat(["Số lần làm", "Lần gần nhất"]);
+    if (headRow) headRow.innerHTML = headCells.map(function (h) { return "<th>" + h + "</th>"; }).join("");
+    var colCount = headCells.length;
+
+    var kindName = kind === "tests" ? "Test học phần" : kind === "mocks" ? "Đề thi mô phỏng" : "bài học";
     if (visibleGroups.length === 0) {
-      // Bài được chọn tồn tại trong chương trình nhưng chưa có ai làm (hoặc lớp đã lọc chưa ai làm bài này).
-      var pickedLesson = getDashboardLessons().find(function (l) { return l.id === filterLessonId; });
-      var pickedLabel = filterLessonId === "__all_tests__" ? "Test học phần" : filterLessonId === "__all_mocks__" ? "Đề thi mô phỏng" : filterLessonId.indexOf("__module__") === 0 ? "học phần " + filterLessonId.slice(10) : pickedLesson ? lessonDisplayTitle(pickedLesson) + (pickedLesson.level ? " (" + pickedLesson.level + ")" : "") : filterLessonId;
+      var pickedLesson = dashLessonById[filterLessonId];
+      var pickedLabel = filterLessonId.indexOf("__module__") === 0 ? "học phần " + filterLessonId.slice(10)
+        : pickedLesson ? (kind === "lessons" ? lessonDisplayTitle(pickedLesson) + (pickedLesson.level ? " (" + pickedLesson.level + ")" : "") : pickedLesson.title) : "";
       body.innerHTML = "";
-      empty.textContent = filterLessonId ? ('Chưa có học sinh' + (filterClass ? ' lớp "' + filterClass + '"' : "") + ' làm bài "' + pickedLabel + '".') : "Chưa có học sinh nào làm bài.";
+      empty.textContent = filterClass && !filterLessonId && groups.length === 0 && kind === "lessons"
+        ? 'Lớp "' + filterClass + '" chưa có học sinh nào được cấp quyền.'
+        : pickedLabel
+        ? 'Chưa có học sinh' + (filterClass ? ' lớp "' + filterClass + '"' : "") + ' làm "' + pickedLabel + '".'
+        : "Chưa có học sinh" + (filterClass ? ' lớp "' + filterClass + '"' : "") + " nào làm " + kindName + ".";
       empty.classList.remove("hidden");
       return;
     }
     empty.classList.add("hidden");
     var permMap = teacherProgressCache.permMap;
-    // Xếp các bài theo HỌC PHẦN (giữ nguyên thứ tự bài bên trong mỗi học phần)
-    // và chèn 1 dòng tiêu đề học phần mỗi khi sang học phần mới.
+    // Xếp theo HỌC PHẦN (giữ thứ tự bài bên trong), chèn dòng tiêu đề học phần (chỉ với loại Bài học).
     visibleGroups = visibleGroups
       .map(function (g, i) { return { g: g, i: i, mod: dashboardModuleOf(dashLessonById[g.lessonId]) }; })
       .sort(function (a, b) { return a.mod.rank - b.mod.rank || a.i - b.i; })
@@ -13156,35 +13192,36 @@ const LESSONS = [
     body.innerHTML = visibleGroups
       .map(function (g) {
         var modHeader = "";
-        if (g.__mod && g.__mod.key !== lastModKey) {
+        if (kind === "lessons" && g.__mod && g.__mod.key !== lastModKey) {
           lastModKey = g.__mod.key;
           var modCount = visibleGroups.filter(function (x) { return x.__mod && x.__mod.key === lastModKey; }).length;
-          modHeader = '<tr><td colspan="9" class="text-base font-extrabold" style="background:var(--jade); color:#fff; letter-spacing:.02em;"><i class="fa-solid fa-folder-open mr-2"></i>' + escapeHtml(g.__mod.label) + ' <span style="font-weight:600; opacity:.85;">· ' + modCount + " bài</span></td></tr>";
+          modHeader = '<tr><td colspan="' + colCount + '" class="text-base font-extrabold" style="background:var(--jade); color:#fff; letter-spacing:.02em;"><i class="fa-solid fa-folder-open mr-2"></i>' + escapeHtml(g.__mod.label) + ' <span style="font-weight:600; opacity:.85;">· ' + modCount + " bài</span></td></tr>";
         }
         var doneCount = g.isRoster ? g.rows.filter(function (row) { return row.hasAttempted; }).length : g.rows.length;
         var countLabel = g.isRoster
           ? doneCount + "/" + g.rows.length + " học sinh đã làm — " + Math.round((g.rows.length ? doneCount / g.rows.length : 0) * 100) + "% cả lớp"
           : g.rows.length + " học sinh đã làm";
+        var ll = dashLessonById[g.lessonId];
+        var groupTitle = kind === "lessons" ? g.lessonLabel + (g.programLabel !== "—" ? " · " + g.programLabel : "") : (ll ? ll.title : g.lessonLabel);
         var headerRow =
-          '<tr><td colspan="9" class="font-extrabold" style="background:var(--surface-alt); color:var(--jade);">' +
-          g.lessonLabel + (g.programLabel !== "—" ? " · " + g.programLabel : "") +
-          ' <span style="font-weight:600; color:var(--ink-faint);">(' + countLabel + ")</span></td></tr>";
+          '<tr><td colspan="' + colCount + '" class="font-extrabold" style="background:var(--surface-alt); color:var(--jade);">' +
+          groupTitle + ' <span style="font-weight:600; color:var(--ink-faint);">(' + countLabel + ")</span></td></tr>";
         var studentRows = g.rows
           .map(function (row) {
-            var s = row.record;
+            var s = row.record || {};
             var stats = scoreRowStats(s);
-            var pct = lessonCompletionPercent(s, g.applicableParts || []);
             var rowCls = row.hasAttempted === false ? ' class="progress-row-notdone"' : "";
-            return (
-              "<tr" + rowCls + ">" + renderStudentCell(row.email, permMap) + "<td>" +
-              (s.bestScore !== undefined && s.bestScore !== null ? s.bestScore + "/100" : "—") + "</td><td>" +
-              (s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore + "/100" : "—") + "</td><td>" +
-              (s.video && s.video.bestScore !== undefined && s.video.bestScore !== null ? s.video.bestScore + "/100" : "—") + "</td><td>" +
-              (s.readlisten && s.readlisten.bestScore !== undefined && s.readlisten.bestScore !== null ? s.readlisten.bestScore + "/100" : "—") + "</td><td>" +
-              (s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore + "/100" + (s.mockexam.lastScore !== undefined && s.mockexam.lastScore !== null && s.mockexam.lastScore !== s.mockexam.bestScore ? ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + s.mockexam.lastScore + ")</span>" : "") : "—") + "</td><td>" +
-              (pct === null ? "—" : pct + "%") + "</td><td>" +
-              stats.totalAttempts + "</td><td>" + formatDateTime(stats.lastAt) + "</td></tr>"
-            );
+            var cells;
+            if (kind === "lessons") {
+              var pct = lessonCompletionPercent(s, g.applicableParts || []);
+              cells = partCols.map(function (c) {
+                var applicable = (g.applicableParts || []).indexOf(c.part) !== -1;
+                return "<td>" + (applicable ? dashPartScoreCell(s, c.part) : '<span style="color:var(--ink-faint);">·</span>') + "</td>";
+              }).join("") + "<td>" + (pct === null ? "—" : pct + "%") + "</td>";
+            } else {
+              cells = "<td>" + dashPartScoreCell(s, "mockexam") + "</td>";
+            }
+            return "<tr" + rowCls + ">" + renderStudentCell(row.email, permMap) + cells + "<td>" + stats.totalAttempts + "</td><td>" + formatDateTime(stats.lastAt) + "</td></tr>";
           })
           .join("");
         return modHeader + headerRow + studentRows;
@@ -13231,6 +13268,14 @@ const LESSONS = [
   var elTeacherProgressLessonFilter = document.getElementById("teacher-progress-lesson-filter");
   if (elTeacherProgressLessonFilter) {
     elTeacherProgressLessonFilter.addEventListener("change", renderTeacherProgressTable);
+  }
+  var elTeacherProgressKindFilter = document.getElementById("teacher-progress-kind-filter");
+  if (elTeacherProgressKindFilter) {
+    elTeacherProgressKindFilter.addEventListener("change", function () {
+      var lf = document.getElementById("teacher-progress-lesson-filter");
+      if (lf) lf.value = ""; // đổi loại → về "Tất cả" của loại mới
+      renderTeacherProgressTable();
+    });
   }
   var elTeacherProgressClassFilter = document.getElementById("teacher-progress-class-filter");
   if (elTeacherProgressClassFilter) {
