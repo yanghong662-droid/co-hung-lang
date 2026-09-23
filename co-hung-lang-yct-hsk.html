@@ -2142,6 +2142,68 @@ const REVIEW_TESTS = {
       { kind: "read", prompt: "Xīngqī'èr ＿＿＿ jǐ diǎn jiàn?\nA：星期二（　　）几点见？\n8 diǎn.\nB：8点。", options: ["谁", "看", "面条儿", "三", "我们", "鼻子"], answer: "我们", image: "assets/mockexam/yct1-th3-r3-q35.jpg", section: "read", part: 3 },
     ], audio: "assets/audio/test-yct1-th3/mock-nghe.mp3" },
   ],
+  yct2: [
+    { title: "Đề 1", quiz: [
+      // ===== 听力 Part 1 (Q1-5): tranh + nghe, đánh dấu đúng (✓) / sai (✗) =====
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/yct2-th-l1-ex1.jpg", isExample: true, section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/yct2-th-l1-ex2.jpg", isExample: true, section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/yct2-th-l1-q1.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/yct2-th-l1-q2.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/yct2-th-l1-q3.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/yct2-th-l1-q4.jpg", section: "listen", part: 1 },
+      { kind: "listen", prompt: "🎧 Nghe và đánh dấu tranh đúng (✓) hay sai (✗)", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/yct2-th-l1-q5.jpg", section: "listen", part: 1 },
+      // ===== 听力 Part 2 (Q6-10): nghe + chọn tranh trong bộ 6 tranh A-F chung =====
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "C", image: "assets/mockexam/yct2-th-l2-gallery.jpg", isExample: true, section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/yct2-th-l2-gallery.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/yct2-th-l2-gallery.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "F", image: "assets/mockexam/yct2-th-l2-gallery.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/yct2-th-l2-gallery.jpg", section: "listen", part: 2 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/yct2-th-l2-gallery.jpg", section: "listen", part: 2 },
+      // ===== 听力 Part 3 (Q11-15): nghe hội thoại + chọn 1 trong 3 tranh A/B/C =====
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/yct2-th-l3-ex.jpg", isExample: true, section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/yct2-th-l3-q11.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "B", image: "assets/mockexam/yct2-th-l3-q12.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "C", image: "assets/mockexam/yct2-th-l3-q13.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "A", image: "assets/mockexam/yct2-th-l3-q14.jpg", section: "listen", part: 3 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn bức tranh đúng", options: ["A", "B", "C"], answer: "B", image: "assets/mockexam/yct2-th-l3-q15.jpg", section: "listen", part: 3 },
+      // ===== 听力 Part 4 (Q16-20): nghe câu hỏi + chọn câu trả lời in sẵn =====
+      { kind: "listen", prompt: "Tā shì shéi?\n她是谁？", options: ["不客气", "去医院", "我的学生"], answer: "我的学生", isExample: true, section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["再见", "很热", "三口人"], answer: "很热", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["打电话", "中国人", "我也喜欢"], answer: "我也喜欢", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["名字", "在北京", "她8岁了"], answer: "她8岁了", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["眼睛", "红颜色", "手和脚"], answer: "眼睛", section: "listen", part: 4 },
+      { kind: "listen", prompt: "🎧 Nghe và chọn đáp án đúng", options: ["2007年", "6月9号", "没有钱"], answer: "2007年", section: "listen", part: 4 },
+      // ===== 阅读 Part 1 (Q21-25): tranh + cụm từ, đánh dấu khớp (✓) / không khớp (✗) =====
+      { kind: "read", prompt: "kàn diànshì\n看电视", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/yct2-th-r1-ex1.jpg", isExample: true, section: "read", part: 1 },
+      { kind: "read", prompt: "zhuōzi hé yǐzi\n桌子和椅子", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/yct2-th-r1-ex2.jpg", isExample: true, section: "read", part: 1 },
+      { kind: "read", prompt: "chī mǐfàn\n吃米饭", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/yct2-th-r1-q21.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "hǎowánr\n好玩儿", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/yct2-th-r1-q22.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "zài shuìjiào\n在睡觉", options: ["✓", "✗"], answer: "✓", image: "assets/mockexam/yct2-th-r1-q23.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "dà ěrduo\n大耳朵", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/yct2-th-r1-q24.jpg", section: "read", part: 1 },
+      { kind: "read", prompt: "sān zhī xióngmāo\n三只熊猫", options: ["✓", "✗"], answer: "✗", image: "assets/mockexam/yct2-th-r1-q25.jpg", section: "read", part: 1 },
+      // ===== 阅读 Part 2 (Q26-30): ghép đoạn hội thoại với tranh trong bộ 6 tranh A-F chung =====
+      { kind: "read", prompt: "Nǐ de shū ne?\nA：你的书呢？\nZài shūbāo li.\nB：在书包里。", options: ["A", "B", "C", "D", "E", "F"], answer: "E", image: "assets/mockexam/yct2-th-r2-gallery.jpg", isExample: true, section: "read", part: 2 },
+      { kind: "read", prompt: "Nǐ yǒu jǐ kuàir?\nA：你有几块儿？\nWǒ yǒu 5 kuàir, nǐ ne?\nB：我有5块儿，你呢？", options: ["A", "B", "C", "D", "E", "F"], answer: "A", image: "assets/mockexam/yct2-th-r2-gallery.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Tāmen liǎng ge qù nǎr le?\nA：他们两个去哪儿了？\nZài fángjiān li kàn diànshì ne.\nB：在房间里看电视呢。", options: ["A", "B", "C", "D", "E", "F"], answer: "C", image: "assets/mockexam/yct2-th-r2-gallery.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Zhè zhī gǒu shì shéi jiā de?\nA：这只狗是谁家的？\nWǒ jiā de.\nB：我家的。", options: ["A", "B", "C", "D", "E", "F"], answer: "D", image: "assets/mockexam/yct2-th-r2-gallery.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Nǐ bù juéde lěng ma?\nA：你不觉得冷吗？\nNà wǒmen qù lǐmiàn zuò.\nB：那我们去里面坐。", options: ["A", "B", "C", "D", "E", "F"], answer: "B", image: "assets/mockexam/yct2-th-r2-gallery.jpg", section: "read", part: 2 },
+      { kind: "read", prompt: "Nǐ zài huà shénme ne?\nA：你在画什么呢？\nWǒ yào huà xiǎo niǎo.\nB：我要画小鸟。", options: ["A", "B", "C", "D", "E", "F"], answer: "F", image: "assets/mockexam/yct2-th-r2-gallery.jpg", section: "read", part: 2 },
+      // ===== 阅读 Part 3 (Q31-35): chọn câu trả lời đúng (A 商店 · B 黄色的 · C 包子 · D 三块 · E 我朋友 · F 很好) =====
+      { kind: "read", prompt: "Zhège qiānbǐ duōshao qián?\n这个铅笔多少钱？", options: ["商店。", "黄色的。", "包子。", "三块。", "我朋友。", "很好。"], answer: "三块。", isExample: true, section: "read", part: 3 },
+      { kind: "read", prompt: "Nǐ māma qù nǎr le?\n你妈妈去哪儿了？", options: ["商店。", "黄色的。", "包子。", "三块。", "我朋友。", "很好。"], answer: "商店。", section: "read", part: 3 },
+      { kind: "read", prompt: "Nǐ juéde nǎge hǎokàn?\n你觉得哪个好看？", options: ["商店。", "黄色的。", "包子。", "三块。", "我朋友。", "很好。"], answer: "黄色的。", section: "read", part: 3 },
+      { kind: "read", prompt: "Lǐmiàn nàge rén shì shéi?\n里面那个人是谁？", options: ["商店。", "黄色的。", "包子。", "三块。", "我朋友。", "很好。"], answer: "我朋友。", section: "read", part: 3 },
+      { kind: "read", prompt: "Jīntiān wǎnshang chī shénme?\n今天晚上吃什么？", options: ["商店。", "黄色的。", "包子。", "三块。", "我朋友。", "很好。"], answer: "包子。", section: "read", part: 3 },
+      { kind: "read", prompt: "Zhège bāo zěnmeyàng?\n这个包怎么样？", options: ["商店。", "黄色的。", "包子。", "三块。", "我朋友。", "很好。"], answer: "很好。", section: "read", part: 3 },
+      // ===== 阅读 Part 4 (Q36-40): điền từ vào hội thoại (A 起床 · B 医生 · C 要 · D 漂亮 · E 汉语 · F 认识) =====
+      { kind: "read", prompt: "Wǒ jiào Míngming, hěn gāoxìng ＿＿＿ nǐ.\nA：我叫明明，很高兴（　　）你。\nMíngming, nǐ hǎo! Wǒ jiào Fāngfang.\nB：明明，你好！我叫芳芳。", options: ["起床", "医生", "要", "漂亮", "汉语", "认识"], answer: "认识", isExample: true, section: "read", part: 4 },
+      { kind: "read", prompt: "Wǒ zǎoshang 7 diǎn 40 ＿＿＿, nǐ ne?\nA：我早上7点40（　　），你呢？\nWǒ bǐ nǐ wǎn 10 fēnzhōng.\nB：我比你晚10分钟。", options: ["起床", "医生", "要", "漂亮", "汉语", "认识"], answer: "起床", section: "read", part: 4 },
+      { kind: "read", prompt: "Píngguǒ hé xiāngjiāo, nǐ ＿＿＿ nǎge?\nA：苹果和香蕉，你（　　）哪个？\nPíngguǒ, wǒ xǐhuan chī píngguǒ.\nB：苹果，我喜欢吃苹果。", options: ["起床", "医生", "要", "漂亮", "汉语", "认识"], answer: "要", section: "read", part: 4 },
+      { kind: "read", prompt: "Nǐ bàba shì zuò shénme de?\nA：你爸爸是做什么的？\nTā shì ＿＿＿.\nB：他是（　　）。", options: ["起床", "医生", "要", "漂亮", "汉语", "认识"], answer: "医生", section: "read", part: 4 },
+      { kind: "read", prompt: "Nǐ jiějie huì shuō ＿＿＿?\nA：你姐姐会说（　　）？\nShì de.\nB：是的。", options: ["起床", "医生", "要", "漂亮", "汉语", "认识"], answer: "汉语", section: "read", part: 4 },
+      { kind: "read", prompt: "Nǐ de yǎnjing zhēn ＿＿＿.\nA：你的眼睛真（　　）。\nShì ma? Xièxie nǐ!\nB：是吗？谢谢你！", options: ["起床", "医生", "要", "漂亮", "汉语", "认识"], answer: "漂亮", section: "read", part: 4 },
+    ], audio: "assets/audio/test-yct2-th/mock-nghe.mp3" },
+  ],
   hsk1: [
     { title: "Đề 1", quiz: [
       // ===== 听力 Part 1 (Q1-5): tranh + nghe, đánh dấu đúng (✓) / sai (✗) =====
