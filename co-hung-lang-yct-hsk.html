@@ -1216,7 +1216,7 @@
           <table class="data-table text-sm">
             <thead>
               <tr>
-                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Bài tập tổng hợp / Test học phần</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
+                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Bài tập tổng hợp / Test học phần / Đề thi mô phỏng</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
               </tr>
             </thead>
             <tbody id="teacher-progress-body"></tbody>
@@ -1255,7 +1255,7 @@
         <table class="data-table text-sm">
           <thead>
             <tr>
-              <th>Bài học</th><th>Điền từ</th><th>Nghe hiểu</th><th>Video</th><th>Nghe đọc</th><th>Bài tập tổng hợp / Test học phần</th><th>Số lần làm</th><th>Gần nhất</th>
+              <th>Bài học</th><th>Điền từ</th><th>Nghe hiểu</th><th>Video</th><th>Nghe đọc</th><th>Bài tập tổng hợp / Test học phần / Đề thi mô phỏng</th><th>Số lần làm</th><th>Gần nhất</th>
             </tr>
           </thead>
           <tbody id="student-history-body"></tbody>
@@ -9930,6 +9930,16 @@ const LESSONS = [
         out.push({ id: "__test__" + f.id + "__" + level, title: "Test học phần — " + level, program: f.id, level: "", isTest: true, isReview: false });
       });
     });
+    // "Đề thi mô phỏng" trong Ôn tập tổng hợp (REVIEW_TESTS) — id PHẢI khớp
+    // id mà enterReviewTest() dùng khi lưu điểm: "__reviewtest__" + key cấp + "__" + số thứ tự đề.
+    Object.keys(REVIEW_TESTS).forEach(function (key) {
+      var papers = Array.isArray(REVIEW_TESTS[key]) ? REVIEW_TESTS[key].filter(function (pp) { return pp && pp.quiz && pp.quiz.length; }) : [];
+      var m = /^([a-z]+)(\d+)$/.exec(key);
+      var levelLabel = m ? m[1].toUpperCase() + " " + m[2] : key;
+      papers.forEach(function (pp, idx) {
+        out.push({ id: "__reviewtest__" + key + "__" + idx, title: "Đề thi mô phỏng — " + levelLabel + " · " + (pp.title || ("Đề " + (idx + 1))), program: key.indexOf("yct") === 0 ? "yct" : "hsk3", level: "", isTest: true, isMock: true, isReview: false });
+      });
+    });
     return out;
   }
   function getDashboardLessons() { return getAllLessons().concat(getTestPseudoLessons()); }
@@ -12601,7 +12611,9 @@ const LESSONS = [
   // ghi "cohunglang:scores[lessonId]" (thêm trường con "mockexam") để
   // Dashboard Giáo viên hiển thị đủ cột điểm.
   function saveMockScore(score100, durationMs) {
-    if (state.lesson && state.lesson.isReview) return; // buổi Ôn tập tổng hợp không tính vào tiến độ từng bài học
+    // Buổi Ôn tập tổng hợp không tính điểm — TRỪ "Đề thi mô phỏng" (id "__reviewtest__...")
+    // vẫn được lưu riêng để giáo viên/học sinh theo dõi tiến độ.
+    if (state.lesson && state.lesson.isReview && String(state.lesson.id || "").indexOf("__reviewtest__") !== 0) return;
     const scores = loadScores();
     const lessonId = state.lesson.id;
     const record = scores[lessonId] || {};
@@ -12998,17 +13010,39 @@ const LESSONS = [
   // làm — để giáo viên bấm chọn được bất kỳ bài nào, kể cả bài chưa ai
   // làm (khi đó bảng sẽ báo rõ "chưa có học sinh nào làm bài này"), thay
   // vì bộ lọc trống trơn chỉ có mỗi "Tất cả bài học" khi chưa có dữ liệu.
+  // Học phần của 1 "bài" trong Dashboard: bài học thường → cấp độ (YCT 1, HSK 2...);
+  // Test học phần / Đề thi mô phỏng → nhóm riêng. rank dùng để xếp thứ tự nhóm.
+  function dashboardModuleOf(l) {
+    if (!l) return { key: "Khác", label: "Khác", rank: 999 };
+    if (l.isMock) return { key: "__mock__", label: "Đề thi mô phỏng (Ôn tập tổng hợp)", rank: 300 };
+    if (l.isTest) return { key: "__test__", label: "Test học phần (cuối khoá)", rank: 200 };
+    var lv = l.level || "";
+    var m = /^(YCT|HSK)\s*(\d+)/i.exec(lv);
+    var rank = m ? (m[1].toUpperCase() === "YCT" ? 0 : 100) + Number(m[2]) : 500;
+    return { key: lv || "Khác", label: lv ? "Học phần " + lv : "Khác", rank: rank };
+  }
+
   function populateTeacherProgressLessonFilter(filterEl, allLessons) {
     if (!filterEl) return;
     var currentValue = filterEl.value;
     var lessonOpts = [];
+    var moduleOpts = {}; // key học phần → { label, rank, opts[] }
     var testOpts = [];
+    var mockOpts = [];
     allLessons
       .filter(function (l) { return !l.isReview; })
       .forEach(function (l) {
         var program = getProgramById(l.program);
         var label = lessonDisplayTitle(l) + (l.level ? " (" + l.level + ")" : "") + (program ? " · " + program.name : "");
-        (l.isTest ? testOpts : lessonOpts).push('<option value="' + l.id + '">' + label + "</option>");
+        var optHtml = '<option value="' + l.id + '">' + label + "</option>";
+        if (l.isMock) mockOpts.push(optHtml);
+        else if (l.isTest) testOpts.push(optHtml);
+        else {
+          var mod = dashboardModuleOf(l);
+          if (!moduleOpts[mod.key]) moduleOpts[mod.key] = { label: mod.label, rank: mod.rank, opts: [] };
+          moduleOpts[mod.key].opts.push(optHtml);
+          lessonOpts.push(optHtml);
+        }
       });
     // Test học phần (bài kiểm tra cuối khoá) đặt LÊN ĐẦU để giáo viên chọn
     // nhanh: "Tất cả Test học phần" xem gộp mọi cấp, hoặc chọn riêng 1 cấp.
@@ -13017,9 +13051,23 @@ const LESSONS = [
       optionsHtml.push('<option value="__all_tests__">📝 Tất cả Test học phần (cuối khoá)</option>');
       optionsHtml.push('<optgroup label="Test học phần (cuối khoá)">' + testOpts.join("") + "</optgroup>");
     }
-    optionsHtml.push('<optgroup label="Bài học">' + lessonOpts.join("") + "</optgroup>");
+    if (mockOpts.length) {
+      optionsHtml.push('<option value="__all_mocks__">🧩 Tất cả Đề thi mô phỏng (Ôn tập tổng hợp)</option>');
+      optionsHtml.push('<optgroup label="Đề thi mô phỏng (Ôn tập tổng hợp)">' + mockOpts.join("") + "</optgroup>");
+    }
+    // Bài học được NHÓM THEO HỌC PHẦN (YCT 1 → YCT 6, HSK 1 → ...): mỗi học phần 1
+    // nhóm riêng, kèm lựa chọn "Cả học phần ..." để xem gộp mọi bài của học phần đó.
+    var moduleKeys = Object.keys(moduleOpts).sort(function (a, b) { return moduleOpts[a].rank - moduleOpts[b].rank || a.localeCompare(b); });
+    if (moduleKeys.length) {
+      optionsHtml.push('<optgroup label="Xem cả học phần">' + moduleKeys.map(function (k) {
+        return '<option value="__module__' + escapeHtml(k) + '">📚 Cả ' + escapeHtml(moduleOpts[k].label) + " (" + moduleOpts[k].opts.length + " bài)</option>";
+      }).join("") + "</optgroup>");
+    }
+    moduleKeys.forEach(function (k) {
+      optionsHtml.push('<optgroup label="' + escapeHtml(moduleOpts[k].label) + '">' + moduleOpts[k].opts.join("") + "</optgroup>");
+    });
     filterEl.innerHTML = optionsHtml.join("");
-    var keep = (currentValue === "__all_tests__" && testOpts.length > 0) || allLessons.some(function (l) { return l.id === currentValue; });
+    var keep = (currentValue === "__all_tests__" && testOpts.length > 0) || (currentValue.indexOf("__module__") === 0 && moduleOpts.hasOwnProperty(currentValue.slice(10))) || (currentValue === "__all_mocks__" && mockOpts.length > 0) || allLessons.some(function (l) { return l.id === currentValue; });
     filterEl.value = keep ? currentValue : "";
   }
 
@@ -13074,14 +13122,20 @@ const LESSONS = [
       return;
     }
 
+    var dashLessonById = {};
+    getDashboardLessons().forEach(function (l) { dashLessonById[l.id] = l; });
     var visibleGroups = filterLessonId === "__all_tests__"
       ? groups.filter(function (g) { return g.lessonId.indexOf("__test__") === 0; })
+      : filterLessonId === "__all_mocks__"
+      ? groups.filter(function (g) { return g.lessonId.indexOf("__reviewtest__") === 0; })
+      : filterLessonId.indexOf("__module__") === 0
+      ? groups.filter(function (g) { var ll = dashLessonById[g.lessonId]; return !!ll && !ll.isTest && dashboardModuleOf(ll).key === filterLessonId.slice(10); })
       : filterLessonId ? groups.filter(function (g) { return g.lessonId === filterLessonId; }) : groups;
 
     if (visibleGroups.length === 0) {
       // Bài được chọn tồn tại trong chương trình nhưng chưa có ai làm (hoặc lớp đã lọc chưa ai làm bài này).
       var pickedLesson = getDashboardLessons().find(function (l) { return l.id === filterLessonId; });
-      var pickedLabel = filterLessonId === "__all_tests__" ? "Test học phần" : pickedLesson ? lessonDisplayTitle(pickedLesson) + (pickedLesson.level ? " (" + pickedLesson.level + ")" : "") : filterLessonId;
+      var pickedLabel = filterLessonId === "__all_tests__" ? "Test học phần" : filterLessonId === "__all_mocks__" ? "Đề thi mô phỏng" : filterLessonId.indexOf("__module__") === 0 ? "học phần " + filterLessonId.slice(10) : pickedLesson ? lessonDisplayTitle(pickedLesson) + (pickedLesson.level ? " (" + pickedLesson.level + ")" : "") : filterLessonId;
       body.innerHTML = "";
       empty.textContent = filterLessonId ? ('Chưa có học sinh' + (filterClass ? ' lớp "' + filterClass + '"' : "") + ' làm bài "' + pickedLabel + '".') : "Chưa có học sinh nào làm bài.";
       empty.classList.remove("hidden");
@@ -13089,8 +13143,21 @@ const LESSONS = [
     }
     empty.classList.add("hidden");
     var permMap = teacherProgressCache.permMap;
+    // Xếp các bài theo HỌC PHẦN (giữ nguyên thứ tự bài bên trong mỗi học phần)
+    // và chèn 1 dòng tiêu đề học phần mỗi khi sang học phần mới.
+    visibleGroups = visibleGroups
+      .map(function (g, i) { return { g: g, i: i, mod: dashboardModuleOf(dashLessonById[g.lessonId]) }; })
+      .sort(function (a, b) { return a.mod.rank - b.mod.rank || a.i - b.i; })
+      .map(function (x) { x.g.__mod = x.mod; return x.g; });
+    var lastModKey = null;
     body.innerHTML = visibleGroups
       .map(function (g) {
+        var modHeader = "";
+        if (g.__mod && g.__mod.key !== lastModKey) {
+          lastModKey = g.__mod.key;
+          var modCount = visibleGroups.filter(function (x) { return x.__mod && x.__mod.key === lastModKey; }).length;
+          modHeader = '<tr><td colspan="9" class="text-base font-extrabold" style="background:var(--jade); color:#fff; letter-spacing:.02em;"><i class="fa-solid fa-folder-open mr-2"></i>' + escapeHtml(g.__mod.label) + ' <span style="font-weight:600; opacity:.85;">· ' + modCount + " bài</span></td></tr>";
+        }
         var doneCount = g.isRoster ? g.rows.filter(function (row) { return row.hasAttempted; }).length : g.rows.length;
         var countLabel = g.isRoster
           ? doneCount + "/" + g.rows.length + " học sinh đã làm — " + Math.round((g.rows.length ? doneCount / g.rows.length : 0) * 100) + "% cả lớp"
@@ -13117,7 +13184,7 @@ const LESSONS = [
             );
           })
           .join("");
-        return headerRow + studentRows;
+        return modHeader + headerRow + studentRows;
       })
       .join("");
   }
