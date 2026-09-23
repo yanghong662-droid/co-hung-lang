@@ -12527,7 +12527,10 @@ const LESSONS = [
     // bị tua lại từ đầu mỗi khi chuyển câu. Bấm lại nút này để tạm dừng/tiếp tục.
     if (sharedSrc) {
       if (!mockAudioEl) {
-        const isPracticeMode = String(state.lesson.id || "").indexOf("__test__") !== 0;
+        // Thanh tua CHỈ hiện ở "Bài tập tổng hợp" trong bài học; Test học phần và "Đề thi mô phỏng"
+        // (Ôn tập tổng hợp, id "__reviewtest__...") ẩn thanh tua — nghe liên tục như thi thật.
+        const _mockId = String(state.lesson.id || "");
+        const isPracticeMode = _mockId.indexOf("__test__") !== 0 && _mockId.indexOf("__reviewtest__") !== 0;
         mockAudioEl = elMockAudioToolbar || new Audio();
         mockAudioEl.src = sharedSrc;
         if (elMockAudioToolbar) {
