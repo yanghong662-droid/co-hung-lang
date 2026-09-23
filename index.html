@@ -695,7 +695,7 @@
             <i class="fa-solid fa-book-open-reader"></i>⑤ Nghe đọc
           </button>
           <button type="button" id="btn-subtab-mock" class="subtab-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5">
-            <i class="fa-solid fa-file-signature"></i>⑥ Đề thi mô phỏng
+            <i class="fa-solid fa-file-signature"></i>⑥ Bài tập tổng hợp
           </button>
         </div>
 
@@ -992,9 +992,9 @@
 
         <!-- ---- Dạng 6: ĐỀ THI MÔ PHỎNG (kết hợp Nghe/Đọc/Điền từ do giáo viên tự soạn) ---- -->
         <div id="subpanel-mock" class="hidden space-y-5">
-        <p class="text-xs mb-1" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>Đề thi mô phỏng do giáo viên tự soạn cho bài này, kết hợp nhiều dạng câu hỏi (Nghe/Đọc/Điền từ). Trả lời hết rồi bấm "Nộp bài" để chấm điểm.</p>
+        <p class="text-xs mb-1" style="color:var(--ink-faint);"><i class="fa-solid fa-circle-info mr-1"></i>Bài tập tổng hợp do giáo viên tự soạn cho bài này, kết hợp nhiều dạng câu hỏi (Nghe/Đọc/Điền từ). Trả lời hết rồi bấm "Nộp bài" để chấm điểm.</p>
         <div id="mock-empty" class="hidden rounded-2xl border p-8 text-center text-sm" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink-faint);">
-          <i class="fa-solid fa-file-signature text-2xl mb-2 block"></i>Bài này chưa có Đề thi mô phỏng. Cô vào Dashboard Giáo viên để soạn đề.
+          <i class="fa-solid fa-file-signature text-2xl mb-2 block"></i>Bài này chưa có Bài tập tổng hợp. Cô vào Dashboard Giáo viên để soạn đề.
         </div>
         <div id="mock-active">
           <div class="mock-layout" style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
@@ -1094,7 +1094,7 @@
       <div id="review-category-section" class="hidden">
         <p class="text-xs font-bold uppercase tracking-wide mb-3" style="color:var(--ink-faint);">Bước 2 · Chọn mục ôn tập</p>
         <div id="review-category-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8"></div>
-        <p id="review-category-note" class="hidden text-sm text-center mb-6" style="color:var(--ink-faint);"><i class="fa-solid fa-pen-ruler mr-1"></i>Mục "Test tổng hợp" đang được biên soạn — nội dung sẽ được bổ sung sau.</p>
+        <p id="review-category-note" class="hidden text-sm text-center mb-6" style="color:var(--ink-faint);"><i class="fa-solid fa-pen-ruler mr-1"></i>Mục "Đề thi mô phỏng" đang được biên soạn — nội dung sẽ được bổ sung sau.</p>
         <div id="review-test-paper-row" class="hidden flex items-center justify-center gap-2 flex-wrap mb-6"></div>
         <div class="flex justify-center">
           <button type="button" id="btn-review-start" disabled class="btn-disabled-look px-7 py-3 rounded-full font-bold text-sm text-white flex items-center gap-2" style="background:var(--jade);">
@@ -1216,7 +1216,7 @@
           <table class="data-table text-sm">
             <thead>
               <tr>
-                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Đề thi mô phỏng / Test học phần</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
+                <th>Học sinh</th><th>Điểm Điền từ</th><th>Điểm Nghe hiểu</th><th>Điểm Video</th><th>Điểm Nghe đọc</th><th>Điểm Bài tập tổng hợp / Test học phần</th><th>% Hoàn thành</th><th>Số lần làm</th><th>Lần gần nhất</th>
               </tr>
             </thead>
             <tbody id="teacher-progress-body"></tbody>
@@ -1255,7 +1255,7 @@
         <table class="data-table text-sm">
           <thead>
             <tr>
-              <th>Bài học</th><th>Điền từ</th><th>Nghe hiểu</th><th>Video</th><th>Nghe đọc</th><th>Đề thi mô phỏng / Test học phần</th><th>Số lần làm</th><th>Gần nhất</th>
+              <th>Bài học</th><th>Điền từ</th><th>Nghe hiểu</th><th>Video</th><th>Nghe đọc</th><th>Bài tập tổng hợp / Test học phần</th><th>Số lần làm</th><th>Gần nhất</th>
             </tr>
           </thead>
           <tbody id="student-history-body"></tbody>
@@ -10145,7 +10145,7 @@ const LESSONS = [
     { key: "grammar", label: "Chỉ Ngữ pháp", icon: "fa-solid fa-book", desc: "Xem lại toàn bộ điểm ngữ pháp đã học, xếp thành danh sách." },
     { key: "quiz", label: "Chỉ Điền từ", icon: "fa-solid fa-pen-to-square", desc: "Trắc nghiệm điền từ gộp, chấm điểm tự động theo thang 100." },
     // Nội dung lấy từ REVIEW_TESTS[key nhóm]; nhóm nào chưa có thì chọn được nhưng nút "Bắt đầu ôn tập" bị khoá và hiện thông báo "đang biên soạn".
-    { key: "test", label: "Test tổng hợp", icon: "fa-solid fa-list-check", desc: "Bài test tổng hợp Nghe + Đọc cho cấp độ đã chọn, chấm điểm tự động." },
+    { key: "test", label: "Đề thi mô phỏng", icon: "fa-solid fa-list-check", desc: "Đề thi mô phỏng Nghe + Đọc cho cấp độ đã chọn, chấm điểm tự động." },
   ];
   const REVIEW_SAMPLE_SIZE = 30; // gộp cả trăm câu/từ thì quá dài — mỗi buổi chỉ lấy ngẫu nhiên tối đa 30, bấm ôn lại sẽ ra bộ khác
 
@@ -10342,7 +10342,7 @@ const LESSONS = [
       program: group.key.indexOf("yct") === 0 ? "yct" : "hsk3",
       permLevel: group.permLevel,
       level: group.label + " · Ôn tập",
-      title: "Test tổng hợp (" + group.label + ")" + paperTag,
+      title: "Đề thi mô phỏng (" + group.label + ")" + paperTag,
       mockExam: data.quiz,
       mockExamAudio: data.audio || "",
       isReview: true, // không tính vào tiến độ từng bài học (giống các buổi Ôn tập tổng hợp khác)
@@ -10350,7 +10350,7 @@ const LESSONS = [
     if (!ensureProgramAccess(lesson.program, () => enterReviewTest(groupKey, idx), lesson.permLevel)) return;
     ensureMockPanelAtHome();
     document.getElementById("test-detail-badge").innerHTML = '<i class="fa-solid fa-list-check mr-1"></i>' + group.label + " · Ôn tập";
-    document.getElementById("test-detail-title").textContent = "Test tổng hợp — " + group.label + paperTag;
+    document.getElementById("test-detail-title").textContent = "Đề thi mô phỏng — " + group.label + paperTag;
     const body = document.getElementById("test-detail-body");
     body.innerHTML = "";
     state.lesson = lesson;
@@ -12893,7 +12893,7 @@ const LESSONS = [
     var rows = results[0];
     var permMap = results[1];
     var groups = groupScoreRowsByLesson(rows, allLessons);
-    var header = ["Bài học", "Chương trình", "Tên học sinh", "Lớp", "Email học sinh", "Điểm Điền từ", "Điểm Nghe hiểu", "Điểm Video", "Điểm Nghe đọc", "Điểm Đề thi mô phỏng", "Số lần làm", "Lần gần nhất"];
+    var header = ["Bài học", "Chương trình", "Tên học sinh", "Lớp", "Email học sinh", "Điểm Điền từ", "Điểm Nghe hiểu", "Điểm Video", "Điểm Nghe đọc", "Điểm Bài tập tổng hợp", "Số lần làm", "Lần gần nhất"];
     var lines = [header.map(csvEscape).join(",")];
     groups.forEach(function (g) {
       g.rows.forEach(function (row) {
@@ -12965,7 +12965,7 @@ const LESSONS = [
       '<div class="flex flex-wrap gap-4 border-b mb-4" style="border-color:var(--border);" id="ledit-tabs">' +
       '<button type="button" data-ledit-tab="quiz" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="true">Dạng 1 · Điền từ</button>' +
       (showVideoTab ? '<button type="button" data-ledit-tab="video" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="false">Dạng 4 · Trắc nghiệm Video</button>' : "") +
-      (showMockTab ? '<button type="button" data-ledit-tab="mockexam" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="false">Dạng 6 · Đề thi mô phỏng</button>' : "") +
+      (showMockTab ? '<button type="button" data-ledit-tab="mockexam" class="ledit-tab-btn teacher-tab pb-2 text-xs sm:text-sm font-bold" aria-selected="false">Dạng 6 · Bài tập tổng hợp</button>' : "") +
       "</div>" +
       '<div id="ledit-panel-quiz"></div>' +
       (showVideoTab ? '<div id="ledit-panel-video" class="hidden"></div>' : "") +
@@ -13122,7 +13122,7 @@ const LESSONS = [
     const panel = document.getElementById("ledit-panel-mockexam");
     if (!panel) return;
     panel.innerHTML =
-      '<p class="text-xs mb-4" style="color:var(--ink-faint);">Soạn "Đề thi mô phỏng" (Dạng 6) cho bài này — kết hợp nhiều loại câu hỏi (Nghe/Đọc/Điền từ) trong CÙNG 1 bài thi liền mạch, chấm chung 1 điểm số. Chọn "Loại câu" cho từng câu: <b>Nghe</b> hiện nút loa 🔊 để học sinh nghe rồi chọn nghĩa; <b>Đọc</b> chỉ hiện chữ, không có nút loa; <b>Điền từ</b> giống Nghe nhưng câu hỏi có chỗ trống "___". Sau khi lưu, thay đổi hiện cho TẤT CẢ học sinh.</p>' +
+      '<p class="text-xs mb-4" style="color:var(--ink-faint);">Soạn "Bài tập tổng hợp" (Dạng 6) cho bài này — kết hợp nhiều loại câu hỏi (Nghe/Đọc/Điền từ) trong CÙNG 1 bài thi liền mạch, chấm chung 1 điểm số. Chọn "Loại câu" cho từng câu: <b>Nghe</b> hiện nút loa 🔊 để học sinh nghe rồi chọn nghĩa; <b>Đọc</b> chỉ hiện chữ, không có nút loa; <b>Điền từ</b> giống Nghe nhưng câu hỏi có chỗ trống "___". Sau khi lưu, thay đổi hiện cho TẤT CẢ học sinh.</p>' +
       '<div class="mb-4 p-3 rounded-xl border" style="border-color:var(--border); background:var(--surface-alt);">' +
       '<label class="text-xs font-bold block mb-1" style="color:var(--ink-faint);"><i class="fa-solid fa-music mr-1"></i>Link file mp3 băng nghe (phát LIÊN TỤC từ Câu 1 đến hết, giống băng thi thật — KHÔNG tách theo từng câu):</label>' +
       '<input type="text" id="mexedit-audio-url" class="form-input rounded-lg px-2.5 py-1.5 text-sm w-full" placeholder="Dán link file mp3 vào đây (để trống nếu chưa có / dùng nút loa đọc bằng giọng máy)">' +
