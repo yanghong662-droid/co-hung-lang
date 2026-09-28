@@ -510,6 +510,15 @@
             </div>
           </div>
         </div>
+        <div id="nav-listen-wrap" class="nav-dropdown-wrap">
+          <button type="button" id="btn-nav-listen" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-headphones text-[11px]"></i> Luyện nghe <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
+          <div id="nav-listen-panel" class="nav-dropdown-panel hidden">
+            <div class="nav-dropdown-grid">
+              <button type="button" data-listen-folder="nguam" class="nav-dropdown-item"><i class="fa-solid fa-folder mb-1"></i>Ngữ âm</button>
+              <button type="button" data-listen-folder="nghesocap" class="nav-dropdown-item"><i class="fa-solid fa-folder mb-1"></i>Nghe sơ cấp</button>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <div id="auth-area" class="auth-area flex items-center justify-end w-full"></div>
@@ -556,6 +565,10 @@
           <!-- Nút vào "Test học phần" cho điện thoại/iPad (thanh menu trên chỉ hiện từ màn hình lớn trở lên) -->
           <button type="button" id="btn-home-test-cta" class="mt-3 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm border" style="border-color:var(--accent); color:var(--accent);">
             <i class="fa-solid fa-list-check"></i> Test học phần (kiểm tra cuối khoá)
+          </button>
+          <!-- Nút vào "Luyện nghe" cho điện thoại/iPad -->
+          <button type="button" id="btn-home-listen-cta" class="mt-3 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm border" style="border-color:var(--accent); color:var(--accent);">
+            <i class="fa-solid fa-headphones"></i> Luyện nghe (Ngữ âm · Nghe sơ cấp)
           </button>
           <p class="lock-hint mt-3 justify-center"><i class="fa-solid fa-lock-open"></i> Xem thoải mái — chỉ cần đăng nhập khi bắt đầu học một bài cụ thể.</p>
         </div>
@@ -1102,6 +1115,32 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- ============ LUYỆN NGHE: DANH SÁCH BÀI (Ngữ âm / Nghe sơ cấp) ============ -->
+    <div id="view-listen-list" class="hidden py-8 sm:py-12">
+      <button type="button" id="btn-back-home-listen" class="flex items-center gap-2 text-sm font-bold px-3.5 py-2 rounded-lg border mb-6" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
+        <i class="fa-solid fa-arrow-left"></i> Về trang chủ
+      </button>
+      <div class="mb-6">
+        <span class="badge-pill" style="background:var(--accent-soft); color:var(--accent-strong);"><i class="fa-solid fa-headphones mr-1"></i>Luyện nghe</span>
+        <h1 id="listen-list-title" class="text-2xl sm:text-3xl font-extrabold mt-3" style="color:var(--jade);"></h1>
+        <p id="listen-list-desc" class="text-sm sm:text-base mt-2 max-w-xl" style="color:var(--ink-soft);"></p>
+      </div>
+      <div id="listen-folder-tabs" class="flex flex-wrap gap-2 mb-6"></div>
+      <div id="listen-list-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+    </div>
+
+    <!-- ============ LUYỆN NGHE: CHI TIẾT 1 BÀI ============ -->
+    <div id="view-listen-detail" class="hidden py-8 sm:py-12">
+      <button type="button" id="btn-back-listen-list" class="flex items-center gap-2 text-sm font-bold px-3.5 py-2 rounded-lg border mb-6" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
+        <i class="fa-solid fa-arrow-left"></i> Quay lại danh sách
+      </button>
+      <div class="mb-6">
+        <span id="listen-detail-badge" class="badge-pill" style="background:var(--accent-soft); color:var(--accent-strong);"></span>
+        <h1 id="listen-detail-title" class="text-2xl sm:text-3xl font-extrabold mt-3" style="color:var(--jade);"></h1>
+      </div>
+      <div id="listen-detail-body" class="p-6 sm:p-8 rounded-2xl border card-shadow text-center" style="border-color:var(--border); background:var(--surface);"></div>
     </div>
 
     <!-- ============ TEST HỌC PHẦN: CHỌN CHƯƠNG TRÌNH ============ -->
@@ -11237,6 +11276,8 @@ const LESSONS = [
     elViewTestHub.classList.toggle("hidden", name !== "testHub");
     elViewTestLevels.classList.toggle("hidden", name !== "testLevels");
     elViewTestDetail.classList.toggle("hidden", name !== "testDetail");
+    document.getElementById("view-listen-list").classList.toggle("hidden", name !== "listenList");
+    document.getElementById("view-listen-detail").classList.toggle("hidden", name !== "listenDetail");
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
   }
 
@@ -11784,6 +11825,94 @@ const LESSONS = [
   document.getElementById("btn-back-home-testhub").addEventListener("click", () => showView("home"));
   document.getElementById("btn-back-testhub").addEventListener("click", () => showView("home"));
   document.getElementById("btn-back-testlevels").addEventListener("click", () => { if (reviewTestActive) { reviewTestActive = false; showView("reviewSetup"); return; } if (testState.folder) renderTestLevelGrid(testState.folder); showView("testLevels"); });
+
+
+  /* =====================================================================
+     LUYỆN NGHE: Ngữ âm 1-10 · Nghe sơ cấp 1-30
+     Thêm nội dung cho 1 bài: điền vào "lessons" theo số bài, ví dụ
+       3: { title: "Thanh điệu", audio: "assets/listen/nguam3.mp3", note: "Ghi chú..." }
+     Bài chưa có nội dung sẽ hiện "Đang biên soạn".
+     ===================================================================== */
+  const LISTENING_FOLDERS = {
+    nguam: { id: "nguam", name: "Ngữ âm", count: 10, colorVar: "--jade", icon: "fa-comment-dots",
+      desc: "10 bài luyện phát âm: thanh mẫu, vận mẫu, thanh điệu.", lessons: {} },
+    nghesocap: { id: "nghesocap", name: "Nghe sơ cấp", count: 30, colorVar: "--accent", icon: "fa-headphones",
+      desc: "30 bài luyện nghe trình độ sơ cấp.", lessons: {} },
+  };
+  let listenFolder = null;
+  function listenHasContent(l) { return !!(l && (l.audio || l.html || l.note)); }
+  function renderListenList(folderId) {
+    listenFolder = LISTENING_FOLDERS[folderId] || LISTENING_FOLDERS.nguam;
+    const f = listenFolder;
+    document.getElementById("listen-list-title").textContent = f.name + " (" + f.count + " bài)";
+    document.getElementById("listen-list-desc").textContent = f.desc;
+    const tabs = document.getElementById("listen-folder-tabs");
+    tabs.innerHTML = "";
+    Object.values(LISTENING_FOLDERS).forEach((x) => {
+      const t = document.createElement("button");
+      t.type = "button";
+      const on = x.id === f.id;
+      t.className = "px-4 py-2 rounded-full text-sm font-bold border";
+      t.style.borderColor = on ? "var(--accent)" : "var(--border)";
+      t.style.background = on ? "var(--accent)" : "var(--surface)";
+      t.style.color = on ? "#fff" : "var(--jade)";
+      t.textContent = x.name;
+      t.addEventListener("click", () => { renderListenList(x.id); showView("listenList"); });
+      tabs.appendChild(t);
+    });
+    const grid = document.getElementById("listen-list-grid");
+    grid.innerHTML = "";
+    for (let i = 1; i <= f.count; i++) {
+      const l = f.lessons[i];
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "review-level-card text-left p-5 rounded-2xl border card-shadow";
+      card.style.borderColor = "var(--border)";
+      card.style.background = "var(--surface)";
+      card.innerHTML =
+        '<span class="program-icon w-12 h-12 grid place-items-center text-white text-sm font-bold mb-3" style="background:var(' + f.colorVar + ');">' + i + "</span>" +
+        '<span class="block text-base font-extrabold mb-1" style="color:var(--jade);">' + f.name + " " + i + "</span>" +
+        '<span class="block text-xs" style="color:var(--ink-faint);">' + (l && l.title ? l.title : (listenHasContent(l) ? "Đã có bài" : "Đang biên soạn")) + "</span>";
+      card.addEventListener("click", () => enterListenLesson(f, i));
+      grid.appendChild(card);
+    }
+  }
+  function enterListenLesson(f, i) {
+    const l = f.lessons[i];
+    document.getElementById("listen-detail-badge").innerHTML = '<i class="fa-solid ' + f.icon + ' mr-1"></i>Luyện nghe · ' + f.name;
+    document.getElementById("listen-detail-title").textContent = f.name + " " + i + (l && l.title ? " — " + l.title : "");
+    const body = document.getElementById("listen-detail-body");
+    if (!listenHasContent(l)) {
+      body.innerHTML =
+        '<i class="fa-solid fa-headphones text-3xl mb-3" style="color:var(--ink-faint);"></i>' +
+        '<p class="text-sm font-bold mb-1" style="color:var(--jade);">' + f.name + " " + i + " đang được biên soạn</p>" +
+        '<p class="text-xs" style="color:var(--ink-faint);">Cô sẽ bổ sung nội dung sau, học viên quay lại kiểm tra sau nhé.</p>';
+    } else {
+      body.innerHTML =
+        (l.audio ? '<audio controls preload="none" class="w-full mb-4" src="' + l.audio + '"></audio>' : "") +
+        (l.note ? '<p class="text-sm text-left" style="color:var(--ink-soft);">' + l.note + "</p>" : "") +
+        (l.html || "");
+    }
+    showView("listenDetail");
+  }
+  (function registerListenNavDropdown() {
+    const wrap = document.getElementById("nav-listen-wrap");
+    const panel = document.getElementById("nav-listen-panel");
+    if (!wrap || !panel) return;
+    navDropdowns.push({ wrap, panel });
+    wrap.querySelector("button.nav-link").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const willOpen = panel.classList.contains("hidden");
+      navDropdowns.forEach((d) => d.panel.classList.add("hidden"));
+      if (willOpen) panel.classList.remove("hidden");
+    });
+    panel.querySelectorAll("[data-listen-folder]").forEach((btn) => {
+      btn.addEventListener("click", () => { panel.classList.add("hidden"); renderListenList(btn.getAttribute("data-listen-folder")); showView("listenList"); });
+    });
+  })();
+  document.getElementById("btn-home-listen-cta").addEventListener("click", () => { renderListenList("nguam"); showView("listenList"); });
+  document.getElementById("btn-back-home-listen").addEventListener("click", () => showView("home"));
+  document.getElementById("btn-back-listen-list").addEventListener("click", () => { renderListenList(listenFolder ? listenFolder.id : "nguam"); showView("listenList"); });
 
 
   /* =====================================================================
