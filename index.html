@@ -515,7 +515,7 @@
           <div id="nav-listen-panel" class="nav-dropdown-panel hidden">
             <div class="nav-dropdown-grid">
               <button type="button" data-listen-folder="nguam" class="nav-dropdown-item"><i class="fa-solid fa-folder mb-1"></i>Ngữ âm</button>
-              <button type="button" data-listen-folder="nghesocap" class="nav-dropdown-item"><i class="fa-solid fa-folder mb-1"></i>Nghe sơ cấp</button>
+              <button type="button" data-listen-folder="nghesocap" class="nav-dropdown-item"><i class="fa-solid fa-folder mb-1"></i>Nghe sc</button>
             </div>
           </div>
         </div>
@@ -568,7 +568,7 @@
           </button>
           <!-- Nút vào "Luyện nghe" cho điện thoại/iPad -->
           <button type="button" id="btn-home-listen-cta" class="mt-3 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm border" style="border-color:var(--accent); color:var(--accent);">
-            <i class="fa-solid fa-headphones"></i> Luyện nghe (Ngữ âm · Nghe sơ cấp)
+            <i class="fa-solid fa-headphones"></i> Luyện nghe (Ngữ âm · Nghe sc)
           </button>
           <p class="lock-hint mt-3 justify-center"><i class="fa-solid fa-lock-open"></i> Xem thoải mái — chỉ cần đăng nhập khi bắt đầu học một bài cụ thể.</p>
         </div>
@@ -1117,7 +1117,7 @@
       </div>
     </div>
 
-    <!-- ============ LUYỆN NGHE: DANH SÁCH BÀI (Ngữ âm / Nghe sơ cấp) ============ -->
+    <!-- ============ LUYỆN NGHE: DANH SÁCH BÀI (Ngữ âm / Nghe sc) ============ -->
     <div id="view-listen-list" class="hidden py-8 sm:py-12">
       <button type="button" id="btn-back-home-listen" class="flex items-center gap-2 text-sm font-bold px-3.5 py-2 rounded-lg border mb-6" style="border-color:var(--border); background:var(--surface); color:var(--jade);">
         <i class="fa-solid fa-arrow-left"></i> Về trang chủ
@@ -11828,7 +11828,7 @@ const LESSONS = [
 
 
   /* =====================================================================
-     LUYỆN NGHE: Ngữ âm 1-10 · Nghe sơ cấp 1-30
+     LUYỆN NGHE: Ngữ âm 1-10 · Nghe sc 1-30
      Thêm nội dung cho 1 bài: điền vào "lessons" theo số bài, ví dụ
        3: { title: "Thanh điệu", audio: "assets/listen/nguam3.mp3", note: "Ghi chú..." }
      Bài chưa có nội dung sẽ hiện "Đang biên soạn".
@@ -11836,7 +11836,7 @@ const LESSONS = [
   const LISTENING_FOLDERS = {
     nguam: { id: "nguam", name: "Ngữ âm", count: 10, colorVar: "--jade", icon: "fa-comment-dots",
       desc: "10 bài luyện phát âm: thanh mẫu, vận mẫu, thanh điệu.", lessons: {} },
-    nghesocap: { id: "nghesocap", name: "Nghe sơ cấp", count: 30, colorVar: "--accent", icon: "fa-headphones",
+    nghesocap: { id: "nghesocap", name: "Nghe sc", count: 30, colorVar: "--accent", icon: "fa-headphones",
       desc: "30 bài luyện nghe trình độ sơ cấp.", lessons: {} },
   };
   let listenFolder = null;
