@@ -13917,7 +13917,7 @@ const LESSONS = [
       var map = {};
       snap.forEach(function (doc) {
         var data = doc.data() || {};
-        map[doc.id] = { name: data.name || "", class: data.class || "" };
+        map[doc.id] = { name: data.name || "", class: data.class || "", perms: data };
       });
       return map;
     }).catch(function () {
@@ -14147,13 +14147,40 @@ const LESSONS = [
     return v === "tests" || v === "mocks" ? v : "lessons";
   }
 
-  function populateTeacherProgressLessonFilter(filterEl, allLessons, kind) {
+  // Mã quyền cấp độ của 1 "bài" trong Dashboard (vd "yct3", "hsk2"), hoặc null nếu không xác định.
+  function dashboardLevelKeyOf(l) {
+    if (!l) return null;
+    var id = String(l.id || ""), m;
+    if ((m = /^__test__([^_]+)__(.+)$/.exec(id))) return programLevelKey(m[1], m[2]);
+    if ((m = /^__reviewtest__([a-z]+\d+)__/.exec(id))) return m[1];
+    return programLevelKey(l.program, l.level);
+  }
+  // Tập quyền của 1 LỚP = gộp mọi quyền (field = true) của các học sinh trong lớp đó.
+  function classPermissionSet(permMap, cls) {
+    var set = {};
+    Object.keys(permMap || {}).forEach(function (email) {
+      var p = permMap[email];
+      if (!p || p.class !== cls || !p.perms) return;
+      Object.keys(p.perms).forEach(function (k) { if (p.perms[k] === true) set[k] = true; });
+    });
+    return set;
+  }
+  // Bài có thuộc học phần mà lớp được cấp quyền không (quyền học bài, quyền test, hoặc quyền cũ trọn bộ).
+  function lessonAllowedForClass(l, set) {
+    if (!set) return true;
+    var k = dashboardLevelKeyOf(l);
+    if (!k) return true;
+    var legacy = k.indexOf("yct") === 0 ? "yct" : "hsk";
+    return !!(set[k] || set["test_" + k] || set[legacy]);
+  }
+
+  function populateTeacherProgressLessonFilter(filterEl, allLessons, kind, classSet) {
     if (!filterEl) return;
     kind = kind || getTeacherProgressKind();
     var currentValue = filterEl.value;
     var validValues = [""];
     var optionsHtml = [];
-    var items = allLessons.filter(function (l) { return !l.isReview && dashboardKindOf(l.id) === kind; });
+    var items = allLessons.filter(function (l) { return !l.isReview && dashboardKindOf(l.id) === kind && lessonAllowedForClass(l, classSet); });
     function optOf(l) {
       var program = getProgramById(l.program);
       var label = kind === "lessons"
@@ -14235,12 +14262,13 @@ const LESSONS = [
     var kind = getTeacherProgressKind();
 
     // Bộ lọc luôn được đổ đầy ngay (không cần chờ Firestore trả điểm về) — chỉ gồm mục thuộc loại đang xem.
-    populateTeacherProgressLessonFilter(filterEl, getDashboardLessons(), kind);
-
-    if (!teacherProgressCache) return;
+    if (!teacherProgressCache) { populateTeacherProgressLessonFilter(filterEl, getDashboardLessons(), kind); return; }
     populateTeacherProgressClassFilter(classFilterEl, teacherProgressCache.permMap);
-    var filterLessonId = filterEl ? filterEl.value : "";
     var filterClass = classFilterEl ? classFilterEl.value : "";
+    // Đã chọn lớp → chỉ hiện các bài thuộc học phần lớp đó được cấp quyền.
+    var classSet = filterClass ? classPermissionSet(teacherProgressCache.permMap, filterClass) : null;
+    populateTeacherProgressLessonFilter(filterEl, getDashboardLessons(), kind, classSet);
+    var filterLessonId = filterEl ? filterEl.value : "";
     var groups = filterClass
       ? buildLessonRosterGroups(teacherProgressCache.rows, teacherProgressCache.allLessons, teacherProgressCache.permMap, filterClass)
       : groupScoreRowsByLesson(teacherProgressCache.rows, teacherProgressCache.allLessons, teacherProgressCache.permMap, filterClass);
@@ -14248,7 +14276,7 @@ const LESSONS = [
     var dashLessonById = {};
     getDashboardLessons().forEach(function (l) { dashLessonById[l.id] = l; });
     // 1) Chỉ giữ đúng loại đang xem (Bài học / Test học phần / Đề thi mô phỏng).
-    groups = groups.filter(function (g) { return dashboardKindOf(g.lessonId) === kind; });
+    groups = groups.filter(function (g) { return dashboardKindOf(g.lessonId) === kind && (!classSet || lessonAllowedForClass(dashLessonById[g.lessonId] || { id: g.lessonId }, classSet)); });
     // 2) Lọc theo bài / học phần đã chọn.
     var visibleGroups = filterLessonId.indexOf("__module__") === 0
       ? groups.filter(function (g) { var ll = dashLessonById[g.lessonId]; return !!ll && dashboardModuleOf(ll).key === filterLessonId.slice(10); })
