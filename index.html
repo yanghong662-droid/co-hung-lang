@@ -11371,8 +11371,8 @@ const LESSONS = [
     // trình HSK 3.0 (kể cả bài Ôn tập tổng hợp gộp từ HSK, vì hàm
     // buildReviewLesson() gán lesson.program = "hsk3" cho nhóm này).
     btnSubtabVideo.classList.toggle("hidden", lesson.program === "hsk3");
-    // HSK 3.0 cũng không dùng Dạng 5 "Nghe đọc" trong tab Luyện tập (YCT vẫn giữ).
-    btnSubtabReadlisten.classList.toggle("hidden", lesson.program === "hsk3");
+    // Dạng 5 "Nghe đọc" hiện cho mọi chương trình (YCT và HSK 3.0).
+    btnSubtabReadlisten.classList.remove("hidden");
     // YCT 1-6 không còn dạng ⑥ "Đề thi mô phỏng" trong tab Luyện tập — ẩn nút
     // (khung #subpanel-mock vẫn giữ nguyên vì HSK 3.0 và Test học phần còn dùng).
     btnSubtabMock.classList.toggle("hidden", lesson.program === "yct");
@@ -14407,7 +14407,7 @@ const LESSONS = [
       });
       if (vids.length > 0) parts.push("video");
     }
-    if (lesson && lesson.program !== "hsk3" && sentCount >= 2) parts.push("readlisten"); // HSK 3.0 không có dạng Nghe đọc
+    if (sentCount >= 2) parts.push("readlisten"); // Nghe đọc: cả YCT và HSK 3.0
     if (lesson && lesson.program !== "yct" && Array.isArray(lesson.mockExam) && lesson.mockExam.length > 0) parts.push("mockexam");
     return parts;
   }
