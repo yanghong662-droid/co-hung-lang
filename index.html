@@ -11868,6 +11868,44 @@ const LESSONS = [
           { q: "baimi", options: ["báimǐ", "bǎimǐ", "bàimǐ", "báimí"] },
           { q: "aihao", options: ["áihào", "àihǎo", "ǎihāo", "àihào"] }
           ] },
+          { key: "bai2", short: "Bài 2 · 辨声母", title: "Bài 2. 辨声母，画出你听到的声母 — Phân biệt thanh mẫu",
+            instr: "Nghe file âm thanh, mỗi câu chọn âm tiết mà em nghe được.",
+            audio: "assets/audio/listen/nguam1-bai2.mp3", items: [
+          { q: "Nhóm 1 (g – k)", options: ["ge", "ke"], answer: 0 },
+          { q: "Nhóm 1 (g – k)", options: ["gu", "ku"], answer: 1 },
+          { q: "Nhóm 1 (g – k)", options: ["gai", "kai"], answer: 1 },
+          { q: "Nhóm 1 (g – k)", options: ["gao", "kao"], answer: 0 },
+          { q: "Nhóm 1 (g – k)", options: ["gou", "kou"], answer: 0 },
+          { q: "Nhóm 2 (m – f)", options: ["ma", "fa"], answer: 0 },
+          { q: "Nhóm 2 (m – f)", options: ["mei", "fei"], answer: 0 },
+          { q: "Nhóm 2 (m – f)", options: ["mu", "fu"], answer: 1 },
+          { q: "Nhóm 2 (m – f)", options: ["mou", "fou"], answer: 1 },
+          { q: "Nhóm 2 (m – f)", options: ["mo", "fo"], answer: 0 },
+          { q: "Nhóm 3 (d – t)", options: ["da", "ta"], answer: 0 },
+          { q: "Nhóm 3 (d – t)", options: ["dao", "tao"], answer: 0 },
+          { q: "Nhóm 3 (d – t)", options: ["dai", "tai"], answer: 1 },
+          { q: "Nhóm 3 (d – t)", options: ["dou", "tou"], answer: 1 },
+          { q: "Nhóm 3 (d – t)", options: ["de", "te"], answer: 0 },
+          { q: "Nhóm 4 (b – p)", options: ["ba", "pa"], answer: 1 },
+          { q: "Nhóm 4 (b – p)", options: ["bao", "pao"], answer: 0 },
+          { q: "Nhóm 4 (b – p)", options: ["bai", "pai"], answer: 1 },
+          { q: "Nhóm 4 (b – p)", options: ["bei", "pei"], answer: 0 },
+          { q: "Nhóm 4 (b – p)", options: ["bu", "pu"], answer: 0 },
+          { q: "Nhóm 4 (b – p)", options: ["bi", "pi"], answer: 1 },
+          { q: "Nhóm 5 (n – l)", options: ["na", "la"], answer: 1 },
+          { q: "Nhóm 5 (n – l)", options: ["ne", "le"], answer: 0 },
+          { q: "Nhóm 5 (n – l)", options: ["nu", "lu"], answer: 1 },
+          { q: "Nhóm 5 (n – l)", options: ["nai", "lai"], answer: 1 },
+          { q: "Nhóm 5 (n – l)", options: ["nei", "lei"], answer: 0 },
+          { q: "Nhóm 5 (n – l)", options: ["nao", "lao"], answer: 1 },
+          { q: "Nhóm 5 (n – l)", options: ["ni", "li"], answer: 0 },
+          { q: "Nhóm 6 (k – h)", options: ["ka", "ha"], answer: 0 },
+          { q: "Nhóm 6 (k – h)", options: ["ke", "he"], answer: 0 },
+          { q: "Nhóm 6 (k – h)", options: ["kai", "hai"], answer: 1 },
+          { q: "Nhóm 6 (k – h)", options: ["kei", "hei"], answer: 1 },
+          { q: "Nhóm 6 (k – h)", options: ["kao", "hao"], answer: 1 },
+          { q: "Nhóm 6 (k – h)", options: ["kou", "hou"], answer: 1 }
+          ] },
         ] },
       } },
     nghesocap: { id: "nghesocap", name: "Nghe sc", count: 30, colorVar: "--accent", icon: "fa-headphones",
@@ -11895,7 +11933,9 @@ const LESSONS = [
     return Array.isArray(o) && o.length ? o : ex.items[idx].options;
   }
   function listenAnswersOf(ex, key) {
-    return ex.items.map((_, idx) => (key && Array.isArray(key.answers) && typeof key.answers[idx] === "number" ? key.answers[idx] : -1));
+    // Ưu tiên đáp án cô lưu trong Dashboard; chưa lưu thì dùng đáp án có sẵn trong code (answer), nếu có.
+    return ex.items.map((it, idx) => (key && Array.isArray(key.answers) && typeof key.answers[idx] === "number" && key.answers[idx] >= 0
+      ? key.answers[idx] : (typeof it.answer === "number" ? it.answer : -1)));
   }
   function renderListenExercises(f, i, l, body) {
     const btnCss = "text-sm font-bold px-4 py-2 rounded-lg border";
