@@ -1261,6 +1261,7 @@
               <option value="lessons">📘 Bài học</option>
               <option value="tests">📝 Test học phần</option>
               <option value="mocks">🧩 Đề thi mô phỏng</option>
+              <option value="listens">🎧 Luyện nghe</option>
             </select>
             <select id="teacher-progress-class-filter" class="text-sm font-semibold px-3 py-2 rounded-lg border" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink);">
               <option value="">Tất cả lớp</option>
@@ -11313,7 +11314,24 @@ const LESSONS = [
     });
     return out;
   }
-  function getDashboardLessons() { return getAllLessons().concat(getTestPseudoLessons()); }
+  // Các bài Luyện nghe (mỗi "Bài x" trong Ngữ âm n / Nghe sc n) — dùng cho Dashboard → Tiến độ → "Luyện nghe".
+  function getListenPseudoLessons() {
+    var out = [];
+    var folders;
+    try { folders = LISTENING_FOLDERS; } catch (e) { return out; }
+    Object.keys(folders).forEach(function (fid) {
+      var f = folders[fid];
+      for (var i = 1; i <= f.count; i++) {
+        var l = f.lessons && f.lessons[i];
+        if (!l || !l.exercises) continue;
+        l.exercises.forEach(function (ex) {
+          out.push({ id: "__listen__" + f.id + i + "__" + ex.key, title: "🎧 " + f.name + " " + i + " · " + (ex.short || ex.title), program: "listen", level: "", listenFolder: f.id, listenFolderName: f.name, isTest: true, isListen: true, isReview: false });
+        });
+      }
+    });
+    return out;
+  }
+  function getDashboardLessons() { return getAllLessons().concat(getTestPseudoLessons()).concat(getListenPseudoLessons()); }
 
   const state = { program: null, lesson: null, deckIndex: 0 };
 
@@ -12792,8 +12810,25 @@ const LESSONS = [
     ).join("") + "</div>";
     l.exercises.forEach((ex, ei) => {
       const wrap = body.querySelector('.listen-ex[data-ei="' + ei + '"]');
+      wrap.dataset.scoreId = listenExDocId(f, i, ex);
       fetchListenKey(listenExDocId(f, i, ex)).then((key) => buildListenItems(wrap, ex, key));
     });
+  }
+  // Lưu điểm bài Luyện nghe (id = "__listen__<thư mục><số bài>__<bài>") để Dashboard → Tiến độ → "Luyện nghe" xem được.
+  function saveListenScore(scoreId, score100) {
+    if (!scoreId) return;
+    const scores = loadScores();
+    const record = scores[scoreId] || {};
+    const prev = record.mockexam;
+    record.mockexam = {
+      bestScore: prev ? Math.max(prev.bestScore, score100) : score100,
+      lastScore: score100,
+      attempts: prev ? prev.attempts + 1 : 1,
+      lastAttemptAt: new Date().toISOString(),
+    };
+    scores[scoreId] = record;
+    saveScores(scores);
+    syncScoreToCloud(scoreId, record);
   }
   function buildListenItems(wrap, ex, key) {
     const grid = wrap.querySelector(".lx-items");
@@ -12852,6 +12887,7 @@ const LESSONS = [
       wrap.dataset.done = "1";
       result.style.color = "var(--jade)";
       result.textContent = "Kết quả: đúng " + correct + "/" + total + " câu (" + Math.round(correct / total * 100) + " điểm). Xanh = đáp án đúng, đỏ = em chọn sai.";
+      saveListenScore(wrap.dataset.scoreId, Math.round(correct / total * 100));
     };
     wrap.querySelector(".lx-reset").onclick = () => buildListenItems(wrap, ex, key);
   }
@@ -15274,6 +15310,7 @@ const LESSONS = [
   // Test học phần / Đề thi mô phỏng → nhóm riêng. rank dùng để xếp thứ tự nhóm.
   function dashboardModuleOf(l) {
     if (!l) return { key: "Khác", label: "Khác", rank: 999 };
+    if (l.isListen) return { key: "__listen__" + l.listenFolder, label: "Luyện nghe · " + l.listenFolderName, rank: 400 };
     if (l.isMock) return { key: "__mock__", label: "Đề thi mô phỏng (Ôn tập tổng hợp)", rank: 300 };
     if (l.isTest) return { key: "__test__", label: "Test học phần (cuối khoá)", rank: 200 };
     var lv = l.level || "";
@@ -15288,12 +15325,13 @@ const LESSONS = [
     var id = String(lessonId || "");
     if (id.indexOf("__test__") === 0) return "tests";
     if (id.indexOf("__reviewtest__") === 0) return "mocks";
+    if (id.indexOf("__listen__") === 0) return "listens";
     return "lessons";
   }
   function getTeacherProgressKind() {
     var el = document.getElementById("teacher-progress-kind-filter");
     var v = el ? el.value : "lessons";
-    return v === "tests" || v === "mocks" ? v : "lessons";
+    return v === "tests" || v === "mocks" || v === "listens" ? v : "lessons";
   }
 
   // Mã quyền cấp độ của 1 "bài" trong Dashboard (vd "yct3", "hsk2"), hoặc null nếu không xác định.
@@ -15302,6 +15340,7 @@ const LESSONS = [
     var id = String(l.id || ""), m;
     if ((m = /^__test__([^_]+)__(.+)$/.exec(id))) return programLevelKey(m[1], m[2]);
     if ((m = /^__reviewtest__([a-z]+\d+)__/.exec(id))) return m[1];
+    if (l.isListen) return "listen_" + l.listenFolder;
     return programLevelKey(l.program, l.level);
   }
   // Tập quyền của 1 LỚP = gộp mọi quyền (field = true) của các học sinh trong lớp đó.
@@ -15358,8 +15397,12 @@ const LESSONS = [
         optionsHtml.push('<optgroup label="' + escapeHtml(moduleOpts[k].label) + '">' + moduleOpts[k].opts.join("") + "</optgroup>");
       });
     } else {
-      optionsHtml.push('<option value="">' + (kind === "tests" ? "Tất cả Test học phần" : "Tất cả Đề thi mô phỏng") + "</option>");
-      optionsHtml.push(items.map(optOf).join(""));
+      optionsHtml.push('<option value="">' + (kind === "tests" ? "Tất cả Test học phần" : kind === "listens" ? "Tất cả bài Luyện nghe" : "Tất cả Đề thi mô phỏng") + "</option>");
+      if (kind === "listens") {
+        var fg = {};
+        items.forEach(function (l) { (fg[l.listenFolderName] = fg[l.listenFolderName] || []).push(optOf(l)); });
+        Object.keys(fg).forEach(function (n) { optionsHtml.push('<optgroup label="' + escapeHtml(n) + '">' + fg[n].join("") + "</optgroup>"); });
+      } else optionsHtml.push(items.map(optOf).join(""));
     }
     filterEl.innerHTML = optionsHtml.join("");
     filterEl.value = validValues.indexOf(currentValue) !== -1 ? currentValue : "";
@@ -15447,14 +15490,14 @@ const LESSONS = [
       partCols = DASH_PART_COLS.filter(function (c) { return used[c.part]; });
       if (!partCols.length) partCols = DASH_PART_COLS.slice();
     }
-    var scoreLabel = kind === "tests" ? "Điểm Test học phần" : "Điểm Đề thi mô phỏng";
+    var scoreLabel = kind === "tests" ? "Điểm Test học phần" : kind === "listens" ? "Điểm Luyện nghe" : "Điểm Đề thi mô phỏng";
     var headCells = ["Học sinh"]
       .concat(kind === "lessons" ? partCols.map(function (c) { return c.label; }).concat(["% Hoàn thành"]) : [scoreLabel])
       .concat(["Số lần làm", "Lần gần nhất"]);
     if (headRow) headRow.innerHTML = headCells.map(function (h) { return "<th>" + h + "</th>"; }).join("");
     var colCount = headCells.length;
 
-    var kindName = kind === "tests" ? "Test học phần" : kind === "mocks" ? "Đề thi mô phỏng" : "bài học";
+    var kindName = kind === "tests" ? "Test học phần" : kind === "mocks" ? "Đề thi mô phỏng" : kind === "listens" ? "bài Luyện nghe" : "bài học";
     if (visibleGroups.length === 0) {
       var pickedLesson = dashLessonById[filterLessonId];
       var pickedLabel = filterLessonId.indexOf("__module__") === 0 ? "học phần " + filterLessonId.slice(10)
