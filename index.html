@@ -11322,11 +11322,7 @@ const LESSONS = [
     Object.keys(folders).forEach(function (fid) {
       var f = folders[fid];
       for (var i = 1; i <= f.count; i++) {
-        var l = f.lessons && f.lessons[i];
-        if (!l || !l.exercises) continue;
-        l.exercises.forEach(function (ex) {
-          out.push({ id: "__listen__" + f.id + i + "__" + ex.key, title: "🎧 " + f.name + " " + i + " · " + (ex.short || ex.title), program: "listen", level: "", listenFolder: f.id, listenFolderName: f.name, isTest: true, isListen: true, isReview: false });
-        });
+        out.push({ id: "__listen__" + f.id + i, title: "🎧 " + f.name + " " + i, program: "listen", level: "", listenFolder: f.id, listenFolderName: f.name, isTest: true, isListen: true, isReview: false });
       }
     });
     return out;
@@ -12810,21 +12806,33 @@ const LESSONS = [
     ).join("") + "</div>";
     l.exercises.forEach((ex, ei) => {
       const wrap = body.querySelector('.listen-ex[data-ei="' + ei + '"]');
-      wrap.dataset.scoreId = listenExDocId(f, i, ex);
+      wrap.dataset.scoreId = "__listen__" + f.id + i;
+      wrap.dataset.partKey = ex.key;
+      wrap.dataset.partTotal = String(l.exercises.length);
       fetchListenKey(listenExDocId(f, i, ex)).then((key) => buildListenItems(wrap, ex, key));
     });
   }
-  // Lưu điểm bài Luyện nghe (id = "__listen__<thư mục><số bài>__<bài>") để Dashboard → Tiến độ → "Luyện nghe" xem được.
-  function saveListenScore(scoreId, score100) {
+  // Lưu điểm Luyện nghe THEO TỪNG BÀI (Ngữ âm n / Nghe sc n — id "__listen__<thư mục><n>"); mỗi bài nhỏ
+  // (Bài 1, Bài 2...) lưu trong record.parts. record.mockexam = điểm tổng hợp của cả bài để Dashboard hiển thị:
+  // bestScore = trung bình điểm cao nhất các bài nhỏ đã làm, done/total = số bài nhỏ đã làm / tổng số.
+  function saveListenScore(scoreId, partKey, partTotal, score100) {
     if (!scoreId) return;
     const scores = loadScores();
     const record = scores[scoreId] || {};
-    const prev = record.mockexam;
+    const parts = record.parts || {};
+    const prev = parts[partKey];
+    parts[partKey] = { bestScore: prev ? Math.max(prev.bestScore, score100) : score100, lastScore: score100, attempts: prev ? prev.attempts + 1 : 1 };
+    const keys = Object.keys(parts);
+    const avg = (f) => Math.round(keys.reduce((t, k) => t + parts[k][f], 0) / keys.length);
+    const now = new Date().toISOString();
+    record.parts = parts;
     record.mockexam = {
-      bestScore: prev ? Math.max(prev.bestScore, score100) : score100,
-      lastScore: score100,
-      attempts: prev ? prev.attempts + 1 : 1,
-      lastAttemptAt: new Date().toISOString(),
+      bestScore: avg("bestScore"),
+      lastScore: avg("lastScore"),
+      attempts: keys.reduce((t, k) => t + parts[k].attempts, 0),
+      lastAttemptAt: now,
+      listenDone: keys.length,
+      listenTotal: partTotal,
     };
     scores[scoreId] = record;
     saveScores(scores);
@@ -12887,7 +12895,7 @@ const LESSONS = [
       wrap.dataset.done = "1";
       result.style.color = "var(--jade)";
       result.textContent = "Kết quả: đúng " + correct + "/" + total + " câu (" + Math.round(correct / total * 100) + " điểm). Xanh = đáp án đúng, đỏ = em chọn sai.";
-      saveListenScore(wrap.dataset.scoreId, Math.round(correct / total * 100));
+      saveListenScore(wrap.dataset.scoreId, wrap.dataset.partKey, Number(wrap.dataset.partTotal) || 1, Math.round(correct / total * 100));
     };
     wrap.querySelector(".lx-reset").onclick = () => buildListenItems(wrap, ex, key);
   }
@@ -15441,6 +15449,9 @@ const LESSONS = [
     var out = r.bestScore + "/100";
     if (part === "mockexam" && r.lastScore !== undefined && r.lastScore !== null && r.lastScore !== r.bestScore) {
       out += ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + r.lastScore + ")</span>";
+    }
+    if (part === "mockexam" && r.listenTotal) {
+      out += ' <span class="text-xs" style="color:var(--ink-faint);">· đã làm ' + r.listenDone + "/" + r.listenTotal + " bài nhỏ</span>";
     }
     if (part === "mockexam" && Array.isArray(r.lastEssays) && r.lastEssays.length) {
       out += '<div class="dash-essay">' + r.lastEssays.map(function (e) {
