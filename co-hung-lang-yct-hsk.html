@@ -12839,20 +12839,20 @@ const LESSONS = [
           { q: "Câu 9", options: ["A. 女的的国家苹果便宜", "B. 女的的国家葡萄便宜", "C. 女的的国家没有西瓜", "D. 男的喜欢葡萄和西瓜"], answer: 1 }
           ] },
           { key: "bai3", short: "Bài 3 · 边听边填出各种商品的价钱并计算", title: "Bài 3. 边听边在横线上填出各种商品的价钱并计算 — Nghe giá từng món hàng rồi tính tiền",
-            instr: "Nghe file âm thanh. Câu 1–6: chọn GIÁ của từng món hàng (单价). Câu 7–12: dựa vào số lượng người mua trong bài nghe, chọn TỔNG TIỀN (合计) của từng món.",
+            instr: "Nghe file âm thanh rồi gõ SỐ vào ô trống (chỉ gõ số, vd: 8.5). Câu 1–6: giá của từng món hàng (单价). Câu 7–12: dựa vào số lượng người mua trong bài nghe, tính TỔNG TIỀN (合计) của từng món.",
             audio: "assets/audio/listen/nghesocap4-bai3.mp3", items: [
-          { q: "苹果 — giá (单价)", options: ["5.8 元/kg", "8.5 元/kg", "8 元/kg", "18.5 元/kg"], answer: 1, img: "assets/mockexam/nsc4-sp1.jpg" },
-          { q: "香蕉 — giá (单价)", options: ["6 元/kg", "16 元/kg", "9 元/kg", "3 元/kg"], answer: 0, img: "assets/mockexam/nsc4-sp2.jpg" },
-          { q: "面包 — giá (单价)", options: ["2.4 元/个", "4.2 元/个", "4 元/个", "14.2 元/个"], answer: 1, img: "assets/mockexam/nsc4-sp3.jpg" },
-          { q: "啤酒 — giá (单价)", options: ["4.5 元/瓶", "5.4 元/瓶", "14.5 元/瓶", "4 元/瓶"], answer: 0, img: "assets/mockexam/nsc4-sp4.jpg" },
-          { q: "茶 — giá (单价)", options: ["87 元/kg", "78 元/kg", "70 元/kg", "68 元/kg"], answer: 1, img: "assets/mockexam/nsc4-sp5.jpg" },
-          { q: "咖啡 — giá (单价)", options: ["98 元/瓶", "88 元/瓶", "80 元/瓶", "68 元/瓶"], answer: 1, img: "assets/mockexam/nsc4-sp6.jpg" },
-          { q: "苹果 — 合计 (tổng tiền)", options: ["7 元", "8.5 元", "17 元", "25.5 元"], answer: 2, img: "assets/mockexam/nsc4-sp1.jpg" },
-          { q: "香蕉 — 合计 (tổng tiền)", options: ["12 元", "18 元", "6 元", "16 元"], answer: 1, img: "assets/mockexam/nsc4-sp2.jpg" },
-          { q: "面包 — 合计 (tổng tiền)", options: ["4.2 元", "8.4 元", "12.6 元", "4.8 元"], answer: 1, img: "assets/mockexam/nsc4-sp3.jpg" },
-          { q: "啤酒 — 合计 (tổng tiền)", options: ["9 元", "13.5 元", "18 元", "20 元"], answer: 2, img: "assets/mockexam/nsc4-sp4.jpg" },
-          { q: "茶 — 合计 (tổng tiền)", options: ["78 元", "39 元", "19.5 元", "156 元"], answer: 1, img: "assets/mockexam/nsc4-sp5.jpg" },
-          { q: "咖啡 — 合计 (tổng tiền)", options: ["88 元", "176 元", "44 元", "98 元"], answer: 0, img: "assets/mockexam/nsc4-sp6.jpg" }
+          { q: "苹果 — giá (单价)", input: true, unit: "元/kg", accept: "8.5", options: [], answer: 0, img: "assets/mockexam/nsc4-sp1.jpg" },
+          { q: "香蕉 — giá (单价)", input: true, unit: "元/kg", accept: "6", options: [], answer: 0, img: "assets/mockexam/nsc4-sp2.jpg" },
+          { q: "面包 — giá (单价)", input: true, unit: "元/个", accept: "4.2", options: [], answer: 0, img: "assets/mockexam/nsc4-sp3.jpg" },
+          { q: "啤酒 — giá (单价)", input: true, unit: "元/瓶", accept: "4.5", options: [], answer: 0, img: "assets/mockexam/nsc4-sp4.jpg" },
+          { q: "茶 — giá (单价)", input: true, unit: "元/kg", accept: "78", options: [], answer: 0, img: "assets/mockexam/nsc4-sp5.jpg" },
+          { q: "咖啡 — giá (单价)", input: true, unit: "元/瓶", accept: "88", options: [], answer: 0, img: "assets/mockexam/nsc4-sp6.jpg" },
+          { q: "苹果 — 合计 (tổng tiền)", input: true, unit: "元", accept: "17", options: [], answer: 0, img: "assets/mockexam/nsc4-sp1.jpg" },
+          { q: "香蕉 — 合计 (tổng tiền)", input: true, unit: "元", accept: "18", options: [], answer: 0, img: "assets/mockexam/nsc4-sp2.jpg" },
+          { q: "面包 — 合计 (tổng tiền)", input: true, unit: "元", accept: "8.4", options: [], answer: 0, img: "assets/mockexam/nsc4-sp3.jpg" },
+          { q: "啤酒 — 合计 (tổng tiền)", input: true, unit: "元", accept: "18", options: [], answer: 0, img: "assets/mockexam/nsc4-sp4.jpg" },
+          { q: "茶 — 合计 (tổng tiền)", input: true, unit: "元", accept: "39", options: [], answer: 0, img: "assets/mockexam/nsc4-sp5.jpg" },
+          { q: "咖啡 — 合计 (tổng tiền)", input: true, unit: "元", accept: "88", options: [], answer: 0, img: "assets/mockexam/nsc4-sp6.jpg" }
           ] },
         ] },
       } },
@@ -12956,6 +12956,14 @@ const LESSONS = [
       card.innerHTML = '<div class="text-sm font-bold mb-2" style="color:var(--jade);">' + (idx + 1) + '. <span style="font-size:1.05rem;">' + escapeHtml(it.q) + "</span></div>" + (it.img ? '<img src="' + it.img + '" alt="" class="mb-2 rounded-lg" style="max-height:110px; max-width:100%;">' : "");
       const row = document.createElement("div");
       row.className = "flex flex-wrap gap-2";
+      if (it.input) {
+        row.className = "flex items-center gap-2";
+        row.innerHTML = '<input type="text" inputmode="decimal" class="lx-input px-3 py-1.5 rounded-lg border text-base w-28" style="border-color:var(--border); background:var(--surface-alt); color:var(--ink);" placeholder="…"><span class="text-base font-bold" style="color:var(--ink-soft);">' + escapeHtml(it.unit || "") + '</span><span class="lx-fix text-sm font-bold"></span>';
+        row.querySelector(".lx-input").addEventListener("input", (e) => { if (!wrap.dataset.done) chosen[idx] = e.target.value; });
+        card.appendChild(row);
+        grid.appendChild(card);
+        return;
+      }
       listenOptionsOf(ex, key, idx).forEach((o, oi) => {
         const b = document.createElement("button");
         b.type = "button";
@@ -12988,6 +12996,17 @@ const LESSONS = [
         const a = answers[idx];
         if (a < 0) return;
         total++;
+        const itm = ex.items[idx];
+        if (itm && itm.input) {
+          const norm = (v) => { const n = parseFloat(String(v || "").replace(/,/g, ".").replace(/[^\d.]/g, "")); return isNaN(n) ? null : n; };
+          const ok = norm(chosen[idx]) !== null && norm(chosen[idx]) === norm(itm.accept);
+          if (ok) correct++;
+          const inp = card.querySelector(".lx-input");
+          inp.disabled = true;
+          inp.style.background = ok ? "#1f7a4d" : "#b4232a"; inp.style.color = "#fff"; inp.style.borderColor = inp.style.background;
+          if (!ok) { const fx = card.querySelector(".lx-fix"); fx.style.color = "#1f7a4d"; fx.textContent = "→ " + itm.accept + " " + (itm.unit || ""); }
+          return;
+        }
         if (chosen[idx] === a) correct++;
         card.querySelectorAll(".lx-opt").forEach((x, xi) => {
           if (xi === a) { x.style.background = "#1f7a4d"; x.style.color = "#fff"; x.style.borderColor = "#1f7a4d"; }
