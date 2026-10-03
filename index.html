@@ -12676,7 +12676,29 @@ const LESSONS = [
         ] },
       } },
     nghesocap: { id: "nghesocap", name: "Nghe sc", count: 30, colorVar: "--accent", icon: "fa-headphones",
-      desc: "30 bài luyện nghe trình độ sơ cấp.", lessons: {} },
+      desc: "30 bài luyện nghe trình độ sơ cấp.", lessons: {
+        1: { exercises: [
+          { key: "bai1", short: "Bài 1 · 听后选择合适的回答", title: "Bài 1. 听后选择合适的回答 — Nghe rồi chọn câu trả lời phù hợp",
+            instr: "Nghe file âm thanh. Mỗi câu em sẽ nghe một câu hỏi, hãy chọn câu trả lời phù hợp nhất (A, B, C hoặc D).",
+            vocab: [
+              { hanzi: "法国人", pinyin: "Fǎguórén", meaning: "người Pháp" },
+              { hanzi: "英国人", pinyin: "Yīngguórén", meaning: "người Anh" },
+              { hanzi: "玛丽", pinyin: "Mǎlì", meaning: "Mary (tên người)" },
+            ],
+            audio: "assets/audio/listen/nghesocap1-bai1.mp3", items: [
+          { q: "Câu 1", options: ["A. 玛丽（Mǎlì）不是姐姐。", "B. 玛丽有妹妹。", "C. 对，她是我妹妹。", "D. 妹妹不是玛丽。"], answer: 2 },
+          { q: "Câu 2", options: ["A. 他很忙。", "B. 他太忙。", "C. 他很好。", "D. 他也忙。"], answer: 0 },
+          { q: "Câu 3", options: ["A. 他不学韩语。", "B. 我哥哥学汉语。", "C. 不，他学韩语。", "D. 你弟弟学英语。"], answer: 2 },
+          { q: "Câu 4", options: ["A. 太难。", "B. 不太难。", "C. 汉语很好。", "D. 韩语很难。"], answer: 1 },
+          { q: "Câu 5", options: ["A. 对，她是女老师。", "B. 她是我的老师。", "C. 她是妹妹的老师。", "D. 他是马老师。"], answer: 0 },
+          { q: "Câu 6", options: ["A. 他是。", "B. 不是。", "C. 不难。", "D. 不太难。"], answer: 1 },
+          { q: "Câu 7", options: ["A. 是法语。", "B. 是英语。", "C. 我不是法国人。", "D. 他是英国人。"], answer: 3 },
+          { q: "Câu 8", options: ["A. 我有弟弟。", "B. 我是哥哥。", "C. 我有哥哥。", "D. 一个哥哥。"], answer: 2 },
+          { q: "Câu 9", options: ["A. 她很好。", "B. 你不好。", "C. 她很忙。", "D. 妹妹很好。"], answer: 0 },
+          { q: "Câu 10", options: ["A. 英语不难。", "B. 汉语很难。", "C. 俄语很难。", "D. 日语不太难。"], answer: 3 }
+          ] },
+        ] },
+      } },
   };
   let listenFolder = null;
   function listenHasContent(l) { return !!(l && (l.audio || l.html || l.note || (l.exercises && l.exercises.length))); }
@@ -12710,6 +12732,16 @@ const LESSONS = [
       '<div class="listen-ex mb-10" data-ei="' + ei + '">' +
       '<h3 class="text-lg font-extrabold mb-1 font-hanzi" style="color:var(--jade);">' + escapeHtml(ex.title) + "</h3>" +
       (ex.instr ? '<p class="text-sm mb-3" style="color:var(--ink-soft);">' + escapeHtml(ex.instr) + "</p>" : "") +
+      (ex.vocab && ex.vocab.length
+        ? '<div class="mb-4 p-3 rounded-xl border" style="border-color:var(--border); background:var(--surface-alt);">' +
+          '<p class="text-xs font-bold mb-2" style="color:var(--accent);">📒 Từ mới</p><div class="flex flex-wrap gap-2">' +
+          ex.vocab.map((w) =>
+            '<div class="px-3 py-2 rounded-lg border text-center" style="border-color:var(--border); background:var(--surface); min-width:6.5rem;">' +
+            '<div class="font-hanzi text-lg font-bold" style="color:var(--jade);">' + escapeHtml(w.hanzi) + "</div>" +
+            '<div class="text-sm" style="color:var(--accent);">' + escapeHtml(w.pinyin) + "</div>" +
+            '<div class="text-xs" style="color:var(--ink-soft);">' + escapeHtml(w.meaning) + "</div></div>"
+          ).join("") + "</div></div>"
+        : "") +
       '<audio controls preload="none" class="w-full mb-4" src="' + ex.audio + '"></audio>' +
       '<div class="lx-items grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"><p class="text-sm" style="color:var(--ink-faint);">Đang tải...</p></div>' +
       '<div class="mt-4 flex flex-wrap gap-3 items-center">' +
