@@ -15616,7 +15616,7 @@ const LESSONS = [
       const data = doc.exists ? doc.data() || {} : {};
       const allLessons = getDashboardLessons();
       const entries = Object.keys(data)
-        .filter((key) => key !== "_email")
+        .filter((key) => key.charAt(0) !== "_")
         .map((lessonId) => {
           const lesson = allLessons.find((l) => l.id === lessonId);
           const program = lesson ? getProgramById(lesson.program) : null;
@@ -15644,11 +15644,11 @@ const LESSONS = [
           const label = entry.lessonLabel + (entry.programLabel !== "—" ? " · " + entry.programLabel : "");
           return (
             '<tr><td class="font-semibold">' + label + "</td><td>" +
-            (s.bestScore !== undefined && s.bestScore !== null ? s.bestScore + "/100" : "—") + "</td><td>" +
-            (s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore + "/100" : "—") + "</td><td>" +
-            (s.video && s.video.bestScore !== undefined && s.video.bestScore !== null ? s.video.bestScore + "/100" : "—") + "</td><td>" +
-            (s.readlisten && s.readlisten.bestScore !== undefined && s.readlisten.bestScore !== null ? s.readlisten.bestScore + "/100" : "—") + "</td><td>" +
-            (s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore + "/100" + (s.mockexam.lastScore !== undefined && s.mockexam.lastScore !== null && s.mockexam.lastScore !== s.mockexam.bestScore ? ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + s.mockexam.lastScore + ")</span>" : "") : "—") + "</td><td>" +
+            (typeof s.bestScore === "number" && isFinite(s.bestScore) ? s.bestScore + "/100" : "—") + "</td><td>" +
+            (s.listen && typeof s.listen.bestScore === "number" && isFinite(s.listen.bestScore) ? s.listen.bestScore + "/100" : "—") + "</td><td>" +
+            (s.video && typeof s.video.bestScore === "number" && isFinite(s.video.bestScore) ? s.video.bestScore + "/100" : "—") + "</td><td>" +
+            (s.readlisten && typeof s.readlisten.bestScore === "number" && isFinite(s.readlisten.bestScore) ? s.readlisten.bestScore + "/100" : "—") + "</td><td>" +
+            (s.mockexam && typeof s.mockexam.bestScore === "number" && isFinite(s.mockexam.bestScore) ? s.mockexam.bestScore + "/100" + (s.mockexam.lastScore !== undefined && s.mockexam.lastScore !== null && s.mockexam.lastScore !== s.mockexam.bestScore ? ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + s.mockexam.lastScore + ")</span>" : "") : "—") + "</td><td>" +
             entry.stats.totalAttempts + "</td><td>" + formatDateTime(entry.stats.lastAt) + "</td></tr>"
           );
         })
@@ -15710,7 +15710,7 @@ const LESSONS = [
         var data = doc.data() || {};
         var email = data._email || doc.id;
         Object.keys(data).forEach(function (key) {
-          if (key === "_email") return;
+          if (key.charAt(0) === "_") return;
           rows.push({ email: email, lessonId: key, record: data[key] || {} });
         });
       });
@@ -16076,9 +16076,9 @@ const LESSONS = [
   ];
   function dashPartScoreCell(s, part) {
     var r = part === "quiz" ? s : s && s[part];
-    if (!r || r.bestScore === undefined || r.bestScore === null) return "—";
+    if (!r || typeof r.bestScore !== "number" || !isFinite(r.bestScore)) return "—"; // bỏ qua dữ liệu hỏng (vd NaN)
     var out = r.bestScore + "/100";
-    if (part === "mockexam" && r.lastScore !== undefined && r.lastScore !== null && r.lastScore !== r.bestScore) {
+    if (part === "mockexam" && typeof r.lastScore === "number" && isFinite(r.lastScore) && r.lastScore !== r.bestScore) {
       out += ' <span class="text-xs" style="color:var(--ink-faint);">(gần nhất: ' + r.lastScore + ")</span>";
     }
     if (part === "mockexam" && r.listenTotal) {
@@ -16283,11 +16283,11 @@ const LESSONS = [
           info.name || "",
           info.class || "",
           row.email,
-          s.bestScore !== undefined && s.bestScore !== null ? s.bestScore : "",
-          s.listen && s.listen.bestScore !== undefined && s.listen.bestScore !== null ? s.listen.bestScore : "",
-          s.video && s.video.bestScore !== undefined && s.video.bestScore !== null ? s.video.bestScore : "",
-          s.readlisten && s.readlisten.bestScore !== undefined && s.readlisten.bestScore !== null ? s.readlisten.bestScore : "",
-          s.mockexam && s.mockexam.bestScore !== undefined && s.mockexam.bestScore !== null ? s.mockexam.bestScore : "",
+          typeof s.bestScore === "number" && isFinite(s.bestScore) ? s.bestScore : "",
+          s.listen && typeof s.listen.bestScore === "number" && isFinite(s.listen.bestScore) ? s.listen.bestScore : "",
+          s.video && typeof s.video.bestScore === "number" && isFinite(s.video.bestScore) ? s.video.bestScore : "",
+          s.readlisten && typeof s.readlisten.bestScore === "number" && isFinite(s.readlisten.bestScore) ? s.readlisten.bestScore : "",
+          s.mockexam && typeof s.mockexam.bestScore === "number" && isFinite(s.mockexam.bestScore) ? s.mockexam.bestScore : "",
           stats.totalAttempts,
           formatDateTime(stats.lastAt),
         ];
@@ -17706,6 +17706,65 @@ const LESSONS = [
     });
   }
 
+  /* ---------------- Sửa điểm bị lỗi (chạy 1 lần khi học sinh đăng nhập) ----------------
+     Ngày 4/10/2026: lỗi trùng tên hàm làm điểm Luyện nghe ghi đè nhầm vào ô "Nghe hiểu" của bài đang mở
+     (lastScore thành chữ "__listen__…", bestScore thành NaN) và không lưu được điểm Luyện nghe.
+     Giáo viên không có quyền ghi vào điểm của học sinh, nên việc sửa chạy trên máy học sinh khi em đăng nhập.
+     - SCORE_REPAIRS: điểm cô khôi phục theo ảnh học sinh gửi (chỉ ghi nếu ô đó chưa có điểm).
+     - Ngoài ra tự xoá mọi ô điểm còn dính lỗi trên (của bất kỳ học sinh nào). */
+  const SCORE_REPAIRS = {
+    "nganltt1985@gmail.com": {
+      "yct2-1": { listen: { bestScore: 100, lastScore: 100, attempts: 1, lastAttemptAt: "2026-10-04T03:32:00.000Z" } },
+      "__listen__nguam1": {
+        parts: { bai1: { bestScore: 93, lastScore: 93, attempts: 1 }, bai2: { bestScore: 100, lastScore: 100, attempts: 1 }, bai3: { bestScore: 100, lastScore: 100, attempts: 1 } },
+        mockexam: { bestScore: 98, lastScore: 98, attempts: 3, lastAttemptAt: "2026-10-04T03:40:00.000Z", listenDone: 3, listenTotal: 3 },
+      },
+      "__listen__nghesocap1": {
+        parts: { bai1: { bestScore: 100, lastScore: 100, attempts: 1 } },
+        mockexam: { bestScore: 100, lastScore: 100, attempts: 1, lastAttemptAt: "2026-10-04T03:46:00.000Z", listenDone: 1, listenTotal: 1 },
+      },
+    },
+  };
+  function isCorruptPart(r) {
+    return !!(r && typeof r === "object" && (typeof r.lastScore === "string" || (r.bestScore !== undefined && r.bestScore !== null && !(typeof r.bestScore === "number" && isFinite(r.bestScore)))));
+  }
+  function applyScoreRepairs(user) {
+    try {
+      if (!fbReady() || !user || !user.email) return;
+      const email = user.email.toLowerCase();
+      const ref = window.__fbDb.collection(SCORES_COLLECTION).doc(email);
+      ref.get().then((doc) => {
+        const data = doc.exists ? doc.data() || {} : {};
+        if (data._repair_20261004) return;
+        const local = loadScores();
+        const upd = { _email: user.email, _repair_20261004: true };
+        Object.keys(data).forEach((lessonId) => {
+          const rec = data[lessonId];
+          if (!rec || typeof rec !== "object" || lessonId.charAt(0) === "_") return;
+          let changed = false;
+          const fixed = Object.assign({}, rec);
+          ["listen", "video", "readlisten", "mockexam", "wordbank"].forEach((part) => {
+            if (isCorruptPart(fixed[part])) { delete fixed[part]; changed = true; }
+          });
+          if (changed) { upd[lessonId] = fixed; local[lessonId] = fixed; }
+        });
+        const rep = SCORE_REPAIRS[email] || {};
+        Object.keys(rep).forEach((lessonId) => {
+          const cur = upd[lessonId] || data[lessonId] || {};
+          const merged = Object.assign({}, cur);
+          let changed = false;
+          Object.keys(rep[lessonId]).forEach((part) => {
+            if (!merged[part] || isCorruptPart(merged[part])) { merged[part] = rep[lessonId][part]; changed = true; }
+          });
+          if (changed) { upd[lessonId] = merged; local[lessonId] = merged; }
+        });
+        // ghi đè nguyên từng bản ghi bài học đã sửa (set + merge ở mức document, thay cả map con)
+        const fullDoc = Object.assign({}, data, upd);
+        return ref.set(fullDoc).then(() => { saveScores(local); console.log("[cohunglang] Đã sửa điểm lỗi cho", email); });
+      }).catch((err) => console.warn("[cohunglang] Không sửa được điểm lỗi:", err && (err.code || err.message)));
+    } catch (e) { /* bỏ qua */ }
+  }
+
   /* ---------------- Khởi động hệ thống đăng nhập ---------------- */
   function initAuth() {
     renderAuthArea(); // hiện nút "Đăng nhập" ngay, không đợi Firebase phản hồi
@@ -17716,6 +17775,7 @@ const LESSONS = [
     window.__fbAuth.onAuthStateChanged((user) => {
       currentUser = user;
       if (user) {
+        applyScoreRepairs(user);
         loadCurrentPermissions().then(() => {
           renderAuthArea();
           if (pendingAccessAction) {
