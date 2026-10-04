@@ -15616,7 +15616,7 @@ const LESSONS = [
       const data = doc.exists ? doc.data() || {} : {};
       const allLessons = getDashboardLessons();
       const entries = Object.keys(data)
-        .filter((key) => key.charAt(0) !== "_")
+        .filter((key) => !/^_[^_]/.test(key))
         .map((lessonId) => {
           const lesson = allLessons.find((l) => l.id === lessonId);
           const program = lesson ? getProgramById(lesson.program) : null;
@@ -15710,7 +15710,7 @@ const LESSONS = [
         var data = doc.data() || {};
         var email = data._email || doc.id;
         Object.keys(data).forEach(function (key) {
-          if (key.charAt(0) === "_") return;
+          if (/^_[^_]/.test(key) || key === "_") return; // bỏ các trường hệ thống như _email, _repair_… (giữ __test__, __listen__…)
           rows.push({ email: email, lessonId: key, record: data[key] || {} });
         });
       });
@@ -17740,7 +17740,7 @@ const LESSONS = [
         const upd = { _email: user.email, _repair_20261004: true };
         Object.keys(data).forEach((lessonId) => {
           const rec = data[lessonId];
-          if (!rec || typeof rec !== "object" || lessonId.charAt(0) === "_") return;
+          if (!rec || typeof rec !== "object" || /^_[^_]/.test(lessonId)) return;
           let changed = false;
           const fixed = Object.assign({}, rec);
           ["listen", "video", "readlisten", "mockexam", "wordbank"].forEach((part) => {
