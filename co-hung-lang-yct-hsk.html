@@ -13278,7 +13278,7 @@ const LESSONS = [
   // Lưu điểm Luyện nghe THEO TỪNG BÀI (Ngữ âm n / Nghe sc n — id "__listen__<thư mục><n>"); mỗi bài nhỏ
   // (Bài 1, Bài 2...) lưu trong record.parts. record.mockexam = điểm tổng hợp của cả bài để Dashboard hiển thị:
   // bestScore = trung bình điểm cao nhất các bài nhỏ đã làm, done/total = số bài nhỏ đã làm / tổng số.
-  function saveListenScore(scoreId, partKey, partTotal, score100) {
+  function saveListenPracticeScore(scoreId, partKey, partTotal, score100) {
     if (!scoreId) return;
     const scores = loadScores();
     const record = scores[scoreId] || {};
@@ -13377,7 +13377,7 @@ const LESSONS = [
       wrap.dataset.done = "1";
       result.style.color = "var(--jade)";
       result.textContent = "Kết quả: đúng " + correct + "/" + total + " câu (" + Math.round(correct / total * 100) + " điểm). Xanh = đáp án đúng, đỏ = em chọn sai.";
-      saveListenScore(wrap.dataset.scoreId, wrap.dataset.partKey, Number(wrap.dataset.partTotal) || 1, Math.round(correct / total * 100));
+      saveListenPracticeScore(wrap.dataset.scoreId, wrap.dataset.partKey, Number(wrap.dataset.partTotal) || 1, Math.round(correct / total * 100));
     };
     wrap.querySelector(".lx-reset").onclick = () => buildListenItems(wrap, ex, key);
   }
