@@ -723,11 +723,11 @@
           <button type="button" id="btn-subtab-readlisten" class="subtab-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5">
             <i class="fa-solid fa-book-open-reader"></i>⑤ Nghe đọc
           </button>
-          <button type="button" id="btn-subtab-mock" class="subtab-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5">
-            <i class="fa-solid fa-file-signature"></i>⑥ Bài tập tổng hợp
-          </button>
           <button type="button" id="btn-subtab-wordbank" class="subtab-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5 hidden">
-            <i class="fa-solid fa-spell-check"></i>⑦ Chọn từ điền trống
+            <i class="fa-solid fa-spell-check"></i>⑥ Chọn từ điền trống
+          </button>
+          <button type="button" id="btn-subtab-mock" class="subtab-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-file-signature"></i>⑦ Bài tập tổng hợp
           </button>
         </div>
 
@@ -7511,7 +7511,7 @@ const LESSONS = [
 
   {
     id: "hsk3-16", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["帮忙", "已经", "意思", "介绍", "有时"], "items": [{"prompt": "我___去电影院看个电影。", "answer": "有时"}, {"prompt": "上课要多听、多说，你懂我的___吗？", "answer": "意思"}, {"prompt": "我很喜欢北京，这___是我第三次来北京了。", "answer": "已经"}, {"prompt": "A：安妮，我给你___一下，这是我的中国朋友李文。B：你好，李文。认识你很高兴。", "answer": "介绍"}, {"prompt": "A：今天的工作太多了！B：那你找个人来___吧。", "answer": "帮忙"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["帮忙", "已经", "意思", "介绍", "有时"], "items": [{"prompt": "我___去电影院看个电影。", "answer": "有时"}, {"prompt": "上课要多听、多说，你懂我的___吗？", "answer": "意思"}, {"prompt": "我很喜欢北京，这___是我第三次来北京了。", "answer": "已经"}, {"prompt": "A：安妮，我给你___一下，这是我的中国朋友李文。B：你好，李文。认识你很高兴。", "answer": "介绍"}, {"prompt": "A：今天的工作太多了！B：那你找个人来___吧。", "answer": "帮忙"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "她请我们吃了北京烤鸭", pinyin: "Tā qǐng wǒmen chīle Běijīng Kǎoyā", meaning: "Cô ấy mời chúng tôi ăn vịt quay Bắc Kinh",
     vocabulary: [
       { hanzi: "就", pinyin: "jiù", meaning: "Chính là / đúng là (nhấn mạnh)", wordType: "Phó từ", example: { hanzi: "你们就是她的学生吧？", pinyin: "Nǐmen jiù shì tā de xuésheng ba?", meaning: "Các bạn chính là học sinh của cô ấy đúng không?" } },
@@ -7597,7 +7597,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-18", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["一起", "送", "回去", "拿", "累"], "items": [{"prompt": "已经下班了，你为什么还不___？", "answer": "回去"}, {"prompt": "他每天早上都___女朋友去上班。", "answer": "送"}, {"prompt": "爸爸___了一些水果给孩子们吃。", "answer": "拿"}, {"prompt": "A：我昨天晚上没睡好，今天觉得很___。B：那你休息休息吧。", "answer": "累"}, {"prompt": "A：你认识家月吗？B：认识啊，我们每天___坐公交车来学校。", "answer": "一起"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["一起", "送", "回去", "拿", "累"], "items": [{"prompt": "已经下班了，你为什么还不___？", "answer": "回去"}, {"prompt": "他每天早上都___女朋友去上班。", "answer": "送"}, {"prompt": "爸爸___了一些水果给孩子们吃。", "answer": "拿"}, {"prompt": "A：我昨天晚上没睡好，今天觉得很___。B：那你休息休息吧。", "answer": "累"}, {"prompt": "A：你认识家月吗？B：认识啊，我们每天___坐公交车来学校。", "answer": "一起"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "还是打车去北大吧", pinyin: "Háishi dǎchē qù Běidà ba", meaning: "Hay là bắt taxi đi Bắc Đại vậy",
     vocabulary: [
       { hanzi: "公交车", pinyin: "gōngjiāochē", meaning: "Xe buýt", wordType: "Danh từ", example: { hanzi: "这儿有到北京大学的公交车吗？", pinyin: "Zhèr yǒu dào Běijīng Dàxué de gōngjiāochē ma?", meaning: "Ở đây có xe buýt đến Đại học Bắc Kinh không?" } },
@@ -7685,7 +7685,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-17", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["但", "间", "车站", "打车", "过来"], "items": [{"prompt": "你家太远了，我们是___过来的。", "answer": "打车"}, {"prompt": "那是一___大教室，我们明天要去那儿上课。", "answer": "间"}, {"prompt": "李文让我去接他的朋友，___我太忙了，没时间。", "answer": "但"}, {"prompt": "A：请问，去北京大学的___在哪儿？B：就在前边，不远。", "answer": "车站"}, {"prompt": "A：家月，我想请你___帮个忙，你有时间吗？B：不好意思，我在外边旅游呢。", "answer": "过来"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["但", "间", "车站", "打车", "过来"], "items": [{"prompt": "你家太远了，我们是___过来的。", "answer": "打车"}, {"prompt": "那是一___大教室，我们明天要去那儿上课。", "answer": "间"}, {"prompt": "李文让我去接他的朋友，___我太忙了，没时间。", "answer": "但"}, {"prompt": "A：请问，去北京大学的___在哪儿？B：就在前边，不远。", "answer": "车站"}, {"prompt": "A：家月，我想请你___帮个忙，你有时间吗？B：不好意思，我在外边旅游呢。", "answer": "过来"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我想去西安旅游", pinyin: "Wǒ xiǎng qù Xī'ān lǚyóu", meaning: "Tôi muốn đi Tây An du lịch",
     vocabulary: [
       { hanzi: "回来", pinyin: "huílái", meaning: "Trở về / quay lại", wordType: "Động từ", example: { hanzi: "今天回来这么晚啊！", pinyin: "Jīntiān huílái zhème wǎn a!", meaning: "Hôm nay về muộn thế!" } },
@@ -7772,7 +7772,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-19", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["进去", "书包", "颜色", "条", "商场"], "items": [{"prompt": "我看见老师在教室里，你___找她吧。", "answer": "进去"}, {"prompt": "你已经有一___黑色的裤子了，别买了。", "answer": "条"}, {"prompt": "我来过这家___，它是今年一月新开的。", "answer": "商场"}, {"prompt": "A：妈妈，你看见我的___了吗？B：没看见，你再找找吧。", "answer": "书包"}, {"prompt": "A：你想买什么___的衣服？B：我喜欢绿色，买绿色的吧。", "answer": "颜色"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["进去", "书包", "颜色", "条", "商场"], "items": [{"prompt": "我看见老师在教室里，你___找她吧。", "answer": "进去"}, {"prompt": "你已经有一___黑色的裤子了，别买了。", "answer": "条"}, {"prompt": "我来过这家___，它是今年一月新开的。", "answer": "商场"}, {"prompt": "A：妈妈，你看见我的___了吗？B：没看见，你再找找吧。", "answer": "书包"}, {"prompt": "A：你想买什么___的衣服？B：我喜欢绿色，买绿色的吧。", "answer": "颜色"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "你穿红色的很好看", pinyin: "Nǐ chuān hóngsè de hěn hǎokàn", meaning: "Bạn mặc màu đỏ trông đẹp lắm",
     vocabulary: [
       { hanzi: "过", pinyin: "guo", meaning: "(trợ từ, chỉ hành động đã từng xảy ra trong quá khứ)", wordType: "Trợ từ", example: { hanzi: "我们来过这家商场吗？", pinyin: "Wǒmen láiguo zhè jiā shāngchǎng ma?", meaning: "Chúng ta đến cửa hàng này rồi à?" } },
@@ -7860,7 +7860,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-20", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["奶茶", "下面", "等", "走", "跟"], "items": [{"prompt": "你喝过___吗？好不好喝？", "answer": "奶茶"}, {"prompt": "桌子___有一个绿色的书包。", "answer": "下面"}, {"prompt": "同学们，___我来。看，这是我们的新教室。", "answer": "跟"}, {"prompt": "A：家月，我不想打车，想___回学校。B：好啊，没问题。", "answer": "走"}, {"prompt": "A：公交车还没来，我们还是打车去吧。B：再___一下吧。", "answer": "等"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["奶茶", "下面", "等", "走", "跟"], "items": [{"prompt": "你喝过___吗？好不好喝？", "answer": "奶茶"}, {"prompt": "桌子___有一个绿色的书包。", "answer": "下面"}, {"prompt": "同学们，___我来。看，这是我们的新教室。", "answer": "跟"}, {"prompt": "A：家月，我不想打车，想___回学校。B：好啊，没问题。", "answer": "走"}, {"prompt": "A：公交车还没来，我们还是打车去吧。B：再___一下吧。", "answer": "等"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "第一次去中国朋友家", pinyin: "Dì-yī cì qù Zhōngguó péngyou jiā", meaning: "Lần đầu đến nhà bạn người Trung Quốc",
     vocabulary: [
       { hanzi: "快", pinyin: "kuài", meaning: "Nhanh / nhanh lên", wordType: "Phó từ / Tính từ", example: { hanzi: "家月，快下来吧。", pinyin: "Jiāyuè, kuài xiàlái ba.", meaning: "Gia Nguyệt, xuống nhanh đi." } },
@@ -7950,7 +7950,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-21", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["忘", "快乐", "打开", "画", "床"], "items": [{"prompt": "明天10点去小雪家，你别___了。", "answer": "忘"}, {"prompt": "衣服在___上，你看看想穿哪一件？", "answer": "床"}, {"prompt": "看，这是我妹妹___的，漂亮不漂亮？", "answer": "画"}, {"prompt": "A：这是什么？B：送你的礼物，快___看看。", "answer": "打开"}, {"prompt": "A：今天我过了一个非常___的生日，谢谢爸爸、妈妈！B：不客气！我们都很爱你！", "answer": "快乐"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["忘", "快乐", "打开", "画", "床"], "items": [{"prompt": "明天10点去小雪家，你别___了。", "answer": "忘"}, {"prompt": "衣服在___上，你看看想穿哪一件？", "answer": "床"}, {"prompt": "看，这是我妹妹___的，漂亮不漂亮？", "answer": "画"}, {"prompt": "A：这是什么？B：送你的礼物，快___看看。", "answer": "打开"}, {"prompt": "A：今天我过了一个非常___的生日，谢谢爸爸、妈妈！B：不客气！我们都很爱你！", "answer": "快乐"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "小雪，生日快乐！", pinyin: "Xiǎoxuě, shēngrì kuàilè!", meaning: "Tiểu Tuyết, chúc mừng sinh nhật!",
     vocabulary: [
       { hanzi: "生日", pinyin: "shēngrì", meaning: "Sinh nhật", wordType: "Danh từ", example: { hanzi: "明天就是女儿的生日了。", pinyin: "Míngtiān jiù shì nǚ'ér de shēngrì le.", meaning: "Mai là sinh nhật con gái rồi." } },
@@ -8036,7 +8036,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-22", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["跑步", "运动", "从", "开始", "游泳"], "items": [{"prompt": "你看过她___吗？游得怎么样？", "answer": "游泳"}, {"prompt": "我们9点___上课，你别来晚了。", "answer": "开始"}, {"prompt": "你___跑得快不快？我想跟你一起去运动。", "answer": "跑步"}, {"prompt": "A：你喜欢什么___？B：足球、篮球什么的都喜欢。", "answer": "运动"}, {"prompt": "A：你喜欢学中文吗？B：喜欢，我___8岁就开始学中文了。", "answer": "从"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["跑步", "运动", "从", "开始", "游泳"], "items": [{"prompt": "你看过她___吗？游得怎么样？", "answer": "游泳"}, {"prompt": "我们9点___上课，你别来晚了。", "answer": "开始"}, {"prompt": "你___跑得快不快？我想跟你一起去运动。", "answer": "跑步"}, {"prompt": "A：你喜欢什么___？B：足球、篮球什么的都喜欢。", "answer": "运动"}, {"prompt": "A：你喜欢学中文吗？B：喜欢，我___8岁就开始学中文了。", "answer": "从"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "他篮球打得很好", pinyin: "Tā lánqiú dǎ de hěn hǎo", meaning: "Anh ấy chơi bóng rổ rất giỏi",
     vocabulary: [
       { hanzi: "从", pinyin: "cóng", meaning: "Từ (thời gian/nơi chốn)", wordType: "Giới từ", example: { hanzi: "你是什么时候从北京回来的？", pinyin: "Nǐ shì shénme shíhou cóng Běijīng huílái de?", meaning: "Bạn từ Bắc Kinh về lúc nào vậy?" } },
@@ -8123,7 +8123,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-23", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["左边", "记得", "手表", "有意思", "花"], "items": [{"prompt": "我的___在哪儿？你看见了吗？", "answer": "手表"}, {"prompt": "我___那个超市卖画笔，我们过去看看。", "answer": "记得"}, {"prompt": "我们在商场买了很多东西，___了很多钱。", "answer": "花"}, {"prompt": "A：我昨天看的那个电影很___。B：有时间我也去看看。", "answer": "有意思"}, {"prompt": "A：___这个人是你妹妹吗？B：是我姐姐，她比我大。", "answer": "左边"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["左边", "记得", "手表", "有意思", "花"], "items": [{"prompt": "我的___在哪儿？你看见了吗？", "answer": "手表"}, {"prompt": "我___那个超市卖画笔，我们过去看看。", "answer": "记得"}, {"prompt": "我们在商场买了很多东西，___了很多钱。", "answer": "花"}, {"prompt": "A：我昨天看的那个电影很___。B：有时间我也去看看。", "answer": "有意思"}, {"prompt": "A：___这个人是你妹妹吗？B：是我姐姐，她比我大。", "answer": "左边"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "虽然你忘了，但是我记得", pinyin: "Suīrán nǐ wàng le, dànshì wǒ jìde", meaning: "Tuy anh quên nhưng em vẫn nhớ",
     vocabulary: [
       { hanzi: "手表", pinyin: "shǒubiǎo", meaning: "Đồng hồ đeo tay", wordType: "Danh từ", example: { hanzi: "你看，这两块手表怎么样？", pinyin: "Nǐ kàn, zhè liǎng kuài shǒubiǎo zěnmeyàng?", meaning: "Anh xem, hai cái đồng hồ này thế nào?" } },
@@ -8209,7 +8209,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-24", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["旁边", "走路", "那么", "个子", "这样"], "items": [{"prompt": "你女儿十多岁，___这么高啊！", "answer": "个子"}, {"prompt": "咖啡店不远，我们是___过去的。", "answer": "走路"}, {"prompt": "我们住的酒店___有个公交站，那儿有到火车站的公交车。", "answer": "旁边"}, {"prompt": "A：我也喜欢___的茶杯，你是在哪儿买的？B：我是在公司门口那家商店买的。", "answer": "这样"}, {"prompt": "A：虽然今天的工作也不少，但是我觉得没有昨天___累。B：那我们出去走一走吧。", "answer": "那么"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["旁边", "走路", "那么", "个子", "这样"], "items": [{"prompt": "你女儿十多岁，___这么高啊！", "answer": "个子"}, {"prompt": "咖啡店不远，我们是___过去的。", "answer": "走路"}, {"prompt": "我们住的酒店___有个公交站，那儿有到火车站的公交车。", "answer": "旁边"}, {"prompt": "A：我也喜欢___的茶杯，你是在哪儿买的？B：我是在公司门口那家商店买的。", "answer": "这样"}, {"prompt": "A：虽然今天的工作也不少，但是我觉得没有昨天___累。B：那我们出去走一走吧。", "answer": "那么"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我去买杯奶茶", pinyin: "Wǒ qù mǎi bēi nǎichá", meaning: "Em đi mua cốc trà sữa",
     vocabulary: [
       { hanzi: "坏", pinyin: "huài", meaning: "Hỏng / tồi", wordType: "Tính từ", example: { hanzi: "儿子的裤子坏了。", pinyin: "Érzi de kùzi huài le.", meaning: "Quần của con trai bị rách rồi." } },
@@ -8294,7 +8294,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-25", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["后面", "错", "帮", "考试", "笑"], "items": [{"prompt": "看到生日礼物，儿子高兴地___了。", "answer": "笑"}, {"prompt": "小雪，你们什么时候___？你准备好了吗？", "answer": "考试"}, {"prompt": "我们公司___有一个商店，下班后我就去那儿买东西。", "answer": "后面"}, {"prompt": "A：不好意思，你能___我叫（jiào）一下白家月吗？B：没问题，你等一下。", "answer": "帮"}, {"prompt": "A：这个字写___了，左边是“口”，不是“日”。B：好的，我知道了。", "answer": "错"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["后面", "错", "帮", "考试", "笑"], "items": [{"prompt": "看到生日礼物，儿子高兴地___了。", "answer": "笑"}, {"prompt": "小雪，你们什么时候___？你准备好了吗？", "answer": "考试"}, {"prompt": "我们公司___有一个商店，下班后我就去那儿买东西。", "answer": "后面"}, {"prompt": "A：不好意思，你能___我叫（jiào）一下白家月吗？B：没问题，你等一下。", "answer": "帮"}, {"prompt": "A：这个字写___了，左边是“口”，不是“日”。B：好的，我知道了。", "answer": "错"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "就要考试了", pinyin: "Jiù yào kǎoshì le", meaning: "Sắp thi rồi",
     vocabulary: [
       { hanzi: "开学", pinyin: "kāixué", meaning: "Khai giảng / vào năm học mới", wordType: "Động từ", example: { hanzi: "你们明天开学，准备好了吗？", pinyin: "Nǐmen míngtiān kāixué, zhǔnbèi hǎo le ma?", meaning: "Mai các con khai giảng rồi, chuẩn bị xong chưa?" } },
@@ -8380,7 +8380,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-26", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["经常", "慢", "时", "身体", "路上"], "items": [{"prompt": "___车多人多，你慢点儿开。", "answer": "路上"}, {"prompt": "他今天___不舒服，所以没来上课。", "answer": "身体"}, {"prompt": "我游泳游得很___，但我跑步跑得很快。", "answer": "慢"}, {"prompt": "A：星期天我___跟朋友去踢球。B：我也喜欢踢球，下次叫我一起去吧。", "answer": "经常"}, {"prompt": "A：昨天雪太大，公交车开得很慢。B：是啊，我到家___都快9点了。", "answer": "时"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["经常", "慢", "时", "身体", "路上"], "items": [{"prompt": "___车多人多，你慢点儿开。", "answer": "路上"}, {"prompt": "他今天___不舒服，所以没来上课。", "answer": "身体"}, {"prompt": "我游泳游得很___，但我跑步跑得很快。", "answer": "慢"}, {"prompt": "A：星期天我___跟朋友去踢球。B：我也喜欢踢球，下次叫我一起去吧。", "answer": "经常"}, {"prompt": "A：昨天雪太大，公交车开得很慢。B：是啊，我到家___都快9点了。", "answer": "时"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我最喜欢吃中国菜", pinyin: "Wǒ zuì xǐhuan chī Zhōngguó cài", meaning: "Tôi thích nhất là ăn món Trung Quốc",
     vocabulary: [
       { hanzi: "头", pinyin: "tóu", meaning: "Đầu", wordType: "Danh từ", example: { hanzi: "我头疼，不太舒服。", pinyin: "Wǒ tóu téng, bú tài shūfu.", meaning: "Tôi đau đầu, không được khỏe lắm." } },
@@ -8465,7 +8465,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-27", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["事情", "正", "从小", "外面", "好"], "items": [{"prompt": "你看，前边的那个人___高啊！", "answer": "好"}, {"prompt": "今天的天气没有昨天好，___正下着雨呢。", "answer": "外面"}, {"prompt": "对不起，公司这几天___很多，太忙了，所以忘了你的生日。", "answer": "事情"}, {"prompt": "A：我___就爱动，经常跟朋友一起踢球、跑步。B：所以你身体这么好！", "answer": "从小"}, {"prompt": "A：小雪在做什么呢？B：快要考试了，她___看书呢。", "answer": "正"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["事情", "正", "从小", "外面", "好"], "items": [{"prompt": "你看，前边的那个人___高啊！", "answer": "好"}, {"prompt": "今天的天气没有昨天好，___正下着雨呢。", "answer": "外面"}, {"prompt": "对不起，公司这几天___很多，太忙了，所以忘了你的生日。", "answer": "事情"}, {"prompt": "A：我___就爱动，经常跟朋友一起踢球、跑步。B：所以你身体这么好！", "answer": "从小"}, {"prompt": "A：小雪在做什么呢？B：快要考试了，她___看书呢。", "answer": "正"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "这里比北京冷多了", pinyin: "Zhèlǐ bǐ Běijīng lěngduō le", meaning: "Ở đây lạnh hơn Bắc Kinh nhiều",
     vocabulary: [
       { hanzi: "事情", pinyin: "shìqing", meaning: "Việc / chuyện", wordType: "Danh từ", example: { hanzi: "有什么事情吗？", pinyin: "Yǒu shénme shìqing ma?", meaning: "Có việc gì vậy?" } },
@@ -8548,7 +8548,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-28", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["上网", "可能", "班", "告诉", "里面"], "items": [{"prompt": "你们___有多少学生？", "answer": "班"}, {"prompt": "我经常___听歌、看电影。", "answer": "上网"}, {"prompt": "教室的门开着，但是___没有人。", "answer": "里面"}, {"prompt": "A：小李呢？我找她有点儿事。B：___去洗手间了。她回来后，我让她去找你。", "answer": "可能"}, {"prompt": "A：姐姐，家月___我你已经接到她们了。谢谢你！B：不客气，你的朋友就是我的朋友。", "answer": "告诉"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["上网", "可能", "班", "告诉", "里面"], "items": [{"prompt": "你们___有多少学生？", "answer": "班"}, {"prompt": "我经常___听歌、看电影。", "answer": "上网"}, {"prompt": "教室的门开着，但是___没有人。", "answer": "里面"}, {"prompt": "A：小李呢？我找她有点儿事。B：___去洗手间了。她回来后，我让她去找你。", "answer": "可能"}, {"prompt": "A：姐姐，家月___我你已经接到她们了。谢谢你！B：不客气，你的朋友就是我的朋友。", "answer": "告诉"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我们爱上中文课", pinyin: "Wǒmen ài shàng Zhōngwén kè", meaning: "Chúng tôi yêu thích học tiếng Trung",
     vocabulary: [
       { hanzi: "新年", pinyin: "xīnnián", meaning: "Năm mới", wordType: "Danh từ", example: { hanzi: "新年就要到了，安妮送给我一个新本子。", pinyin: "Xīnnián jiù yào dào le, Ānnī sòng gěi wǒ yí gè xīn běnzi.", meaning: "Năm mới sắp đến rồi, Annie tặng tôi một quyển sổ mới." } },
@@ -8637,7 +8637,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-29", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["位", "过年", "跳舞", "姓", "眼睛"], "items": [{"prompt": "他儿子的___大大的，很漂亮。", "answer": "眼睛"}, {"prompt": "他已经几年没回国了，今年想回国___。", "answer": "过年"}, {"prompt": "我从小就跟老师学___，学了十多年了。", "answer": "跳舞"}, {"prompt": "A：请你介绍一下自己。B：我___李，叫李明，是从上海来的。", "answer": "姓"}, {"prompt": "A：您好！请问，就您一___吗？B：还有个朋友，他一来我们就点菜。", "answer": "位"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["位", "过年", "跳舞", "姓", "眼睛"], "items": [{"prompt": "他儿子的___大大的，很漂亮。", "answer": "眼睛"}, {"prompt": "他已经几年没回国了，今年想回国___。", "answer": "过年"}, {"prompt": "我从小就跟老师学___，学了十多年了。", "answer": "跳舞"}, {"prompt": "A：请你介绍一下自己。B：我___李，叫李明，是从上海来的。", "answer": "姓"}, {"prompt": "A：您好！请问，就您一___吗？B：还有个朋友，他一来我们就点菜。", "answer": "位"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "一个人过年多没意思啊", pinyin: "Yí gè rén guònián duō méi yìsi a", meaning: "Một mình đón Tết thì chán biết bao",
     vocabulary: [
       { hanzi: "站", pinyin: "zhàn", meaning: "Đứng", wordType: "Động từ", example: { hanzi: "你家楼下站着一个人。", pinyin: "Nǐ jiā lóu xià zhànzhe yí gè rén.", meaning: "Dưới nhà bạn có một người đang đứng." } },
@@ -8727,7 +8727,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-30", program: "hsk3", level: "HSK 2",
-    wordBank: {"bank": ["出国", "姓名", "门票", "鸟", "机票"], "items": [{"prompt": "你看，那只小___多漂亮啊！", "answer": "鸟"}, {"prompt": "我记得这里的___不到10块钱，现在怎么这么贵了？", "answer": "门票"}, {"prompt": "儿子就要___上大学了，你给他准备了什么东西啊？", "answer": "出国"}, {"prompt": "A：你买的是什么时候的___？B：明天早上的，下午就到北京了。", "answer": "机票"}, {"prompt": "A：请您说一下他的___，我看看有没有这个人。B：王大明。A：不好意思，他没住在我们酒店。", "answer": "姓名"}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"bank": ["出国", "姓名", "门票", "鸟", "机票"], "items": [{"prompt": "你看，那只小___多漂亮啊！", "answer": "鸟"}, {"prompt": "我记得这里的___不到10块钱，现在怎么这么贵了？", "answer": "门票"}, {"prompt": "儿子就要___上大学了，你给他准备了什么东西啊？", "answer": "出国"}, {"prompt": "A：你买的是什么时候的___？B：明天早上的，下午就到北京了。", "answer": "机票"}, {"prompt": "A：请您说一下他的___，我看看有没有这个人。B：王大明。A：不好意思，他没住在我们酒店。", "answer": "姓名"}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我想再去一次中国", pinyin: "Wǒ xiǎng zài qù yí cì Zhōngguó", meaning: "Tôi muốn đi Trung Quốc thêm một lần nữa",
     vocabulary: [
       { hanzi: "姓名", pinyin: "xìngmíng", meaning: "Họ tên", wordType: "Danh từ", example: { hanzi: "请大家写上姓名，写好后就可以做题了。", pinyin: "Qǐng dàjiā xiě shàng xìngmíng, xiěhǎo hòu jiù kěyǐ zuò tí le.", meaning: "Mời mọi người viết họ tên, viết xong là có thể làm bài." } },
@@ -8823,7 +8823,7 @@ const LESSONS = [
 
   {
     id: "hsk3-31", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["带", "接", "丢", "重要", "应该"], "items": [{"prompt": "服务台___在前面，我们过去问问吧。", "answer": "应该"}, {"prompt": "他已经到了，我们快出去___他吧。", "answer": "接"}, {"prompt": "我的护照不见了，是不是在机场___了？", "answer": "丢"}, {"prompt": "行李票很___，你们出机场的时候有人看。", "answer": "重要"}, {"prompt": "我___了两个行李箱和一个大包，所以走得非常慢。", "answer": "带"}]}, {"bank": ["发现", "以为", "好像", "年轻", "帮助"], "items": [{"prompt": "A：这个头发很短的男孩儿是我弟弟。B：我___这个是你，你们长得太像了。", "answer": "以为"}, {"prompt": "A：我___坐飞机来北京的人非常多。B：对，很多人这个时候来北京旅游。", "answer": "发现"}, {"prompt": "A：这是我和哥哥的照片，你看我们像吗？B：你们很像，你哥哥看起来也很___。", "answer": "年轻"}, {"prompt": "A：你的行李箱找到了，你看看是不是这个？B：对，太好了！谢谢您的___。", "answer": "帮助"}, {"prompt": "A：那个穿着黑衣服的高个子的人是王老师吗？B：___是吧，我也不知道。", "answer": "好像"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["带", "接", "丢", "重要", "应该"], "items": [{"prompt": "服务台___在前面，我们过去问问吧。", "answer": "应该"}, {"prompt": "他已经到了，我们快出去___他吧。", "answer": "接"}, {"prompt": "我的护照不见了，是不是在机场___了？", "answer": "丢"}, {"prompt": "行李票很___，你们出机场的时候有人看。", "answer": "重要"}, {"prompt": "我___了两个行李箱和一个大包，所以走得非常慢。", "answer": "带"}]}, {"bank": ["发现", "以为", "好像", "年轻", "帮助"], "items": [{"prompt": "A：这个头发很短的男孩儿是我弟弟。B：我___这个是你，你们长得太像了。", "answer": "以为"}, {"prompt": "A：我___坐飞机来北京的人非常多。B：对，很多人这个时候来北京旅游。", "answer": "发现"}, {"prompt": "A：这是我和哥哥的照片，你看我们像吗？B：你们很像，你哥哥看起来也很___。", "answer": "年轻"}, {"prompt": "A：你的行李箱找到了，你看看是不是这个？B：对，太好了！谢谢您的___。", "answer": "帮助"}, {"prompt": "A：那个穿着黑衣服的高个子的人是王老师吗？B：___是吧，我也不知道。", "answer": "好像"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我们去机场接你们", pinyin: "Wǒmen qù jīchǎng jiē nǐmen", meaning: "Chúng tôi ra sân bay đón các bạn",
     vocabulary: [
       { hanzi: "以为", pinyin: "yǐwéi", meaning: "Cứ tưởng, cho rằng", wordType: "Động từ", example: { hanzi: "我还以为是同乐呢，他们看上去有点儿像。", pinyin: "Wǒ hái yǐwéi shì Tónglè ne, tāmen kàn shàngqù yǒudiǎnr xiàng.", meaning: "Tôi cứ tưởng là Đồng Lạc chứ, họ trông hơi giống nhau." } },
@@ -8897,7 +8897,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-32", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["尝", "只", "菜单", "记", "用"], "items": [{"prompt": "我觉得___筷子吃饭更方便。", "answer": "用"}, {"prompt": "你___住那个饭馆的名字了吗？", "answer": "记"}, {"prompt": "她现在很饿，早上___吃了一块蛋糕。", "answer": "只"}, {"prompt": "___上有好几个新菜，你看看我们吃哪个？", "answer": "菜单"}, {"prompt": "我妈妈会做中国菜，下次你们来我家___一下她做的菜。", "answer": "尝"}]}, {"bank": ["饿", "不用", "简单", "好久", "马上"], "items": [{"prompt": "A：我还不太会用筷子，你们有勺子吗？B：有，你等一下，我___给你拿。", "answer": "马上"}, {"prompt": "A：我找服务员要一下菜单，咱们点菜。B：在手机上就可以点菜，___要菜单。", "answer": "不用"}, {"prompt": "A：我太___了，不想做饭了，我们叫个外卖，怎么样？B：没问题，你想吃什么，我们就点什么。", "answer": "饿"}, {"prompt": "A：你想去哪个饭馆吃饭？B：我___没吃饺子了，去楼下的饺子馆吧。", "answer": "好久"}, {"prompt": "A：你下班回家自己做饭吗？B：不做饭，我就吃碗方便面。方便面是最___的晚饭。", "answer": "简单"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["尝", "只", "菜单", "记", "用"], "items": [{"prompt": "我觉得___筷子吃饭更方便。", "answer": "用"}, {"prompt": "你___住那个饭馆的名字了吗？", "answer": "记"}, {"prompt": "她现在很饿，早上___吃了一块蛋糕。", "answer": "只"}, {"prompt": "___上有好几个新菜，你看看我们吃哪个？", "answer": "菜单"}, {"prompt": "我妈妈会做中国菜，下次你们来我家___一下她做的菜。", "answer": "尝"}]}, {"bank": ["饿", "不用", "简单", "好久", "马上"], "items": [{"prompt": "A：我还不太会用筷子，你们有勺子吗？B：有，你等一下，我___给你拿。", "answer": "马上"}, {"prompt": "A：我找服务员要一下菜单，咱们点菜。B：在手机上就可以点菜，___要菜单。", "answer": "不用"}, {"prompt": "A：我太___了，不想做饭了，我们叫个外卖，怎么样？B：没问题，你想吃什么，我们就点什么。", "answer": "饿"}, {"prompt": "A：你想去哪个饭馆吃饭？B：我___没吃饺子了，去楼下的饺子馆吧。", "answer": "好久"}, {"prompt": "A：你下班回家自己做饭吗？B：不做饭，我就吃碗方便面。方便面是最___的晚饭。", "answer": "简单"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "你们想吃什么就点什么", pinyin: "Nǐmen xiǎng chī shénme jiù diǎn shénme", meaning: "Các bạn muốn ăn gì thì gọi món đó",
     vocabulary: [
       { hanzi: "菜单", pinyin: "càidān", meaning: "Thực đơn", wordType: "Danh từ", example: { hanzi: "家月、李文，你们看看菜单，想吃点儿什么？", pinyin: "Jiāyuè, Lǐ Wén, nǐmen kànkan càidān, xiǎng chī diǎnr shénme?", meaning: "Gia Nguyệt, Lý Văn, hai bạn xem thực đơn xem muốn ăn gì?" } },
@@ -8965,7 +8965,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-33", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["才", "挺", "办", "关", "还"], "items": [{"prompt": "你走的时候要___灯。", "answer": "关"}, {"prompt": "我要去银行___一张信用卡。", "answer": "办"}, {"prompt": "搬家要准备的东西___多的。", "answer": "挺"}, {"prompt": "这本书不是我的，明天我要___给朋友。", "answer": "还"}, {"prompt": "我太忙了，没时间打扫新家，可能下个月___搬家。", "answer": "才"}]}, {"bank": ["环境", "需要", "搬家", "听说", "打扫"], "items": [{"prompt": "A：你去哪儿了？怎么这么晚才回来？B：我一直在___新家，今天真是累坏了。", "answer": "打扫"}, {"prompt": "A：这个小区离学校有点儿远。B：虽然有点儿远，但是我们很喜欢这个小区的___。", "answer": "环境"}, {"prompt": "A：你知道她为什么不喜欢这个房子吗？B：我___她不喜欢住一层。", "answer": "听说"}, {"prompt": "A：这个小区明天不能___，你知道吗？B：我知道，我已经告诉搬家公司的人了，他们下周一再来。", "answer": "搬家"}, {"prompt": "A：她家真大，还有个大花园。B：因为她家人多，___一个大房子。", "answer": "需要"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["才", "挺", "办", "关", "还"], "items": [{"prompt": "你走的时候要___灯。", "answer": "关"}, {"prompt": "我要去银行___一张信用卡。", "answer": "办"}, {"prompt": "搬家要准备的东西___多的。", "answer": "挺"}, {"prompt": "这本书不是我的，明天我要___给朋友。", "answer": "还"}, {"prompt": "我太忙了，没时间打扫新家，可能下个月___搬家。", "answer": "才"}]}, {"bank": ["环境", "需要", "搬家", "听说", "打扫"], "items": [{"prompt": "A：你去哪儿了？怎么这么晚才回来？B：我一直在___新家，今天真是累坏了。", "answer": "打扫"}, {"prompt": "A：这个小区离学校有点儿远。B：虽然有点儿远，但是我们很喜欢这个小区的___。", "answer": "环境"}, {"prompt": "A：你知道她为什么不喜欢这个房子吗？B：我___她不喜欢住一层。", "answer": "听说"}, {"prompt": "A：这个小区明天不能___，你知道吗？B：我知道，我已经告诉搬家公司的人了，他们下周一再来。", "answer": "搬家"}, {"prompt": "A：她家真大，还有个大花园。B：因为她家人多，___一个大房子。", "answer": "需要"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "这个小区挺好的", pinyin: "Zhège xiǎoqū tǐng hǎo de", meaning: "Khu chung cư này khá tốt",
     vocabulary: [
       { hanzi: "初中", pinyin: "chūzhōng", meaning: "Trung học cơ sở", wordType: "Danh từ", example: { hanzi: "小雪的初中离家有点儿远，咱们换一个近点儿的房子吧。", pinyin: "Xiǎoxuě de chūzhōng lí jiā yǒudiǎnr yuǎn, zánmen huàn yí gè jìn diǎnr de fángzi ba.", meaning: "Trường cấp 2 của Tiểu Tuyết cách nhà hơi xa, chúng ta đổi một căn nhà gần hơn đi." } },
@@ -9037,7 +9037,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-34", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["先", "久", "刻", "满意", "特别"], "items": [{"prompt": "已经八点一___了，快起床吧。", "answer": "刻"}, {"prompt": "飞机晚点了，小李在机场等了很___。", "answer": "久"}, {"prompt": "我___打车过去，你们可以慢慢走过去。", "answer": "先"}, {"prompt": "我对这里的服务非常___，下次还会再来。", "answer": "满意"}, {"prompt": "我们这次在草原上住的宾馆很___，跟别的都不一样。", "answer": "特别"}]}, {"bank": ["一直", "一样", "一定", "欢迎", "别的"], "items": [{"prompt": "A：草原真是太漂亮了，跟我想的___。B：我觉得草原比我想的更漂亮。", "answer": "一样"}, {"prompt": "A：我们搬家了，___你来我们的新家玩。B：好啊，有时间我一定去。", "answer": "欢迎"}, {"prompt": "A：除了要买几个纸箱，还买___东西吗？B：没有了，谢谢你帮我买。", "answer": "别的"}, {"prompt": "A：喂，小李，这边天气不好，我们还没起飞呢。B：没关系，我会___在机场等您。", "answer": "一直"}, {"prompt": "A：行李准备好了，你看看还需要带什么东西？B：___别忘了带护照。", "answer": "一定"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["先", "久", "刻", "满意", "特别"], "items": [{"prompt": "已经八点一___了，快起床吧。", "answer": "刻"}, {"prompt": "飞机晚点了，小李在机场等了很___。", "answer": "久"}, {"prompt": "我___打车过去，你们可以慢慢走过去。", "answer": "先"}, {"prompt": "我对这里的服务非常___，下次还会再来。", "answer": "满意"}, {"prompt": "我们这次在草原上住的宾馆很___，跟别的都不一样。", "answer": "特别"}]}, {"bank": ["一直", "一样", "一定", "欢迎", "别的"], "items": [{"prompt": "A：草原真是太漂亮了，跟我想的___。B：我觉得草原比我想的更漂亮。", "answer": "一样"}, {"prompt": "A：我们搬家了，___你来我们的新家玩。B：好啊，有时间我一定去。", "answer": "欢迎"}, {"prompt": "A：除了要买几个纸箱，还买___东西吗？B：没有了，谢谢你帮我买。", "answer": "别的"}, {"prompt": "A：喂，小李，这边天气不好，我们还没起飞呢。B：没关系，我会___在机场等您。", "answer": "一直"}, {"prompt": "A：行李准备好了，你看看还需要带什么东西？B：___别忘了带护照。", "answer": "一定"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "这家宾馆跟别的都不一样", pinyin: "Zhè jiā bīnguǎn gēn biéde dōu bù yíyàng", meaning: "Khách sạn này khác hẳn những nơi khác",
     vocabulary: [
       { hanzi: "假期", pinyin: "jiàqī", meaning: "Kỳ nghỉ", wordType: "Danh từ", example: { hanzi: "这个假期咱们去哪儿玩玩吧。", pinyin: "Zhège jiàqī zánmen qù nǎr wánwan ba.", meaning: "Kỳ nghỉ này chúng ta đi đâu chơi đi." } },
@@ -9111,7 +9111,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-35", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["照", "干", "水平", "难看", "收到"], "items": [{"prompt": "他的拍照___比我高多了。", "answer": "水平"}, {"prompt": "我___了一封学校的邮件。", "answer": "收到"}, {"prompt": "明天又是星期天，我不知道应该___什么。", "answer": "干"}, {"prompt": "我还没准备好呢，我看着你的时候你再___。", "answer": "照"}, {"prompt": "我觉得前两张照片好看，第三张有点儿___，你选前两张吧。", "answer": "难看"}]}, {"bank": ["结束", "总是", "终于", "感兴趣", "比较"], "items": [{"prompt": "A：他们的飞机到了吗？B：___到了，晚点了五个多小时。", "answer": "终于"}, {"prompt": "A：为什么我照的照片___不好看？B：我姐姐会拍照，我让她教教你。", "answer": "总是"}, {"prompt": "A：喂，你在哪儿？怎么没接电话？B：我在看电影呢，还有十分钟就___了。", "answer": "结束"}, {"prompt": "A：假期我想去北京，也想去上海，不知道怎么选。B：我帮你___一下。", "answer": "比较"}, {"prompt": "A：我有两张音乐会的票，咱们一起去吧。B：我对音乐不___。家月喜欢，你问问她。", "answer": "感兴趣"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["照", "干", "水平", "难看", "收到"], "items": [{"prompt": "他的拍照___比我高多了。", "answer": "水平"}, {"prompt": "我___了一封学校的邮件。", "answer": "收到"}, {"prompt": "明天又是星期天，我不知道应该___什么。", "answer": "干"}, {"prompt": "我还没准备好呢，我看着你的时候你再___。", "answer": "照"}, {"prompt": "我觉得前两张照片好看，第三张有点儿___，你选前两张吧。", "answer": "难看"}]}, {"bank": ["结束", "总是", "终于", "感兴趣", "比较"], "items": [{"prompt": "A：他们的飞机到了吗？B：___到了，晚点了五个多小时。", "answer": "终于"}, {"prompt": "A：为什么我照的照片___不好看？B：我姐姐会拍照，我让她教教你。", "answer": "总是"}, {"prompt": "A：喂，你在哪儿？怎么没接电话？B：我在看电影呢，还有十分钟就___了。", "answer": "结束"}, {"prompt": "A：假期我想去北京，也想去上海，不知道怎么选。B：我帮你___一下。", "answer": "比较"}, {"prompt": "A：我有两张音乐会的票，咱们一起去吧。B：我对音乐不___。家月喜欢，你问问她。", "answer": "感兴趣"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "这样的照片才好看", pinyin: "Zhèyàng de zhàopiàn cái hǎokàn", meaning: "Ảnh như thế này mới đẹp",
     vocabulary: [
       { hanzi: "总是", pinyin: "zǒngshì", meaning: "Luôn luôn, lúc nào cũng", wordType: "Phó từ", example: { hanzi: "这个星期总是阴天，今天终于晴了。", pinyin: "Zhège xīngqī zǒngshì yīntiān, jīntiān zhōngyú qíng le.", meaning: "Tuần này lúc nào cũng âm u, hôm nay cuối cùng cũng nắng rồi." } },
@@ -9185,7 +9185,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-36", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["该", "刷", "急", "后来", "以前"], "items": [{"prompt": "我没带钱，可以___信用卡吗？", "answer": "刷"}, {"prompt": "不用太早，星期五___买票就可以。", "answer": "以前"}, {"prompt": "飞机马上就要起飞了，你的手机___关机了。", "answer": "该"}, {"prompt": "前面的路口人很多，你开慢一点儿，别___。", "answer": "急"}, {"prompt": "她开始的时候说要来，___打电话说不来了。", "answer": "后来"}]}, {"bank": ["选择", "检查", "小心", "必须", "打算"], "items": [{"prompt": "A：你一个人开车，路上要___。B：好的，谢谢。", "answer": "小心"}, {"prompt": "A：马上就要出门了，你再___一下，护照什么的都带了吧？B：都带了，放在包里了。", "answer": "检查"}, {"prompt": "A：明天晚上六点的火车，你几点出门？B：我___四点半出门，晚一点儿也没关系。", "answer": "打算"}, {"prompt": "A：坐高铁四个多小时，坐飞机两个小时，你想坐什么？B：高铁站比机场近多了，我还是想___高铁。", "answer": "选择"}, {"prompt": "A：我能坐在你旁边吗？B：不行，咱们的票是分开的，你___坐在前面。", "answer": "必须"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["该", "刷", "急", "后来", "以前"], "items": [{"prompt": "我没带钱，可以___信用卡吗？", "answer": "刷"}, {"prompt": "不用太早，星期五___买票就可以。", "answer": "以前"}, {"prompt": "飞机马上就要起飞了，你的手机___关机了。", "answer": "该"}, {"prompt": "前面的路口人很多，你开慢一点儿，别___。", "answer": "急"}, {"prompt": "她开始的时候说要来，___打电话说不来了。", "answer": "后来"}]}, {"bank": ["选择", "检查", "小心", "必须", "打算"], "items": [{"prompt": "A：你一个人开车，路上要___。B：好的，谢谢。", "answer": "小心"}, {"prompt": "A：马上就要出门了，你再___一下，护照什么的都带了吧？B：都带了，放在包里了。", "answer": "检查"}, {"prompt": "A：明天晚上六点的火车，你几点出门？B：我___四点半出门，晚一点儿也没关系。", "answer": "打算"}, {"prompt": "A：坐高铁四个多小时，坐飞机两个小时，你想坐什么？B：高铁站比机场近多了，我还是想___高铁。", "answer": "选择"}, {"prompt": "A：我能坐在你旁边吗？B：不行，咱们的票是分开的，你___坐在前面。", "answer": "必须"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "高铁上还可以点外卖", pinyin: "Gāotiě shàng hái kěyǐ diǎn wàimài", meaning: "Trên tàu cao tốc còn có thể gọi đồ ăn mang đi",
     vocabulary: [
       { hanzi: "该", pinyin: "gāi", meaning: "Nên, phải (đến lúc)", wordType: "Động từ năng nguyện", example: { hanzi: "家月，咱们该买去上海的票了。", pinyin: "Jiāyuè, zánmen gāi mǎi qù Shànghǎi de piào le.", meaning: "Gia Nguyệt, chúng ta phải mua vé đi Thượng Hải rồi." } },
@@ -9259,7 +9259,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-37", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["试", "更", "矮", "旧", "声"], "items": [{"prompt": "你的手机很___，买个新的吧。", "answer": "旧"}, {"prompt": "她比我大两岁，但是比我还___一点儿。", "answer": "矮"}, {"prompt": "这条短裤比那条___合适，买这条吧。", "answer": "更"}, {"prompt": "我们都听见了他在教室外面的笑___。", "answer": "声"}, {"prompt": "上网买东西很方便，你应该___一下。", "answer": "试"}]}, {"bank": ["一共", "合适", "决定", "结婚", "开机"], "items": [{"prompt": "A：假期的时候你们去哪儿旅游？B：我想去看海，不知道这个时间是不是___。", "answer": "合适"}, {"prompt": "A：你们两个准备什么时候___？B：可能今年10月，到时候一定告诉你。", "answer": "结婚"}, {"prompt": "A：你帮我看看，我的手机为什么不能___？B：让小李帮你看，你新买的这个手机跟他的一样。", "answer": "开机"}, {"prompt": "A：网上的房子太多了，我还没有___去看哪一个。B：你可以先在网上看房，我教你。", "answer": "决定"}, {"prompt": "A：请问，这些水果多少钱？B：苹果两斤，八块；香蕉四斤，十二块。___二十块。", "answer": "一共"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["试", "更", "矮", "旧", "声"], "items": [{"prompt": "你的手机很___，买个新的吧。", "answer": "旧"}, {"prompt": "她比我大两岁，但是比我还___一点儿。", "answer": "矮"}, {"prompt": "这条短裤比那条___合适，买这条吧。", "answer": "更"}, {"prompt": "我们都听见了他在教室外面的笑___。", "answer": "声"}, {"prompt": "上网买东西很方便，你应该___一下。", "answer": "试"}]}, {"bank": ["一共", "合适", "决定", "结婚", "开机"], "items": [{"prompt": "A：假期的时候你们去哪儿旅游？B：我想去看海，不知道这个时间是不是___。", "answer": "合适"}, {"prompt": "A：你们两个准备什么时候___？B：可能今年10月，到时候一定告诉你。", "answer": "结婚"}, {"prompt": "A：你帮我看看，我的手机为什么不能___？B：让小李帮你看，你新买的这个手机跟他的一样。", "answer": "开机"}, {"prompt": "A：网上的房子太多了，我还没有___去看哪一个。B：你可以先在网上看房，我教你。", "answer": "决定"}, {"prompt": "A：请问，这些水果多少钱？B：苹果两斤，八块；香蕉四斤，十二块。___二十块。", "answer": "一共"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "那条裙子比短裤更好看", pinyin: "Nà tiáo qúnzi bǐ duǎnkù gèng hǎokàn", meaning: "Cái váy đó đẹp hơn cái quần short",
     vocabulary: [
       { hanzi: "辆", pinyin: "liàng", meaning: "Chiếc (lượng từ cho xe cộ)", wordType: "Lượng từ", example: { hanzi: "这辆自行车是小雪八岁的时候买的，看起来有点儿旧了。", pinyin: "Zhè liàng zìxíngchē shì Xiǎoxuě bā suì de shíhou mǎi de, kàn qǐlái yǒudiǎnr jiù le.", meaning: "Chiếc xe đạp này mua lúc Tiểu Tuyết tám tuổi, trông có vẻ hơi cũ rồi." } },
@@ -9333,7 +9333,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-38", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["开", "得", "种", "关心", "方法"], "items": [{"prompt": "李医生特别___病人。", "answer": "关心"}, {"prompt": "医生说你下个星期___回来检查一下。", "answer": "得"}, {"prompt": "您一直很健康，有什么好的锻炼___吗？", "answer": "方法"}, {"prompt": "如果你的病好了，医生就不会给你___药了。", "answer": "开"}, {"prompt": "感冒的时候能吃这___药吗？你再问一下医生。", "answer": "种"}]}, {"bank": ["注意", "突然", "差不多", "其他", "以后"], "items": [{"prompt": "A：你什么时候能出院？B：可能两天___，我还需要做几个检查。", "answer": "以后"}, {"prompt": "A：你是不是生病了？B：是，我昨天晚上___头疼、发烧，吃完药好多了。", "answer": "突然"}, {"prompt": "A：你的腿可以走路，但是还不能运动。B：我知道了，我会___的。", "answer": "注意"}, {"prompt": "A：刘医生，您下个星期来医院吗？B：我下个星期一不来，___时间都在。", "answer": "其他"}, {"prompt": "A：你疼了多长时间了？B：有时候疼，有时候不疼，___一个月吧。", "answer": "差不多"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["开", "得", "种", "关心", "方法"], "items": [{"prompt": "李医生特别___病人。", "answer": "关心"}, {"prompt": "医生说你下个星期___回来检查一下。", "answer": "得"}, {"prompt": "您一直很健康，有什么好的锻炼___吗？", "answer": "方法"}, {"prompt": "如果你的病好了，医生就不会给你___药了。", "answer": "开"}, {"prompt": "感冒的时候能吃这___药吗？你再问一下医生。", "answer": "种"}]}, {"bank": ["注意", "突然", "差不多", "其他", "以后"], "items": [{"prompt": "A：你什么时候能出院？B：可能两天___，我还需要做几个检查。", "answer": "以后"}, {"prompt": "A：你是不是生病了？B：是，我昨天晚上___头疼、发烧，吃完药好多了。", "answer": "突然"}, {"prompt": "A：你的腿可以走路，但是还不能运动。B：我知道了，我会___的。", "answer": "注意"}, {"prompt": "A：刘医生，您下个星期来医院吗？B：我下个星期一不来，___时间都在。", "answer": "其他"}, {"prompt": "A：你疼了多长时间了？B：有时候疼，有时候不疼，___一个月吧。", "answer": "差不多"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "今天我出院了", pinyin: "Jīntiān wǒ chūyuàn le", meaning: "Hôm nay tôi xuất viện rồi",
     vocabulary: [
       { hanzi: "最近", pinyin: "zuìjìn", meaning: "Gần đây, dạo này", wordType: "Danh từ", example: { hanzi: "天中，最近常看见你来体育馆。", pinyin: "Tiānzhōng, zuìjìn cháng kànjiàn nǐ lái tǐyùguǎn.", meaning: "Thiên Trung, dạo này thường thấy bạn đến phòng tập thể dục." } },
@@ -9409,7 +9409,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-39", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["世界", "成绩", "球场", "参加", "影响"], "items": [{"prompt": "我的腿不舒服，所以没___这次网球比赛。", "answer": "参加"}, {"prompt": "学校的___上，每天都有很多同学在那儿做运动。", "answer": "球场"}, {"prompt": "运动员们为了得到好___，每天要练十多个小时。", "answer": "成绩"}, {"prompt": "受到天气的___，今天的足球比赛要晚两个小时开始。", "answer": "影响"}, {"prompt": "这位运动员觉得___上最重要的运动会就是奥运会。", "answer": "世界"}]}, {"bank": ["只是", "几乎", "主要", "得到", "受到"], "items": [{"prompt": "A：她游泳游得快吗？B：她___每天都游，现在游得特别快。", "answer": "几乎"}, {"prompt": "A：他们以前每年都是第一名，为什么今年成绩这么不好？B：我觉得___是因为好多老球员病了。", "answer": "主要"}, {"prompt": "A：你打得这么好，是羽毛球运动员吗？B：打羽毛球___我的兴趣，我不是运动员。", "answer": "只是"}, {"prompt": "A：___我爸爸的影响，我十几岁就开始打网球了。B：现在你也开始影响我，我也喜欢上了打网球。", "answer": "受到"}, {"prompt": "A：我听说你参加了学校的运动会？B：是的。虽然没有___很好的成绩，但是我认识了很多新朋友。", "answer": "得到"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["世界", "成绩", "球场", "参加", "影响"], "items": [{"prompt": "我的腿不舒服，所以没___这次网球比赛。", "answer": "参加"}, {"prompt": "学校的___上，每天都有很多同学在那儿做运动。", "answer": "球场"}, {"prompt": "运动员们为了得到好___，每天要练十多个小时。", "answer": "成绩"}, {"prompt": "受到天气的___，今天的足球比赛要晚两个小时开始。", "answer": "影响"}, {"prompt": "这位运动员觉得___上最重要的运动会就是奥运会。", "answer": "世界"}]}, {"bank": ["只是", "几乎", "主要", "得到", "受到"], "items": [{"prompt": "A：她游泳游得快吗？B：她___每天都游，现在游得特别快。", "answer": "几乎"}, {"prompt": "A：他们以前每年都是第一名，为什么今年成绩这么不好？B：我觉得___是因为好多老球员病了。", "answer": "主要"}, {"prompt": "A：你打得这么好，是羽毛球运动员吗？B：打羽毛球___我的兴趣，我不是运动员。", "answer": "只是"}, {"prompt": "A：___我爸爸的影响，我十几岁就开始打网球了。B：现在你也开始影响我，我也喜欢上了打网球。", "answer": "受到"}, {"prompt": "A：我听说你参加了学校的运动会？B：是的。虽然没有___很好的成绩，但是我认识了很多新朋友。", "answer": "得到"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "打不好没关系", pinyin: "Dǎ bù hǎo méi guānxi", meaning: "Đánh không giỏi cũng không sao",
     vocabulary: [
       { hanzi: "校园", pinyin: "xiàoyuán", meaning: "Khuôn viên trường", wordType: "Danh từ", example: { hanzi: "家月，对不起，我昨天忘了还你校园卡了。", pinyin: "Jiāyuè, duìbuqǐ, wǒ zuótiān wàngle huán nǐ xiàoyuán kǎ le.", meaning: "Gia Nguyệt, xin lỗi, hôm qua tôi quên trả lại thẻ khuôn viên trường cho bạn." } },
@@ -9485,7 +9485,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-40", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["遍", "难", "差", "讲", "清楚"], "items": [{"prompt": "我再说一___，请大家认真听。", "answer": "遍"}, {"prompt": "你的汉字写得太___了，要多练习才能写得好。", "answer": "差"}, {"prompt": "老师上课说什么我没听___，你再告诉我一下吧。", "answer": "清楚"}, {"prompt": "李老师，可以给我___一下我做错的这几个题吗？", "answer": "讲"}, {"prompt": "今天这几个题有点儿___，好多同学都没听明白。", "answer": "难"}]}, {"bank": ["认真", "复习", "提高", "要求", "当然"], "items": [{"prompt": "A：今天的作业你写完了吗？B：没有，老师___写500个字，我只写了一半。", "answer": "要求"}, {"prompt": "A：你有什么___外语水平的好方法吗？B：没什么特别的，多听多说就行了。", "answer": "提高"}, {"prompt": "A：你还在想考试的事吗？一次考试没考好没关系。B：好，我不想了。我以后会好好___的。", "answer": "复习"}, {"prompt": "A：我高中的时候没遇到好老师，所以成绩越来越差。B：老师___重要，但是自己的努力也很重要。", "answer": "当然"}, {"prompt": "A：这次你数学考试考了100分，你是怎么做到的？B：做完以后，我又___地检查了一遍。", "answer": "认真"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["遍", "难", "差", "讲", "清楚"], "items": [{"prompt": "我再说一___，请大家认真听。", "answer": "遍"}, {"prompt": "你的汉字写得太___了，要多练习才能写得好。", "answer": "差"}, {"prompt": "老师上课说什么我没听___，你再告诉我一下吧。", "answer": "清楚"}, {"prompt": "李老师，可以给我___一下我做错的这几个题吗？", "answer": "讲"}, {"prompt": "今天这几个题有点儿___，好多同学都没听明白。", "answer": "难"}]}, {"bank": ["认真", "复习", "提高", "要求", "当然"], "items": [{"prompt": "A：今天的作业你写完了吗？B：没有，老师___写500个字，我只写了一半。", "answer": "要求"}, {"prompt": "A：你有什么___外语水平的好方法吗？B：没什么特别的，多听多说就行了。", "answer": "提高"}, {"prompt": "A：你还在想考试的事吗？一次考试没考好没关系。B：好，我不想了。我以后会好好___的。", "answer": "复习"}, {"prompt": "A：我高中的时候没遇到好老师，所以成绩越来越差。B：老师___重要，但是自己的努力也很重要。", "answer": "当然"}, {"prompt": "A：这次你数学考试考了100分，你是怎么做到的？B：做完以后，我又___地检查了一遍。", "answer": "认真"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "你明天再把书还给我", pinyin: "Nǐ míngtiān zài bǎ shū huán gěi wǒ", meaning: "Ngày mai bạn hãy trả sách lại cho tôi",
     vocabulary: [
       { hanzi: "数学", pinyin: "shùxué", meaning: "Toán học", wordType: "Danh từ", example: { hanzi: "你的数学越来越好，能不能介绍一下学习方法？", pinyin: "Nǐ de shùxué yuè lái yuè hǎo, néng bu néng jièshào yíxià xuéxí fāngfǎ?", meaning: "Toán của bạn ngày càng giỏi, bạn có thể giới thiệu phương pháp học không?" } },
@@ -9561,7 +9561,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-41", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["发", "怕", "为", "或者", "机会"], "items": [{"prompt": "这是同事们___你准备的礼物。", "answer": "为"}, {"prompt": "下班以前我得把这封邮件___给大家。", "answer": "发"}, {"prompt": "今天好几个人请假了，我们明天___后天再开会吧。", "answer": "或者"}, {"prompt": "每次开会我都不说话，因为我总是___说错话。", "answer": "怕"}, {"prompt": "这次去上海开会是个好___，你可以多认识一些新同事。", "answer": "机会"}]}, {"bank": ["办法", "解决", "只能", "离开", "愿意"], "items": [{"prompt": "A：你为什么要___现在的公司？B：对我来说，多跟家人在一起比工作更重要。", "answer": "离开"}, {"prompt": "A：工作中遇到不能___的问题，你怎么办？B：请同事帮忙，多跟他们学习。", "answer": "解决"}, {"prompt": "A：每次遇到问题，他都会帮我们一起想___。B：所以大家都喜欢和他做朋友。", "answer": "办法"}, {"prompt": "A：你___去别的城市工作吗？B：经理已经问过我了，我还没想好呢。", "answer": "愿意"}, {"prompt": "A：这么多工作今天做不完了，___明天再说。B：行，明天我和你一起把这些做完。", "answer": "只能"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["发", "怕", "为", "或者", "机会"], "items": [{"prompt": "这是同事们___你准备的礼物。", "answer": "为"}, {"prompt": "下班以前我得把这封邮件___给大家。", "answer": "发"}, {"prompt": "今天好几个人请假了，我们明天___后天再开会吧。", "answer": "或者"}, {"prompt": "每次开会我都不说话，因为我总是___说错话。", "answer": "怕"}, {"prompt": "这次去上海开会是个好___，你可以多认识一些新同事。", "answer": "机会"}]}, {"bank": ["办法", "解决", "只能", "离开", "愿意"], "items": [{"prompt": "A：你为什么要___现在的公司？B：对我来说，多跟家人在一起比工作更重要。", "answer": "离开"}, {"prompt": "A：工作中遇到不能___的问题，你怎么办？B：请同事帮忙，多跟他们学习。", "answer": "解决"}, {"prompt": "A：每次遇到问题，他都会帮我们一起想___。B：所以大家都喜欢和他做朋友。", "answer": "办法"}, {"prompt": "A：你___去别的城市工作吗？B：经理已经问过我了，我还没想好呢。", "answer": "愿意"}, {"prompt": "A：这么多工作今天做不完了，___明天再说。B：行，明天我和你一起把这些做完。", "answer": "只能"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "看来我没办法解决这个问题", pinyin: "Kànlái wǒ méi bànfǎ jiějué zhège wèntí", meaning: "Xem ra tôi không có cách nào giải quyết vấn đề này",
     vocabulary: [
       { hanzi: "会议", pinyin: "huìyì", meaning: "Cuộc họp, hội nghị", wordType: "Danh từ", example: { hanzi: "会议下午几点开始？", pinyin: "Huìyì xiàwǔ jǐ diǎn kāishǐ?", meaning: "Cuộc họp chiều nay mấy giờ bắt đầu?" } },
@@ -9637,7 +9637,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-42", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["刮", "季节", "把", "借", "地方"], "items": [{"prompt": "突然___起风来了，可能会下雨。", "answer": "刮"}, {"prompt": "我在昨天拍照的___等你，别走错了。", "answer": "地方"}, {"prompt": "这___雨伞不大不小，可以放在书包里。", "answer": "把"}, {"prompt": "我把这件雨衣___给你吧，我开车不需要穿。", "answer": "借"}, {"prompt": "这个___北京不冷不热，很多人都在这个时候来旅游。", "answer": "季节"}]}, {"bank": ["刚才", "关注", "变成", "常常", "变"], "items": [{"prompt": "A：这里的冬天___下雪吗？B：不是，每年就二月雪最多。", "answer": "常常"}, {"prompt": "A：___下大雨了，天气凉快了很多。B：没错，每天都能这么凉快就好了。", "answer": "刚才"}, {"prompt": "A：这几天天气不好，我怕下午的飞机会晚点。B：放心吧，我一直在___天气，下午是晴天。", "answer": "关注"}, {"prompt": "A：这里以前是一片草地，现在___了学校和医院。B：是啊，变化真大，都不认识了。", "answer": "变成"}, {"prompt": "A：下了一晚上的雪，外面全都___白了。B：是的，太漂亮了！我是第一次见到这么大的雪，咱们出去看看吧。", "answer": "变"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["刮", "季节", "把", "借", "地方"], "items": [{"prompt": "突然___起风来了，可能会下雨。", "answer": "刮"}, {"prompt": "我在昨天拍照的___等你，别走错了。", "answer": "地方"}, {"prompt": "这___雨伞不大不小，可以放在书包里。", "answer": "把"}, {"prompt": "我把这件雨衣___给你吧，我开车不需要穿。", "answer": "借"}, {"prompt": "这个___北京不冷不热，很多人都在这个时候来旅游。", "answer": "季节"}]}, {"bank": ["刚才", "关注", "变成", "常常", "变"], "items": [{"prompt": "A：这里的冬天___下雪吗？B：不是，每年就二月雪最多。", "answer": "常常"}, {"prompt": "A：___下大雨了，天气凉快了很多。B：没错，每天都能这么凉快就好了。", "answer": "刚才"}, {"prompt": "A：这几天天气不好，我怕下午的飞机会晚点。B：放心吧，我一直在___天气，下午是晴天。", "answer": "关注"}, {"prompt": "A：这里以前是一片草地，现在___了学校和医院。B：是啊，变化真大，都不认识了。", "answer": "变成"}, {"prompt": "A：下了一晚上的雪，外面全都___白了。B：是的，太漂亮了！我是第一次见到这么大的雪，咱们出去看看吧。", "answer": "变"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "这个季节天气变化很快", pinyin: "Zhège jìjié tiānqì biànhuà hěn kuài", meaning: "Mùa này thời tiết thay đổi rất nhanh",
     vocabulary: [
       { hanzi: "街", pinyin: "jiē", meaning: "Phố", wordType: "Danh từ", example: { hanzi: "王老师，您看，这条街上的树都开花了。", pinyin: "Wáng lǎoshī, nín kàn, zhè tiáo jiē shàng de shù dōu kāihuā le.", meaning: "Thầy Vương ơi, thầy xem, cây trên con phố này đều nở hoa rồi." } },
@@ -9711,7 +9711,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-43", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["加", "放", "请客", "做客", "聊天儿"], "items": [{"prompt": "我们一边吃饭一边___，时间过得很快。", "answer": "聊天儿"}, {"prompt": "咱们只点了一个鸡肉，再___几个肉菜吧。", "answer": "加"}, {"prompt": "谢谢小王今天___，下周你们都去我家，我给大家做饭吃。", "answer": "请客"}, {"prompt": "在南方的一些城市，你去别人家___的时候会先喝茶。", "answer": "做客"}, {"prompt": "桌子上___着一些饮料，你们想喝什么就拿，跟在自己家一样。", "answer": "放"}]}, {"bank": ["不同", "直到", "来自", "感到", "放心"], "items": [{"prompt": "A：昨天的生日晚会玩得怎么样？B：玩得太开心了，___十一点我才回家。", "answer": "直到"}, {"prompt": "A：你去外国人家做客，会不会___不太习惯？B：第一次是有一点儿，但是慢慢就习惯了。", "answer": "感到"}, {"prompt": "A：你的同学们是哪国人？B：他们都___不同的地方，大家的文化也不一样。", "answer": "来自"}, {"prompt": "A：现在你可以___了，吃的喝的都准备好了。B：我怕他们吃不习惯我做的菜。", "answer": "放心"}, {"prompt": "A：你们国家过生日和这里过生日有什么___？B：差不多。我们也是先吃饭，再一起吃蛋糕。", "answer": "不同"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["加", "放", "请客", "做客", "聊天儿"], "items": [{"prompt": "我们一边吃饭一边___，时间过得很快。", "answer": "聊天儿"}, {"prompt": "咱们只点了一个鸡肉，再___几个肉菜吧。", "answer": "加"}, {"prompt": "谢谢小王今天___，下周你们都去我家，我给大家做饭吃。", "answer": "请客"}, {"prompt": "在南方的一些城市，你去别人家___的时候会先喝茶。", "answer": "做客"}, {"prompt": "桌子上___着一些饮料，你们想喝什么就拿，跟在自己家一样。", "answer": "放"}]}, {"bank": ["不同", "直到", "来自", "感到", "放心"], "items": [{"prompt": "A：昨天的生日晚会玩得怎么样？B：玩得太开心了，___十一点我才回家。", "answer": "直到"}, {"prompt": "A：你去外国人家做客，会不会___不太习惯？B：第一次是有一点儿，但是慢慢就习惯了。", "answer": "感到"}, {"prompt": "A：你的同学们是哪国人？B：他们都___不同的地方，大家的文化也不一样。", "answer": "来自"}, {"prompt": "A：现在你可以___了，吃的喝的都准备好了。B：我怕他们吃不习惯我做的菜。", "answer": "放心"}, {"prompt": "A：你们国家过生日和这里过生日有什么___？B：差不多。我们也是先吃饭，再一起吃蛋糕。", "answer": "不同"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我的新邻居来自英国", pinyin: "Wǒ de xīn línjū láizì Yīngguó", meaning: "Hàng xóm mới của tôi đến từ nước Anh",
     vocabulary: [
       { hanzi: "请客", pinyin: "qǐngkè", meaning: "Mời khách, đãi khách", wordType: "Động từ", example: { hanzi: "今天我请客，你们想吃什么就点什么！", pinyin: "Jīntiān wǒ qǐngkè, nǐmen xiǎng chī shénme jiù diǎn shénme!", meaning: "Hôm nay tôi mời, các bạn muốn ăn gì thì gọi món đó!" } },
@@ -9787,7 +9787,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-44", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["故事", "最好", "有些", "一块儿", "表演"], "items": [{"prompt": "你今天看起来___难过，遇到什么问题了？", "answer": "有些"}, {"prompt": "图书馆的这本书我已经看完了，我很喜欢这个___。", "answer": "故事"}, {"prompt": "她读不懂中文报纸，你___把那个新闻给她讲一下。", "answer": "最好"}, {"prompt": "网站上已经可以看到晚会的视频了，咱们___看吧。", "answer": "一块儿"}, {"prompt": "她学过___，可以跟你们一起准备这个节目。", "answer": "表演"}]}, {"bank": ["最后", "面前", "相信", "留学生", "忘记"], "items": [{"prompt": "A：你要___自己，这次一定能比上次更好！B：谢谢你，我会努力的。", "answer": "相信"}, {"prompt": "A：我刚才想说什么？突然就___了。B：你再想想，我们刚才在说运动会的事情。", "answer": "忘记"}, {"prompt": "A：你们学校的___多吗？B：越来越多，今年有三千多人。", "answer": "留学生"}, {"prompt": "A：你唱歌唱得那么好听，为什么没参加昨天的晚会？B：我不喜欢在很多人___表演。", "answer": "面前"}, {"prompt": "A：这次考试你考得怎么样？B：我已经很努力了，希望___的成绩能好一些！", "answer": "最后"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["故事", "最好", "有些", "一块儿", "表演"], "items": [{"prompt": "你今天看起来___难过，遇到什么问题了？", "answer": "有些"}, {"prompt": "图书馆的这本书我已经看完了，我很喜欢这个___。", "answer": "故事"}, {"prompt": "她读不懂中文报纸，你___把那个新闻给她讲一下。", "answer": "最好"}, {"prompt": "网站上已经可以看到晚会的视频了，咱们___看吧。", "answer": "一块儿"}, {"prompt": "她学过___，可以跟你们一起准备这个节目。", "answer": "表演"}]}, {"bank": ["最后", "面前", "相信", "留学生", "忘记"], "items": [{"prompt": "A：你要___自己，这次一定能比上次更好！B：谢谢你，我会努力的。", "answer": "相信"}, {"prompt": "A：我刚才想说什么？突然就___了。B：你再想想，我们刚才在说运动会的事情。", "answer": "忘记"}, {"prompt": "A：你们学校的___多吗？B：越来越多，今年有三千多人。", "answer": "留学生"}, {"prompt": "A：你唱歌唱得那么好听，为什么没参加昨天的晚会？B：我不喜欢在很多人___表演。", "answer": "面前"}, {"prompt": "A：这次考试你考得怎么样？B：我已经很努力了，希望___的成绩能好一些！", "answer": "最后"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "这本书被别人借走了", pinyin: "Zhè běn shū bèi biérén jièzǒu le", meaning: "Cuốn sách này bị người khác mượn mất rồi",
     vocabulary: [
       { hanzi: "词典", pinyin: "cídiǎn", meaning: "Từ điển", wordType: "Danh từ", example: { hanzi: "我借的这本词典最好今天还，但是我没时间去。", pinyin: "Wǒ jiè de zhè běn cídiǎn zuìhǎo jīntiān huán, dànshì wǒ méi shíjiān qù.", meaning: "Cuốn từ điển tôi mượn tốt nhất là nên trả hôm nay, nhưng tôi không có thời gian đi." } },
@@ -9861,7 +9861,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-45", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["段", "养", "外地", "遇见", "有名"], "items": [{"prompt": "我爷爷喜欢___花，他家有很多漂亮的花。", "answer": "养"}, {"prompt": "昨天我在公园___了一位老朋友，聊了很久。", "answer": "遇见"}, {"prompt": "他是从___来的，还不太习惯这里的天气。", "answer": "外地"}, {"prompt": "这家饭馆在我们城市很___，很多人都来这里吃饭。", "answer": "有名"}, {"prompt": "这本书我已经看了一___时间了，越看越觉得有意思。", "answer": "段"}]}, {"bank": ["了解", "经过", "可是", "根据", "平时"], "items": [{"prompt": "A：这家饭馆很有名，咱们去尝尝吧！B：今天是假期，人一定很多，___人少的时候再去吧。", "answer": "平时"}, {"prompt": "A：公园有两个门，咱们进哪个门？B：进东门吧，进去以后会___一条很漂亮的小河。", "answer": "经过"}, {"prompt": "A：我早就想去南京旅游了，___一直没时间去。B：有机会咱们一起去吧。", "answer": "可是"}, {"prompt": "A：我选什么课好呢？B：你可以___自己的兴趣来选择。", "answer": "根据"}, {"prompt": "A：你对这座城市___多少？B：我只知道这里有很多好吃的，别的还不太清楚。", "answer": "了解"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["段", "养", "外地", "遇见", "有名"], "items": [{"prompt": "我爷爷喜欢___花，他家有很多漂亮的花。", "answer": "养"}, {"prompt": "昨天我在公园___了一位老朋友，聊了很久。", "answer": "遇见"}, {"prompt": "他是从___来的，还不太习惯这里的天气。", "answer": "外地"}, {"prompt": "这家饭馆在我们城市很___，很多人都来这里吃饭。", "answer": "有名"}, {"prompt": "这本书我已经看了一___时间了，越看越觉得有意思。", "answer": "段"}]}, {"bank": ["了解", "经过", "可是", "根据", "平时"], "items": [{"prompt": "A：这家饭馆很有名，咱们去尝尝吧！B：今天是假期，人一定很多，___人少的时候再去吧。", "answer": "平时"}, {"prompt": "A：公园有两个门，咱们进哪个门？B：进东门吧，进去以后会___一条很漂亮的小河。", "answer": "经过"}, {"prompt": "A：我早就想去南京旅游了，___一直没时间去。B：有机会咱们一起去吧。", "answer": "可是"}, {"prompt": "A：我选什么课好呢？B：你可以___自己的兴趣来选择。", "answer": "根据"}, {"prompt": "A：你对这座城市___多少？B：我只知道这里有很多好吃的，别的还不太清楚。", "answer": "了解"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我是半个南京人", pinyin: "Wǒ shì bàn gè Nánjīng rén", meaning: "Tôi coi như là nửa người Nam Kinh",
     vocabulary: [
       { hanzi: "蓝", pinyin: "lán", meaning: "Màu xanh (da trời)", wordType: "Tính từ", example: { hanzi: "您搬到蓝天小区一段时间了，觉得怎么样？", pinyin: "Nín bāndào Lántiān xiǎoqū yí duàn shíjiān le, juéde zěnmeyàng?", meaning: "Ông/bà chuyển đến khu Lam Thiên được một thời gian rồi, thấy thế nào?" } },
@@ -9933,7 +9933,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-46", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["照顾", "张", "饱", "奇怪", "脏"], "items": [{"prompt": "小猫看到妈妈后马上___开嘴要吃的。", "answer": "张"}, {"prompt": "这个电影介绍了怎么___离开爸爸妈妈的小动物。", "answer": "照顾"}, {"prompt": "这只大熊猫没吃___，你看它还在找吃的东西呢。", "answer": "饱"}, {"prompt": "这个饭馆的桌子这么___，碗也不干净，咱们换一家吧。", "answer": "脏"}, {"prompt": "这只鸟好像飞不起来，而且吃东西的时候看起来也很___。", "answer": "奇怪"}]}, {"bank": ["认得", "关于", "其实", "一般", "半天"], "items": [{"prompt": "A：小王，你在找什么？B：我的手机不见了，我找了___也没找到。", "answer": "半天"}, {"prompt": "A：你想借哪本书？B：我忘了名字，是一本___动物的书。", "answer": "关于"}, {"prompt": "A：这只小猫在小区里好几天了，是不是找不到家了？B：我___它，这是我邻居家的小猫。", "answer": "认得"}, {"prompt": "A：你周末带孩子做什么？B：如果天气好，我___带孩子去公园里玩。", "answer": "一般"}, {"prompt": "A：你怎么又去动物园了？B：___我也不想去，但是妈妈希望我和弟弟一起去。", "answer": "其实"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["照顾", "张", "饱", "奇怪", "脏"], "items": [{"prompt": "小猫看到妈妈后马上___开嘴要吃的。", "answer": "张"}, {"prompt": "这个电影介绍了怎么___离开爸爸妈妈的小动物。", "answer": "照顾"}, {"prompt": "这只大熊猫没吃___，你看它还在找吃的东西呢。", "answer": "饱"}, {"prompt": "这个饭馆的桌子这么___，碗也不干净，咱们换一家吧。", "answer": "脏"}, {"prompt": "这只鸟好像飞不起来，而且吃东西的时候看起来也很___。", "answer": "奇怪"}]}, {"bank": ["认得", "关于", "其实", "一般", "半天"], "items": [{"prompt": "A：小王，你在找什么？B：我的手机不见了，我找了___也没找到。", "answer": "半天"}, {"prompt": "A：你想借哪本书？B：我忘了名字，是一本___动物的书。", "answer": "关于"}, {"prompt": "A：这只小猫在小区里好几天了，是不是找不到家了？B：我___它，这是我邻居家的小猫。", "answer": "认得"}, {"prompt": "A：你周末带孩子做什么？B：如果天气好，我___带孩子去公园里玩。", "answer": "一般"}, {"prompt": "A：你怎么又去动物园了？B：___我也不想去，但是妈妈希望我和弟弟一起去。", "answer": "其实"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我听说有的熊猫出国了", pinyin: "Wǒ tīngshuō yǒude xióngmāo chūguó le", meaning: "Tôi nghe nói có mấy con gấu trúc đã ra nước ngoài",
     vocabulary: [
       { hanzi: "脏", pinyin: "zāng", meaning: "Bẩn, dơ", wordType: "Tính từ", example: { hanzi: "它又脏又小，我们把它洗干净了。", pinyin: "Tā yòu zāng yòu xiǎo, wǒmen bǎ tā xǐ gānjìng le.", meaning: "Nó vừa bẩn vừa nhỏ, chúng tôi đã tắm rửa sạch sẽ cho nó rồi." } },
@@ -10005,7 +10005,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-47", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["常见", "方向", "回答", "难题", "同意"], "items": [{"prompt": "在生活中，因为不认真做错事情是很___的。", "answer": "常见"}, {"prompt": "我认为大学的时候就应该选好以后工作的___。", "answer": "方向"}, {"prompt": "他说的话我一句也不___，你也不要受他的影响。", "answer": "同意"}, {"prompt": "这个问题我还没想清楚怎么___他。", "answer": "回答"}, {"prompt": "对我来说，怎么让父母同意我的选择是一个___。", "answer": "难题"}]}, {"bank": ["到处", "比如", "继续", "有关", "认为"], "items": [{"prompt": "A：已经下课了，同学们都走了吗？B：没有，还有几个人在___问李老师问题。", "answer": "继续"}, {"prompt": "A：你为什么___找我？有什么急事？B：我要告诉你一件很重要的事。", "answer": "到处"}, {"prompt": "A：你觉得中文难学吗？B：我___汉字有点儿难，但是也非常有意思。", "answer": "认为"}, {"prompt": "A：今天下午的会议跟留学生___吗？B：没有，留学生都不用参加。", "answer": "有关"}, {"prompt": "A：中国的很多城市历史都很长，___北京、南京、西安。B：谢谢，我打算夏天先去西安看一看。", "answer": "比如"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["常见", "方向", "回答", "难题", "同意"], "items": [{"prompt": "在生活中，因为不认真做错事情是很___的。", "answer": "常见"}, {"prompt": "我认为大学的时候就应该选好以后工作的___。", "answer": "方向"}, {"prompt": "他说的话我一句也不___，你也不要受他的影响。", "answer": "同意"}, {"prompt": "这个问题我还没想清楚怎么___他。", "answer": "回答"}, {"prompt": "对我来说，怎么让父母同意我的选择是一个___。", "answer": "难题"}]}, {"bank": ["到处", "比如", "继续", "有关", "认为"], "items": [{"prompt": "A：已经下课了，同学们都走了吗？B：没有，还有几个人在___问李老师问题。", "answer": "继续"}, {"prompt": "A：你为什么___找我？有什么急事？B：我要告诉你一件很重要的事。", "answer": "到处"}, {"prompt": "A：你觉得中文难学吗？B：我___汉字有点儿难，但是也非常有意思。", "answer": "认为"}, {"prompt": "A：今天下午的会议跟留学生___吗？B：没有，留学生都不用参加。", "answer": "有关"}, {"prompt": "A：中国的很多城市历史都很长，___北京、南京、西安。B：谢谢，我打算夏天先去西安看一看。", "answer": "比如"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我要多向认真的人学习", pinyin: "Wǒ yào duō xiàng rènzhēn de rén xuéxí", meaning: "Tôi phải học hỏi nhiều hơn từ những người nghiêm túc",
     vocabulary: [
       { hanzi: "向", pinyin: "xiàng", meaning: "Về phía, hướng về", wordType: "Giới từ", example: { hanzi: "别再向前走了，李老师的办公室已经到了。", pinyin: "Bié zài xiàng qián zǒu le, Lǐ lǎoshī de bàngōngshì yǐjīng dào le.", meaning: "Đừng đi về phía trước nữa, văn phòng thầy Lý đến rồi." } },
@@ -10079,7 +10079,7 @@ const LESSONS = [
   },
   {
     id: "hsk3-48", program: "hsk3", level: "HSK 3",
-    wordBank: {"sets": [{"bank": ["刚", "总", "起", "收", "见面"], "items": [{"prompt": "我___来中国几个月，还没在中国过过春节。", "answer": "刚"}, {"prompt": "这是我给您和叔叔准备的小礼物，请您___下。", "answer": "收"}, {"prompt": "过年的时候，小孩子___会收到大人给的红包。", "answer": "总"}, {"prompt": "从上个月___，妈妈就开始为春节做准备了。", "answer": "起"}, {"prompt": "春节的时候只要有时间，就一定要跟小时候的朋友们___。", "answer": "见面"}]}, {"bank": ["完成", "坚持", "发生", "怎样", "大概"], "items": [{"prompt": "A：你想___过今年的春节？B：我好几年没回爸爸妈妈家了，今年打算回去过节。", "answer": "怎样"}, {"prompt": "A：这一年___了很多开心的事。B：希望明年更好，祝我们大家都新年快乐！", "answer": "发生"}, {"prompt": "A：你今年怎么过春节？B：我回家住___三四天，然后出去旅游。", "answer": "大概"}, {"prompt": "A：快12点了，你是不是想睡觉了？B：我一定要___到12点，新的一年开始以后再睡觉。", "answer": "坚持"}, {"prompt": "A：新年就要到了，可是今年的目标还没___呢。B：没关系，明年我们一起努力吧。", "answer": "完成"}]}]}, // 选词填空 (综合练习) — tab ⑦ Chọn từ điền trống
+    wordBank: {"sets": [{"bank": ["刚", "总", "起", "收", "见面"], "items": [{"prompt": "我___来中国几个月，还没在中国过过春节。", "answer": "刚"}, {"prompt": "这是我给您和叔叔准备的小礼物，请您___下。", "answer": "收"}, {"prompt": "过年的时候，小孩子___会收到大人给的红包。", "answer": "总"}, {"prompt": "从上个月___，妈妈就开始为春节做准备了。", "answer": "起"}, {"prompt": "春节的时候只要有时间，就一定要跟小时候的朋友们___。", "answer": "见面"}]}, {"bank": ["完成", "坚持", "发生", "怎样", "大概"], "items": [{"prompt": "A：你想___过今年的春节？B：我好几年没回爸爸妈妈家了，今年打算回去过节。", "answer": "怎样"}, {"prompt": "A：这一年___了很多开心的事。B：希望明年更好，祝我们大家都新年快乐！", "answer": "发生"}, {"prompt": "A：你今年怎么过春节？B：我回家住___三四天，然后出去旅游。", "answer": "大概"}, {"prompt": "A：快12点了，你是不是想睡觉了？B：我一定要___到12点，新的一年开始以后再睡觉。", "answer": "坚持"}, {"prompt": "A：新年就要到了，可是今年的目标还没___呢。B：没关系，明年我们一起努力吧。", "answer": "完成"}]}]}, // 选词填空 (综合练习) — tab ⑥ Chọn từ điền trống
     title: "我学会了包饺子", pinyin: "Wǒ xuéhuì le bāo jiǎozi", meaning: "Tôi đã học được cách gói sủi cảo",
     vocabulary: [
       { hanzi: "怎样", pinyin: "zěnyàng", meaning: "Như thế nào", wordType: "Đại từ", example: { hanzi: "你们怎样过节？", pinyin: "Nǐmen zěnyàng guòjié?", meaning: "Các bạn đón lễ tết như thế nào?" } },
@@ -16032,8 +16032,8 @@ const LESSONS = [
     { part: "listen", label: "Điểm Nghe hiểu" },
     { part: "video", label: "Điểm Video" },
     { part: "readlisten", label: "Điểm Nghe đọc" },
-    { part: "mockexam", label: "Điểm Bài tập tổng hợp" },
     { part: "wordbank", label: "Điểm Chọn từ điền trống" },
+    { part: "mockexam", label: "Điểm Bài tập tổng hợp" },
   ];
   function dashPartScoreCell(s, part) {
     var r = part === "quiz" ? s : s && s[part];
