@@ -15664,6 +15664,43 @@ const LESSONS = [
   // 1 document/học sinh, id = email viết thường, mỗi field còn lại là
   // lessonId -> bản ghi điểm), rồi "làm phẳng" thành danh sách các dòng
   // (email, lessonId, bản ghi điểm) để vừa vẽ bảng vừa xuất CSV dùng chung.
+  // Điểm Luyện nghe từng được lưu theo id cũ "__listen__<thư mục><n>__<bài nhỏ>" (bản đầu tiên của tính năng).
+  // Gộp các bản ghi đó vào id mới "__listen__<thư mục><n>" (1 dòng / 1 bài lớn) để Dashboard vẫn thấy.
+  function mergeLegacyListenRows(rows) {
+    var out = [], byKey = {};
+    function totalOf(folderNum) {
+      try {
+        var m = /^([a-z]+)(\d+)$/.exec(folderNum); var f = m && LISTENING_FOLDERS[m[1]]; var l = f && f.lessons[Number(m[2])];
+        return l && l.exercises ? l.exercises.length : 1;
+      } catch (e) { return 1; }
+    }
+    rows.forEach(function (row) {
+      var m = /^__listen__([a-z]+\d+)__([A-Za-z0-9]+)$/.exec(row.lessonId);
+      var newId = m ? "__listen__" + m[1] : (/^__listen__[a-z]+\d+$/.test(row.lessonId) ? row.lessonId : null);
+      if (!newId) { out.push(row); return; }
+      var k = row.email + "|" + newId;
+      if (!byKey[k]) { byKey[k] = { email: row.email, lessonId: newId, record: { parts: {} }, folderNum: newId.slice(10) }; out.push(byKey[k]); }
+      var target = byKey[k].record;
+      if (m) {
+        var me = row.record && row.record.mockexam;
+        if (me && !target.parts[m[2]]) target.parts[m[2]] = { bestScore: me.bestScore, lastScore: me.lastScore, attempts: me.attempts || 1, lastAttemptAt: me.lastAttemptAt };
+        if (me && me.lastAttemptAt && (!target._lastAt || me.lastAttemptAt > target._lastAt)) target._lastAt = me.lastAttemptAt;
+      } else {
+        var r = row.record || {};
+        Object.keys(r.parts || {}).forEach(function (pk) { target.parts[pk] = r.parts[pk]; });
+        var at = r.mockexam && r.mockexam.lastAttemptAt;
+        if (at && (!target._lastAt || at > target._lastAt)) target._lastAt = at;
+      }
+    });
+    Object.keys(byKey).forEach(function (k) {
+      var g = byKey[k], rec = g.record, keys = Object.keys(rec.parts);
+      if (!keys.length) return;
+      var avg = function (f) { return Math.round(keys.reduce(function (t, x) { return t + (Number(rec.parts[x][f]) || 0); }, 0) / keys.length); };
+      rec.mockexam = { bestScore: avg("bestScore"), lastScore: avg("lastScore"), attempts: keys.reduce(function (t, x) { return t + (rec.parts[x].attempts || 0); }, 0), lastAttemptAt: rec._lastAt || null, listenDone: keys.length, listenTotal: totalOf(g.folderNum) };
+      delete rec._lastAt;
+    });
+    return out;
+  }
   function fetchAllScoreRows() {
     return window.__fbDb.collection(SCORES_COLLECTION).get().then(function (snap) {
       var rows = [];
@@ -15677,6 +15714,7 @@ const LESSONS = [
           rows.push({ email: email, lessonId: key, record: data[key] || {} });
         });
       });
+      rows = mergeLegacyListenRows(rows);
       // eslint-disable-next-line no-console
       console.log("[cohunglang] Đã tải collection 'scores': " + docCount + " học sinh, " + rows.length + " lượt điểm bài học.");
       rows.sort(function (a, b) {
@@ -15955,6 +15993,7 @@ const LESSONS = [
   // Bài có thuộc học phần mà lớp được cấp quyền không (quyền học bài, quyền test, hoặc quyền cũ trọn bộ).
   function lessonAllowedForClass(l, set) {
     if (!set) return true;
+    if (l && (l.isListen || String(l.id || "").indexOf("__listen__") === 0)) return true; // Luyện nghe: luôn hiện đủ 40 bài khi lọc theo lớp
     var k = dashboardLevelKeyOf(l);
     if (!k) return true;
     var legacy = k.indexOf("yct") === 0 ? "yct" : "hsk";
