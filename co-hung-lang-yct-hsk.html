@@ -16978,6 +16978,27 @@ const LESSONS = [
     { part: "wordbank", label: "Điểm Chọn từ điền trống" },
     { part: "mockexam", label: "Điểm Bài tập tổng hợp" },
   ];
+  // Luyện nghe: điểm TỪNG BÀI NHỎ của 1 bài lớn (Ngữ âm n / Nghe sc n), lấy từ record.parts[<key bài nhỏ>].
+  function dashListenPartsCell(s, lessonId) {
+    var exs = [];
+    try {
+      var m = /^__listen__([a-z]+)(\d+)$/.exec(String(lessonId || ""));
+      var f = m && LISTENING_FOLDERS[m[1]]; var l = f && f.lessons[Number(m[2])];
+      exs = (l && l.exercises) || [];
+    } catch (e) { exs = []; }
+    var parts = (s && s.parts) || {};
+    if (!exs.length) exs = Object.keys(parts).map(function (k) { return { key: k, short: k }; });
+    if (!exs.length) return "—";
+    return '<div class="flex flex-wrap gap-1">' + exs.map(function (ex) {
+      var lbl = String(ex.short || ex.key).split(" · ")[0];
+      var p = parts[ex.key];
+      var ok = p && typeof p.bestScore === "number" && isFinite(p.bestScore);
+      var txt = ok ? p.bestScore + (typeof p.lastScore === "number" && isFinite(p.lastScore) && p.lastScore !== p.bestScore ? " (gần nhất " + p.lastScore + ")" : "") + (p.attempts ? " · " + p.attempts + " lần" : "") : "chưa làm";
+      var bg = ok ? (p.bestScore >= 80 ? "var(--jade)" : p.bestScore >= 50 ? "var(--accent)" : "#b4533c") : "var(--surface-alt)";
+      var col = ok ? "#fff" : "var(--ink-faint)";
+      return '<span class="text-xs font-semibold px-2 py-0.5 rounded-md" title="' + escapeHtml(String(ex.short || ex.key)) + '" style="background:' + bg + "; color:" + col + '; white-space:nowrap;">' + escapeHtml(lbl) + ": " + escapeHtml(txt) + "</span>";
+    }).join("") + "</div>";
+  }
   function dashPartScoreCell(s, part) {
     var r = part === "quiz" ? s : s && s[part];
     if (!r || typeof r.bestScore !== "number" || !isFinite(r.bestScore)) return "—"; // bỏ qua dữ liệu hỏng (vd NaN)
@@ -17038,7 +17059,7 @@ const LESSONS = [
     }
     var scoreLabel = kind === "tests" ? "Điểm Test học phần" : kind === "listens" ? "Điểm Luyện nghe" : "Điểm Đề thi mô phỏng";
     var headCells = ["Học sinh"]
-      .concat(kind === "lessons" ? partCols.map(function (c) { return c.label; }).concat(["% Hoàn thành"]) : [scoreLabel])
+      .concat(kind === "lessons" ? partCols.map(function (c) { return c.label; }).concat(["% Hoàn thành"]) : kind === "listens" ? ["Điểm TB cả bài", "Điểm từng bài nhỏ"] : [scoreLabel])
       .concat(["Số lần làm", "Lần gần nhất"]);
     if (headRow) headRow.innerHTML = headCells.map(function (h) { return "<th>" + h + "</th>"; }).join("");
     var colCount = headCells.length;
@@ -17094,6 +17115,8 @@ const LESSONS = [
                 var applicable = (g.applicableParts || []).indexOf(c.part) !== -1;
                 return "<td>" + (applicable ? dashPartScoreCell(s, c.part) : '<span style="color:var(--ink-faint);">·</span>') + "</td>";
               }).join("") + "<td>" + (pct === null ? "—" : pct + "%") + "</td>";
+            } else if (kind === "listens") {
+              cells = "<td>" + dashPartScoreCell(s, "mockexam") + "</td><td>" + dashListenPartsCell(s, g.lessonId) + "</td>";
             } else {
               cells = "<td>" + dashPartScoreCell(s, "mockexam") + "</td>";
             }
