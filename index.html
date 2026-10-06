@@ -17160,6 +17160,7 @@ const LESSONS = [
     body.innerHTML = '<tr><td colspan="8" class="text-center text-sm py-6" style="color:var(--ink-faint);">Đang tải...</td></tr>';
     Promise.all([fetchAllScoreRows(), fetchPermissionsMap()])
       .then(function (results) {
+        applyQuizScoreFixesToRows(results[0], results[1]);
         teacherProgressCache = { rows: results[0], allLessons: allLessons, permMap: results[1] };
         renderTeacherProgressTable();
       })
@@ -17202,6 +17203,7 @@ const LESSONS = [
     var allLessons = getDashboardLessons();
     Promise.all([fetchAllScoreRows(), fetchPermissionsMap()]).then(function (results) {
     var rows = results[0];
+    applyQuizScoreFixesToRows(rows, results[1]);
     var permMap = results[1];
     var groups = groupScoreRowsByLesson(rows, allLessons);
     var header = ["Bài học", "Chương trình", "Tên học sinh", "Lớp", "Email học sinh", "Điểm Điền từ", "Điểm Nghe hiểu", "Điểm Video", "Điểm Nghe đọc", "Điểm Bài tập tổng hợp", "Số lần làm", "Lần gần nhất"];
@@ -18706,6 +18708,22 @@ const LESSONS = [
     // 6/10/2026: hsk3-17 câu 4 (我去 ___ 洗手) đáp án cũ ghi nhầm "洗洗" — em chọn "洗" là đúng.
     { id: "_fix_20261006_hsk3_17", name: "Nguyễn Duy Đức", lessonId: "hsk3-17", from: 90, to: 100 },
   ];
+  // Dashboard giáo viên: áp ngay các khoản cộng điểm trên vào bảng (không cần đợi học sinh đăng nhập lại).
+  function applyQuizScoreFixesToRows(rows, permMap) {
+    try {
+      const norm = (x) => String(x || "").trim().toLowerCase().normalize("NFC");
+      (rows || []).forEach((row) => {
+        const em = norm(row.email), nm = norm(permMap && permMap[row.email] && permMap[row.email].name);
+        QUIZ_SCORE_FIXES.forEach((f) => {
+          if (row.lessonId !== f.lessonId) return;
+          if (!((f.email && norm(f.email) === em) || (f.name && nm && norm(f.name) === nm))) return;
+          const rec = row.record = Object.assign({}, row.record || {});
+          if (rec.bestScore === f.from) rec.bestScore = f.to;
+          if (rec.lastScore === f.from) rec.lastScore = f.to;
+        });
+      });
+    } catch (e) { /* bỏ qua */ }
+  }
   function applyQuizScoreFixes(user) {
     try {
       if (!fbReady() || !user || !user.email) return;
@@ -18765,6 +18783,46 @@ const LESSONS = [
   renderPrograms();
   initAuth();
   hydrateLessonOverridesFromCloud();
+})();
+</script>
+<!-- ===== Hiệu ứng theo mùa: LÁ PHONG RƠI (tự bật tháng 9–11). Học sinh có thể tắt bằng nút 🍁 góc trái dưới. ===== -->
+<style>
+  #season-leaves { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 40; }
+  #season-leaves .leaf { position: absolute; top: -60px; will-change: transform; animation: leaf-fall linear infinite; opacity: .85; }
+  #season-leaves .leaf svg { display: block; width: 100%; height: 100%; animation: leaf-sway 3.5s ease-in-out infinite alternate; }
+  @keyframes leaf-fall { from { transform: translate3d(0, -60px, 0) rotate(0deg); } to { transform: translate3d(var(--drift, 60px), 110vh, 0) rotate(var(--spin, 540deg)); } }
+  @keyframes leaf-sway { from { transform: translateX(-14px) rotate(-12deg); } to { transform: translateX(14px) rotate(12deg); } }
+  #season-toggle { position: fixed; left: 1.1rem; bottom: 4.8rem; z-index: 41; width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--border, #ddd);
+    background: var(--surface, #fff); box-shadow: 0 2px 8px rgba(0,0,0,.12); font-size: 20px; line-height: 36px; text-align: center; cursor: pointer; padding: 0; }
+  #season-toggle.off { filter: grayscale(1); opacity: .6; }
+  @media (prefers-reduced-motion: reduce) { #season-leaves { display: none; } }
+  @media print { #season-leaves, #season-toggle { display: none; } }
+</style>
+<script>
+(function () {
+  try {
+    var m = new Date().getMonth(); // 0 = tháng 1
+    if (m < 8 || m > 10) return;   // chỉ tháng 9, 10, 11
+    var KEY = "cohunglang_leaves_off";
+    var off = false; try { off = localStorage.getItem(KEY) === "1"; } catch (e) {}
+    var COLORS = ["#d94f2b", "#e8762c", "#f2a93b", "#c0392b", "#e0a526", "#b5462a"];
+    var PATH = "M50 0 L56 13 L63 9 L60 30 L71 19 L75 26 L90 22 L86 34 L98 38 L80 52 L84 58 L63 58 L65 66 L53 63 L52 90 L48 90 L47 63 L35 66 L37 58 L16 58 L20 52 L2 38 L14 34 L10 22 L25 26 L29 19 L40 30 L37 9 L44 13 Z";
+    var layer = document.createElement("div"); layer.id = "season-leaves"; layer.setAttribute("aria-hidden", "true");
+    var n = window.innerWidth < 640 ? 7 : 13;
+    for (var i = 0; i < n; i++) {
+      var size = 18 + Math.random() * 22, dur = 11 + Math.random() * 12;
+      var d = document.createElement("div"); d.className = "leaf";
+      d.style.left = (Math.random() * 100) + "vw"; d.style.width = d.style.height = size + "px";
+      d.style.animationDuration = dur + "s"; d.style.animationDelay = (-Math.random() * dur) + "s";
+      d.style.setProperty("--drift", (Math.random() * 160 - 80) + "px"); d.style.setProperty("--spin", (Math.random() < .5 ? -1 : 1) * (300 + Math.random() * 400) + "deg");
+      d.innerHTML = '<svg viewBox="0 0 100 100"><path d="' + PATH + '" fill="' + COLORS[i % COLORS.length] + '"/></svg>';
+      layer.appendChild(d);
+    }
+    var btn = document.createElement("button"); btn.id = "season-toggle"; btn.type = "button"; btn.textContent = "🍁";
+    function apply() { layer.style.display = off ? "none" : ""; btn.classList.toggle("off", off); btn.title = off ? "Bật lá phong rơi" : "Tắt lá phong rơi"; }
+    btn.addEventListener("click", function () { off = !off; try { localStorage.setItem(KEY, off ? "1" : "0"); } catch (e) {} apply(); });
+    document.body.appendChild(layer); document.body.appendChild(btn); apply();
+  } catch (e) { /* bỏ qua */ }
 })();
 </script>
 </html>
