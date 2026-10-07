@@ -892,6 +892,8 @@
 
         <div id="videoq-selector" class="hidden flex flex-wrap gap-2"></div>
 
+        <div id="videoq-vocab" class="hidden"></div>
+
         <div id="video-embed-wrap" class="rounded-2xl overflow-hidden border card-shadow" style="border-color:var(--border);">
           <div class="video-embed-ratio">
             <iframe id="video-quiz-iframe" src="" title="Video bài học"
@@ -3827,6 +3829,28 @@ const LESSONS = [
         { hanzi: "好的，对不起。没关系。", pinyin: "Hǎode, duìbuqǐ. Méi guānxi.", meaning: "Vâng, xin lỗi. Không sao đâu." },
       ],
     },
+    videoQuiz: {
+      youtubeId: "",
+      title: "凯丽老师的课堂 15：我可以看电视吗？(Mrs. Kelly's Class 15: Can I watch TV?)",
+      vocab: [
+        { hanzi: "睡觉", pinyin: "shuìjiào", meaning: "Ngủ, đi ngủ" },
+        { hanzi: "一起", pinyin: "yìqǐ", meaning: "Cùng nhau" },
+        { hanzi: "看书", pinyin: "kàn shū", meaning: "Đọc sách" },
+        { hanzi: "电视", pinyin: "diànshì", meaning: "Ti vi" },
+        { hanzi: "看电视", pinyin: "kàn diànshì", meaning: "Xem ti vi" },
+      ],
+      questions: [
+        { prompt: "Đầu video, bố nói gì với Minwoo?", options: ["敏宇，该睡觉了！", "敏宇，该起床了！", "敏宇，该吃饭了！", "敏宇，该洗澡了！"], answer: "敏宇，该睡觉了！", explanation: "Bố nói \"敏宇，该睡觉了！\" (Minwoo, đến giờ ngủ rồi!)." },
+        { prompt: "Đầu tiên Minwoo xin bố làm gì?", options: ["Chơi (玩儿)", "Xem ti vi (看电视)", "Đọc sách (看书)", "Uống nước (喝水)"], answer: "Chơi (玩儿)", explanation: "Minwoo hỏi \"爸爸，我可以玩儿吗？\" (Bố ơi, con chơi được không?)." },
+        { prompt: "Bố trả lời câu \"我可以玩儿吗？\" thế nào?", options: ["不可以。", "可以。", "好的。", "没关系。"], answer: "不可以。", explanation: "Bố nói \"不可以\" (không được)." },
+        { prompt: "Lần thứ hai, Minwoo hỏi câu gì?", options: ["爸爸，我可以看电视吗？", "爸爸，我可以看书吗？", "爸爸，我可以喝水吗？", "爸爸，我可以坐这儿吗？"], answer: "爸爸，我可以看电视吗？", explanation: "Minwoo hỏi \"爸爸，我可以看电视吗？\" (Bố ơi, con xem ti vi được không?)." },
+        { prompt: "Bố có cho Minwoo xem ti vi không?", options: ["Không cho", "Có cho", "Cho xem một chút", "Bố không trả lời"], answer: "Không cho", explanation: "Bố nói \"不可以。敏宇，该睡觉了！\" (Không được. Minwoo, đến giờ ngủ rồi!)." },
+        { prompt: "Cuối cùng Minwoo xin làm gì?", options: ["看书", "看电视", "玩儿", "睡觉"], answer: "看书", explanation: "Minwoo hỏi \"那我可以看书吗？\" (Vậy con đọc sách được không?)." },
+        { prompt: "Trong câu \"那我可以看书吗？\", từ \"那\" có nghĩa là gì?", options: ["Vậy thì", "Kia, đó", "Ở đâu", "Cái gì"], answer: "Vậy thì", explanation: "Ở đầu câu, 那 (nà) nghĩa là \"vậy thì, thế thì\"." },
+        { prompt: "Bố trả lời câu \"那我可以看书吗？\" thế nào?", options: ["可以。我们一起看书吧！", "不可以。该睡觉了！", "可以。你一个人看书吧！", "不可以。我们一起玩儿吧！"], answer: "可以。我们一起看书吧！", explanation: "Bố đồng ý: \"可以。我们一起看书吧！\" (Được. Chúng ta cùng đọc sách nhé!)." },
+        { prompt: "\"我们一起看书吧！\" có nghĩa là gì?", options: ["Chúng ta cùng đọc sách nhé!", "Chúng ta cùng xem ti vi nhé!", "Chúng ta cùng đi ngủ nhé!", "Chúng ta cùng chơi nhé!"], answer: "Chúng ta cùng đọc sách nhé!", explanation: "一起 = cùng nhau; 吧 ở cuối câu = rủ rê \"nhé\"." },
+      ],
+    },
     quiz: [
       { audioText: "我可以坐这儿吗？", prompt: "我 ___ 坐这儿吗？", options: ["可以", "请", "不要", "谢谢"], answer: "可以" },
       { audioText: "可以。请坐。", prompt: "可以。___ 坐。", options: ["请", "坐", "不要", "谢谢"], answer: "请" },
@@ -3861,6 +3885,27 @@ const LESSONS = [
         { hanzi: "我十二点起床。", pinyin: "Wǒ shí'èr diǎn qǐchuáng.", meaning: "Tôi dậy lúc 12 giờ." },
         { hanzi: "妈妈，今天晚上我可以不睡觉吗？", pinyin: "Māma, jīntiān wǎnshang wǒ kěyǐ bù shuìjiào ma?", meaning: "Mẹ ơi, tối nay con có thể không ngủ được không?" },
         { hanzi: "你要做什么？我要看小鱼几点睡觉。", pinyin: "Nǐ yào zuò shénme? Wǒ yào kàn xiǎoyú jǐ diǎn shuìjiào.", meaning: "Con muốn làm gì? Con muốn xem mấy giờ cá con đi ngủ." },
+      ],
+    },
+    videoQuiz: {
+      youtubeId: "8uqyIfFV6Vc",
+      title: "凯丽老师的课堂 16：起床！(Mrs. Kelly's Class 16: Get up!)",
+      vocab: [
+        { hanzi: "不要", pinyin: "bú yào", meaning: "Không muốn, không cần, đừng" },
+        { hanzi: "困", pinyin: "kùn", meaning: "Buồn ngủ" },
+        { hanzi: "该……了", pinyin: "gāi……le", meaning: "Đến lúc phải… rồi" },
+        { hanzi: "不……了", pinyin: "bù……le", meaning: "Không… nữa" },
+      ],
+      questions: [
+        { prompt: "Đầu video, mẹ gọi Peter thế nào?", options: ["皮特，起床！", "皮特，睡觉！", "皮特，吃饭！", "皮特，洗澡！"], answer: "皮特，起床！", explanation: "Mẹ gọi \"皮特，起床！\" (Peter, dậy đi!)." },
+        { prompt: "Peter trả lời mẹ như thế nào?", options: ["不要……我很困。", "好的，我起床。", "我不困。", "我很饿。"], answer: "不要……我很困。", explanation: "Peter nói \"不要……我很困\" (Không đâu… con buồn ngủ lắm)." },
+        { prompt: "Từ \"困 (kùn)\" trong video có nghĩa là gì?", options: ["Buồn ngủ", "Đói bụng", "Mệt mỏi vì bệnh", "Vui vẻ"], answer: "Buồn ngủ", explanation: "困 (kùn) = buồn ngủ. 我很困 = Tôi rất buồn ngủ." },
+        { prompt: "Mẹ gọi lần thứ hai: \"该起床了！\" nghĩa là gì?", options: ["Đến giờ dậy rồi!", "Đến giờ ngủ rồi!", "Con dậy sớm quá!", "Mấy giờ con dậy?"], answer: "Đến giờ dậy rồi!", explanation: "该……了 = đến lúc phải… rồi. 该起床了 = đến giờ dậy rồi." },
+        { prompt: "Peter nói \"不要……我很困\" mấy lần trong video?", options: ["2 lần", "1 lần", "3 lần", "4 lần"], answer: "2 lần", explanation: "Mẹ gọi 2 lần và Peter đều trả lời \"不要……我很困\"." },
+        { prompt: "Bố chào Peter bằng câu nào?", options: ["皮特，早上好！", "皮特，晚上好！", "皮特，你好吗？", "皮特，再见！"], answer: "皮特，早上好！", explanation: "Bố nói \"皮特，早上好！\" (Chào buổi sáng, Peter!)." },
+        { prompt: "Lisa nói gì với Peter?", options: ["该洗澡了，皮特！", "该睡觉了，皮特！", "该吃饭了，皮特！", "该上学了，皮特！"], answer: "该洗澡了，皮特！", explanation: "Lisa nói \"该洗澡了，皮特！\" (Đến giờ tắm rồi, Peter!)." },
+        { prompt: "\"洗澡 (xǐzǎo)\" có nghĩa là gì?", options: ["Tắm", "Rửa tay", "Đánh răng", "Rửa mặt"], answer: "Tắm", explanation: "洗澡 (xǐzǎo) = tắm. 该洗澡了 = đến giờ tắm rồi." },
+        { prompt: "Cuối video mẹ nói \"他现在不困了！\" nghĩa là gì?", options: ["Bây giờ cậu ấy hết buồn ngủ rồi!", "Bây giờ cậu ấy vẫn buồn ngủ!", "Bây giờ cậu ấy đi ngủ rồi!", "Bây giờ cậu ấy đói rồi!"], answer: "Bây giờ cậu ấy hết buồn ngủ rồi!", explanation: "现在 = bây giờ; 不……了 = không còn… nữa. 他现在不困了 = bây giờ cậu ấy hết buồn ngủ rồi." },
       ],
     },
     quiz: [
@@ -15702,9 +15747,23 @@ const LESSONS = [
   // còn lại của code chỉ cần xử lý 1 kiểu duy nhất.
   function getLessonVideoQuizzes(lesson) {
     if (!lesson) return [];
-    if (Array.isArray(lesson.videoQuizzes)) return lesson.videoQuizzes;
-    if (lesson.videoQuiz && lesson.videoQuiz.youtubeId) return [Object.assign({ id: "v1" }, lesson.videoQuiz)];
-    return [];
+    let list = [];
+    if (Array.isArray(lesson.videoQuizzes)) list = lesson.videoQuizzes;
+    else if (lesson.videoQuiz && lesson.videoQuiz.youtubeId) list = [Object.assign({ id: "v1" }, lesson.videoQuiz)];
+    // Cô dán link video trong Dashboard nhưng CHƯA soạn câu hỏi → lấy câu hỏi soạn sẵn trong code (cùng video) nếu có.
+    const base = LESSONS.find((l) => l.id === lesson.id);
+    const bank = [];
+    if (base) { if (base.videoQuiz) bank.push(base.videoQuiz); if (Array.isArray(base.videoQuizzes)) bank.push.apply(bank, base.videoQuizzes); }
+    return list.map((vq) => {
+      if (!vq) return vq;
+      // Bộ câu hỏi soạn sẵn không ghi youtubeId ("") = dùng cho video cô dán trong Dashboard (khi bài chỉ có 1 bộ).
+      const src = bank.find((b) => b && b.youtubeId && b.youtubeId === vq.youtubeId) || (bank.length === 1 && bank[0] && !bank[0].youtubeId ? bank[0] : null);
+      if (!src) return vq;
+      const out = Object.assign({}, vq);
+      if (!(Array.isArray(out.questions) && out.questions.length) && Array.isArray(src.questions) && src.questions.length) { out.questions = src.questions; out.title = out.title || src.title; }
+      if (!(Array.isArray(out.vocab) && out.vocab.length) && Array.isArray(src.vocab)) out.vocab = src.vocab;
+      return out;
+    });
   }
 
   // Vẽ dải nút chọn video (chỉ hiện khi bài có TỪ 2 video trở lên — bài
@@ -15745,6 +15804,7 @@ const LESSONS = [
       elVideoqResult.classList.add("hidden");
       elVideoqActive.classList.add("hidden");
       elVideoEmbedWrap.classList.add("hidden");
+      { const vv = document.getElementById("videoq-vocab"); if (vv) { vv.innerHTML = ""; vv.classList.add("hidden"); } }
       elVideoQuizTitle.textContent = "";
       elVideoQuizOpenLink.classList.add("hidden");
       elVideoQuizOpenLink.href = "#";
@@ -15771,6 +15831,20 @@ const LESSONS = [
     btnVideoqSubmit.classList.remove("hidden");
     videoQuizState.isLocked = false;
 
+    const elVqVocab = document.getElementById("videoq-vocab");
+    if (elVqVocab) {
+      if (Array.isArray(vq.vocab) && vq.vocab.length) {
+        elVqVocab.innerHTML = '<div class="p-3 rounded-xl border" style="border-color:var(--border); background:var(--surface-alt);">' +
+          '<p class="text-xs font-bold mb-2" style="color:var(--accent);">📒 Từ mới trong video</p><div class="flex flex-wrap gap-2">' +
+          vq.vocab.map((w) =>
+            '<div class="px-3 py-2 rounded-lg border text-center" style="border-color:var(--border); background:var(--surface); min-width:6.5rem;">' +
+            '<div class="font-hanzi text-lg font-bold" style="color:var(--jade);">' + escapeHtml(w.hanzi) + "</div>" +
+            '<div class="text-sm" style="color:var(--accent);">' + escapeHtml(w.pinyin) + "</div>" +
+            '<div class="text-xs" style="color:var(--ink-soft);">' + escapeHtml(w.meaning) + "</div></div>"
+          ).join("") + "</div></div>";
+        elVqVocab.classList.remove("hidden");
+      } else { elVqVocab.innerHTML = ""; elVqVocab.classList.add("hidden"); }
+    }
     elVideoEmbedWrap.classList.remove("hidden");
     elVideoIframe.src = "https://www.youtube.com/embed/" + encodeURIComponent(vq.youtubeId);
     elVideoQuizTitle.textContent = vq.title || "";
