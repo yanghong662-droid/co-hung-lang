@@ -13372,8 +13372,8 @@ const LESSONS = [
      Bài chưa có nội dung sẽ hiện "Đang biên soạn".
      ===================================================================== */
   const LISTENING_FOLDERS = {
-    nguam: { id: "nguam", name: "Ngữ âm", count: 10, colorVar: "--jade", icon: "fa-comment-dots",
-      desc: "10 bài luyện phát âm: thanh mẫu, vận mẫu, thanh điệu.", lessons: {
+    nguam: { id: "nguam", name: "Ngữ âm", count: 11, colorVar: "--jade", icon: "fa-comment-dots",
+      desc: "11 bài luyện phát âm: thanh mẫu, vận mẫu, thanh điệu.", lessons: {
         1: { exercises: [
           { key: "bai1", short: "Bài 1 · 听后标出声调", title: "Bài 1. 听后标出声调 — Nghe rồi chọn thanh điệu đúng",
             instr: "Nghe file âm thanh, mỗi câu chọn cách đọc (thanh điệu) đúng của âm tiết.",
@@ -14070,6 +14070,34 @@ const LESSONS = [
           { q: "Tāmen dōu shuō Hànyǔ.", options: ["✓", "✗"], answer: 1 }
           ] },
         ] },
+        11: { exercises: [
+          { key: "bai1", short: "Bài 1 · 选择你在句中听到的词语", title: "Bài 1. 选择你在句中听到的词语 — Chọn từ em nghe được trong câu",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là từ em nghe được trong câu.",
+            audio: "assets/audio/listen/nguam11-bai1.mp3", items: [
+          { q: "Câu 1", options: ["A. shèngzàn", "B. chēngzàn"], answer: 1 },
+          { q: "Câu 2", options: ["A. dǎidú", "B. tàidu"], answer: 1 },
+          { q: "Câu 3", options: ["A. zìzhuàn", "B. zìzuàn"], answer: 0 },
+          { q: "Câu 4", options: ["A. Ānkāng", "B. Āngāng"], answer: 1 },
+          { q: "Câu 5", options: ["A. dàgài", "B. dǎkāi"], answer: 1 },
+          { q: "Câu 6", options: ["A. chūnjuǎnr", "B. chūnjuǎn"], answer: 0 },
+          { q: "Câu 7", options: ["A. yùjì", "B. yùqī"], answer: 0 },
+          { q: "Câu 8", options: ["A. chízǎo", "B. qǐzǎo"], answer: 0 },
+          { q: "Câu 9", options: ["A. huìyì", "B. huíyì"], answer: 1 },
+          { q: "Câu 10", options: ["A. yuànlái", "B. yuánlái"], answer: 1 }
+          ] },
+          { key: "bai2", short: "Bài 2 · 听后标出句中画线词语的声调", title: "Bài 2. 听后标出句中画线词语的声调 — Nghe rồi chọn thanh điệu đúng cho từ gạch chân",
+            instr: "Nghe file âm thanh. Mỗi câu, chọn cách viết có thanh điệu đúng của phần còn trống (phiên âm không dấu ghi trong ngoặc).",
+            audio: "assets/audio/listen/nguam11-bai2.mp3", items: [
+          { q: "1. Hánjià wǒ huí jiā ___ .  (guonian)", options: ["guònián", "guōnián", "guònian", "guǒnián"], answer: 0 },
+          { q: "2. Huǒchē ___ liánghǎo.  (yunxing)", options: ["yúnxíng", "yùnxíng", "yùnxǐng", "yǔnxíng"], answer: 1 },
+          { q: "3. Wǒ péngyou bú zài ___ .  (dian li)", options: ["diàn li", "diàn lǐ", "diān li", "diǎn li"], answer: 0 },
+          { q: "4. Qù bu qù, ___ .  (sui ni)", options: ["suí ní", "suī nǐ", "suí nǐ", "suì nǐ"], answer: 2 },
+          { q: "5. Lǐ lǎoshī jiā zài ___ .  (Shanghai)", options: ["Shānghǎi", "Shǎnghǎi", "Shànghǎi", "Shànghài"], answer: 2 },
+          { q: "6. Tā māma shēntǐ ___ .  (bu tai hao)", options: ["bú tài hào", "bù tài hǎo", "bú tāi hǎo", "bú tài hǎo"], answer: 3 },
+          { q: "7. Tā shì yí ge ___ de rén.  (guo he chai qiao)", options: ["guó hé chāi qiáo", "guò hé chāi qiáo", "guò hé chái qiáo", "guò hē chāi qiáo"], answer: 1 },
+          { q: "8. Wǒmen ___ qù ___ .  (zuo chuan … Hankou)", options: ["zuò chuān … Hànkǒu", "zuò chuán … Hánkǒu", "zuǒ chuán … Hànkǒu", "zuò chuán … Hànkǒu"], answer: 3 }
+          ] },
+        ] },
       } },
     nghesocap: { id: "nghesocap", name: "Nghe sc", count: 30, colorVar: "--accent", icon: "fa-headphones",
       desc: "30 bài luyện nghe trình độ sơ cấp.", lessons: {
@@ -14235,6 +14263,30 @@ const LESSONS = [
           { q: "啤酒 — 合计 (tổng tiền)", input: true, unit: "元", accept: "18", options: [], answer: 0, img: "assets/mockexam/nsc4-sp4.jpg" },
           { q: "茶 — 合计 (tổng tiền)", input: true, unit: "元", accept: "39", options: [], answer: 0, img: "assets/mockexam/nsc4-sp5.jpg" },
           { q: "咖啡 — 合计 (tổng tiền)", input: true, unit: "元", accept: "88", options: [], answer: 0, img: "assets/mockexam/nsc4-sp6.jpg" }
+          ] },
+        ] },
+        5: { exercises: [
+          { key: "bai1", short: "Bài 1 · 听下列对话，选择正确答案", title: "Bài 1. 听下列对话，选择正确答案 — Nghe hội thoại, chọn đáp án đúng",
+            instr: "Nghe file âm thanh. Mỗi câu là một đoạn hội thoại ngắn kèm câu hỏi, hãy chọn đáp án đúng (A, B, C hoặc D).",
+            audio: "assets/audio/listen/nghesocap5-bai1.mp3", items: [
+          { q: "Câu 1", options: ["A. 男的是李老师", "B. 女的不认识李老师", "C. 李老师一会儿来", "D. 他们去找李老师"], answer: 2 },
+          { q: "Câu 2", options: ["A. 两个都是日本人", "B. 两个都是韩国人", "C. 一个是韩国人，一个不是", "D. 两个是韩国人，一个不是"], answer: 2 },
+          { q: "Câu 3", options: ["A. 找护士", "B. 找大夫", "C. 找家人", "D. 找办公室"], answer: 1 },
+          { q: "Câu 4", options: ["A. 她不是刘小姐", "B. 她是刘小姐", "C. 这位是刘小姐", "D. 刘小姐不在"], answer: 1 },
+          { q: "Câu 5", options: ["A. 英语老师", "B. 法语老师", "C. 英语老师和法语老师", "D. 没有人姓王"], answer: 2 },
+          { q: "Câu 6", options: ["A. 玛丽的房间是207", "B. 玛丽的房间是217", "C. 第一个人说得对", "D. 玛丽不在家"], answer: 0 },
+          { q: "Câu 7", options: ["A. 他们都住11楼", "B. 女的住11楼7门7号", "C. 男的住11楼7门7号", "D. 男的住12楼7门1号"], answer: 2 },
+          { q: "Câu 8", options: ["A. 星期一", "B. 星期二", "C. 星期三", "D. 星期四"], answer: 2 },
+          { q: "Câu 9", options: ["A. 3100", "B. 3001", "C. 3010", "D. 301"], answer: 2 },
+          { q: "Câu 10", options: ["A. 五个人", "B. 一个人", "C. 六个人", "D. 十个人"], answer: 1 }
+          ] },
+          { key: "bai2", short: "Bài 2 · 听下列对话，选择正确答案", title: "Bài 2. 听下列对话，选择正确答案 — Nghe hội thoại, chọn đáp án đúng",
+            instr: "Nghe file âm thanh. Có 3 đoạn hội thoại; đoạn (2) có 2 câu hỏi ① và ②. Chọn đáp án đúng (A, B, C hoặc D).",
+            audio: "assets/audio/listen/nghesocap5-bai2.mp3", items: [
+          { q: "(1)", options: ["A. 513 办公室", "B. 514 办公室", "C. 913 办公室", "D. 524 办公室"], answer: 1 },
+          { q: "(2) ①", options: ["A. 女的打电话时麦克没在家", "B. 女的打通电话了", "C. 女的打电话时麦克在家", "D. 女的打电话时麦克家里没人"], answer: 2 },
+          { q: "(2) ②", options: ["A. 64681913", "B. 64681931", "C. 64861913", "D. 64681193"], answer: 3 },
+          { q: "(3)", options: ["A. 女的知道", "B. 男的知道", "C. 刘英知道", "D. 没人知道"], answer: 2 }
           ] },
         ] },
       } },
