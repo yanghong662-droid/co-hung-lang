@@ -13372,8 +13372,8 @@ const LESSONS = [
      Bài chưa có nội dung sẽ hiện "Đang biên soạn".
      ===================================================================== */
   const LISTENING_FOLDERS = {
-    nguam: { id: "nguam", name: "Ngữ âm", count: 11, colorVar: "--jade", icon: "fa-comment-dots",
-      desc: "11 bài luyện phát âm: thanh mẫu, vận mẫu, thanh điệu.", lessons: {
+    nguam: { id: "nguam", name: "Ngữ âm", count: 15, colorVar: "--jade", icon: "fa-comment-dots",
+      desc: "15 bài luyện phát âm: thanh mẫu, vận mẫu, thanh điệu.", lessons: {
         1: { exercises: [
           { key: "bai1", short: "Bài 1 · 听后标出声调", title: "Bài 1. 听后标出声调 — Nghe rồi chọn thanh điệu đúng",
             instr: "Nghe file âm thanh, mỗi câu chọn cách đọc (thanh điệu) đúng của âm tiết.",
@@ -14096,6 +14096,175 @@ const LESSONS = [
           { q: "6. Tā māma shēntǐ ___ .  (bu tai hao)", options: ["bú tài hào", "bù tài hǎo", "bú tāi hǎo", "bú tài hǎo"], answer: 3 },
           { q: "7. Tā shì yí ge ___ de rén.  (guo he chai qiao)", options: ["guó hé chāi qiáo", "guò hé chāi qiáo", "guò hé chái qiáo", "guò hē chāi qiáo"], answer: 1 },
           { q: "8. Wǒmen ___ qù ___ .  (zuo chuan … Hankou)", options: ["zuò chuān … Hànkǒu", "zuò chuán … Hánkǒu", "zuǒ chuán … Hànkǒu", "zuò chuán … Hànkǒu"], answer: 3 }
+          ] },
+        ] },
+        12: { exercises: [
+          { key: "bai1", short: "Bài 1 · 选择你在句中听到的词语", title: "Bài 1. 选择你在句中听到的词语 — Chọn từ em nghe được trong câu",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là từ em nghe được trong câu.",
+            audio: "assets/audio/listen/nguam12-bai1.mp3", items: [
+          { q: "Câu 1", options: ["A. běnshi", "B. běnzhì"], answer: 0 },
+          { q: "Câu 2", options: ["A. chīpàng", "B. chìbǎng"], answer: 1 },
+          { q: "Câu 3", options: ["A. chījǐn", "B. chījīng"], answer: 1 },
+          { q: "Câu 4", options: ["A. chóngxīn", "B. cóngxīn"], answer: 0 },
+          { q: "Câu 5", options: ["A. jiànmiàn", "B. qiánmiàn"], answer: 0 },
+          { q: "Câu 6", options: ["A. hàohàn", "B. hǎokàn"], answer: 1 },
+          { q: "Câu 7", options: ["A. zìzào", "B. zhìzào"], answer: 1 },
+          { q: "Câu 8", options: ["A. ēnwēi", "B. ānwèi"], answer: 1 },
+          { q: "Câu 9", options: ["A. cídiǎn", "B. zìdiǎn"], answer: 0 },
+          { q: "Câu 10", options: ["A. bēitòng", "B. bèi téng"], answer: 0 }
+          ] },
+          { key: "bai2", short: "Bài 2 · 听后标出句中画线词语的声调", title: "Bài 2. 听后标出句中画线词语的声调 — Nghe rồi chọn thanh điệu đúng cho từ gạch chân",
+            instr: "Nghe file âm thanh. Mỗi câu, chọn cách viết có thanh điệu đúng của phần còn trống (phiên âm không dấu ghi trong ngoặc).",
+            audio: "assets/audio/listen/nguam12-bai2.mp3", items: [
+          { q: "1. Diànhuàjú ___ fúwù.  (quan tian)", options: ["quān tiān", "quán tiān", "quàn tiān", "quán tián"], answer: 1 },
+          { q: "2. Wǒmen lǎoshī shì ___ rén.  (nanfang)", options: ["nánfāng", "nánfáng", "nànfāng", "nǎnfāng"], answer: 0 },
+          { q: "3. Wǒ qù shāngdiàn mǎi ___ .  (niunai)", options: ["niúnài", "niǔnǎi", "niúnǎi", "niūnǎi"], answer: 2 },
+          { q: "4. Tā de ___ zài Yàzhōu.  (guojia)", options: ["guójià", "guòjiā", "guōjiā", "guójiā"], answer: 3 },
+          { q: "5. Lǐ Lì bú shì Běijīng rén, tā shì ___ rén.  (Hubei)", options: ["Húběi", "Hùběi", "Húbèi", "Hǔběi"], answer: 0 },
+          { q: "6. Nǐ shénme shíhou ___ ?  (hui jia)", options: ["huì jiā", "huí jiā", "huí jiǎ", "huǐ jiā"], answer: 1 },
+          { q: "7. Nǐ xǐhuan ___ ma?  (youyong)", options: ["yǒuyòng", "yóuyòng", "yóuyǒng", "yòuyǒng"], answer: 2 },
+          { q: "8. Qǐng gěi wǒ yí ge ___ .  (pingguo)", options: ["píngguǒ", "pīngguǒ", "píngguó", "pǐngguǒ"], answer: 0 },
+          { q: "9. Tā qù ___ mǎi dōngxi le.  (Wangfujing)", options: ["Wàngfǔjǐng", "Wángfújǐng", "Wángfǔjìng", "Wángfǔjǐng"], answer: 3 },
+          { q: "10. Gēge shì ___ , dìdi shì gōngrén.  (changzhang)", options: ["chángzhǎng", "chǎngzhǎng", "chǎngzhàng", "chàngzhǎng"], answer: 1 }
+          ] },
+          { key: "bai3", short: "Bài 3 · 选择你听到的句子", title: "Bài 3. 选择你听到的句子 — Chọn câu em nghe được",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là câu em nghe được.",
+            audio: "assets/audio/listen/nguam12-bai3.mp3", items: [
+          { q: "Câu 1", options: ["A. Nàge rén mài pútaogānr.", "B. Nàge rén mǎi pútaogānr."], answer: 0 },
+          { q: "Câu 2", options: ["A. Qián fàng zài sùshè, méi zài jiàoshì.", "B. Xiàn fàng zài sùshè, bú zài jiàoshì."], answer: 0 },
+          { q: "Câu 3", options: ["A. Shuí qù Wáng Qiáng de bàngōngshì?", "B. Shuí qù Wáng Jiāng de bàngōngshì?"], answer: 1 },
+          { q: "Câu 4", options: ["A. Nàge xiǎojiě hái yǒu biéde shū.", "B. Nàge xiǎojiě hái yào biéde shū."], answer: 1 },
+          { q: "Câu 5", options: ["A. Nǐ zhǎo shuí jiā?", "B. Nǐ jiào shuí jiā?"], answer: 0 },
+          { q: "Câu 6", options: ["A. Tiān hǎo qǐng gàosu wǒ.", "B. Tiánhǎo qǐng gàosu wǒ."], answer: 1 },
+          { q: "Câu 7", options: ["A. Qǐng nǐ gěi wǒ hǎoma?", "B. Qǐng nǐ gěi wǒ hàomǎ."], answer: 0 },
+          { q: "Câu 8", options: ["A. Wǔ mén shì Wàn lǎoshī jiā.", "B. Wǔ mén shì Wáng lǎoshī jiā."], answer: 1 },
+          { q: "Câu 9", options: ["A. Zhùyì àihù yǎnjing.", "B. Zhùyì àihù yǎnjìng."], answer: 0 },
+          { q: "Câu 10", options: ["A. Yì céng jǐ ge rén zhù?", "B. Yì céng jiǔ ge rén zhù?"], answer: 0 }
+          ] },
+        ] },
+        13: { exercises: [
+          { key: "bai1", short: "Bài 1 · 选择你在句中听到的词语", title: "Bài 1. 选择你在句中听到的词语 — Chọn từ em nghe được trong câu",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là từ em nghe được trong câu.",
+            audio: "assets/audio/listen/nguam13-bai1.mp3", items: [
+          { q: "Câu 1", options: ["A. chuánbō", "B. zhuǎnbō"], answer: 1 },
+          { q: "Câu 2", options: ["A. bù yuǎn", "B. bú yuàn"], answer: 0 },
+          { q: "Câu 3", options: ["A. yì táng", "B. yí tàng"], answer: 1 },
+          { q: "Câu 4", options: ["A. Chūn Jié", "B. chúnjié"], answer: 0 },
+          { q: "Câu 5", options: ["A. chǔfá", "B. chùfā"], answer: 1 },
+          { q: "Câu 6", options: ["A. dádào", "B. dǎdǎo"], answer: 0 },
+          { q: "Câu 7", options: ["A. dǎting", "B. dàtīng"], answer: 0 },
+          { q: "Câu 8", options: ["A. dàliàng", "B. dǎliang"], answer: 1 },
+          { q: "Câu 9", options: ["A. dàyí", "B. dàyī"], answer: 1 },
+          { q: "Câu 10", options: ["A. dāngshì", "B. dāngshí"], answer: 1 }
+          ] },
+          { key: "bai2", short: "Bài 2 · 听后标出句中画线词语的声调", title: "Bài 2. 听后标出句中画线词语的声调 — Nghe rồi chọn thanh điệu đúng cho từ gạch chân",
+            instr: "Nghe file âm thanh. Mỗi câu, chọn cách viết có thanh điệu đúng của phần còn trống (phiên âm không dấu ghi trong ngoặc).",
+            audio: "assets/audio/listen/nguam13-bai2.mp3", items: [
+          { q: "1. Tā huì zuò ___ .  (jiandan)", options: ["jiǎndān", "jiāndàn", "jiándàn", "jiàndān"], answer: 1 },
+          { q: "2. Xuéshengmen ___ cāoliàn.  (zhengzai)", options: ["zhèngzài", "zhēngzài", "zhěngzài", "zhèngzāi"], answer: 0 },
+          { q: "3. Xiǎo Lǐ hé Xiǎo Zhāng ___ yīnyuán.  (xijie)", options: ["xìjié", "xījié", "xǐjiě", "xǐjié"], answer: 3 },
+          { q: "4. Tā shì yí ge ___ hǎo de rén.  (feichang)", options: ["fēicháng", "fèicháng", "fēicāng", "fěicháng"], answer: 0 },
+          { q: "5. Wǒ xiǎng qù ___ kànkan.  (gongdian)", options: ["gōngdiǎn", "gòngdiàn", "gōngdiàn", "gǒngdiàn"], answer: 2 },
+          { q: "6. ___ nǐmen lái wǒmen xuéxiào.  (Huanying)", options: ["Huànyíng", "Huānyíng", "Huānyǐng", "Huányíng"], answer: 1 },
+          { q: "7. Nǐ yào nǎ zhǒng ___ ?  (jixing)", options: ["jíxíng", "jìxìng", "jǐxíng", "jīxíng"], answer: 3 },
+          { q: "8. Niǎo zài ___ fēi.  (tian shang)", options: ["tiānshang", "tiánshang", "tiānshàng", "tiǎnshang"], answer: 0 },
+          { q: "9. Jīntiān de wǎnhuì nǐ bù néng ___ .  (tuici)", options: ["tuìcí", "tuīcǐ", "tuīcí", "tuícì"], answer: 2 }
+          ] },
+          { key: "bai3", short: "Bài 3 · 选择你听到的句子", title: "Bài 3. 选择你听到的句子 — Chọn câu em nghe được",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là câu em nghe được.",
+            audio: "assets/audio/listen/nguam13-bai3.mp3", items: [
+          { q: "Câu 1", options: ["A. Gèdì dàduō yǒu zhèyàng de xíguàn.", "B. Gèdì dàdū yǒu zhèyàng de xíguàn."], answer: 0 },
+          { q: "Câu 2", options: ["A. Dāngshí wǒ bù lǐjiě tā de zuòfǎ.", "B. Dànshì wǒ bù lǐjiě tā de zuòfǎ."], answer: 1 },
+          { q: "Câu 3", options: ["A. Dàwèi gěi wǒ kànle yí ge chúfáng.", "B. Dàwèi gěi wǒ kànle yí ge chǔfāng."], answer: 1 },
+          { q: "Câu 4", options: ["A. Nàge xuéxiào hěn zhòngshì déyù.", "B. Nàge xuéxiào hěn zhòngshì Déyǔ."], answer: 0 },
+          { q: "Câu 5", options: ["A. Zǒngsuàn duǒguòle nàge nánguān.", "B. Zǒngsuàn dùguòle nàge nánguān."], answer: 1 },
+          { q: "Câu 6", options: ["A. Tā dīng de hěn jǐn.", "B. Tā dìng de hěn jǐn."], answer: 0 },
+          { q: "Câu 7", options: ["A. Yínháng suíshí kěyǐ duìfù.", "B. Yínháng suíshí kěyǐ duìfu."], answer: 0 },
+          { q: "Câu 8", options: ["A. Wǒ hái méi kàndào fāpiào.", "B. Wǒ hái méi kàndào fābiǎo."], answer: 1 }
+          ] },
+        ] },
+        14: { exercises: [
+          { key: "bai1", short: "Bài 1 · 选择你在句中听到的词语", title: "Bài 1. 选择你在句中听到的词语 — Chọn từ em nghe được trong câu",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là từ em nghe được trong câu.",
+            audio: "assets/audio/listen/nguam14-bai1.mp3", items: [
+          { q: "Câu 1", options: ["A. yóujì", "B. yóujú"], answer: 1 },
+          { q: "Câu 2", options: ["A. zhǔyì", "B. zhùyì"], answer: 1 },
+          { q: "Câu 3", options: ["A. xiāxiě", "B. xiàxuě"], answer: 1 },
+          { q: "Câu 4", options: ["A. yìxiē", "B. yíqiè"], answer: 0 },
+          { q: "Câu 5", options: ["A. dúzhí", "B. dúzhě"], answer: 1 },
+          { q: "Câu 6", options: ["A. Qīngxié", "B. Qǐng xiě"], answer: 1 },
+          { q: "Câu 7", options: ["A. fāyáng", "B. fāyán"], answer: 0 },
+          { q: "Câu 8", options: ["A. bù quán", "B. bǔquán"], answer: 0 },
+          { q: "Câu 9", options: ["A. máoyī", "B. màoyì"], answer: 0 },
+          { q: "Câu 10", options: ["A. fālǎn", "B. fālěng"], answer: 1 }
+          ] },
+          { key: "bai2", short: "Bài 2 · 听后标出句中画线词语的声调", title: "Bài 2. 听后标出句中画线词语的声调 — Nghe rồi chọn thanh điệu đúng cho từ gạch chân",
+            instr: "Nghe file âm thanh. Mỗi câu, chọn cách viết có thanh điệu đúng của phần còn trống (phiên âm không dấu ghi trong ngoặc).",
+            audio: "assets/audio/listen/nguam14-bai2.mp3", items: [
+          { q: "1. ___ méi jiàn, shēntǐ hǎo ma?  (Haojiu)", options: ["Hàojiǔ", "Hǎojiǔ", "Hǎojiù", "Háojiǔ"], answer: 1 },
+          { q: "2. Hànyǔ ___ nán ma?  (yufa)", options: ["yǔfǎ", "yùfǎ", "yǔfā", "yúfǎ"], answer: 0 },
+          { q: "3. Wǒ méiyǒu Hàn-Yīng ___ .  (cidian)", options: ["cìdiǎn", "cídiàn", "cídiǎn", "cǐdiǎn"], answer: 2 },
+          { q: "4. Nǐ ___ biéde dōngxi ma?  (hai mai)", options: ["hái mài", "hǎi mǎi", "hāi mǎi", "hái mǎi"], answer: 3 },
+          { q: "5. Nǐ chī ___ mǐfàn?  (ji wan)", options: ["jǐ wǎn", "jǐ wán", "jī wǎn", "jì wǎn"], answer: 0 },
+          { q: "6. Wǒ yòng ___ xiě zì.  (maobi)", options: ["màobǐ", "máobǐ", "máobí", "māobǐ"], answer: 1 },
+          { q: "7. Xiǎo Lǐ huì shuō ___ .  (Fayu)", options: ["Fāyǔ", "Fàyǔ", "Fǎyǔ", "Fǎyù"], answer: 2 },
+          { q: "8. Tiān'ān Mén de ___ hěn piàoliang.  (huabiao)", options: ["huàbiǎo", "huábiāo", "huābiǎo", "huábiǎo"], answer: 3 }
+          ] },
+          { key: "bai3", short: "Bài 3 · 选择你听到的句子", title: "Bài 3. 选择你听到的句子 — Chọn câu em nghe được",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là câu em nghe được.",
+            audio: "assets/audio/listen/nguam14-bai3.mp3", items: [
+          { q: "Câu 1", options: ["A. Gēge gěi wǒ yì zhī bǐ.", "B. Gēge gāi wǒ yì zhī bǐ."], answer: 0 },
+          { q: "Câu 2", options: ["A. Zhè shì wǒmen de zhèngdàng fángwèi.", "B. Zhè shì wǒmen de zhèngdàng fǎngwèn."], answer: 0 },
+          { q: "Câu 3", options: ["A. Nàli de fēngsú fēicháng jīngrén.", "B. Nàli de fēngsù fēicháng jīngrén."], answer: 1 },
+          { q: "Câu 4", options: ["A. Chúle fúshì hái yǒu biéde dōngxi.", "B. Chúle fùshí hái yǒu biéde dōngxi."], answer: 0 },
+          { q: "Câu 5", options: ["A. Zhème dà de gēzi hěn shǎojiàn.", "B. Zhème dà de gèzi hěn shǎojiàn."], answer: 1 },
+          { q: "Câu 6", options: ["A. Xuéshengmen zuìjìn gāng kāixué.", "B. Xuéshengmen zuìjìn gāng gǎixué."], answer: 0 },
+          { q: "Câu 7", options: ["A. Xiǎo chéngshì li méiyǒu gōngyǎn.", "B. Xiǎo chéngshì li méiyǒu gōngyuán."], answer: 1 },
+          { q: "Câu 8", options: ["A. Zhè liǎng ge cí de yòngfǎ shì xiāngtóng de.", "B. Zhè liǎng ge cí de yòngfǎ shì xiāngtōng de."], answer: 0 }
+          ] },
+        ] },
+        15: { exercises: [
+          { key: "bai1", short: "Bài 1 · 选择你在句中听到的词语", title: "Bài 1. 选择你在句中听到的词语 — Chọn từ em nghe được trong câu",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là từ em nghe được trong câu.",
+            audio: "assets/audio/listen/nguam15-bai1.mp3", items: [
+          { q: "Câu 1", options: ["A. yǒngyuǎn", "B. yǒuyuán"], answer: 0 },
+          { q: "Câu 2", options: ["A. gōngzī", "B. gōngsī"], answer: 1 },
+          { q: "Câu 3", options: ["A. kōngjiān", "B. kòngxián"], answer: 0 },
+          { q: "Câu 4", options: ["A. gǔzhǎng", "B. gùzhàng"], answer: 0 },
+          { q: "Câu 5", options: ["A. guàhào", "B. guàhǎo"], answer: 0 },
+          { q: "Câu 6", options: ["A. hóunián", "B. hòunián"], answer: 1 },
+          { q: "Câu 7", options: ["A. qīngshuǐ", "B. jǐngshuǐ"], answer: 0 },
+          { q: "Câu 8", options: ["A. jiā yóu", "B. jiā yòu"], answer: 0 },
+          { q: "Câu 9", options: ["A. qīnjìn", "B. qīngjìng"], answer: 1 },
+          { q: "Câu 10", options: ["A. qīxī", "B. jíqí"], answer: 1 }
+          ] },
+          { key: "bai2", short: "Bài 2 · 听后标出句中画线词语的声调", title: "Bài 2. 听后标出句中画线词语的声调 — Nghe rồi chọn thanh điệu đúng cho từ gạch chân",
+            instr: "Nghe file âm thanh. Mỗi câu, chọn cách viết có thanh điệu đúng của phần còn trống (phiên âm không dấu ghi trong ngoặc).",
+            audio: "assets/audio/listen/nguam15-bai2.mp3", items: [
+          { q: "1. Tā àiren zài ___ gōngzuò.  (yiyuan)", options: ["yíyuàn", "yīyuàn", "yīyuán", "yìyuàn"], answer: 1 },
+          { q: "2. Tā xīngqītiān bú qù ___ .  (gongsi)", options: ["gōngsī", "gōngsì", "gòngsī", "gōngsǐ"], answer: 0 },
+          { q: "3. Wǒ de ___ péngyou dōu hěn hǎo.  (zhexie)", options: ["zhéxiē", "zhèxiè", "zhèxiē", "zhěxiē"], answer: 2 },
+          { q: "4. Nǐ ___ tā shì shuí ma?  (zhidao)", options: ["zhídào", "zhīdāo", "zhǐdào", "zhīdào"], answer: 3 },
+          { q: "5. Xiǎo Wáng bù xǐhuan chī ___ .  (jidan)", options: ["jīdàn", "jídàn", "jīdān", "jìdàn"], answer: 0 },
+          { q: "6. Zhè shì ___ de bàozhǐ ma?  (jintian)", options: ["jìntiān", "jīntiān", "jīntián", "jǐntiān"], answer: 1 },
+          { q: "7. Màikè shì Zhōngwén ___ ma?  (fanyi)", options: ["fànyì", "fānyí", "fānyì", "fǎnyì"], answer: 2 },
+          { q: "8. Wǒmen zuò ___ qù Shànghǎi.  (feiji)", options: ["fèijī", "fēijí", "féijī", "fēijī"], answer: 3 },
+          { q: "9. Wáng lǎoshī shì ___ de lǎoshī.  (yi ban)", options: ["yī bān", "yì bān", "yí bàn", "yī bàn"], answer: 0 },
+          { q: "10. Tóngxuémen yìqǐ tīng ___ .  (yinyue)", options: ["yǐnyuè", "yīnyuè", "yīnyuē", "yínyuè"], answer: 1 }
+          ] },
+          { key: "bai3", short: "Bài 3 · 选择你听到的句子", title: "Bài 3. 选择你听到的句子 — Chọn câu em nghe được",
+            instr: "Nghe file âm thanh, mỗi câu chọn A hoặc B là câu em nghe được.",
+            audio: "assets/audio/listen/nguam15-bai3.mp3", items: [
+          { q: "Câu 1", options: ["A. Tāmen jíshí huílai le.", "B. Tāmen jǐshí huílai de?"], answer: 0 },
+          { q: "Câu 2", options: ["A. Qǐng jièshào yíxià tiānqì.", "B. Qǐng jièshào yíxià diànqì."], answer: 0 },
+          { q: "Câu 3", options: ["A. Zhèli méiyǒu qìjié biànhuà.", "B. Zhèli méiyǒu jìjié biànhuà."], answer: 1 },
+          { q: "Câu 4", options: ["A. Ōuzhōu fāzhǎn hěn kuài.", "B. Àozhōu fāzhǎn hěn kuài."], answer: 0 },
+          { q: "Câu 5", options: ["A. Luàn tíng chē de xiànxiàng jiǎnshǎo le.", "B. Luàn tíng chē de xiànxiàng jiànxiào le."], answer: 0 },
+          { q: "Câu 6", options: ["A. Wáng jiàoshòu zhēnbiéguo le.", "B. Wáng jiàoshòu jiànbiéguo le."], answer: 1 },
+          { q: "Câu 7", options: ["A. Zhè shuāng xuēzi shì dìdi de.", "B. Zhè shuāng xiézi shì dìdi de."], answer: 0 },
+          { q: "Câu 8", options: ["A. Wǒmen bǎ tā jiédào dàtīng.", "B. Wǒmen bǎ tā jiēdào dàtīng."], answer: 1 },
+          { q: "Câu 9", options: ["A. Tā lìjīng qiān xīn wàn kǔ.", "B. Tā lìjìn jiān xīn wàn kǔ."], answer: 0 },
+          { q: "Câu 10", options: ["A. Bié jùjué tā le.", "B. Bié jǔjué tā le."], answer: 0 }
           ] },
         ] },
       } },
