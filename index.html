@@ -15487,7 +15487,7 @@ const LESSONS = [
       '<div class="mt-4 flex flex-wrap gap-3 items-center">' +
       '<button type="button" class="lx-submit ' + btnCss + '" style="background:var(--accent); border-color:var(--accent); color:#fff;">Nộp bài</button>' +
       '<button type="button" class="lx-reset ' + btnCss + '" style="border-color:var(--border); background:var(--surface); color:var(--jade);">Làm lại</button>' +
-      (listenTapescriptOf(f, i, ex) ? '<button type="button" class="lx-tape hidden ' + btnCss + '" style="border-color:var(--jade); background:var(--surface); color:var(--jade);">📜 Lời thoại</button>' : "") +
+      (listenTapescriptOf(f, i, ex) ? '<button type="button" class="lx-tape ' + btnCss + '" style="border-color:var(--jade); background:var(--surface); color:var(--jade);">📜 Lời thoại</button>' : "") +
       '<span class="lx-result text-sm font-bold"></span></div>' +
       (listenTapescriptOf(f, i, ex) ? '<div class="lx-tapebox hidden mt-3 p-4 rounded-xl border font-hanzi text-base" style="border-color:var(--border); background:var(--surface-alt); white-space:pre-wrap; line-height:1.9;">' + escapeHtml(listenTapescriptOf(f, i, ex)) + "</div>" : "") +
       "</div>"
@@ -15529,8 +15529,19 @@ const LESSONS = [
   function buildListenItems(wrap, ex, key) {
     const tapeBtn = wrap.querySelector(".lx-tape"), tapeBox = wrap.querySelector(".lx-tapebox");
     if (tapeBtn) {
-      tapeBtn.classList.add("hidden"); tapeBox.classList.add("hidden"); tapeBtn.textContent = "📜 Lời thoại";
-      tapeBtn.onclick = () => { const show = tapeBox.classList.toggle("hidden") === false; tapeBtn.textContent = show ? "📜 Ẩn lời thoại" : "📜 Lời thoại"; };
+      tapeBox.classList.add("hidden"); tapeBtn.textContent = "📜 Lời thoại";
+      const canSee = isAdminUser(currentUser);
+      tapeBtn.dataset.unlocked = canSee ? "1" : "";
+      tapeBtn.style.opacity = canSee ? "1" : "0.5";
+      tapeBtn.title = canSee ? "" : "Nộp bài xong mới xem được lời thoại";
+      tapeBtn.onclick = () => {
+        if (!tapeBtn.dataset.unlocked) {
+          const r = wrap.querySelector(".lx-result");
+          r.style.color = "var(--accent)"; r.textContent = "🔒 Em hãy làm bài và bấm \"Nộp bài\" trước, sau đó mới xem được lời thoại.";
+          return;
+        }
+        const show = tapeBox.classList.toggle("hidden") === false; tapeBtn.textContent = show ? "📜 Ẩn lời thoại" : "📜 Lời thoại";
+      };
     }
     const grid = wrap.querySelector(".lx-items");
     const result = wrap.querySelector(".lx-result");
@@ -15608,7 +15619,7 @@ const LESSONS = [
       result.style.color = "var(--jade)";
       result.textContent = "Kết quả: đúng " + correct + "/" + total + " câu (" + Math.round(correct / total * 100) + " điểm). Xanh = đáp án đúng, đỏ = em chọn sai.";
       saveListenPracticeScore(wrap.dataset.scoreId, wrap.dataset.partKey, Number(wrap.dataset.partTotal) || 1, Math.round(correct / total * 100));
-      if (tapeBtn) tapeBtn.classList.remove("hidden");
+      if (tapeBtn) { tapeBtn.dataset.unlocked = "1"; tapeBtn.style.opacity = "1"; tapeBtn.title = ""; }
     };
     wrap.querySelector(".lx-reset").onclick = () => buildListenItems(wrap, ex, key);
   }
