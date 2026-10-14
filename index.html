@@ -13138,6 +13138,98 @@ const LESSONS = [
     });
   }
 
+  // ===== Chấm bài viết (tự luận) của Đề thi mô phỏng / Bài tập tổng hợp =====
+  // Điểm + nhận xét của cô lưu trong document điểm của chính học sinh (collection "scores", field
+  // "_essayGrades" → { [lessonId]: { forAt, grades: { [số câu]: { score, comment, at } }, at } }).
+  // forAt = thời điểm học sinh nộp bài (lastAttemptAt) mà cô chấm — học sinh làm lại đề thì bài mới
+  // coi như CHƯA chấm. Nếu Firestore không cho ghi vào "scores", tự lưu dự phòng vào
+  // lessonOverrides/essay__<email> (field "grades").
+  var essayGradeMap = {};
+  function essayFallbackDocId(email) { return "essay__" + String(email || "").toLowerCase(); }
+  function essayGradeOf(email, lessonId, forAt, num) {
+    var g = (essayGradeMap[String(email || "").toLowerCase()] || {})[lessonId];
+    if (!g || (forAt && g.forAt && g.forAt !== forAt)) return null;
+    return (g.grades || {})[String(num)] || null;
+  }
+  function mergeEssayGrades(email, obj) {
+    if (!obj || typeof obj !== "object") return;
+    var key = String(email || "").toLowerCase();
+    var cur = essayGradeMap[key] || (essayGradeMap[key] = {});
+    Object.keys(obj).forEach(function (lid) {
+      var v = obj[lid];
+      if (v && (!cur[lid] || String(v.at || "") > String(cur[lid].at || ""))) cur[lid] = v;
+    });
+  }
+  function loadFallbackEssayGrades() {
+    if (!fbReady()) return Promise.resolve();
+    var FP = firebase.firestore.FieldPath.documentId();
+    return window.__fbDb.collection(LESSON_OVERRIDES_COLLECTION).where(FP, ">=", "essay__").where(FP, "<", "essay_`").get().then(function (snap) {
+      snap.forEach(function (doc) { var d = doc.data() || {}; mergeEssayGrades(d._email || doc.id.slice(7), d.grades); });
+    }).catch(function () {});
+  }
+  function saveEssayGrade(email, lessonId, forAt, num, score, comment) {
+    email = String(email || "").toLowerCase();
+    var now = new Date().toISOString();
+    var cur = (essayGradeMap[email] || {})[lessonId];
+    var grades = cur && cur.forAt === forAt ? Object.assign({}, cur.grades || {}) : {};
+    grades[String(num)] = { score: String(score || ""), comment: String(comment || ""), at: now };
+    var val = { forAt: forAt || "", grades: grades, at: now };
+    var db = window.__fbDb;
+    var path = new firebase.firestore.FieldPath("_essayGrades", lessonId);
+    var done = function () { mergeEssayGrades(email, (function () { var o = {}; o[lessonId] = val; return o; })()); };
+    return db.collection(SCORES_COLLECTION).doc(email).update(path, val).then(done).catch(function () {
+      var ref = db.collection(LESSON_OVERRIDES_COLLECTION).doc(essayFallbackDocId(email));
+      return ref.set({ _email: email, updatedAt: now }, { merge: true })
+        .then(function () { return ref.update(new firebase.firestore.FieldPath("grades", lessonId), val); })
+        .then(done);
+    });
+  }
+  // Học sinh: mở lại đề → hiện điểm + nhận xét phần viết của LẦN NỘP GẦN NHẤT (nếu cô đã chấm).
+  function showMyEssayGrades() {
+    var box = document.getElementById("mock-grade-box");
+    if (!box && elMockActive && elMockActive.parentNode) {
+      box = document.createElement("div");
+      box.id = "mock-grade-box";
+      box.className = "hidden rounded-2xl border p-4 text-sm";
+      box.style.cssText = "border-color:var(--jade); background:var(--surface-alt);";
+      elMockActive.parentNode.insertBefore(box, elMockActive);
+    }
+    if (!box) return;
+    box.classList.add("hidden"); box.innerHTML = "";
+    var lessonId = state.lesson && state.lesson.id;
+    var items = (state.lesson && state.lesson.mockExam) || [];
+    if (!lessonId || !items.some(function (q) { return q.kind === "essay"; })) return;
+    if (!fbReady() || !currentUser || !currentUser.email) return;
+    var email = currentUser.email.toLowerCase();
+    var db = window.__fbDb;
+    Promise.all([
+      db.collection(SCORES_COLLECTION).doc(email).get().then(function (d) { return d.exists ? d.data() || {} : {}; }),
+      db.collection(LESSON_OVERRIDES_COLLECTION).doc(essayFallbackDocId(email)).get().then(function (d) { return d.exists ? d.data() || {} : {}; }).catch(function () { return {}; }),
+    ]).then(function (res) {
+      if (!state.lesson || state.lesson.id !== lessonId) return;
+      var data = res[0], fb = res[1];
+      var rec = data[lessonId] && data[lessonId].mockexam;
+      if (!rec || !rec.lastAttemptAt) return;
+      var cands = [(data._essayGrades || {})[lessonId], (fb.grades || {})[lessonId]].filter(function (g) { return g && g.forAt === rec.lastAttemptAt; });
+      cands.sort(function (a, b) { return String(b.at || "").localeCompare(String(a.at || "")); });
+      var g = cands[0];
+      if (!g || !g.grades || !Object.keys(g.grades).length) return;
+      var essays = rec.lastEssays || [];
+      var nums = Object.keys(g.grades).sort(function (a, b) { return (parseFloat(a) || 0) - (parseFloat(b) || 0); });
+      box.innerHTML = '<p class="font-extrabold mb-2" style="color:var(--jade);">📝 Cô đã chấm phần viết của lần nộp gần nhất (' + formatDateTime(rec.lastAttemptAt) + ")</p>" +
+        nums.map(function (n) {
+          var it = g.grades[n] || {};
+          var e = essays.filter(function (x) { return String(x.num) === String(n); })[0];
+          return '<div class="mb-3 p-3 rounded-xl border" style="border-color:var(--border); background:var(--surface);">' +
+            '<p class="font-bold">Câu ' + escapeHtml(n) + (it.score ? ' · Điểm: <span style="color:var(--accent);">' + escapeHtml(it.score) + "</span>" : "") + "</p>" +
+            (it.comment ? '<p class="mt-1" style="white-space:pre-wrap;">💬 ' + escapeHtml(it.comment) + "</p>" : "") +
+            (e && e.text ? '<details class="mt-1"><summary class="text-xs font-bold cursor-pointer" style="color:var(--ink-faint);">Xem lại bài em đã viết</summary><div class="essay-review mt-1 font-hanzi">' + escapeHtml(e.text) + "</div></details>" : "") +
+            "</div>";
+        }).join("");
+      box.classList.remove("hidden");
+    }).catch(function () {});
+  }
+
   // Tên collection Firestore lưu NỘI DUNG bài học đã được giáo viên sửa/
   // thêm trong Dashboard (câu hỏi "Điền từ" sửa lại, hoặc "Trắc nghiệm
   // Video" thêm mới) — 1 document cho mỗi bài học (id document = lessonId).
@@ -17545,6 +17637,7 @@ const LESSONS = [
     elMockEmpty.classList.add("hidden");
     elMockActive.classList.remove("hidden");
     renderMockQuestion();
+    try { showMyEssayGrades(); } catch (e) {}
   }
 
   function renderMockQuestion() {
@@ -18148,12 +18241,15 @@ const LESSONS = [
         docCount++;
         var data = doc.data() || {};
         var email = data._email || doc.id;
+        if (data._essayGrades) mergeEssayGrades(email, data._essayGrades);
         Object.keys(data).forEach(function (key) {
           if (/^_[^_]/.test(key) || key === "_") return; // bỏ các trường hệ thống như _email, _repair_… (giữ __test__, __listen__…)
           rows.push({ email: email, lessonId: key, record: data[key] || {} });
         });
       });
       rows = mergeLegacyListenRows(rows);
+      return loadFallbackEssayGrades().then(function () { return rows; });
+    }).then(function (rows) {
       // eslint-disable-next-line no-console
       console.log("[cohunglang] Đã tải collection 'scores': " + docCount + " học sinh, " + rows.length + " lượt điểm bài học.");
       rows.sort(function (a, b) {
@@ -18537,7 +18633,7 @@ const LESSONS = [
     }
     return out;
   }
-  function dashPartScoreCell(s, part) {
+  function dashPartScoreCell(s, part, email, lessonId) {
     var r = part === "quiz" ? s : s && s[part];
     if (!r || typeof r.bestScore !== "number" || !isFinite(r.bestScore)) return "—"; // bỏ qua dữ liệu hỏng (vd NaN)
     var out = r.bestScore + "/100";
@@ -18550,8 +18646,16 @@ const LESSONS = [
     if (part === "mockexam" && Array.isArray(r.lastEssays) && r.lastEssays.length) {
       out += '<div class="dash-essay">' + r.lastEssays.map(function (e) {
         var t = String(e.text || "");
-        return "<details><summary>📝 Bài viết câu " + escapeHtml(String(e.num || "")) + " (" + t.replace(/\s/g, "").length + " chữ)</summary>" +
-          '<div class="dash-essay-body"><b>' + escapeHtml(String(e.prompt || "")) + "</b>\n\n" + (t ? escapeHtml(t) : "<i>(học sinh để trống)</i>") + "</div></details>";
+        var gr = email ? essayGradeOf(email, lessonId, r.lastAttemptAt, e.num) : null;
+        var form = email
+          ? '<div class="essay-grade-form mt-2" data-email="' + escapeHtml(email) + '" data-lesson="' + escapeHtml(lessonId) + '" data-at="' + escapeHtml(r.lastAttemptAt || "") + '" data-num="' + escapeHtml(String(e.num || "")) + '" style="white-space:normal;">' +
+            '<input type="text" class="eg-score px-2 py-1 rounded border text-sm" style="width:6rem; border-color:var(--border); background:var(--surface);" placeholder="Điểm" value="' + escapeHtml(gr ? gr.score : "") + '">' +
+            '<textarea class="eg-comment w-full mt-1 px-2 py-1 rounded border text-sm" rows="3" style="border-color:var(--border); background:var(--surface);" placeholder="Nhận xét cho học sinh...">' + escapeHtml(gr ? gr.comment : "") + "</textarea>" +
+            '<button type="button" class="eg-save mt-1 text-xs font-bold px-3 py-1 rounded" style="background:var(--accent); color:#fff;">Lưu điểm</button> <span class="eg-msg text-xs"></span></div>'
+          : "";
+        return "<details><summary>📝 Bài viết câu " + escapeHtml(String(e.num || "")) + " (" + t.replace(/\s/g, "").length + " chữ)" +
+          (email ? (gr ? ' · <span style="color:var(--jade);">✅ đã chấm' + (gr.score ? ": " + escapeHtml(gr.score) : "") + "</span>" : ' · <span style="color:var(--accent);">⏳ chưa chấm</span>') : "") + "</summary>" +
+          '<div class="dash-essay-body"><b>' + escapeHtml(String(e.prompt || "")) + "</b>\n\n" + (t ? escapeHtml(t) : "<i>(học sinh để trống)</i>") + form + "</div></details>";
       }).join("") + "</div>";
     }
     return out;
@@ -18654,12 +18758,12 @@ const LESSONS = [
               var pct = lessonCompletionPercent(s, g.applicableParts || []);
               cells = partCols.map(function (c) {
                 var applicable = (g.applicableParts || []).indexOf(c.part) !== -1;
-                return "<td>" + (applicable ? dashPartScoreCell(s, c.part) : '<span style="color:var(--ink-faint);">·</span>') + "</td>";
+                return "<td>" + (applicable ? dashPartScoreCell(s, c.part, row.email, g.lessonId) : '<span style="color:var(--ink-faint);">·</span>') + "</td>";
               }).join("") + "<td>" + (pct === null ? "—" : pct + "%") + "</td>";
             } else if (kind === "listens") {
               cells = dashListenPartCells(s, g.lessonId, listenColN);
             } else {
-              cells = "<td>" + dashPartScoreCell(s, "mockexam") + "</td>";
+              cells = "<td>" + dashPartScoreCell(s, "mockexam", row.email, g.lessonId) + "</td>";
             }
             return "<tr" + rowCls + ">" + renderStudentCell(row.email, permMap) + cells + "<td>" + stats.totalAttempts + "</td><td>" + formatDateTime(stats.lastAt) + "</td>" +
               (kind === "listens" ? '<td class="font-bold">' + dashPartScoreCell(s, "mockexam") + "</td>" : "") + "</tr>";
@@ -18671,6 +18775,21 @@ const LESSONS = [
   }
 
   document.getElementById("teacher-progress-body").addEventListener("click", function (e) {
+    var sv = e.target.closest(".eg-save");
+    if (sv) {
+      var f = sv.closest(".essay-grade-form"), msg = f.querySelector(".eg-msg");
+      if (!fbReady()) { msg.style.color = "#b4232a"; msg.textContent = "Chưa kết nối Firebase."; return; }
+      msg.style.color = "var(--ink-faint)"; msg.textContent = "Đang lưu...";
+      saveEssayGrade(f.dataset.email, f.dataset.lesson, f.dataset.at, f.dataset.num, f.querySelector(".eg-score").value.trim(), f.querySelector(".eg-comment").value.trim())
+        .then(function () {
+          msg.style.color = "#1f7a4d"; msg.textContent = "✓ Đã lưu";
+          var sum = f.closest("details") && f.closest("details").querySelector("summary span:last-child");
+          var sc = f.querySelector(".eg-score").value.trim();
+          if (sum) { sum.style.color = "var(--jade)"; sum.textContent = "✅ đã chấm" + (sc ? ": " + sc : ""); }
+        })
+        .catch(function (err) { msg.style.color = "#b4232a"; msg.textContent = "Lưu thất bại: " + ((err && (err.code || err.message)) || err); });
+      return;
+    }
     var btn = e.target.closest(".progress-name-toggle");
     if (!btn) return;
     var reveal = btn.parentElement.querySelector(".progress-email-reveal");
