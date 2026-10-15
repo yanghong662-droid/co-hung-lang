@@ -18234,9 +18234,9 @@ const LESSONS = [
     return out;
   }
   function fetchAllScoreRows() {
+    var docCount = 0;
     return window.__fbDb.collection(SCORES_COLLECTION).get().then(function (snap) {
       var rows = [];
-      var docCount = 0;
       snap.forEach(function (doc) {
         docCount++;
         var data = doc.data() || {};
@@ -18248,7 +18248,7 @@ const LESSONS = [
         });
       });
       rows = mergeLegacyListenRows(rows);
-      return loadFallbackEssayGrades().then(function () { return rows; });
+      return loadFallbackEssayGrades().catch(function () {}).then(function () { return rows; });
     }).then(function (rows) {
       // eslint-disable-next-line no-console
       console.log("[cohunglang] Đã tải collection 'scores': " + docCount + " học sinh, " + rows.length + " lượt điểm bài học.");
