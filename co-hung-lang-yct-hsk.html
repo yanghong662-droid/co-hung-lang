@@ -516,6 +516,17 @@
             <button type="button" id="btn-nav-hsk3-all" class="nav-dropdown-item is-all nav-dropdown-item-wide">Xem tất cả</button>
           </div>
         </div>
+        <div id="nav-hsk2-wrap" class="nav-dropdown-wrap">
+          <button type="button" id="btn-nav-hsk2" class="nav-link text-sm font-bold flex items-center gap-1">HSK 2.0 <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
+          <div id="nav-hsk2-panel" class="nav-dropdown-panel nav-dropdown-panel-wide hidden">
+            <div class="nav-dropdown-grid nav-dropdown-grid-3">
+              <button type="button" data-hsk2-level="HSK 4" class="nav-dropdown-item">HSK 4<span class="count-tag"></span></button>
+              <button type="button" data-hsk2-level="HSK 5" class="nav-dropdown-item">HSK 5<span class="count-tag"></span></button>
+              <button type="button" data-hsk2-level="HSK 6" class="nav-dropdown-item">HSK 6<span class="count-tag"></span></button>
+            </div>
+            <button type="button" id="btn-nav-hsk2-all" class="nav-dropdown-item is-all nav-dropdown-item-wide">Xem tất cả</button>
+          </div>
+        </div>
         <button type="button" id="btn-nav-review" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-shuffle text-[11px]"></i> Ôn tập tổng hợp</button>
         <div id="nav-testhub-wrap" class="nav-dropdown-wrap">
           <button type="button" id="btn-nav-test-hub" class="nav-link text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-list-check text-[11px]"></i> Test học phần <i class="fa-solid fa-chevron-down text-[10px]"></i></button>
@@ -1437,6 +1448,11 @@
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-listen" data-listen="nguam"> Ngữ âm</label>
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-listen" data-listen="nghesocap"> Nghe sc</label>
           <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-grant-listen-all"><b>Tất cả</b></label>
+          <span class="text-xs font-bold" style="color:var(--gold);">HSK 2.0:</span>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-listen-hsk2" data-listen="hsk2v4"> HSK 4</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-listen-hsk2" data-listen="hsk2v5"> HSK 5</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-grant-listen-hsk2" data-listen="hsk2v6"> HSK 6</label>
+          <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-grant-listen-hsk2-all"><b>Tất cả</b></label>
           <button type="submit" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0 sm:ml-auto" style="background:var(--jade);">Lưu</button>
         </div>
       </form>
@@ -1492,6 +1508,11 @@
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-listen" data-listen="nguam"> Ngữ âm</label>
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-listen" data-listen="nghesocap"> Nghe sc</label>
               <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-bulk-listen-all"><b>Tất cả</b></label>
+              <span class="text-xs font-bold" style="color:var(--gold);">HSK 2.0:</span>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-listen-hsk2" data-listen="hsk2v4"> HSK 4</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-listen-hsk2" data-listen="hsk2v5"> HSK 5</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="admin-bulk-listen-hsk2" data-listen="hsk2v6"> HSK 6</label>
+              <label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" id="admin-bulk-listen-hsk2-all"><b>Tất cả</b></label>
               <button type="button" id="btn-admin-bulk-grant" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white shrink-0 sm:ml-auto" style="background:var(--jade);">Cấp quyền cả lớp</button>
             </div>
           </div>
@@ -1623,6 +1644,7 @@
 const PROGRAMS = [
   { id: "yct", name: "Tiếng Trung trẻ em", shortLabel: "YCT", desc: "Làm quen tiếng Trung qua hình ảnh, bài hát và trò chơi — dành cho các em nhỏ mới bắt đầu.", colorVar: "--blue" },
   { id: "hsk3", name: "HSK 3.0", shortLabel: "HSK 3.0", desc: "Lộ trình luyện thi HSK 3.0 bài bản, bám sát cấu trúc đề thi mới nhất.", colorVar: "--accent" },
+  { id: "hsk2", name: "HSK 2.0", shortLabel: "HSK 2.0", desc: "Chương trình HSK 2.0 (cấu trúc 6 cấp cũ) — HSK 4, HSK 5, HSK 6.", colorVar: "--gold" },
 ];
 
 
@@ -13790,7 +13812,7 @@ const LESSONS = [
     // ẩn hẳn nút chọn dạng bài này khi đang học một bài thuộc chương
     // trình HSK 3.0 (kể cả bài Ôn tập tổng hợp gộp từ HSK, vì hàm
     // buildReviewLesson() gán lesson.program = "hsk3" cho nhóm này).
-    btnSubtabVideo.classList.toggle("hidden", lesson.program === "hsk3");
+    btnSubtabVideo.classList.toggle("hidden", lesson.program === "hsk3" || lesson.program === "hsk2");
     // Dạng 5 "Nghe đọc" hiện cho mọi chương trình (YCT và HSK 3.0).
     btnSubtabReadlisten.classList.remove("hidden");
     // YCT 1-6 không còn dạng ⑥ "Đề thi mô phỏng" trong tab Luyện tập — ẩn nút
@@ -13842,6 +13864,7 @@ const LESSONS = [
   }
   registerNavDropdown("nav-yct-wrap", "nav-yct-panel", "data-yct-level", "yct", "btn-nav-yct-all");
   registerNavDropdown("nav-hsk3-wrap", "nav-hsk3-panel", "data-hsk-level", "hsk3", "btn-nav-hsk3-all");
+  registerNavDropdown("nav-hsk2-wrap", "nav-hsk2-panel", "data-hsk2-level", "hsk2", "btn-nav-hsk2-all");
   document.addEventListener("click", (e) => {
     navDropdowns.forEach((d) => { if (!d.wrap.contains(e.target)) d.panel.classList.add("hidden"); });
   });
@@ -18355,7 +18378,7 @@ const LESSONS = [
     if (lesson && Array.isArray(lesson.quiz) && lesson.quiz.length > 0) parts.push("quiz");
     var sentCount = countReadableSentences(lesson);
     if (sentCount >= 2) parts.push("listen");
-    if (lesson && lesson.program !== "hsk3") {
+    if (lesson && lesson.program !== "hsk3" && lesson.program !== "hsk2") {
       var vids = getLessonVideoQuizzes(lesson).filter(function (vq) {
         return vq && vq.youtubeId && Array.isArray(vq.questions) && vq.questions.length > 0;
       });
@@ -18486,6 +18509,7 @@ const LESSONS = [
     if (l.isMock) return { key: "__mock__", label: "Đề thi mô phỏng (Ôn tập tổng hợp)", rank: 300 };
     if (l.isTest) return { key: "__test__", label: "Test học phần (cuối khoá)", rank: 200 };
     var lv = l.level || "";
+    if (l.program === "hsk2") { var m2 = /(\d+)/.exec(lv); return { key: "hsk2:" + lv, label: "Học phần HSK 2.0 · " + lv, rank: 150 + (m2 ? Number(m2[1]) : 0) }; }
     var m = /^(YCT|HSK)\s*(\d+)/i.exec(lv);
     var rank = m ? (m[1].toUpperCase() === "YCT" ? 0 : 100) + Number(m[2]) : 500;
     return { key: lv || "Khác", label: lv ? "Học phần " + lv : "Khác", rank: rank };
@@ -18939,7 +18963,7 @@ const LESSONS = [
     const editor = document.getElementById("teacher-lesson-editor");
     // HSK 3.0 không dùng Dạng 4 "Trắc nghiệm Video" (xem enterLesson()) nên
     // không hiện tab sửa video cho các bài thuộc chương trình này.
-    const showVideoTab = lesson.program !== "hsk3";
+    const showVideoTab = lesson.program !== "hsk3" && lesson.program !== "hsk2";
     // YCT 1-6 không còn Dạng 6 "Đề thi mô phỏng" (đã ẩn ở tab Luyện tập của học sinh) nên ẩn luôn tab soạn đề.
     const showMockTab = lesson.program !== "yct";
     editor.innerHTML =
@@ -19562,6 +19586,7 @@ const LESSONS = [
   // trong danh sách này coi như luôn mở, không cần cấp quyền.
   function permissionKeyForProgram(programId) {
     if (programId === "yct") return "yct";
+    if (programId === "hsk2") return "hsk2"; // HSK 2.0: quyền theo từng cấp hsk2v4..hsk2v6 (field "hsk2" không dùng)
     if (programId === "hsk3") return "hsk"; // quyền cũ, trước khi tách theo cấp — vẫn giữ để tương thích ngược
     return null;
   }
@@ -19579,7 +19604,14 @@ const LESSONS = [
     const m = /^YCT\s*(\d+)$/.exec((level || "").trim());
     return m ? "yct" + m[1] : null;
   }
+  // HSK 2.0 (chương trình riêng, chỉ có HSK 4/5/6): field Firestore hsk2v4..hsk2v6. "HSK 5" -> "hsk2v5".
+  const HSK2_LEVELS = [4, 5, 6];
+  function hsk2LevelKey(level) {
+    const m = /^HSK\s*(\d+)$/.exec((level || "").trim());
+    return m ? "hsk2v" + m[1] : null;
+  }
   function programLevelKey(programId, level) {
+    if (programId === "hsk2") return hsk2LevelKey(level);
     if (programId === "hsk3") return hskLevelKey(level);
     if (programId === "yct") return yctLevelKey(level);
     return null;
@@ -19599,6 +19631,11 @@ const LESSONS = [
   // ra đời) được coi như có đủ mọi cấp, để không ai bị mất quyền đang có
   // khi nâng cấp.
   function hasLevelPermission(programId, level) {
+    if (programId === "hsk2") {
+      if (!level) return hasAnyPermissionForProgram(programId);
+      const k2 = hsk2LevelKey(level);
+      return !!(currentPermissions && k2 && currentPermissions[k2] === true);
+    }
     if (programId !== "hsk3" && programId !== "yct") return hasPermission(programId);
     if (!level) return hasPermission(programId);
     if (!currentPermissions) return false;
@@ -19613,6 +19650,7 @@ const LESSONS = [
     const key = permissionKeyForProgram(programId);
     if (!key) return true;
     if (!currentPermissions) return false;
+    if (programId === "hsk2") return HSK2_LEVELS.some((n) => currentPermissions["hsk2v" + n] === true);
     if (currentPermissions[key] === true) return true;
     if (programId === "hsk3" || programId === "yct") {
       const prefix = programId === "hsk3" ? "hsk" : "yct";
@@ -19910,19 +19948,22 @@ const LESSONS = [
   }
 
   // ===== Quyền "Luyện nghe" (field Firestore: listen_nguam, listen_nghesocap) — tách riêng, cấp theo từng thư mục =====
-  const LISTEN_PERM_ITEMS = [{ id: "nguam", label: "Ngữ âm" }, { id: "nghesocap", label: "Nghe sc" }];
+  // Quyền HSK 2.0 (field hsk2v4..hsk2v6) đi chung bộ máy này (group "hsk2") — checkbox có class "<boxClass>-hsk2".
+  const LISTEN_PERM_ITEMS = [{ id: "nguam", label: "Ngữ âm" }, { id: "nghesocap", label: "Nghe sc" },
+    { id: "hsk2v4", label: "HSK 4", field: "hsk2v4", group: "hsk2" }, { id: "hsk2v5", label: "HSK 5", field: "hsk2v5", group: "hsk2" }, { id: "hsk2v6", label: "HSK 6", field: "hsk2v6", group: "hsk2" }];
+  function permItemField(it) { return it.field || "listen_" + it.id; }
   function readCheckedListen(container, boxClass) {
-    return Array.from((container || document).querySelectorAll("." + boxClass)).filter((b) => b.checked).map((b) => b.getAttribute("data-listen"));
+    return Array.from((container || document).querySelectorAll("." + boxClass + ", ." + boxClass + "-hsk2")).filter((b) => b.checked).map((b) => b.getAttribute("data-listen"));
   }
   function listenPayload(keys) {
     const set = new Set(keys || []);
     const payload = {};
-    LISTEN_PERM_ITEMS.forEach((it) => { payload["listen_" + it.id] = set.has(it.id); });
+    LISTEN_PERM_ITEMS.forEach((it) => { payload[permItemField(it)] = set.has(it.id); });
     return payload;
   }
-  function renderListenCheckboxes(checkedKeys, boxClass) {
+  function renderListenCheckboxes(checkedKeys, boxClass, group) {
     const set = new Set(checkedKeys || []);
-    return LISTEN_PERM_ITEMS.map((it) =>
+    return LISTEN_PERM_ITEMS.filter((it) => (it.group || "") === (group || "")).map((it) =>
       '<label class="perm-check-label" style="padding:0.35rem 0.6rem; font-size:0.75rem;"><input type="checkbox" class="' + boxClass + '" data-listen="' + it.id + '" ' + (set.has(it.id) ? "checked" : "") + "> " + it.label + "</label>"
     ).join("");
   }
@@ -19969,6 +20010,7 @@ const LESSONS = [
   wireHskSelectAll("admin-grant-test-hsk-all", "admin-grant-test-hsk-level", formAdminGrant);
   wireHskSelectAll("admin-grant-test-yct-all", "admin-grant-test-yct-level", formAdminGrant);
   wireHskSelectAll("admin-grant-listen-all", "admin-grant-listen", formAdminGrant);
+  wireHskSelectAll("admin-grant-listen-hsk2-all", "admin-grant-listen-hsk2", formAdminGrant);
 
   formAdminGrant.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -20061,7 +20103,8 @@ const LESSONS = [
         return '<optgroup label="' + g.label + '">' + opts + "</optgroup>";
       })
       .join("") +
-      '<optgroup label="Luyện nghe"><option value="listen_nguam">Luyện nghe · Ngữ âm</option><option value="listen_nghesocap">Luyện nghe · Nghe sc</option></optgroup>';
+      '<optgroup label="Luyện nghe"><option value="listen_nguam">Luyện nghe · Ngữ âm</option><option value="listen_nghesocap">Luyện nghe · Nghe sc</option></optgroup>' +
+      '<optgroup label="HSK 2.0 (học)"><option value="hsk2v4">HSK 2.0 · HSK 4</option><option value="hsk2v5">HSK 2.0 · HSK 5</option><option value="hsk2v6">HSK 2.0 · HSK 6</option></optgroup>';
   })();
 
   const elAdminBulkMsg = document.getElementById("admin-bulk-msg");
@@ -20070,6 +20113,7 @@ const LESSONS = [
   wireHskSelectAll("admin-bulk-test-hsk-all", "admin-bulk-test-hsk-level");
   wireHskSelectAll("admin-bulk-test-yct-all", "admin-bulk-test-yct-level");
   wireHskSelectAll("admin-bulk-listen-all", "admin-bulk-listen");
+  wireHskSelectAll("admin-bulk-listen-hsk2-all", "admin-bulk-listen-hsk2");
   document.getElementById("btn-admin-bulk-grant").addEventListener("click", () => {
     const raw = document.getElementById("admin-bulk-emails").value;
     const className = document.getElementById("admin-bulk-class").value.trim();
@@ -20126,7 +20170,7 @@ const LESSONS = [
         for (let i = 1; i <= HSK_LEVEL_COUNT; i++) {
           if (data["test_hsk" + i] === true) testHskLevels.push(i);
         }
-        const listenKeys = LISTEN_PERM_ITEMS.filter((it) => data["listen_" + it.id] === true).map((it) => it.id);
+        const listenKeys = LISTEN_PERM_ITEMS.filter((it) => data[permItemField(it)] === true).map((it) => it.id);
         rows.push({ email: doc.id, name: data.name || "", yctLevels: yctLevels, hskLevels: hskLevels, testYctLevels: testYctLevels, testHskLevels: testHskLevels, listenKeys: listenKeys, class: data.class || "" });
       });
       rows.sort((a, b) => a.email.localeCompare(b.email));
@@ -20271,6 +20315,10 @@ const LESSONS = [
           '<div class="basis-full flex flex-wrap gap-1.5 items-center">' +
             '<span class="text-xs font-bold" style="color:var(--jade);">Luyện nghe:</span>' +
             renderListenCheckboxes(row.listenKeys, "perm-row-listen") +
+          "</div>" +
+          '<div class="basis-full flex flex-wrap gap-1.5 items-center">' +
+            '<span class="text-xs font-bold" style="color:var(--gold);">HSK 2.0:</span>' +
+            renderListenCheckboxes(row.listenKeys, "perm-row-listen-hsk2", "hsk2") +
           "</div>" +
           '<button type="button" class="perm-row-save text-xs font-bold px-3 py-1.5 rounded-lg text-white" style="background:var(--jade);">Lưu</button>' +
           '<button type="button" class="perm-row-delete text-xs font-bold px-3 py-1.5 rounded-lg border" style="border-color:var(--wrong); color:var(--wrong);">Xoá</button>';
