@@ -1641,6 +1641,113 @@
      và tự động gộp vào dữ liệu gốc bên dưới khi hiển thị.
    ===================================================================== */
 
+// ===== HSK 2.0 — Bài tập dạng đề thi (examOnly: bấm vào là làm đề luôn, không có thẻ từ/ngữ pháp) =====
+// H4-1: 《新汉语水平考试精讲精练 HSK四级》模拟试卷 1 — Nghe 45 + Đọc 40 câu chấm tự động; Viết 86–100 (kind "essay") giáo viên chấm tay.
+const HSK2_EXAMS = [
+  {"id": "hsk2-h4-1", "program": "hsk2", "level": "HSK 4", "title": "H4-1 · 模拟试卷（一）", "pinyin": "HSK（四级）模拟试卷 1", "meaning": "Đề thi thử HSK 4 (HSK 2.0) — Nghe 45 · Đọc 40 · Viết 15 câu", "examOnly": true, "vocabulary": [], "grammar": [], "quiz": [], "mockExamAudio": "assets/audio/hsk2-h4-1/mock-nghe.mp3", "mockExam": [
+      {"kind": "listen", "section": "listen", "part": 1, "num": 1, "fixedOrder": true, "prompt": "🎧 第1题：判断对错。\n★ 小张误会了汽车司机的意思。", "options": ["✓", "✗"], "answer": "✓"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 2, "fixedOrder": true, "prompt": "🎧 第2题：判断对错。\n★ 请客时应让客人自己选择位置。", "options": ["✓", "✗"], "answer": "✗"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 3, "fixedOrder": true, "prompt": "🎧 第3题：判断对错。\n★ 人感觉很饿时最好别去买东西。", "options": ["✓", "✗"], "answer": "✓"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 4, "fixedOrder": true, "prompt": "🎧 第4题：判断对错。\n★ 心情好时更容易接受新事物。", "options": ["✓", "✗"], "answer": "✓"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 5, "fixedOrder": true, "prompt": "🎧 第5题：判断对错。\n★ 这个富人是个很节省的人。", "options": ["✓", "✗"], "answer": "✓"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 6, "fixedOrder": true, "prompt": "🎧 第6题：判断对错。\n★ 骗人时脸部会发生变化。", "options": ["✓", "✗"], "answer": "✗"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 7, "fixedOrder": true, "prompt": "🎧 第7题：判断对错。\n★ 这位教授带病工作。", "options": ["✓", "✗"], "answer": "✗"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 8, "fixedOrder": true, "prompt": "🎧 第8题：判断对错。\n★ 猴子也会用“钱”。", "options": ["✓", "✗"], "answer": "✓"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 9, "fixedOrder": true, "prompt": "🎧 第9题：判断对错。\n★ 如果办公室门开着可直接进去等候。", "options": ["✓", "✗"], "answer": "✗"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 10, "fixedOrder": true, "prompt": "🎧 第10题：判断对错。\n★ 听音乐会应该主动鼓掌。", "options": ["✓", "✗"], "answer": "✗"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 11, "fixedOrder": true, "prompt": "🎧 第11题：请选出正确答案。", "options": ["A　佩服", "B　嫉妒", "C　激动", "D　羡慕"], "answer": "B　嫉妒"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 12, "fixedOrder": true, "prompt": "🎧 第12题：请选出正确答案。", "options": ["A　考虑一下再说", "B　不可能是真的", "C　消息让人兴奋", "D　吃饭免费更好"], "answer": "B　不可能是真的"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 13, "fixedOrder": true, "prompt": "🎧 第13题：请选出正确答案。", "options": ["A　很结实", "B　身体弱", "C　不怕冷", "D　很懂事"], "answer": "D　很懂事"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 14, "fixedOrder": true, "prompt": "🎧 第14题：请选出正确答案。", "options": ["A　买新鞋子", "B　找负责人", "C　要求修鞋", "D　想找麻烦"], "answer": "B　找负责人"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 15, "fixedOrder": true, "prompt": "🎧 第15题：请选出正确答案。", "options": ["A　请他吃饭", "B　没什么事", "C　商量事情", "D　询问去处"], "answer": "B　没什么事"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 16, "fixedOrder": true, "prompt": "🎧 第16题：请选出正确答案。", "options": ["A　一直不运动", "B　从来不出门", "C　经常发脾气", "D　烟抽得很多"], "answer": "C　经常发脾气"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 17, "fixedOrder": true, "prompt": "🎧 第17题：请选出正确答案。", "options": ["A　身体很好", "B　走不了路", "C　爱开玩笑", "D　经常爬山"], "answer": "A　身体很好"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 18, "fixedOrder": true, "prompt": "🎧 第18题：请选出正确答案。", "options": ["A　“我”并不认识他", "B　他不会听“我”的", "C　“我”不想跟他说", "D　他不让“我”说话"], "answer": "B　他不会听“我”的"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 19, "fixedOrder": true, "prompt": "🎧 第19题：请选出正确答案。", "options": ["A　并不想帮忙", "B　怕承担责任", "C　不太懂电脑", "D　很愿意帮忙"], "answer": "C　不太懂电脑"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 20, "fixedOrder": true, "prompt": "🎧 第20题：请选出正确答案。", "options": ["A　认真对待婚姻", "B　婚礼别开玩笑", "C　夫妻不要吵架", "D　婚礼热闹才好"], "answer": "A　认真对待婚姻"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 21, "fixedOrder": true, "prompt": "🎧 第21题：请选出正确答案。", "options": ["A　跟小浩一起出国", "B　尊重小浩的决定", "C　不要去打扰小浩", "D　让小浩锻炼身体"], "answer": "B　尊重小浩的决定"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 22, "fixedOrder": true, "prompt": "🎧 第22题：请选出正确答案。", "options": ["A　对现在工作不满", "B　在服装公司工作", "C　想成为一名演员", "D　没有过工作经历"], "answer": "A　对现在工作不满"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 23, "fixedOrder": true, "prompt": "🎧 第23题：请选出正确答案。", "options": ["A　不想听人称赞梅梅", "B　很羡慕现在的梅梅", "C　认为自己比梅梅强", "D　为梅梅的成绩高兴"], "answer": "B　很羡慕现在的梅梅"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 24, "fixedOrder": true, "prompt": "🎧 第24题：请选出正确答案。", "options": ["A　明白自己的位置", "B　找其他朋友帮忙", "C　理解小东的情况", "D　帮小东管理公司"], "answer": "C　理解小东的情况"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 25, "fixedOrder": true, "prompt": "🎧 第25题：请选出正确答案。", "options": ["A　走着去亲戚的家", "B　亲戚间互相拜访", "C　请亲戚来自己家", "D　去看望外地亲戚"], "answer": "B　亲戚间互相拜访"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 26, "fixedOrder": true, "prompt": "🎧 第26题：请选出正确答案。", "options": ["A　请你再说一遍吧", "B　“我”在想你说的话", "C　你说得很有意思", "D　“我”没有听你说话"], "answer": "D　“我”没有听你说话"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 27, "fixedOrder": true, "prompt": "🎧 第27题：请选出正确答案。", "options": ["A　上课时讲笑话", "B　不愿帮助同学", "C　被同学误会了", "D　让同学写作业"], "answer": "C　被同学误会了"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 28, "fixedOrder": true, "prompt": "🎧 第28题：请选出正确答案。", "options": ["A　不愿意吃苦", "B　大学没毕业", "C　收入不太高", "D　不想去工作"], "answer": "A　不愿意吃苦"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 29, "fixedOrder": true, "prompt": "🎧 第29题：请选出正确答案。", "options": ["A　谈合作生意", "B　接客人回来", "C　送客人离开", "D　带客人参观"], "answer": "C　送客人离开"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 30, "fixedOrder": true, "prompt": "🎧 第30题：请选出正确答案。", "options": ["A　需要别人照顾", "B　第一次离开家", "C　刚开始新工作", "D　作结婚前准备"], "answer": "C　刚开始新工作"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 31, "fixedOrder": true, "prompt": "🎧 第31题：请选出正确答案。", "options": ["A　图纸被火烧了", "B　被朋友给骗了", "C　弄丢了设计图", "D　设计图没通过"], "answer": "B　被朋友给骗了"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 32, "fixedOrder": true, "prompt": "🎧 第32题：请选出正确答案。", "options": ["A　脾气非常坏", "B　长得比较胖", "C　心眼儿不坏", "D　不懂理解人"], "answer": "C　心眼儿不坏"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 33, "fixedOrder": true, "prompt": "🎧 第33题：请选出正确答案。", "options": ["A　早晚他会明白“我”", "B　“我”会跟他解释的", "C　“我”不知道怎么说", "D　他不想听“我”解释"], "answer": "A　早晚他会明白“我”"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 34, "fixedOrder": true, "prompt": "🎧 第34题：请选出正确答案。", "options": ["A　是个好兄弟", "B　不愿意帮人", "C　不值得信任", "D　对人很热情"], "answer": "C　不值得信任"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 35, "fixedOrder": true, "prompt": "🎧 第35题：请选出正确答案。", "options": ["A　朋友", "B　亲戚", "C　顾客", "D　姐姐"], "answer": "C　顾客"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 36, "fixedOrder": true, "prompt": "🎧 第36题：请选出正确答案。", "options": ["A　妻子就在身边", "B　跟妻子感情好", "C　孩子可以再生", "D　救妻子更重要"], "answer": "A　妻子就在身边"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 37, "fixedOrder": true, "prompt": "🎧 第37题：请选出正确答案。", "options": ["A　决定太快会犯错误", "B　决定前应仔细想想", "C　生活不能重新选择", "D　想做就要马上去做"], "answer": "D　想做就要马上去做"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 38, "fixedOrder": true, "prompt": "🎧 第38题：请选出正确答案。", "options": ["A　比一般人更易取得成就", "B　大部分时间用在工作上", "C　过度工作引起身体疾病", "D　工作使他们获得安全感"], "answer": "C　过度工作引起身体疾病"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 39, "fixedOrder": true, "prompt": "🎧 第39题：请选出正确答案。", "options": ["A　生病后不应再工作", "B　工作可以带来成就", "C　不应从早到晚工作", "D　工作给人带来快乐"], "answer": "C　不应从早到晚工作"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 40, "fixedOrder": true, "prompt": "🎧 第40题：请选出正确答案。", "options": ["A　调皮的孩子", "B　会说话的鸟", "C　很听话的狗", "D　朋友的名字"], "answer": "B　会说话的鸟"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 41, "fixedOrder": true, "prompt": "🎧 第41题：请选出正确答案。", "options": ["A　小狗咬了鹦鹉", "B　朋友被狗咬了", "C　鹦鹉闭上了嘴", "D　朋友打了鹦鹉"], "answer": "B　朋友被狗咬了"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 42, "fixedOrder": true, "prompt": "🎧 第42题：请选出正确答案。", "options": ["A　等结果", "B　拿茶杯", "C　去喝水", "D　找钥匙"], "answer": "B　拿茶杯"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 43, "fixedOrder": true, "prompt": "🎧 第43题：请选出正确答案。", "options": ["A　态度", "B　坚持", "C　工具", "D　方法"], "answer": "D　方法"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 44, "fixedOrder": true, "prompt": "🎧 第44题：请选出正确答案。", "options": ["A　设定阶段性目标", "B　更了解比赛路线", "C　比其他人更聪明", "D　跑步的速度很快"], "answer": "A　设定阶段性目标"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 45, "fixedOrder": true, "prompt": "🎧 第45题：请选出正确答案。", "options": ["A　离成功太远", "B　被困难吓倒", "C　事情太难做", "D　头脑不聪明"], "answer": "A　离成功太远"},
+      {"kind": "read", "section": "read", "part": 1, "num": 46, "fixedOrder": true, "prompt": "📖 第46题（第46～50题：选词填空）：\n高波正闹（　　）呢，见谁烦谁，让他静静吧。", "options": ["A 丰富", "B 甚至", "C 教育", "D 坚持", "E 允许", "F 情绪"], "answer": "F 情绪"},
+      {"kind": "read", "section": "read", "part": 1, "num": 47, "fixedOrder": true, "prompt": "📖 第47题（第46～50题：选词填空）：\n贫困使世界上上百万的儿童失去了受（　　）的机会。", "options": ["A 丰富", "B 甚至", "C 教育", "D 坚持", "E 允许", "F 情绪"], "answer": "C 教育"},
+      {"kind": "read", "section": "read", "part": 1, "num": 48, "fixedOrder": true, "prompt": "📖 第48题（第46～50题：选词填空）：\n医生建议病人在身体条件（　　）的情况下，尽量坚持早晚锻炼。", "options": ["A 丰富", "B 甚至", "C 教育", "D 坚持", "E 允许", "F 情绪"], "answer": "E 允许"},
+      {"kind": "read", "section": "read", "part": 1, "num": 49, "fixedOrder": true, "prompt": "📖 第49题（第46～50题：选词填空）：\n有些食物放在一起吃，不但影响营养的吸收，（　　）还会危害健康。", "options": ["A 丰富", "B 甚至", "C 教育", "D 坚持", "E 允许", "F 情绪"], "answer": "B 甚至"},
+      {"kind": "read", "section": "read", "part": 1, "num": 50, "fixedOrder": true, "prompt": "📖 第50题（第46～50题：选词填空）：\n西藏是中国太阳能资源最（　　）的地区，每年平均日照时间达3000小时左右。", "options": ["A 丰富", "B 甚至", "C 教育", "D 坚持", "E 允许", "F 情绪"], "answer": "A 丰富"},
+      {"kind": "read", "section": "read", "part": 1, "num": 51, "fixedOrder": true, "prompt": "📖 第51题（第51～55题：选词填空）：\nA：你说，我光吃蔬菜、水果，不吃肉，是不是就能瘦下来？\nB：（　　），只要搭配合理，吃肉也可以减肥。", "options": ["A 减少", "B 周围", "C 温度", "D 直接", "E 其实", "F 提高"], "answer": "E 其实"},
+      {"kind": "read", "section": "read", "part": 1, "num": 52, "fixedOrder": true, "prompt": "📖 第52题（第51～55题：选词填空）：\nA：中国人喜欢（　　）用现金买东西，尤其是老年人。\nB：不过那是以前，现在更多的人习惯用银行卡消费。", "options": ["A 减少", "B 周围", "C 温度", "D 直接", "E 其实", "F 提高"], "answer": "D 直接"},
+      {"kind": "read", "section": "read", "part": 1, "num": 53, "fixedOrder": true, "prompt": "📖 第53题（第51～55题：选词填空）：\nA：在现代中国，女性的地位发生了很大的变化。\nB：是呀，女性经济上的独立带来了家庭地位的（　　）。", "options": ["A 减少", "B 周围", "C 温度", "D 直接", "E 其实", "F 提高"], "answer": "F 提高"},
+      {"kind": "read", "section": "read", "part": 1, "num": 54, "fixedOrder": true, "prompt": "📖 第54题（第51～55题：选词填空）：\nA：我只知道有空气污染、水污染，那什么是光污染呢？\nB：光污染是指各种各样的光对（　　）环境和人体健康造成的伤害。", "options": ["A 减少", "B 周围", "C 温度", "D 直接", "E 其实", "F 提高"], "answer": "B 周围"},
+      {"kind": "read", "section": "read", "part": 1, "num": 55, "fixedOrder": true, "prompt": "📖 第55题（第51～55题：选词填空）：\nA：你觉得吃盐跟心脏病有关系吗？\nB：当然有。如果人们每天少吃3克盐，那么得心脏病的人就会（　　）11%。", "options": ["A 减少", "B 周围", "C 温度", "D 直接", "E 其实", "F 提高"], "answer": "A 减少"},
+      {"kind": "read", "section": "read", "part": 2, "num": 56, "fixedOrder": true, "prompt": "📖 第56题：排列顺序。\nA：有些人会因为性格的原因\nB：另一些人却从来不表达意见\nC：直接说出自己的不同意见", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "ACB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 57, "fixedOrder": true, "prompt": "📖 第57题：排列顺序。\nA：就是说身体不太舒服\nB：不是说最近工作很忙\nC：他总是故意拒绝我", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CBA"},
+      {"kind": "read", "section": "read", "part": 2, "num": 58, "fixedOrder": true, "prompt": "📖 第58题：排列顺序。\nA：这才是我们参加比赛的目的\nB：比赛的输赢其实并不重要\nC：关键是在比赛中学到了什么", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "BCA"},
+      {"kind": "read", "section": "read", "part": 2, "num": 59, "fixedOrder": true, "prompt": "📖 第59题：排列顺序。\nA：也是一种难得的享受\nB：呼吸一下新鲜空气\nC：周末去郊外走一走", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CBA"},
+      {"kind": "read", "section": "read", "part": 2, "num": 60, "fixedOrder": true, "prompt": "📖 第60题：排列顺序。\nA：人们都喜欢在房间里活动\nB：甚至还会把门窗都关上\nC：一到冬季，因为外边太冷", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CAB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 61, "fixedOrder": true, "prompt": "📖 第61题：排列顺序。\nA：如果一天不喝点儿茶\nB：他已经养成了喝茶的习惯\nC：就好像少了点儿什么似的", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "BAC"},
+      {"kind": "read", "section": "read", "part": 2, "num": 62, "fixedOrder": true, "prompt": "📖 第62题：排列顺序。\nA：售货员始终脸上带着笑\nB：表现了高度的职业精神\nC：不管顾客怎么不讲道理", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CAB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 63, "fixedOrder": true, "prompt": "📖 第63题：排列顺序。\nA：所以得学会减轻压力\nB：尤其是大城市里的人\nC：现在人们生活压力非常大", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CBA"},
+      {"kind": "read", "section": "read", "part": 2, "num": 64, "fixedOrder": true, "prompt": "📖 第64题：排列顺序。\nA：我们甚至可以这样说\nB：其实认识自己并不难\nC：这是做人的基本本能", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "BAC"},
+      {"kind": "read", "section": "read", "part": 2, "num": 65, "fixedOrder": true, "prompt": "📖 第65题：排列顺序。\nA：出现问题时就得学会冷静\nB：否则很难长时间在一起\nC：如果两个人想好好儿在一起", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CAB"},
+      {"kind": "read", "section": "read", "part": 3, "num": 66, "fixedOrder": true, "prompt": "📖 第66题\n从前，有个人丢了一把斧头。他怀疑是邻居家的孩子偷的，就偷偷注意那个孩子。不论是语言动作还是神态举止，他怎么看都觉得那个孩子是偷斧头的人。过了几天，他在后山找到了斧头，原来是自己弄丢了。从此以后，他再看邻居家那个孩子，怎么看都觉得他不像偷斧头的人。\n★ 这个人丢了斧头后做了什么？", "options": ["A　直接去后山找斧头", "B　去邻居家偷回斧头", "C　偷偷观察邻居孩子", "D　直接上门要求归还"], "answer": "C　偷偷观察邻居孩子"},
+      {"kind": "read", "section": "read", "part": 3, "num": 67, "fixedOrder": true, "prompt": "📖 第67题\n主动积极不仅是一个人做事的态度，更是做人的态度。主动积极的人知道成功是要自己去争取的，只是消极地等待是等不来的，要学会抓住机会，否则只能在后悔中过日子。有句话说得好：“山不会向我走来，我要走向大山；海不会向我走来，我要奔向大海。”\n★ 这段话的主要内容是：", "options": ["A　做事别后悔", "B　做人要积极", "C　做事要负责", "D　做事要认真"], "answer": "B　做人要积极"},
+      {"kind": "read", "section": "read", "part": 3, "num": 68, "fixedOrder": true, "prompt": "📖 第68题\n随着年龄的增长，小狗的睡眠时间也会逐渐增加。不仅身体需要营养，头脑也需要营养，因此高质量的睡眠是保证小狗活得长的关键。但是，只是长时间睡觉也不够，小狗和人一样，不能深睡或睡眠过程不顺利，都会影响睡眠质量。\n★ 关于小狗的睡眠，正确的一项是：", "options": ["A　年龄越大睡眠时间越短", "B　睡眠时间应和人类一样", "C　睡眠质量影响小狗寿命", "D　睡得越长，活得就越长"], "answer": "C　睡眠质量影响小狗寿命"},
+      {"kind": "read", "section": "read", "part": 3, "num": 69, "fixedOrder": true, "prompt": "📖 第69题\n现在的孩子都被爸爸妈妈像宝贝一样疼着、爱着，每天都在房子、车子、教室里养着，父母认为好像这样就是疼孩子、爱孩子，其实这样做对孩子的将来一点儿好处都没有。我们可以想一下，当孩子离开家门，走入另外一个环境，任何困难都要自己解决的时候，就很容易产生问题，甚至因为受不了压力而做出一些不该做的事情。\n★ 这段话的主要内容是：", "options": ["A　有压力未必是坏事", "B　不要让孩子养动物", "C　压力引起心理问题", "D　疼爱利于孩子成长"], "answer": "A　有压力未必是坏事"},
+      {"kind": "read", "section": "read", "part": 3, "num": 70, "fixedOrder": true, "prompt": "📖 第70题\n家庭“隐形人”是指那些因平时忙于工作和学习，极少与家人在一起的人。如果长时间与家人之间缺少交流，不仅会影响与家人之间的关系，使感情变淡，而且容易产生家庭问题，甚至因此影响自己和家人的身心健康。\n★ 家庭“隐形人”的共同特点是：", "options": ["A　事业有成的成功人士", "B　没有能力处理家庭矛盾", "C　跟家人相处机会很少", "D　对人不热情，做事马虎"], "answer": "C　跟家人相处机会很少"},
+      {"kind": "read", "section": "read", "part": 3, "num": 71, "fixedOrder": true, "prompt": "📖 第71题\n过程和结果哪个更重要？这个问题从来就没有标准答案，每个人都有自己的想法。从事情的发展来看，也许过程更重要，因为过程决定结果。但是，结果也可以影响过程，这和看体育比赛一样，即使过程再美，结果输了也是一种遗憾。有时要从事情可能出现的结果出发，考虑要不要进行这样的过程，从这个意义上讲，在整个过程中，结果才是真正的主导。\n★ 下列符合这段话内容的一项是：", "options": ["A　过程决定做事的意义", "B　结果比过程更加重要", "C　过程比结果更加重要", "D　过程和结果都很重要"], "answer": "B　结果比过程更加重要"},
+      {"kind": "read", "section": "read", "part": 3, "num": 72, "fixedOrder": true, "prompt": "📖 第72题\n很多人爱吃沙丁鱼，但是沙丁鱼离开大海不久就会死亡。为了让沙丁鱼活得更长一些，渔民们想出了一个方法：将几条专门吃沙丁鱼的鲶鱼直接跟沙丁鱼放在一起。鲶鱼会在水箱里游来游去寻找食物，为了不被吃掉，沙丁鱼自然要一直不停地游，这样一来，沙丁鱼就能活得长一些了。\n★ 什么使沙丁鱼活得更长？", "options": ["A　渔民减少了运输时间", "B　鲶鱼使它们保持活力", "C　为沙丁鱼提供了食物", "D　渔民增加了水箱空间"], "answer": "B　鲶鱼使它们保持活力"},
+      {"kind": "read", "section": "read", "part": 3, "num": 73, "fixedOrder": true, "prompt": "📖 第73题\n握手是人们见面时表示友好的常见动作。其实，从握手方式也能看出一个人的性格。握手力量很大的人一般热情活泼；握手时间很短，但握得很紧的人一般不容易信任别人；对你很感兴趣、希望跟你交流的人一般会握着你的手不放；如果对方伸出手以后，自己才慢慢伸出手来，这样的人一般性格内向害羞；要是你想试试一个人是不是很诚实，也可以一边握手一边提问，如果对方的手突然出汗了，那么很可能他在骗你。\n★ 这段话的主要内容是：", "options": ["A　握手时间越长越被人信任", "B　诚实的人握手时不会出汗", "C　握手方式能反映人的性格", "D　害羞的人不愿意跟人握手"], "answer": "C　握手方式能反映人的性格"},
+      {"kind": "read", "section": "read", "part": 3, "num": 74, "fixedOrder": true, "prompt": "📖 第74题\n有一个人在河边钓鱼，他钓上来很多鱼，但每钓上一条就用尺子量一量，只要比尺子长的鱼，他就扔回河里。旁边的人觉得很奇怪，问：“别人都希望钓到大鱼，你为什么把大鱼都扔回河里呢？”这个人笑着说：“因为我家的锅只有尺子这么长，太大的放不下。”\n★ 这个钓鱼的人的心理是：", "options": ["A　钓到就行", "B　够用就好", "C　只钓大鱼", "D　钓最好的"], "answer": "B　够用就好"},
+      {"kind": "read", "section": "read", "part": 3, "num": 75, "fixedOrder": true, "prompt": "📖 第75题\n对一些让自己不愉快的事情，要学会放在脑后，不要一次次地跟别人去讲。因为你的每次讲述都是在记忆中进行了又一次强调，本来不明显的难过经历被讲述的次数多了，不愉快被一次次提醒，就会更加难过。你应该清楚，别人的同情只是暂时的，永远不能真正帮助你，能帮你的，只有你自己。\n★ 有了不愉快的事情，应该怎么做？", "options": ["A　不去想它，做些轻松的事情", "B　请求别人帮助来解决问题", "C　经常说起，提醒自己别忘记", "D　跟别人讲并得到更多同情"], "answer": "A　不去想它，做些轻松的事情"},
+      {"kind": "read", "section": "read", "part": 3, "num": 76, "fixedOrder": true, "prompt": "📖 第76题\n大多数人都认为，只要我们不原谅对方，就可以让对方得到一些教训，也就是说，只要我不原谅你，你就没有好日子过。其实，真正不好过的是你自己，你要不要让他感到后悔，对他差别都不大，他的生活不会受到什么影响，但是这样却会破坏你自己的生活，影响你工作的心情、做事的兴趣，甚至让你连觉都睡不好。\n★ 当我们不原谅对方时，结果会怎样？", "options": ["A　对方的日子不好过", "B　对方会感到很后悔", "C　对方生活受到影响", "D　自己的日子不好过"], "answer": "D　自己的日子不好过"},
+      {"kind": "read", "section": "read", "part": 3, "num": 77, "fixedOrder": true, "prompt": "📖 第77题\n在我们周围，经常可以看到一些又年轻又成功的人放弃让人羡慕的工作，主动要求“退休”，这就是职场上的“新退休主义”。出现“新退休主义”最大的原因就是健康问题。很显然，他们已经感觉到了不健康的身体状态给生活带来的消极影响，意识到了这种状态所引起的心态变化和工作效率的降低，于是，他们决定退下来，以保证后半生的健康。\n★ “新退休主义”的出现说明：", "options": ["A　压力过高使白领们放弃工作", "B　现代人价值观发生了新变化", "C　金钱价值正在超越健康价值", "D　成功人士健康问题引起关注"], "answer": "B　现代人价值观发生了新变化"},
+      {"kind": "read", "section": "read", "part": 3, "num": 78, "fixedOrder": true, "prompt": "📖 第78题\n在现代中国，女性的地位发生了很大的变化，她们有了自己的工作。经济上的独立带来了家庭地位的提高，丈夫再也不会像以前那样对妻子乱发脾气了。相反，在一些家庭中，反而是丈夫要看妻子的脸色行事，变成了“妻管严”。\n★ “妻管严”是指：", "options": ["A　从来不发脾气的丈夫", "B　遇事听妻子话的丈夫", "C　照顾生病妻子的丈夫", "D　挣钱比妻子少的丈夫"], "answer": "B　遇事听妻子话的丈夫"},
+      {"kind": "read", "section": "read", "part": 3, "num": 79, "fixedOrder": true, "prompt": "📖 第79题\n一说到成熟，人们马上就会想到年龄，好像在大家看来，长大了就该成熟了。爸妈常说我不懂事，不够成熟，可是成熟到底是什么？成熟就是听父母的话吗？就是让他们安排我的生活吗？没有规定说一个人到多少岁就必须成熟，那我为什么要按照别人的经验来改变自己呢？为什么要尽量显得成熟呢？到头来，我都觉得自己不再是自己了。我只想做我自己，做自己想做的，想自己所想的，而不需要按照别人的想法“成熟”起来。\n★ “我”对“成熟”的看法是：", "options": ["A　长大了就成熟了", "B　接受父母的安排", "C　与年龄没有关系", "D　能理解接受别人"], "answer": "C　与年龄没有关系"},
+      {"kind": "read", "section": "read", "part": 3, "num": 80, "fixedOrder": true, "passageTitle": "第80～81题", "passage": "有一个表演大师上场前，他的学生告诉他鞋带松了。大师点头表示感谢，蹲下来仔细系好。等到学生转过身后，他又蹲下来把鞋带解开。旁边的人奇怪地问：“大师，您为什么又将鞋带解开呢？”大师回答：“因为我演的是一个劳累的旅行者，长途行走让他的鞋带松开了，这个细节可以表现他的劳累。”“那为什么不直接告诉你的学生呢？”“他很细心地发现我的鞋带松了，并且热心地告诉了我，我一定要保护他的这种热情，及时给他鼓励。至于为什么又把鞋带解开，是因为将来还会有很多机会教他表演，可以下一次再说啊！”", "prompt": "80. ★ 大师为什么把系好的鞋带又解开了？", "options": ["A　表演的需要", "B　觉得没面子", "C　鞋子不舒服", "D　感觉很疲劳"], "answer": "A　表演的需要"},
+      {"kind": "read", "section": "read", "part": 3, "num": 81, "fixedOrder": true, "passageTitle": "第80～81题", "passage": "有一个表演大师上场前，他的学生告诉他鞋带松了。大师点头表示感谢，蹲下来仔细系好。等到学生转过身后，他又蹲下来把鞋带解开。旁边的人奇怪地问：“大师，您为什么又将鞋带解开呢？”大师回答：“因为我演的是一个劳累的旅行者，长途行走让他的鞋带松开了，这个细节可以表现他的劳累。”“那为什么不直接告诉你的学生呢？”“他很细心地发现我的鞋带松了，并且热心地告诉了我，我一定要保护他的这种热情，及时给他鼓励。至于为什么又把鞋带解开，是因为将来还会有很多机会教他表演，可以下一次再说啊！”", "prompt": "81. ★ 大师为什么按学生的话做了？", "options": ["A　责怪学生管闲事", "B　不想作过多解释", "C　保护学生的热情", "D　责怪自己的粗心"], "answer": "C　保护学生的热情"},
+      {"kind": "read", "section": "read", "part": 3, "num": 82, "fixedOrder": true, "passageTitle": "第82～83题", "passage": "一项调查结果显示，年龄是影响婚姻稳定的一个重要条件。在婚姻中，丈夫比妻子大4岁以上才算男比女大，否则应该算是同龄人。研究者对1534对情侣进行了调查，结果显示，能保持婚姻长久稳定的最佳夫妻模式是男女双方都受过高等教育而且没有离过婚，同时男方比女方大5岁以上。研究者说，妻子比丈夫小5岁以上是最不容易产生矛盾的年龄组合，他们的离婚率是其他婚姻的1/6。", "prompt": "82. ★ 下列哪种情况算同龄人？", "options": ["A　年龄差在4岁以上", "B　丈夫比妻子大5岁", "C　年龄差在4岁之内", "D　妻子比丈夫小5岁"], "answer": "C　年龄差在4岁之内"},
+      {"kind": "read", "section": "read", "part": 3, "num": 83, "fixedOrder": true, "passageTitle": "第82～83题", "passage": "一项调查结果显示，年龄是影响婚姻稳定的一个重要条件。在婚姻中，丈夫比妻子大4岁以上才算男比女大，否则应该算是同龄人。研究者对1534对情侣进行了调查，结果显示，能保持婚姻长久稳定的最佳夫妻模式是男女双方都受过高等教育而且没有离过婚，同时男方比女方大5岁以上。研究者说，妻子比丈夫小5岁以上是最不容易产生矛盾的年龄组合，他们的离婚率是其他婚姻的1/6。", "prompt": "83. ★ 什么样的夫妻最不容易离婚？", "options": ["A　双方都没有过恋爱经历", "B　年龄和兴趣爱好都一样", "C　男方比女方大5岁以上", "D　夫妻一方受过高等教育"], "answer": "C　男方比女方大5岁以上"},
+      {"kind": "read", "section": "read", "part": 3, "num": 84, "fixedOrder": true, "passageTitle": "第84～85题", "passage": "有一次，我去拜访一位事业有成的朋友，闲聊中谈起了命运。我问：“世界上到底有没有命运？”他说：“当然有啊。”我再问：“命运究竟是怎么回事？既然命中注定，那奋斗又有什么用？”\n他没有直接回答我的问题，而是笑着抓起我的左手，说要先看看我的手相，帮我算算命。他给我讲了一些生命线、爱情线、事业线之类的话，然后举起我的左手，慢慢地，而且越来越紧地握起拳头。最后，他问：“握紧了没有？”我有些迷惑，答道：“握紧啦。”他又问：“那些命运线在哪里？”我回答：“在我的手里呀。”他再追问：“请问，命运在哪里？”我突然明白了。\n他很平静地继续说：“不管别人怎么跟你说，不管‘算命先生们’如何给你算，记住，命运在自己的手里，而不是在别人的嘴里。这就是命运！”", "prompt": "84. ★ 命运：", "options": ["A　是命中注定的", "B　隐藏在手相里", "C　就在自己手里", "D　能够预先知道"], "answer": "C　就在自己手里"},
+      {"kind": "read", "section": "read", "part": 3, "num": 85, "fixedOrder": true, "passageTitle": "第84～85题", "passage": "有一次，我去拜访一位事业有成的朋友，闲聊中谈起了命运。我问：“世界上到底有没有命运？”他说：“当然有啊。”我再问：“命运究竟是怎么回事？既然命中注定，那奋斗又有什么用？”\n他没有直接回答我的问题，而是笑着抓起我的左手，说要先看看我的手相，帮我算算命。他给我讲了一些生命线、爱情线、事业线之类的话，然后举起我的左手，慢慢地，而且越来越紧地握起拳头。最后，他问：“握紧了没有？”我有些迷惑，答道：“握紧啦。”他又问：“那些命运线在哪里？”我回答：“在我的手里呀。”他再追问：“请问，命运在哪里？”我突然明白了。\n他很平静地继续说：“不管别人怎么跟你说，不管‘算命先生们’如何给你算，记住，命运在自己的手里，而不是在别人的嘴里。这就是命运！”", "prompt": "85. ★ “奋斗”的意义是：", "options": ["A　用努力去争取", "B　服从命运安排", "C　做自己想做的", "D　抓住身边机会"], "answer": "A　用努力去争取"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 86, "short": true, "prompt": "📝 第86题：完成句子。\n人与人　更……了　使　网络　之间的　距离　近\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "网络使人与人之间的距离更近了。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 87, "short": true, "prompt": "📝 第87题：完成句子。\n反应　减肥药　容易　的　严重　身体　引起\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "减肥药容易引起严重的身体反应。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 88, "short": true, "prompt": "📝 第88题：完成句子。\n椅子　这是　专门　饭店　儿童　为　提供　的\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "这是饭店专门为儿童提供的椅子。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 89, "short": true, "prompt": "📝 第89题：完成句子。\n离开　这　从小到大　从来　过　父母　孩子　没\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "这孩子从小到大从来没离开过父母。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 90, "short": true, "prompt": "📝 第90题：完成句子。\n行李箱　机场　重新　要　乘客　的　警察　检查\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "机场警察要重新检查乘客的行李箱。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 91, "short": true, "prompt": "📝 第91题：完成句子。\n校长　他　提前　申请　毕业　的　要求　拒绝了\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "校长拒绝了他要求提前毕业的申请。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 92, "short": true, "prompt": "📝 第92题：完成句子。\n学校　商店　有　开门　24小时　的　附近　一家\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "学校附近有一家24小时开门的商店。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 93, "short": true, "prompt": "📝 第93题：完成句子。\n禁止　应该　网站　儿童　进入　国家　不健康的\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "国家应该禁止儿童进入不健康的网站。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 94, "short": true, "prompt": "📝 第94题：完成句子。\n妻子　这　家具　两种　的　质量　区别　没什么　觉得\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "妻子觉得这两种家具的质量没什么区别。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 95, "short": true, "prompt": "📝 第95题：完成句子。\n通过　奶奶　了解　国内外　电视　的　大事　发生　节目\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "奶奶通过电视节目了解国内外发生的大事。"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 96, "short": true, "prompt": "📝 第96题：看图，用词造句。\n词语：「撞」\n(Nhìn tranh, viết 1 câu có dùng từ「撞」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「撞」bằng chữ Hán vào đây…", "sample": "那个运动员被人撞倒了。", "image": "assets/mockexam/hsk2-h4-1-w96.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 97, "short": true, "prompt": "📝 第97题：看图，用词造句。\n词语：「免费」\n(Nhìn tranh, viết 1 câu có dùng từ「免费」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「免费」bằng chữ Hán vào đây…", "sample": "餐厅为客人提供免费饮料。", "image": "assets/mockexam/hsk2-h4-1-w97.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 98, "short": true, "prompt": "📝 第98题：看图，用词造句。\n词语：「禁止」\n(Nhìn tranh, viết 1 câu có dùng từ「禁止」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「禁止」bằng chữ Hán vào đây…", "sample": "马路旁边禁止停车。", "image": "assets/mockexam/hsk2-h4-1-w98.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 99, "short": true, "prompt": "📝 第99题：看图，用词造句。\n词语：「新鲜」\n(Nhìn tranh, viết 1 câu có dùng từ「新鲜」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「新鲜」bằng chữ Hán vào đây…", "sample": "超市里有很多新鲜水果。", "image": "assets/mockexam/hsk2-h4-1-w99.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 100, "short": true, "prompt": "📝 第100题：看图，用词造句。\n词语：「售货员」\n(Nhìn tranh, viết 1 câu có dùng từ「售货员」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「售货员」bằng chữ Hán vào đây…", "sample": "售货员热情地为顾客服务。", "image": "assets/mockexam/hsk2-h4-1-w100.jpg"}
+    ]},
+];
+
 const PROGRAMS = [
   { id: "yct", name: "Tiếng Trung trẻ em", shortLabel: "YCT", desc: "Làm quen tiếng Trung qua hình ảnh, bài hát và trò chơi — dành cho các em nhỏ mới bắt đầu.", colorVar: "--blue" },
   { id: "hsk3", name: "HSK 3.0", shortLabel: "HSK 3.0", desc: "Lộ trình luyện thi HSK 3.0 bài bản, bám sát cấu trúc đề thi mới nhất.", colorVar: "--accent" },
@@ -13322,7 +13429,7 @@ const LESSONS = [
   function getAllLessons() {
     const overrides = loadJSON(LESSON_OVERRIDES_KEY, {});
     const custom = loadJSON(CUSTOM_LESSONS_KEY, []);
-    const base = LESSONS.map((l) => {
+    const base = LESSONS.concat(typeof HSK2_EXAMS !== "undefined" ? HSK2_EXAMS : []).map((l) => {
       const ov = overrides[l.id];
       if (!ov) return l;
       const merged = Object.assign({}, l);
@@ -13358,6 +13465,7 @@ const LESSONS = [
     return idx >= 0 ? "Bài " + (idx + 1) : "";
   }
   function lessonDisplayTitle(lesson) {
+    if (lesson && lesson.examOnly) return lesson.title; // bài dạng đề thi (HSK 2.0) đã có tên riêng, vd "H4-1 · 模拟试卷（一）"
     const num = lessonNumberLabel(lesson);
     return num ? num + ": " + lesson.title : lesson.title;
   }
@@ -13776,8 +13884,8 @@ const LESSONS = [
         '<p class="text-sm mb-1" style="color:var(--blue);">' + lesson.pinyin + "</p>" +
         '<p class="text-xs sm:text-sm mb-5" style="color:var(--ink-faint);">' + lesson.meaning + "</p>" +
         '<button type="button" class="btn-start-lesson mt-auto w-full justify-center flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm text-white" style="background:var(--accent);">' +
-        'Học bài <i class="fa-solid fa-arrow-right"></i></button>';
-      card.querySelector(".btn-start-lesson").addEventListener("click", () => enterLesson(lesson));
+        (lesson.examOnly ? 'Làm bài' : 'Học bài') + ' <i class="fa-solid fa-arrow-right"></i></button>';
+      card.querySelector(".btn-start-lesson").addEventListener("click", () => (lesson.examOnly ? enterExamLesson(lesson) : enterLesson(lesson)));
       grid.appendChild(card);
     });
   }
@@ -14098,7 +14206,25 @@ const LESSONS = [
 
   // Cờ: đang mở "Test tổng hợp" (dùng lại màn hình Test học phần) — để nút Quay lại về đúng trang Ôn tập tổng hợp.
   let reviewTestActive = false;
+  // Cờ: đang làm 1 "bài dạng đề thi" (lesson.examOnly, vd HSK 2.0 · H4-1) — nút Quay lại về danh sách bài của chương trình.
+  let examLessonActive = false;
+  function enterExamLesson(lesson) {
+    if (!ensureProgramAccess(lesson.program, () => enterExamLesson(lesson), lesson.level)) return;
+    ensureMockPanelAtHome();
+    const program = getProgramById(lesson.program);
+    document.getElementById("test-detail-badge").innerHTML = '<i class="fa-solid fa-file-pen mr-1"></i>' + (program ? program.name + " · " : "") + lesson.level;
+    document.getElementById("test-detail-title").textContent = lesson.title;
+    const body = document.getElementById("test-detail-body");
+    body.innerHTML = "";
+    state.lesson = lesson; // id thật (vd "hsk2-h4-1") — điểm được lưu như bài học bình thường
+    reviewTestActive = false;
+    examLessonActive = true;
+    moveMockExamPanelInto(body);
+    buildMockExam();
+    showView("testDetail");
+  }
   function enterReviewTest(groupKey, paperIdx) {
+    examLessonActive = false;
     const group = getReviewGroupById(groupKey);
     const papers = getReviewTestPapers(groupKey);
     const idx = papers[paperIdx || 0] ? (paperIdx || 0) : 0;
@@ -14222,6 +14348,7 @@ const LESSONS = [
 
   function enterTestLevel(folder, level) {
     reviewTestActive = false;
+    examLessonActive = false;
     if (!ensureTestAccess(folder.id, level, () => enterTestLevel(folder, level))) return;
     document.getElementById("test-detail-badge").innerHTML = '<i class="fa-solid fa-list-check mr-1"></i>' + folder.name;
     document.getElementById("test-detail-title").textContent = "Test tổng hợp — " + level;
@@ -14272,7 +14399,7 @@ const LESSONS = [
   })();
   document.getElementById("btn-back-home-testhub").addEventListener("click", () => showView("home"));
   document.getElementById("btn-back-testhub").addEventListener("click", () => showView("home"));
-  document.getElementById("btn-back-testlevels").addEventListener("click", () => { if (reviewTestActive) { reviewTestActive = false; showView("reviewSetup"); return; } if (testState.folder) renderTestLevelGrid(testState.folder); showView("testLevels"); });
+  document.getElementById("btn-back-testlevels").addEventListener("click", () => { if (examLessonActive) { examLessonActive = false; showView("program"); return; } if (reviewTestActive) { reviewTestActive = false; showView("reviewSetup"); return; } if (testState.folder) renderTestLevelGrid(testState.folder); showView("testLevels"); });
 
 
   /* =====================================================================
