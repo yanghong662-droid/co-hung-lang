@@ -1642,6 +1642,7 @@
    ===================================================================== */
 
 // ===== HSK 2.0 — Bài tập dạng đề thi (examOnly: bấm vào là làm đề luôn, không có thẻ từ/ngữ pháp) =====
+// H4-2: 模拟试卷 2 (cùng cấu trúc; câu nghe có trường "script" = 录音文本, hiện sau khi nộp phần 听力).
 // H4-1: 《新汉语水平考试精讲精练 HSK四级》模拟试卷 1 — Nghe 45 + Đọc 40 câu chấm tự động; Viết 86–100 (kind "essay") giáo viên chấm tay.
 const HSK2_EXAMS = [
   {"id": "hsk2-h4-1", "program": "hsk2", "level": "HSK 4", "title": "H4-1 · 模拟试卷（一）", "pinyin": "HSK（四级）模拟试卷 1", "meaning": "Đề thi thử HSK 4 (HSK 2.0) — Nghe 45 · Đọc 40 · Viết 15 câu", "examOnly": true, "vocabulary": [], "grammar": [], "quiz": [], "mockExamAudio": "assets/audio/hsk2-h4-1/mock-nghe.mp3", "mockExam": [
@@ -1745,6 +1746,108 @@ const HSK2_EXAMS = [
       {"kind": "essay", "section": "write", "part": 2, "num": 98, "short": true, "prompt": "📝 第98题：看图，用词造句。\n词语：「禁止」\n(Nhìn tranh, viết 1 câu có dùng từ「禁止」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「禁止」bằng chữ Hán vào đây…", "sample": "马路旁边禁止停车。", "image": "assets/mockexam/hsk2-h4-1-w98.jpg"},
       {"kind": "essay", "section": "write", "part": 2, "num": 99, "short": true, "prompt": "📝 第99题：看图，用词造句。\n词语：「新鲜」\n(Nhìn tranh, viết 1 câu có dùng từ「新鲜」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「新鲜」bằng chữ Hán vào đây…", "sample": "超市里有很多新鲜水果。", "image": "assets/mockexam/hsk2-h4-1-w99.jpg"},
       {"kind": "essay", "section": "write", "part": 2, "num": 100, "short": true, "prompt": "📝 第100题：看图，用词造句。\n词语：「售货员」\n(Nhìn tranh, viết 1 câu có dùng từ「售货员」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「售货员」bằng chữ Hán vào đây…", "sample": "售货员热情地为顾客服务。", "image": "assets/mockexam/hsk2-h4-1-w100.jpg"}
+    ]},
+  {"id": "hsk2-h4-2", "program": "hsk2", "level": "HSK 4", "title": "H4-2 · 模拟试卷（二）", "pinyin": "HSK（四级）模拟试卷 2", "meaning": "Đề thi thử HSK 4 (HSK 2.0) — Nghe 45 · Đọc 40 · Viết 15 câu", "examOnly": true, "vocabulary": [], "grammar": [], "quiz": [], "mockExamAudio": "assets/audio/hsk2-h4-2/mock-nghe.mp3", "mockExam": [
+      {"kind": "listen", "section": "listen", "part": 1, "num": 1, "fixedOrder": true, "prompt": "🎧 第1题：判断对错。\n★ 现代年轻人的婚姻更尊重自己的感觉。", "options": ["✓", "✗"], "answer": "✓", "script": "现代年轻人的婚姻是跟着感觉走，父母的意见已经不那么重要了。即使是通过朋友介绍，如果对对方不“感冒”，也可以马上走人，或者只是吃个饭就分手。\n★ 现代年轻人的婚姻更尊重自己的感觉。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 2, "fixedOrder": true, "prompt": "🎧 第2题：判断对错。\n★ 飞机起降声使我心情变坏。", "options": ["✓", "✗"], "answer": "✗", "script": "我住的地方离机场很近，飞机起飞降落时我都能听到巨大的声音。每当我心情不好时，我就会对着飞过的飞机大叫，等飞机飞走了，我的坏心情也被飞机带走了。\n★ 飞机起降声使我心情变坏。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 3, "fixedOrder": true, "prompt": "🎧 第3题：判断对错。\n★ 起床后别马上吃早餐。", "options": ["✓", "✗"], "answer": "✓", "script": "很多习惯早起的人起床后会马上吃早餐，认为这样能及时补充身体所需的营养。事实上，这样做对健康没有好处。专家指出，为了补充睡眠中失去的水分，起床后先喝点儿水，20到30分钟后再吃早餐比较合适。\n★ 起床后别马上吃早餐。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 4, "fixedOrder": true, "prompt": "🎧 第4题：判断对错。\n★ 儿童不要使用成人牙膏。", "options": ["✓", "✗"], "answer": "✓", "script": "成人牙膏一般口味比较重，刺激性也比较强，儿童使用后会影响对味道的感觉；而且由于成人牙膏硬度比较高，因此更容易损伤儿童牙齿。\n★ 儿童不要使用成人牙膏。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 5, "fixedOrder": true, "prompt": "🎧 第5题：判断对错。\n★ 懒人体内盐分不足。", "options": ["✓", "✗"], "answer": "✗", "script": "据报道，只要稍微调整一下自己的饮食习惯，就可以改变身体的内在规律。比如在饮食中增加含盐食物，减少含糖食物，就可以使生物钟变快，使懒人变得勤快起来；而红葡萄酒则相反，可以使生物钟变慢。\n★ 懒人体内盐分不足。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 6, "fixedOrder": true, "prompt": "🎧 第6题：判断对错。\n★ 过度购物易引起心理疾病。", "options": ["✓", "✗"], "answer": "✗", "script": "在日常生活中，有些人面对名牌或打折商品时，即使对自己来说是没什么用处的东西，也会马上买下来。但买到的不一定就是适合自己的，所以事后又常常感到很后悔。心理医生说，这种行为其实是对商品的病态占有欲造成的。\n★ 过度购物易引起心理疾病。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 7, "fixedOrder": true, "prompt": "🎧 第7题：判断对错。\n★ 说假话时眼睛会向右转。", "options": ["✓", "✗"], "answer": "✓", "script": "对大多数人来说，当回忆某件真实存在的事情时，眼睛会先向上、再向左转动。而当一个人尝试去“构建”一个不存在的情况时，眼球的运动正好相反，会先向上、再向右转动。\n★ 说假话时眼睛会向右转。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 8, "fixedOrder": true, "prompt": "🎧 第8题：判断对错。\n★ 人犯错时才会脸红。", "options": ["✓", "✗"], "answer": "✗", "script": "科学家研究发现，脸红是只有人类才有的身体反应。通过脸红，我们可以告诉别人我们已经认识到自己做得不对了，而这时看到我们脸红的人则可以了解我们在这一时刻所经历的不快感受。脸红也许就是我们对所犯错误表示歉意的身体语言。\n★ 人犯错时才会脸红。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 9, "fixedOrder": true, "prompt": "🎧 第9题：判断对错。\n★ 人越胖越容易得心脏病。", "options": ["✓", "✗"], "answer": "✗", "script": "看起来比较瘦，但没有运动习惯的人，虽然脂肪没有胖人多，但是心脏病的发病风险和胖人没什么不同，因为心脏病与脂肪的多少没有关系。就是说，胖人不一定就会得心脏病，瘦人也不一定不得心脏病。\n★ 人越胖越容易得心脏病。"},
+      {"kind": "listen", "section": "listen", "part": 1, "num": 10, "fixedOrder": true, "prompt": "🎧 第10题：判断对错。\n★ 夏季喝冰凉饮料最解渴。", "options": ["✓", "✗"], "answer": "✗", "script": "科学家对在炎热的夏天喝温热饮料和冰凉饮料的人的皮肤进行测试后发现，温热饮料能降低皮肤温度1到2度，而冰凉饮料只能使口腔周围变冷。同时，喝饮料的人自己的感觉也不同，喝温热饮料者觉得清凉舒服，渴的感觉消失了；而喝冰凉饮料的人则感觉越喝越渴。\n★ 夏季喝冰凉饮料最解渴。"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 11, "fixedOrder": true, "prompt": "🎧 第11题：请选出正确答案。", "options": ["A　害羞", "B　谦虚", "C　得意", "D　感激"], "answer": "C　得意", "script": "女：还是你有办法。\n男：你也不看看我是谁！\n问：男的是什么语气？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 12, "fixedOrder": true, "prompt": "🎧 第12题：请选出正确答案。", "options": ["A　失眠", "B　哭了", "C　生病", "D　工作"], "answer": "D　工作", "script": "男：看看你这熊猫眼，又熬了一夜吧？\n女：时间紧，任务急，没办法呀！\n问：女的昨晚怎么了？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 13, "fixedOrder": true, "prompt": "🎧 第13题：请选出正确答案。", "options": ["A　很伤心", "B　很紧张", "C　很无奈", "D　很激动"], "answer": "C　很无奈", "script": "女：下一步打算怎么办？\n男：还能怎么办？走一步算一步吧。\n问：男的现在心情怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 14, "fixedOrder": true, "prompt": "🎧 第14题：请选出正确答案。", "options": ["A　送礼物", "B　请吃饭", "C　喝饮料", "D　谈生意"], "answer": "A　送礼物", "script": "女：我最喜欢这个牌子了。又让你破费了！\n男：你喜欢就好，这个味道很适合你这样的职业女性。\n问：男的正在干什么？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 15, "fixedOrder": true, "prompt": "🎧 第15题：请选出正确答案。", "options": ["A　看笑话", "B　很着急", "C　想帮忙", "D　很同情"], "answer": "A　看笑话", "script": "女：瞧瞧，我说什么来着？\n男：你不帮忙可以，请不要阴一句阳一句的！\n问：女的是什么心态？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 16, "fixedOrder": true, "prompt": "🎧 第16题：请选出正确答案。", "options": ["A　很辛苦", "B　长得帅", "C　很危险", "D　很勇敢"], "answer": "D　很勇敢", "script": "男：这小伙子可真是好样的，不顾危险，跳进河里救起了两个落水儿童。\n女：是啊，这时候河水可够凉的！\n问：他们觉得这个小伙子怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 17, "fixedOrder": true, "prompt": "🎧 第17题：请选出正确答案。", "options": ["A　要求高", "B　不漂亮", "C　个子高", "D　很优秀"], "answer": "A　要求高", "script": "女：我看你跟英子挺合适的，要不阿姨帮你说说？\n男：人家英子眼光高，看不上我！\n问：男的说英子怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 18, "fixedOrder": true, "prompt": "🎧 第18题：请选出正确答案。", "options": ["A　收拾房间", "B　帮妈妈忙", "C　清洗碗筷", "D　负责做菜"], "answer": "B　帮妈妈忙", "script": "男：你真厉害，还会做菜！跟谁学的这一手？\n女：每次家里来了客人，我都给妈妈打下手，慢慢儿就学了一点儿。\n问：家里来客人时，女的一般会做什么？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 19, "fixedOrder": true, "prompt": "🎧 第19题：请选出正确答案。", "options": ["A　头脑不聪明", "B　文化水平低", "C　说话太直接", "D　打伤了别人"], "answer": "C　说话太直接", "script": "女：小娟就是个直脾气，说话不知深浅，您千万别往心里去！\n男：我倒没什么，只是直来直去容易伤人哪！\n问：根据对话，可以知道小娟怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 20, "fixedOrder": true, "prompt": "🎧 第20题：请选出正确答案。", "options": ["A　听不懂老师的课", "B　不想听父母的话", "C　对学习没有兴趣", "D　觉得内容太简单"], "answer": "C　对学习没有兴趣", "script": "女：你为什么上课总不注意听呢？有什么事吗？\n男：听不进去呗！我本来就不是学习的料，可我爸妈就是不听。\n问：根据对话，可以知道男的怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 21, "fixedOrder": true, "prompt": "🎧 第21题：请选出正确答案。", "options": ["A　在村里住下来", "B　按时赶到店里", "C　快点儿作决定", "D　到农村做生意"], "answer": "C　快点儿作决定", "script": "男：这笔钱不是小数目，你让我再想想！\n女：还想呢？生意都送上门来了，过了这个村可没这个店了！\n问：女的希望男的怎么做？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 22, "fixedOrder": true, "prompt": "🎧 第22题：请选出正确答案。", "options": ["A　不想留校当老师", "B　终于等到这一天", "C　消息并不是真的", "D　已经接到通知了"], "answer": "C　消息并不是真的", "script": "男：文丽，听说你留校当老师了，得请客啊！\n女：别听风就是雨，没影儿的事！\n问：女的是什么意思？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 23, "fixedOrder": true, "prompt": "🎧 第23题：请选出正确答案。", "options": ["A　找不到地铁站了", "B　想买图书馆地图", "C　不熟悉这个地方", "D　请女的帮忙带路"], "answer": "C　不熟悉这个地方", "script": "男：你能告诉我，我在地图上的什么位置吗？我想去国家图书馆。\n女：你看，这是地铁站，你正好走反了。我也去那个方向，我给你带路吧。\n问：根据对话，可以知道男的怎么了？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 24, "fixedOrder": true, "prompt": "🎧 第24题：请选出正确答案。", "options": ["A　做事不能总依靠别人", "B　别人的话别放在心上", "C　做事不是给别人看的", "D　应该重视别人的评价"], "answer": "C　做事不是给别人看的", "script": "男：我一定要做出个样子来，给这些人看看！\n女：如果只是为了面子这样做，还真没这个必要。\n问：女的是什么意思？"},
+      {"kind": "listen", "section": "listen", "part": 2, "num": 25, "fixedOrder": true, "prompt": "🎧 第25题：请选出正确答案。", "options": ["A　只要请客他准答应", "B　好好儿说老周会吃的", "C　豆腐最适合老年人", "D　老周心软，同情弱者"], "answer": "D　老周心软，同情弱者", "script": "男：要是老周软硬不吃怎么办？\n女：不会的，他吃软不吃硬。你说点儿软话，他准答应！\n问：女的是什么意思？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 26, "fixedOrder": true, "prompt": "🎧 第26题：请选出正确答案。", "options": ["A　兴奋", "B　同情", "C　后悔", "D　激动"], "answer": "C　后悔", "script": "女：你太让老师失望了！你怎么能跟老师顶嘴呢？\n男：我当时也是头脑一热，就说了不该说的话。现在怎么办？\n女：你呀你，让我说什么好呢！\n男：你说他不会放弃我，从此不管我了吧？\n问：男的现在是什么心情？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 27, "fixedOrder": true, "prompt": "🎧 第27题：请选出正确答案。", "options": ["A　同学", "B　恋人", "C　同事", "D　夫妻"], "answer": "B　恋人", "script": "男：我家最近出了点儿状况，可能一时半会儿买不了房子，你看……\n女：我看上的是你的人，又不是你的房子！我们可以先租房。\n男：兰兰，你真好！\n女：行了，瞧你这点儿出息！\n问：他们最可能是什么关系？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 28, "fixedOrder": true, "prompt": "🎧 第28题：请选出正确答案。", "options": ["A　需要帮助", "B　缺乏耐心", "C　遇到麻烦", "D　打错电话"], "answer": "B　缺乏耐心", "script": "女：您好，请帮我找一下赵明。\n男：赵明？你打错了，我们这里没有这个人。\n女：不可能吧？我昨天还跟他通过电话呢。我是……\n男：你最好弄清楚再打！\n女：喂……\n问：根据对话，可以知道男的怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 29, "fixedOrder": true, "prompt": "🎧 第29题：请选出正确答案。", "options": ["A　注意身体", "B　遇事动脑", "C　按时打针", "D　别犯错误"], "answer": "D　别犯错误", "script": "男：别人的钱再多，那也是人家的，不能动别的心思！\n女：你这是说什么呢？我动什么心思了？\n男：我只是给你打个预防针！\n女：你这是哪儿跟哪儿呀！当我是什么人了！\n问：男的提醒女的什么？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 30, "fixedOrder": true, "prompt": "🎧 第30题：请选出正确答案。", "options": ["A　应受到重视", "B　不需要帮助", "C　想离开公司", "D　不值得同情"], "answer": "D　不值得同情", "script": "女：听说钟元弄丢了一份重要材料，老板要停他的职。\n男：活该！他要是把玩儿游戏的劲头儿用在工作上，哪会有今天？\n女：怎么说我们也是朋友，不能看着他丢掉工作吧？\n男：你爱帮你帮，我才懒得管他的闲事呢！\n问：男的觉得钟元怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 31, "fixedOrder": true, "prompt": "🎧 第31题：请选出正确答案。", "options": ["A　生活压力很大", "B　正给家人做饭", "C　身体不是很好", "D　家里人口很多"], "answer": "A　生活压力很大", "script": "男：这上有老下有小的日子真够你受的，你也得注意身体呀！\n女：唉，慢慢儿熬吧。\n男：也快，等小静大学毕业，你就能松口气了。\n女：可她才上大学呀！\n问：根据对话，可以知道女的怎么样？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 32, "fixedOrder": true, "prompt": "🎧 第32题：请选出正确答案。", "options": ["A　妻子和丈夫", "B　医生和病人", "C　领导和职员", "D　母亲和儿子"], "answer": "B　医生和病人", "script": "女：老孔，我的话你可别不当回事儿！真出事就晚了！\n男：那你总不能让我天天躺在床上吧？\n女：能那样更好。其实，我今天就该把你留下来作全面检查！\n男：别，别！厂里一堆事等着我呢，我保证每周都来还不行吗？\n女：老孔，你得说话算数！\n问：他们最可能是什么关系？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 33, "fixedOrder": true, "prompt": "🎧 第33题：请选出正确答案。", "options": ["A　应该搞好同事关系", "B　不应该太相信别人", "C　钱不能让别人管理", "D　别让亲戚进入公司"], "answer": "B　不应该太相信别人", "script": "男：你觉得我不应该向郭经理汇报孙月的经济问题？\n女：你想想啊，他们是亲戚，还能不互相帮忙？\n男：不会吧，亲戚是亲戚，工作是工作，再说我也是为公司好啊！\n女：你呀，还是小心点儿好，别让人卖了还帮人家数钱！\n问：女的想提醒男的什么？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 34, "fixedOrder": true, "prompt": "🎧 第34题：请选出正确答案。", "options": ["A　货物数量不够", "B　双方协商不成", "C　货物包装不当", "D　买方名誉受损"], "answer": "B　双方协商不成", "script": "男：我们之间没什么好谈的，等着律师跟你们谈吧。\n女：何必弄得这么不愉快呢？有什么问题我们可以商量解决呀！\n男：你来看看这些货物，数量不够不说，大部分都被海水弄湿了，完全是因为包装不合格而造成的。由于你们的过错，我们的信誉受到了巨大损失，这个损失由谁来承担？\n女：发生这样的事我也很抱歉，我完全能理解你们的心情，我们愿意承担你们的损失。不过，您看能不能不通过法律手段解决这件事？\n问：对话中没有提到什么问题？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 35, "fixedOrder": true, "prompt": "🎧 第35题：请选出正确答案。", "options": ["A　免费送货安装", "B　改变家具尺寸", "C　免费以旧换新", "D　更新家具样式"], "answer": "C　免费以旧换新", "script": "男：你们的家具比别的厂家都贵，我想知道你们的家具跟其他公司的有什么不同。\n女：一分钱一分货。您看看我们所用的材料和家具的样子就知道了。时尚的设计、一流的材料，都是现在最流行的。\n男：现在流行不代表永远流行，总有过时的时候吧？\n女：说得太对了！我们公司还提供以旧换新业务，要是过几年您不喜欢这个样子了，可以来换新家具，只要补些差价就行。这样您的家具永远是最新、最时尚的。\n男：听起来倒很不错。家具的大小可以改变吗？\n女：当然可以，我们可以根据您的要求在合理的范围内调整大小，而且我们还提供免费送货上门安装的服务。\n问：下列哪项不是家具公司所提供的服务？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 36, "fixedOrder": true, "prompt": "🎧 第36题：请选出正确答案。", "options": ["A　心理压力太大", "B　身体状态不好", "C　技术不够熟练", "D　客观环境不好"], "answer": "A　心理压力太大", "script": "（第36～37题）他是一个非常著名的高空表演者，在一次重大的表演中不幸出了事故，摔死了。事后他的妻子说：我知道他这次一定会出事的，因为他上场前总是不停地说：“这次太重要了，不能失败，一定不能失败！”而以前每次成功的表演，他只是想着表演这件事，而不去管这件事可能带来的结果。\n36. 他为什么会出事？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 37, "fixedOrder": true, "prompt": "🎧 第37题：请选出正确答案。", "options": ["A　做事应该全面考虑", "B　不应该做危险的事", "C　应专注于事情本身", "D　外界对人影响很大"], "answer": "C　应专注于事情本身", "script": "（第36～37题）他是一个非常著名的高空表演者，在一次重大的表演中不幸出了事故，摔死了。事后他的妻子说：我知道他这次一定会出事的，因为他上场前总是不停地说：“这次太重要了，不能失败，一定不能失败！”而以前每次成功的表演，他只是想着表演这件事，而不去管这件事可能带来的结果。\n37. 这个故事告诉我们什么？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 38, "fixedOrder": true, "prompt": "🎧 第38题：请选出正确答案。", "options": ["A　产品质量问题使他不安", "B　发现卖价高出同类产品", "C　因数量过多而计算错误", "D　顾客要求退还产品差价"], "answer": "B　发现卖价高出同类产品", "script": "（第38～39题）有一个专门卖厨房用具的年轻人在半个月内跟二十多位顾客做成了生意，但是后来他发现自己卖的刀具比别的商店的同类产品价格高，这让他很不安。经过考虑，他决定向这二十多位顾客说明情况，并主动提出把多收的钱退给顾客。他的这种做法感动了顾客，他们不但没接受退款，反而又买了很多刀具，这使他的销售量一下子提高了很多，并因此得到了公司的奖励。\n38. 这个年轻人为什么要退钱给顾客？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 39, "fixedOrder": true, "prompt": "🎧 第39题：请选出正确答案。", "options": ["A　服务热情", "B　产品质量", "C　诚实坦白", "D　产品价格"], "answer": "C　诚实坦白", "script": "（第38～39题）有一个专门卖厨房用具的年轻人在半个月内跟二十多位顾客做成了生意，但是后来他发现自己卖的刀具比别的商店的同类产品价格高，这让他很不安。经过考虑，他决定向这二十多位顾客说明情况，并主动提出把多收的钱退给顾客。他的这种做法感动了顾客，他们不但没接受退款，反而又买了很多刀具，这使他的销售量一下子提高了很多，并因此得到了公司的奖励。\n39. 他凭什么得到了顾客的信任？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 40, "fixedOrder": true, "prompt": "🎧 第40题：请选出正确答案。", "options": ["A　影响员工工作热情", "B　促使员工更加努力", "C　致使员工停止工作", "D　员工要求离开公司"], "answer": "A　影响员工工作热情", "script": "（第40～41题）我们常听到“公司的成绩是全体员工努力的结果”之类的话，表面看起来，管理者非常尊重企业员工，但当员工的利益以个体方式出现时，企业管理者会以维护全体员工的利益为理由拒绝少数员工的要求，他们会说“我们不可能只考虑你的利益”或者“你不想干可以走，我们不担心找不到人”，这时员工就会觉得“重视员工的价值和需求”只是一句漂亮话，没有什么实际意义。很显然，如果管理者不重视员工的感受，不尊重员工，就会大大降低员工的工作积极性，使他们只是为了得到工资而工作。\n40. 如果公司不重视员工感受，结果会怎样？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 41, "fixedOrder": true, "prompt": "🎧 第41题：请选出正确答案。", "options": ["A　公司成绩是员工努力的结果", "B　员工工作仅仅是为了获得钱", "C　管理者应重视公司员工感受", "D　员工不该只是为了钱而工作"], "answer": "C　管理者应重视公司员工感受", "script": "（第40～41题）我们常听到“公司的成绩是全体员工努力的结果”之类的话，表面看起来，管理者非常尊重企业员工，但当员工的利益以个体方式出现时，企业管理者会以维护全体员工的利益为理由拒绝少数员工的要求，他们会说“我们不可能只考虑你的利益”或者“你不想干可以走，我们不担心找不到人”，这时员工就会觉得“重视员工的价值和需求”只是一句漂亮话，没有什么实际意义。很显然，如果管理者不重视员工的感受，不尊重员工，就会大大降低员工的工作积极性，使他们只是为了得到工资而工作。\n41. 这段话的主要内容是什么？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 42, "fixedOrder": true, "prompt": "🎧 第42题：请选出正确答案。", "options": ["A　玉器相碰后发出的声音", "B　请专家用仪器进行判定", "C　看玉器产品价格的高低", "D　看玉器撞击后的坚硬度"], "answer": "A　玉器相碰后发出的声音", "script": "（第42～43题）据说通过声音可以来判断用玉做成的产品的质量好坏。把两个玉制品轻轻相碰，能发出清脆好听的声音的就是好产品。有一个人就用这种方法去商店买玉器。但他总是不满意，他觉得这家商店没有一件好玉器，甚至价格很贵的玉器质量也不好。原来，他用质地很差的玉器做检验的标准，结果所有的玉器都发不出清脆好听的声音。\n42. 这个人用什么方法判断玉制品质量的好坏？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 43, "fixedOrder": true, "prompt": "🎧 第43题：请选出正确答案。", "options": ["A　检验的标准错了", "B　他对玉器要求高", "C　店里没有好玉器", "D　店里玉器卖价低"], "answer": "A　检验的标准错了", "script": "（第42～43题）据说通过声音可以来判断用玉做成的产品的质量好坏。把两个玉制品轻轻相碰，能发出清脆好听的声音的就是好产品。有一个人就用这种方法去商店买玉器。但他总是不满意，他觉得这家商店没有一件好玉器，甚至价格很贵的玉器质量也不好。原来，他用质地很差的玉器做检验的标准，结果所有的玉器都发不出清脆好听的声音。\n43. 他为什么总是不满意？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 44, "fixedOrder": true, "prompt": "🎧 第44题：请选出正确答案。", "options": ["A　分不清钱的价值", "B　被别人给利用了", "C　是个很笨的傻子", "D　头脑聪明会赚钱"], "answer": "D　头脑聪明会赚钱", "script": "（第44～45题）有一个小孩，大家都说他很傻，因为如果有人同时给他5毛钱和1块钱，他总是选择5毛钱，而不要1块钱。有人觉得很奇怪，就去问那个孩子：“难道你分不清5毛钱和1块钱的价值吗？”孩子小声说：“当然分得清楚！可是如果我选择了1块钱，下次你就不会跟我玩儿这种游戏了。”\n这就是小孩的聪明之处。确实，如果他选择了1块钱，就没有人愿意继续跟他玩儿了，而他得到的也只有1块钱。但是他拿5毛钱，别人就会把他当成傻子继续跟他玩儿，时间越长，他拿得就越多。\n44. 关于这个孩子，正确的是哪一项？"},
+      {"kind": "listen", "section": "listen", "part": 3, "num": 45, "fixedOrder": true, "prompt": "🎧 第45题：请选出正确答案。", "options": ["A　傻子总能得到帮助", "B　知道满足才能够快乐", "C　孩子智力比大人高", "D　不满足才能得到更多"], "answer": "B　知道满足才能够快乐", "script": "（第44～45题）有一个小孩，大家都说他很傻，因为如果有人同时给他5毛钱和1块钱，他总是选择5毛钱，而不要1块钱。有人觉得很奇怪，就去问那个孩子：“难道你分不清5毛钱和1块钱的价值吗？”孩子小声说：“当然分得清楚！可是如果我选择了1块钱，下次你就不会跟我玩儿这种游戏了。”\n这就是小孩的聪明之处。确实，如果他选择了1块钱，就没有人愿意继续跟他玩儿了，而他得到的也只有1块钱。但是他拿5毛钱，别人就会把他当成傻子继续跟他玩儿，时间越长，他拿得就越多。\n45. 这个故事告诉我们什么？"},
+      {"kind": "read", "section": "read", "part": 1, "num": 46, "fixedOrder": true, "prompt": "📖 第46题（第46～50题：选词填空）：\n没有任何一种食物能（　　）人体需要的全部营养。", "options": ["A 按时", "B 距离", "C 耐心", "D 培养", "E 包含", "F 坚持"], "answer": "E 包含"},
+      {"kind": "read", "section": "read", "part": 1, "num": 47, "fixedOrder": true, "prompt": "📖 第47题（第46～50题：选词填空）：\n如果白天不（　　）吃饭而晚上大吃一顿，那么很容易发胖。", "options": ["A 按时", "B 距离", "C 耐心", "D 培养", "E 包含", "F 坚持"], "answer": "A 按时"},
+      {"kind": "read", "section": "read", "part": 1, "num": 48, "fixedOrder": true, "prompt": "📖 第48题（第46～50题：选词填空）：\n无论是关系多么亲密的朋友，也要保持一定的（　　），给彼此留一些空间。", "options": ["A 按时", "B 距离", "C 耐心", "D 培养", "E 包含", "F 坚持"], "answer": "B 距离"},
+      {"kind": "read", "section": "read", "part": 1, "num": 49, "fixedOrder": true, "prompt": "📖 第49题（第46～50题：选词填空）：\n企业要求员工具有（　　）细致的性格以及良好的职业素质。", "options": ["A 按时", "B 距离", "C 耐心", "D 培养", "E 包含", "F 坚持"], "answer": "C 耐心"},
+      {"kind": "read", "section": "read", "part": 1, "num": 50, "fixedOrder": true, "prompt": "📖 第50题（第46～50题：选词填空）：\n积极的心态和把握机会的能力是需要我们慢慢（　　）的。", "options": ["A 按时", "B 距离", "C 耐心", "D 培养", "E 包含", "F 坚持"], "answer": "D 培养"},
+      {"kind": "read", "section": "read", "part": 1, "num": 51, "fixedOrder": true, "prompt": "📖 第51题（第51～55题：选词填空）：\nA：（　　）有没有好办法解决记生词的问题呢？\nB：根据语言环境发挥你的想象力，记生词就不那么难了。", "options": ["A 节约", "B 湿润", "C 到底", "D 规定", "E 关键", "F 温度"], "answer": "C 到底"},
+      {"kind": "read", "section": "read", "part": 1, "num": 52, "fixedOrder": true, "prompt": "📖 第52题（第51～55题：选词填空）：\nA：你们公司有上班时不允许私自外出的（　　）吗？\nB：当然有了，不请假就外出是要扣工资的。", "options": ["A 节约", "B 湿润", "C 到底", "D 规定", "E 关键", "F 温度"], "answer": "D 规定"},
+      {"kind": "read", "section": "read", "part": 1, "num": 53, "fixedOrder": true, "prompt": "📖 第53题（第51～55题：选词填空）：\nA：坐飞机去西藏考察不是可以（　　）很多时间吗？\nB：谁说不是呢？可是钱谁出呀？", "options": ["A 节约", "B 湿润", "C 到底", "D 规定", "E 关键", "F 温度"], "answer": "A 节约"},
+      {"kind": "read", "section": "read", "part": 1, "num": 54, "fixedOrder": true, "prompt": "📖 第54题（第51～55题：选词填空）：\nA：吃什么水果能让皮肤变得更（　　）呢？\nB：苹果呀，长期吃苹果还能减肥呢。", "options": ["A 节约", "B 湿润", "C 到底", "D 规定", "E 关键", "F 温度"], "answer": "B 湿润"},
+      {"kind": "read", "section": "read", "part": 1, "num": 55, "fixedOrder": true, "prompt": "📖 第55题（第51～55题：选词填空）：\nA：我们班身高差了点儿，比赛有把握吗？\nB：比赛不仅要看身高，技术也是获得胜利的（　　）。", "options": ["A 节约", "B 湿润", "C 到底", "D 规定", "E 关键", "F 温度"], "answer": "E 关键"},
+      {"kind": "read", "section": "read", "part": 2, "num": 56, "fixedOrder": true, "prompt": "📖 第56题：排列顺序。\nA：总得有点儿精气神\nB：这样企业才能保持活力\nC：一个企业就像一个人", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CAB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 57, "fixedOrder": true, "prompt": "📖 第57题：排列顺序。\nA：把奶奶送到了医院\nB：幸亏邻居及时发现\nC：否则后果会很严重", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "BAC"},
+      {"kind": "read", "section": "read", "part": 2, "num": 58, "fixedOrder": true, "prompt": "📖 第58题：排列顺序。\nA：孤单没有大家想得那么可怕\nB：是每个人都会有的感觉\nC：其实它只是一种感觉", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "ACB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 59, "fixedOrder": true, "prompt": "📖 第59题：排列顺序。\nA：几乎每过两分钟就有一次射门\nB：可惜的是，到最后都没能进球\nC：比赛双方的进攻速度都很快", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CAB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 60, "fixedOrder": true, "prompt": "📖 第60题：排列顺序。\nA：大学生专业水平还不够\nB：所以家教是打工的首选\nC：而且没有多少社会经验", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "ACB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 61, "fixedOrder": true, "prompt": "📖 第61题：排列顺序。\nA：喜欢那种被称赞的感觉\nB：每个人都愿意听好话\nC：即使那些话并不是真的", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "BAC"},
+      {"kind": "read", "section": "read", "part": 2, "num": 62, "fixedOrder": true, "prompt": "📖 第62题：排列顺序。\nA：我还会作这样的决定\nB：如果有机会再来一次\nC：我并不认为我做错了", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CBA"},
+      {"kind": "read", "section": "read", "part": 2, "num": 63, "fixedOrder": true, "prompt": "📖 第63题：排列顺序。\nA：如果讲话人讲得确实有道理\nB：甚至有意让对方和自己争论\nC：他就会鼓励对方一直说下去", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "ACB"},
+      {"kind": "read", "section": "read", "part": 2, "num": 64, "fixedOrder": true, "prompt": "📖 第64题：排列顺序。\nA：早晚会到达你向往的终点\nB：而跑得慢的人只要一直跑\nC：跑得快的人往往会停下来", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "CBA"},
+      {"kind": "read", "section": "read", "part": 2, "num": 65, "fixedOrder": true, "prompt": "📖 第65题：排列顺序。\nA：让大家跟我受批评\nB：是我把事情办砸了\nC：我因此感到很不安", "options": ["ABC", "ACB", "BAC", "BCA", "CAB", "CBA"], "answer": "BAC"},
+      {"kind": "read", "section": "read", "part": 3, "num": 66, "fixedOrder": true, "prompt": "📖 第66题\n一位乘客上了一辆出租车。司机问：“先生，您要走最短的路还是最快的路？”“最短的路难道不是最快的路吗？”乘客奇怪地问。“当然不是，现在是上下班高峰，人多车多，最短的路交通拥挤，说不定还会堵车。”可见，此时绕道是最好的选择。\n★ 这个故事告诉我们：", "options": ["A　面对有些问题可以绕道而行", "B　选择最短的路才能最快到达", "C　司机总是想办法绕远道赚钱", "D　最快的路一定就是最短的路"], "answer": "A　面对有些问题可以绕道而行"},
+      {"kind": "read", "section": "read", "part": 3, "num": 67, "fixedOrder": true, "prompt": "📖 第67题\n最近一项中国城市居民幸福感调查显示：70%以上的被调查者认为自己很幸福，女性、老年人、大学本科以上学历者以及公司负责人群体的幸福感相对较高，其中公务员感到最幸福。此外，收入分配是否公平合理已成为影响幸福的重要因素。\n★ 对幸福感有重要影响的是：", "options": ["A　是否受过大学教育", "B　收入分配是否合理", "C　是否担任单位领导", "D　家庭成员关系如何"], "answer": "B　收入分配是否合理"},
+      {"kind": "read", "section": "read", "part": 3, "num": 68, "fixedOrder": true, "prompt": "📖 第68题\n豆腐是西汉时期刘安发明的绿色食品，流传到今天已经有两千多年的历史了。最近市场上流行的彩色豆腐与传统豆腐一样，都是把大豆作为主要生产原料的。不同的是，彩色豆腐在制作中加入了新鲜的蔬菜果汁，形成了天然的颜色，既有豆腐的口感，又保存了蔬菜的营养，对人体消化、吸收很有好处。\n★ 关于彩色豆腐，正确的一项是：", "options": ["A　已有两千多年的历史", "B　把蔬菜作为主要原料", "C　加入了天然蔬菜果汁", "D　是绿颜色的豆腐食品"], "answer": "C　加入了天然蔬菜果汁"},
+      {"kind": "read", "section": "read", "part": 3, "num": 69, "fixedOrder": true, "prompt": "📖 第69题\n冬天天气寒冷，非常容易引起血压的变化，所以专家建议，有心脏病的人感到不舒服时应该及时到医院作进一步的检查。另外，这样的病人更要注意早睡晚起，早上起床时最好先喝杯热水，身体感觉暖和一点儿以后再起床，去室外锻炼也应该改在中午以后。\n★ 天气寒冷时，心脏病病人应该怎么做？", "options": ["A　起床以后先喝热水", "B　养成早起运动的习惯", "C　冬季最好不要运动", "D　养成早睡早起的习惯"], "answer": "A　起床以后先喝热水"},
+      {"kind": "read", "section": "read", "part": 3, "num": 70, "fixedOrder": true, "prompt": "📖 第70题\n很多人都知道这样一个实验：把一只青蛙扔到100℃的开水里，青蛙能马上跳出来，从而活下来。但是，如果把青蛙放在温水里慢慢加热，等到它感觉危险来临时，已经没有力量跳出来了。在职场中也有这样的“温水青蛙”，他们每天重复着那些熟悉的工作，一天又一天、一年又一年，对压力已经没有太多的感觉，慢慢等着“安乐死”。\n★ 职场上的“温水青蛙”指：", "options": ["A　工作环境舒服的人", "B　带病坚持工作的人", "C　感觉不到危机的人", "D　工作没有压力的人"], "answer": "C　感觉不到危机的人"},
+      {"kind": "read", "section": "read", "part": 3, "num": 71, "fixedOrder": true, "prompt": "📖 第71题\n每个孩子都会犯这样那样的错误，而孩子正是在不断犯错误、改正错误的过程中成长起来的。所以说，重要的不是孩子是否犯错误，而是父母采取什么态度让孩子认识并改正错误。能在孩子的错误中发现优点，用欣赏的态度去教育孩子改正错误，比严肃的批评和打骂更有效果。\n★ 孩子犯错误时，父母应该怎么做？", "options": ["A　必要时可以打骂", "B　进行严厉的批评", "C　帮孩子认识错误", "D　让孩子别犯错误"], "answer": "C　帮孩子认识错误"},
+      {"kind": "read", "section": "read", "part": 3, "num": 72, "fixedOrder": true, "prompt": "📖 第72题\n在城市发展的过程中，由于利益原因，一些地方出现了“贵族化”的发展趋势，追求繁荣、豪华的发展模式，“城市名片”几乎完全一样，到处都是高楼，教育、医疗等公共服务行业也出现了高端化、贵族化的倾向。与此相伴的是大拆大建，普通百姓觉得生活很不方便，生存空间越来越小。\n★ 这段话提到的“贵族化”是指：", "options": ["A　增加普通百姓收入", "B　追求高端发展模式", "C　提高百姓生活水平", "D　促进服务业的发展"], "answer": "B　追求高端发展模式"},
+      {"kind": "read", "section": "read", "part": 3, "num": 73, "fixedOrder": true, "prompt": "📖 第73题\n现在，自然资源问题越来越突出，人们已经认识到，自然资源总有一天会用完的。因此世界各国对能源的关注也普遍上升，维护国家能源安全成为世界各国面临的重要课题，无论是发达国家还是发展中国家，都把保障本国能源安全作为国家发展的首要目标。\n★ 这段话的主要内容是：", "options": ["A　能源成为各国关注的重点", "B　世界自然资源已经用完了", "C　开发新资源成为关注重点", "D　保护国家安全成为大问题"], "answer": "A　能源成为各国关注的重点"},
+      {"kind": "read", "section": "read", "part": 3, "num": 74, "fixedOrder": true, "prompt": "📖 第74题\n许多人都希望找到一份有保障的工作，它能保证你工作到退休，而你愿意用永远的忠诚作为交换。直到今天，仍有很多老师、父母还鼓励这种愿望。然而，如果到了现在还抱着这种希望，这就意味着你已经完全跟不上这个时代，只剩下美好的幻想了。早在几年前，传统的工作就已经没有了。你不要抱怨任何人，而应该怪自己有这样不合实际的想法。\n★ 这段话的主要内容是：", "options": ["A　不该对工作抱有太多不满", "B　永远的保障已经不存在了", "C　能工作到退休才是好工作", "D　忠于企业是能换来保障的"], "answer": "B　永远的保障已经不存在了"},
+      {"kind": "read", "section": "read", "part": 3, "num": 75, "fixedOrder": true, "prompt": "📖 第75题\n冰激凌文学把定位放在“好看”的休闲功能上，是能满足读者娱乐需求的文化商品。它好像冰激凌一样，包装精美，色彩鲜艳，很受年轻人喜爱。这些作品通常风格幽默轻松，故事内容吸引人，情感表达以温馨欢快为主，一般以喜剧结尾。故事总是简单而温暖的，语言总是活泼而俏皮的，读者很容易被故事内容所感动。\n★ 下列符合这段话内容的一项是：", "options": ["A　冰激凌是很受欢迎的新食品", "B　冰激凌文学很阳光", "C　冰激凌文学是新的喜剧形式", "D　读者都喜欢冰激凌"], "answer": "B　冰激凌文学很阳光"},
+      {"kind": "read", "section": "read", "part": 3, "num": 76, "fixedOrder": true, "prompt": "📖 第76题\n汽车颜色不仅仅是汽车的外衣和车型特征的标志，而且还能反映出车主的性格和情感。一般选择不起眼车身颜色的人，工作欲望比较强；相反，选择明亮颜色的人，一般都喜欢享受生活乐趣。关于汽车安全方面，专家对五种颜色汽车的安全性从高到低进行了排名，依次是：白色、银灰色、蓝色、绿色和黑色。\n★ 下列符合这段话内容的一项是：", "options": ["A　浅色车事故发生率较高", "B　开车的人工作欲望较强", "C　选择黑色汽车最为安全", "D　汽车颜色反映人的性格"], "answer": "D　汽车颜色反映人的性格"},
+      {"kind": "read", "section": "read", "part": 3, "num": 77, "fixedOrder": true, "prompt": "📖 第77题\n增加体内维生素C的含量不仅是保证营养平衡的基础，也是提高身体防病能力、防止冬季感冒的最简单办法。面对我们每天都吃的含有维生素C的蔬菜，怎么做才能让蔬菜中的维生素C不被浪费呢？实际上很简单：吃菜时加点儿醋，这样就能促进蔬菜中维生素C的吸收。\n★ 下列符合这段话内容的一项是：", "options": ["A　喝醋可以防止冬季感冒", "B　醋中维生素C含量最多", "C　醋可以促进营养的吸收", "D　做菜时加醋可增加营养"], "answer": "C　醋可以促进营养的吸收"},
+      {"kind": "read", "section": "read", "part": 3, "num": 78, "fixedOrder": true, "prompt": "📖 第78题\n随着网上购物越来越多地进入普通百姓的生活，一种新兴职业也随之产生，网友们送给专门为网店做模特儿的人一个昵称：“网络麻豆”。一些网店主人为了使自己的商品卖得更好，会请来专业摄影师和模特儿，让模特儿们穿上不同的服装来拍照，摄影师和“麻豆们”都可以得到收入。\n★ “网络麻豆”指的是：", "options": ["A　在网上开店的人", "B　职业网络模特儿", "C　拍照片的摄影师", "D　网站的促销人员"], "answer": "B　职业网络模特儿"},
+      {"kind": "read", "section": "read", "part": 3, "num": 79, "fixedOrder": true, "prompt": "📖 第79题\n传说唐代大诗人李白小时候特别不爱学习，很喜欢玩儿。有一天，他又偷偷跑出去玩儿，在河边看见一个老奶奶手里拿着一根很粗的铁棒在石头上一遍一遍地用力磨。李白很好奇，就问：“您在干什么？”老奶奶回答：“我要把铁棒磨成一根针。”李白又问：“这么粗的铁棒怎么可能磨成很细的针呢？”老奶奶说：“只要一直这样磨下去，总有一天会磨成针的。”李白听了，觉得很惭愧，回去后开始努力学习，后来终于成为唐代最著名的诗人。\n★ 这个故事告诉我们：", "options": ["A　做事应该懂得方法", "B　多学习能减少错误", "C　做事坚持才能成功", "D　应该勇敢面对困难"], "answer": "C　做事坚持才能成功"},
+      {"kind": "read", "section": "read", "part": 3, "num": 80, "fixedOrder": true, "passageTitle": "第80～81题", "passage": "现在很多年轻人在碰到自己不了解的问题时，首先想到的是去网上找，如果找不到，就在网上提问，希望得到热心网友的帮助。有这种“搜索依赖症”的人主要是80后和职业白领。互联网的方便快速可以帮助人们在获得大量信息的同时节省不少时间，但过分的依赖容易导致人情绪上的懒惰，造成一部分年轻人不主动记忆、思考问题。", "prompt": "80. ★ 当遇到问题时，很多年轻人会怎么做？", "options": ["A　自己独立思考", "B　找明白人帮忙", "C　上网寻找答案", "D　去向朋友求助"], "answer": "C　上网寻找答案"},
+      {"kind": "read", "section": "read", "part": 3, "num": 81, "fixedOrder": true, "passageTitle": "第80～81题", "passage": "现在很多年轻人在碰到自己不了解的问题时，首先想到的是去网上找，如果找不到，就在网上提问，希望得到热心网友的帮助。有这种“搜索依赖症”的人主要是80后和职业白领。互联网的方便快速可以帮助人们在获得大量信息的同时节省不少时间，但过分的依赖容易导致人情绪上的懒惰，造成一部分年轻人不主动记忆、思考问题。", "prompt": "81. ★ 这段话主要谈了年轻人哪方面的问题？", "options": ["A　能有效利用互联网", "B　凡事依赖上网搜索", "C　对别人的事很热心", "D　好奇心求知欲很强"], "answer": "B　凡事依赖上网搜索"},
+      {"kind": "read", "section": "read", "part": 3, "num": 82, "fixedOrder": true, "passageTitle": "第82～83题", "passage": "我们不难发现，在乘坐电梯时一般人习惯向上看。实际上，这种行为与我们的“私人空间”有着很大的关系。所谓私人空间，是指我们身体周围一定的空间，一旦有人闯入我们的私人空间，我们就会感觉不舒服、不自在。私人空间的大小每个人都不一样，调查显示，女性的私人空间比男性的大。在拥挤的公共汽车中我们会感觉不自在，就是因为有人进入了我们的私人空间。\n电梯是一个非常狭小的空间。在电梯里，人与人互相感觉到对方进入了自己的私人空间，所以会感到不舒服，都想赶紧离开电梯这个狭小的空间，向上看正是这种心理的表现。", "prompt": "82. ★ 人们在电梯里为什么感觉不舒服？", "options": ["A　有人进入了私人空间", "B　快速运行造成不适", "C　空气较少，呼吸困难", "D　空间太小、人太多"], "answer": "A　有人进入了私人空间"},
+      {"kind": "read", "section": "read", "part": 3, "num": 83, "fixedOrder": true, "passageTitle": "第82～83题", "passage": "我们不难发现，在乘坐电梯时一般人习惯向上看。实际上，这种行为与我们的“私人空间”有着很大的关系。所谓私人空间，是指我们身体周围一定的空间，一旦有人闯入我们的私人空间，我们就会感觉不舒服、不自在。私人空间的大小每个人都不一样，调查显示，女性的私人空间比男性的大。在拥挤的公共汽车中我们会感觉不自在，就是因为有人进入了我们的私人空间。\n电梯是一个非常狭小的空间。在电梯里，人与人互相感觉到对方进入了自己的私人空间，所以会感到不舒服，都想赶紧离开电梯这个狭小的空间，向上看正是这种心理的表现。", "prompt": "83. ★ 人们乘电梯时为什么常向上看？", "options": ["A　没事可做，打发时间", "B　怕错过要去的楼层", "C　保持直立的自然状态", "D　想快点儿离开电梯"], "answer": "D　想快点儿离开电梯"},
+      {"kind": "read", "section": "read", "part": 3, "num": 84, "fixedOrder": true, "passageTitle": "第84～85题", "passage": "“地球之船”是一种可以自我满足需要的环保住房，每个“地球之船”都是独一无二的。因为每一座都是由主人自己设计并亲手建成的，所以每一座“地球之船”都拥有独特的外观。不但大小、建筑材料不同，外形也是千变万化，这一切都由建造者决定。值得一提的是，这些房子都有很好的温度控制功能，无论是在炎热的夏天还是在寒冷的冬天，居住在这里都能享受到家的温暖和舒适，因为这些房屋在设计和建造时将地热、风、空气、太阳能、水等天然资源完美地结合了起来，可以达到很好的温度控制效果，就连房屋正面的朝向都十分讲究。", "prompt": "84. ★ “地球之船”的设计由什么决定？", "options": ["A　建造者的愿望", "B　当地气候情况", "C　建筑所需材料", "D　当地天然资源"], "answer": "A　建造者的愿望"},
+      {"kind": "read", "section": "read", "part": 3, "num": 85, "fixedOrder": true, "passageTitle": "第84～85题", "passage": "“地球之船”是一种可以自我满足需要的环保住房，每个“地球之船”都是独一无二的。因为每一座都是由主人自己设计并亲手建成的，所以每一座“地球之船”都拥有独特的外观。不但大小、建筑材料不同，外形也是千变万化，这一切都由建造者决定。值得一提的是，这些房子都有很好的温度控制功能，无论是在炎热的夏天还是在寒冷的冬天，居住在这里都能享受到家的温暖和舒适，因为这些房屋在设计和建造时将地热、风、空气、太阳能、水等天然资源完美地结合了起来，可以达到很好的温度控制效果，就连房屋正面的朝向都十分讲究。", "prompt": "85. ★ 关于“地球之船”，不正确的一项是：", "options": ["A　由设计者亲手建成", "B　能控制房内的温度", "C　设计环保而有个性", "D　房屋正面朝向太阳"], "answer": "D　房屋正面朝向太阳"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 86, "short": true, "prompt": "📝 第86题：完成句子。\n从来　戴　的　习惯　哥哥　没有　手表\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "哥哥从来没有戴手表的习惯。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 87, "short": true, "prompt": "📝 第87题：完成句子。\n冬季　注意　干燥　得　皮肤　保护　的\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "干燥的冬季得注意保护皮肤。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 88, "short": true, "prompt": "📝 第88题：完成句子。\n长大　人　孤单　为什么　越……越……　觉得　呢\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "人为什么越长大越觉得孤单呢？"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 89, "short": true, "prompt": "📝 第89题：完成句子。\n都　对　负责　工作　应该　认真　每个人\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "每个人都应该对工作认真负责。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 90, "short": true, "prompt": "📝 第90题：完成句子。\n是　复习　保证　方法　效果　的　重要　学习\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "复习是保证学习效果的重要方法。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 91, "short": true, "prompt": "📝 第91题：完成句子。\n公司　标准　管理者　谁　决定　工资　由　来　的\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "公司管理者的工资标准由谁来决定？"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 92, "short": true, "prompt": "📝 第92题：完成句子。\n学过　应该　起来　把　的　知识　你　学会　联系\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "你应该学会把学过的知识联系起来。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 93, "short": true, "prompt": "📝 第93题：完成句子。\n希望　将来　姐姐　合格的　能　一名　翻译　成为\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "姐姐希望将来能成为一名合格的翻译。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 94, "short": true, "prompt": "📝 第94题：完成句子。\n幽默的　他　风格　欢迎　受到了　主持　观众　的\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "他幽默的主持风格受到了观众的欢迎。"},
+      {"kind": "essay", "section": "write", "part": 1, "num": 95, "short": true, "prompt": "📝 第95题：完成句子。\n以　她　心情　愉快的　新的　每天　工作　开始\n(Sắp xếp các từ trên thành 1 câu hoàn chỉnh — giáo viên chấm tay)", "placeholder": "Gõ câu hoàn chỉnh bằng chữ Hán vào đây…", "sample": "她每天以愉快的心情开始新的工作。"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 96, "short": true, "prompt": "📝 第96题：看图，用词造句。\n词语：「越……越……」\n(Nhìn tranh, viết 1 câu có dùng từ「越……越……」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「越……越……」bằng chữ Hán vào đây…", "sample": "人越胖越应该运动。", "image": "assets/mockexam/hsk2-h4-2-w96.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 97, "short": true, "prompt": "📝 第97题：看图，用词造句。\n词语：「遇到」\n(Nhìn tranh, viết 1 câu có dùng từ「遇到」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「遇到」bằng chữ Hán vào đây…", "sample": "王阿姨在路上遇到了老邻居。", "image": "assets/mockexam/hsk2-h4-2-w97.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 98, "short": true, "prompt": "📝 第98题：看图，用词造句。\n词语：「沙发」\n(Nhìn tranh, viết 1 câu có dùng từ「沙发」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「沙发」bằng chữ Hán vào đây…", "sample": "奶奶正坐在沙发上看报纸。", "image": "assets/mockexam/hsk2-h4-2-w98.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 99, "short": true, "prompt": "📝 第99题：看图，用词造句。\n词语：「允许」\n(Nhìn tranh, viết 1 câu có dùng từ「允许」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「允许」bằng chữ Hán vào đây…", "sample": "加油站不允许使用手机。", "image": "assets/mockexam/hsk2-h4-2-w99.jpg"},
+      {"kind": "essay", "section": "write", "part": 2, "num": 100, "short": true, "prompt": "📝 第100题：看图，用词造句。\n词语：「至少」\n(Nhìn tranh, viết 1 câu có dùng từ「至少」 — giáo viên chấm tay)", "placeholder": "Gõ câu có dùng「至少」bằng chữ Hán vào đây…", "sample": "爬到山顶至少得两个小时。", "image": "assets/mockexam/hsk2-h4-2-w100.jpg"}
     ]},
 ];
 
@@ -18258,22 +18361,32 @@ const LESSONS = [
     if (score100 === 100) launchFireworks(elFireworksCanvasMock);
   }
 
-  /* ===== NỘP BÀI THEO TỪNG PHẦN (听力 / 阅读 / 书写) =====
-     Với đề có chia phần (q.section), học sinh làm xong phần nào có thể bấm
-     "Nộp phần …" để xem điểm phần đó ngay; phần đã nộp bị khoá (không sửa
-     được) và hiện đúng/sai từng câu. Phần 书写: câu sắp xếp (完成句子) chấm
-     tự động, bài viết đoạn văn chờ giáo viên chấm. Nộp xong phần cuối cùng →
-     hiện kết quả toàn bài và lưu điểm như cũ. */
-  function mockSectionsOf(items) {
+  /* ===== NỘP BÀI THEO TỪNG PHẦN =====
+     Với đề có chia phần (q.section): 听力 nộp cả phần; 阅读 và 书写 nộp theo
+     từng phần nhỏ (第一部分、第二部分…, theo q.part). Nộp xong phần nào hiện
+     điểm phần đó ngay; phần đã nộp bị khoá và hiện đúng/sai từng câu. Bài
+     viết (kind "essay") chờ giáo viên chấm. Nộp xong phần cuối cùng → hiện
+     kết quả toàn bài và lưu điểm như cũ. */
+  const MOCK_PART_CN = ["", "第一部分", "第二部分", "第三部分", "第四部分", "第五部分"];
+  function mockUnitOf(q) {
+    if (!q || !q.section) return null;
+    return q.section === "listen" ? "listen" : q.section + "#" + (q.part || 1);
+  }
+  function mockUnitLabel(u) {
+    const [sec, part] = String(u).split("#");
+    const base = MOCK_SECTION_LABELS[sec] || sec;
+    return part ? base + " " + (MOCK_PART_CN[+part] || ("第" + part + "部分")) : base;
+  }
+  function mockUnitsOf(items) {
     const out = [];
-    items.forEach((q) => { if (q.section && !out.includes(q.section)) out.push(q.section); });
+    items.forEach((q) => { const u = mockUnitOf(q); if (u && !out.includes(u)) out.push(u); });
     return out;
   }
-  function mockSectionStats(sec) {
+  function mockUnitStats(u) {
     const items = state.lesson.mockExam || [];
     let total = 0, correct = 0, essays = 0, answered = 0, count = 0;
     items.forEach((q, i) => {
-      if (q.section !== sec || q.isExample) return;
+      if (mockUnitOf(q) !== u || q.isExample) return;
       count += 1;
       const a = mockState.answers[i];
       if (q.kind === "essay") { essays += 1; if (a && String(a).trim()) answered += 1; return; }
@@ -18282,6 +18395,19 @@ const LESSONS = [
       if (a === q.answer) correct += 1;
     });
     return { total, correct, essays, answered, count, score: total ? Math.round((correct / total) * 100) : null };
+  }
+  function mockSectionStats(sec) {
+    const items = state.lesson.mockExam || [];
+    const units = mockUnitsOf(items).filter((u) => u.split("#")[0] === sec);
+    const r = { total: 0, correct: 0, essays: 0 };
+    units.forEach((u) => { const s = mockUnitStats(u); r.total += s.total; r.correct += s.correct; r.essays += s.essays; });
+    r.score = r.total ? Math.round((r.correct / r.total) * 100) : null;
+    return r;
+  }
+  function mockSectionDone(sec) {
+    const items = (state.lesson && state.lesson.mockExam) || [];
+    const units = mockUnitsOf(items).filter((u) => u.split("#")[0] === sec);
+    return units.length > 0 && units.every((u) => (mockState.secDone || {})[u]);
   }
   let elMockSectionBar = null;
   function ensureMockSectionBar() {
@@ -18293,85 +18419,93 @@ const LESSONS = [
     if (row && row.parentNode) row.parentNode.insertBefore(elMockSectionBar, row.nextSibling);
     return elMockSectionBar;
   }
-  function submitMockSection(sec) {
+  function submitMockUnit(u) {
     const items = state.lesson.mockExam || [];
-    const st = mockSectionStats(sec);
-    const label = MOCK_SECTION_LABELS[sec] || sec;
+    const st = mockUnitStats(u);
+    const label = mockUnitLabel(u);
     const missing = st.count - st.answered;
-    if (missing > 0 && !window.confirm("Phần " + label + " còn " + missing + " câu chưa làm. Vẫn nộp phần này? (Nộp rồi sẽ không sửa được nữa.)")) return;
-    if (missing === 0 && !window.confirm("Nộp phần " + label + "? Nộp rồi sẽ không sửa được nữa.")) return;
+    if (missing > 0 && !window.confirm(label + " còn " + missing + " câu chưa làm. Vẫn nộp bài phần này? (Nộp rồi sẽ không sửa được nữa.)")) return;
+    if (missing === 0 && !window.confirm("Nộp bài " + label + "? Nộp rồi sẽ không sửa được nữa.")) return;
     if (!mockState.secDone) mockState.secDone = {};
-    mockState.secDone[sec] = { correct: st.correct, total: st.total, score: st.score, essays: st.essays, at: Date.now() };
+    mockState.secDone[u] = { correct: st.correct, total: st.total, score: st.score, essays: st.essays, at: Date.now() };
     saveMockProgress();
-    const secs = mockSectionsOf(items);
-    if (secs.every((x) => mockState.secDone[x])) {
-      // Phần cuối cùng → chấm và hiện kết quả toàn bài (câu bỏ trống tính sai).
-      gradeAndShowMockResult();
+    if (mockUnitsOf(items).every((x) => mockState.secDone[x])) {
+      gradeAndShowMockResult(); // phần cuối cùng → kết quả toàn bài (câu bỏ trống tính sai)
       showMockSectionSummary();
       return;
     }
     renderMockQuestion();
   }
-  function goNextMockSection() {
+  function goNextMockUnit() {
     const items = state.lesson.mockExam || [];
-    const secs = mockSectionsOf(items);
-    const next = secs.find((x) => !(mockState.secDone || {})[x]);
+    const next = mockUnitsOf(items).find((x) => !(mockState.secDone || {})[x]);
     if (!next) return;
-    const idx = items.findIndex((q) => q.section === next);
+    const idx = items.findIndex((q) => mockUnitOf(q) === next);
     if (idx !== -1) { mockState.index = idx; renderMockQuestion(); }
   }
-  function sectionScoreHtml(sec, d) {
-    const label = MOCK_SECTION_LABELS[sec] || sec;
+  function unitScoreHtml(label, d) {
     let h = '<b>' + label + ':</b> ';
     if (d.total) h += 'đúng <b>' + d.correct + '/' + d.total + '</b> câu · điểm <b>' + d.score + '/100</b>';
-    if (d.essays) h += (d.total ? ' · ' : '') + d.essays + ' bài viết chờ giáo viên chấm';
+    if (d.essays) h += (d.total ? ' · ' : '') + d.essays + ' câu viết chờ giáo viên chấm';
     return h;
   }
   function updateMockSectionUI() {
     const items = (state.lesson && state.lesson.mockExam) || [];
-    const secs = mockSectionsOf(items);
+    const units = mockUnitsOf(items);
     const bar = ensureMockSectionBar();
     const q = items[mockState.index];
-    const locked = !!(q && q.section && mockState.secDone && mockState.secDone[q.section]);
+    const u = mockUnitOf(q);
+    const locked = !!(u && mockState.secDone && mockState.secDone[u]);
     elMockOptions.style.pointerEvents = locked ? "none" : "";
     elMockOptions.style.opacity = locked ? "0.85" : "";
     elMockOptions.querySelectorAll("textarea, input").forEach((el) => { el.readOnly = locked; });
-    if (secs.length < 2 || !q || !q.section) { bar.innerHTML = ""; bar.classList.add("hidden"); return; }
+    const sections = []; units.forEach((x) => { const s = x.split("#")[0]; if (!sections.includes(s)) sections.push(s); });
+    if (sections.length < 2 || !u) { bar.innerHTML = ""; bar.classList.add("hidden"); return; }
     bar.classList.remove("hidden");
-    const sec = q.section;
-    const label = MOCK_SECTION_LABELS[sec] || sec;
-    const done = mockState.secDone && mockState.secDone[sec];
+    const label = mockUnitLabel(u);
+    const done = mockState.secDone && mockState.secDone[u];
     const box = 'class="rounded-xl border p-3 text-sm text-left" style="border-color:var(--border); background:var(--surface-alt);"';
     if (!done) {
-      const st = mockSectionStats(sec);
+      const st = mockUnitStats(u);
       bar.innerHTML = '<div ' + box + '><div class="flex flex-wrap items-center justify-between gap-2">' +
-        '<span>Phần <b>' + label + '</b>: đã làm ' + st.answered + '/' + st.count + ' câu</span>' +
-        '<button type="button" id="btn-mock-submit-section" class="px-4 py-2 rounded-xl font-bold text-sm" style="background:var(--accent); color:#fff;"><i class="fa-solid fa-paper-plane mr-1.5"></i>Nộp phần ' + label + ' &amp; xem điểm</button></div></div>';
-      document.getElementById("btn-mock-submit-section").onclick = () => submitMockSection(sec);
+        '<span><b>' + label + '</b>: đã làm ' + st.answered + '/' + st.count + ' câu</span>' +
+        '<button type="button" id="btn-mock-submit-section" class="px-4 py-2 rounded-xl font-bold text-sm" style="background:var(--accent); color:#fff;"><i class="fa-solid fa-paper-plane mr-1.5"></i>Nộp bài phần ' + label + '</button></div></div>';
+      document.getElementById("btn-mock-submit-section").onclick = () => submitMockUnit(u);
       return;
     }
     let fb = "";
     if (!q.isExample) {
-      if (q.kind === "essay") fb = '<p class="mt-1">Câu này: bài viết đã nộp — chờ giáo viên chấm.</p>';
+      if (q.kind === "essay") fb = '<p class="mt-1">Câu này: đã nộp — chờ giáo viên chấm.' + (q.sample ? ' Đáp án/bài mẫu tham khảo: <b>' + escapeHtml(String(q.sample)) + '</b>' : '') + '</p>';
       else {
         const ok = mockState.answers[mockState.index] === q.answer;
         fb = '<p class="mt-1" style="color:' + (ok ? 'var(--jade)' : 'var(--wrong)') + ';">Câu này: ' + (ok ? '✓ Đúng' : '✗ Sai — đáp án đúng: <b>' + escapeHtml(String(q.answer)) + '</b>') + '</p>';
       }
     }
-    const hasNext = secs.some((x) => !mockState.secDone[x]);
-    bar.innerHTML = '<div ' + box + '><p><i class="fa-solid fa-circle-check mr-1" style="color:var(--jade);"></i>Đã nộp — ' + sectionScoreHtml(sec, done) + '</p>' + fb +
+    const tape = (q.script && (mockSectionDone("listen") || (typeof isAdminUser === "function" && isAdminUser(currentUser))))
+      ? '<details class="mt-2"><summary class="cursor-pointer font-semibold" style="color:var(--jade);">📜 录音文本 (Lời thoại câu này)</summary><div class="mt-1 whitespace-pre-line" style="font-size:15px; line-height:1.7;">' + escapeHtml(q.script) + '</div></details>' : '';
+    const hasNext = units.some((x) => !mockState.secDone[x]);
+    bar.innerHTML = '<div ' + box + '><p><i class="fa-solid fa-circle-check mr-1" style="color:var(--jade);"></i>Đã nộp — ' + unitScoreHtml(label, done) + '</p>' + fb + tape +
       (hasNext ? '<button type="button" id="btn-mock-next-section" class="mt-2 px-4 py-2 rounded-xl font-bold text-sm" style="background:var(--jade); color:#fff;">Sang phần tiếp theo <i class="fa-solid fa-arrow-right ml-1"></i></button>' : '') + '</div>';
     const nb = document.getElementById("btn-mock-next-section");
-    if (nb) nb.onclick = goNextMockSection;
+    if (nb) nb.onclick = goNextMockUnit;
   }
   function showMockSectionSummary() {
     const items = (state.lesson && state.lesson.mockExam) || [];
-    const secs = mockSectionsOf(items);
-    if (secs.length < 2 || !elMockReviewList) return;
+    const units = mockUnitsOf(items);
+    const sections = []; units.forEach((x) => { const s = x.split("#")[0]; if (!sections.includes(s)) sections.push(s); });
+    if (sections.length < 2 || !elMockReviewList) return;
     const div = document.createElement("div");
-    div.className = "rounded-lg px-3 py-2.5 text-sm mb-2";
+    div.className = "rounded-lg px-3 py-2.5 text-sm mb-2 mock-sec-summary";
     div.style.background = "var(--jade-soft)";
-    div.innerHTML = '<p class="font-bold mb-1">Điểm từng phần</p>' + secs.map((sec) => '<p>' + sectionScoreHtml(sec, mockSectionStats(sec)) + '</p>').join("");
+    let html = '<p class="font-bold mb-1">Điểm từng phần</p>';
+    sections.forEach((sec) => {
+      html += '<p>' + unitScoreHtml(MOCK_SECTION_LABELS[sec] || sec, mockSectionStats(sec)) + '</p>';
+      units.filter((x) => x.split("#")[0] === sec && x.indexOf("#") !== -1).forEach((x) => { html += '<p class="ml-4" style="color:var(--ink-faint);">' + unitScoreHtml(mockUnitLabel(x), mockUnitStats(x)) + '</p>'; });
+    });
+    const scripts = items.filter((q) => q.script);
+    if (scripts.length) html += '<details class="mt-2"><summary class="cursor-pointer font-semibold" style="color:var(--jade);">📜 录音文本 — toàn bộ phần nghe</summary><div class="mt-1" style="font-size:15px; line-height:1.7;">' +
+      scripts.map((q) => '<p class="mt-1 whitespace-pre-line"><b>' + (q.num || "") + '.</b> ' + escapeHtml(q.script) + '</p>').join("") + '</div></details>';
+    div.innerHTML = html;
     elMockReviewList.insertBefore(div, elMockReviewList.firstChild);
   }
   // Gắn thêm vào renderMockQuestion / renderMockNav có sẵn (không sửa ruột hàm cũ).
@@ -18385,16 +18519,13 @@ const LESSONS = [
         if (!elMockNavTabs || !mockState.secDone) return;
         elMockNavTabs.querySelectorAll(".mock-nav-tab").forEach((tab) => {
           const sec = Object.keys(MOCK_SECTION_LABELS).find((k) => MOCK_SECTION_LABELS[k] === tab.textContent);
-          if (sec && mockState.secDone[sec]) tab.textContent = tab.textContent + " ✓";
+          if (sec && mockSectionDone(sec)) tab.textContent = tab.textContent + " ✓";
         });
       } catch (e) {}
     };
   })(renderMockNav);
   // Nộp cả bài bằng nút "Nộp bài" cũ → vẫn hiện thêm bảng điểm từng phần.
-  gradeAndShowMockResult = (function (orig) {
-    return function () { orig.apply(this, arguments); };
-  })(gradeAndShowMockResult);
-  btnMockSubmit.addEventListener("click", () => { if (!elMockResult.classList.contains("hidden")) { try { if (!document.querySelector("#mock-review-list .font-bold.mb-1")) showMockSectionSummary(); } catch (e) {} } });
+  btnMockSubmit.addEventListener("click", () => { if (!elMockResult.classList.contains("hidden")) { try { if (!document.querySelector("#mock-review-list .mock-sec-summary")) showMockSectionSummary(); } catch (e) {} } });
 
   // Lưu điểm "Đề thi mô phỏng" theo từng bài học, gộp CHUNG vào cùng bản
   // ghi "cohunglang:scores[lessonId]" (thêm trường con "mockexam") để
