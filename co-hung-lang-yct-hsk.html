@@ -18361,7 +18361,7 @@ const LESSONS = [
     if (score100 === 100) launchFireworks(elFireworksCanvasMock);
   }
 
-  /* ===== NỘP BÀI THEO TỪNG PHẦN =====
+  /* ===== NỘP BÀI THEO TỪNG PHẦN (CHỈ ĐỀ HSK 2.0) =====
      Với đề có chia phần (q.section): 听力 nộp cả phần; 阅读 và 书写 nộp theo
      từng phần nhỏ (第一部分、第二部分…, theo q.part). Nộp xong phần nào hiện
      điểm phần đó ngay; phần đã nộp bị khoá và hiện đúng/sai từng câu. Bài
@@ -18455,12 +18455,13 @@ const LESSONS = [
     const bar = ensureMockSectionBar();
     const q = items[mockState.index];
     const u = mockUnitOf(q);
-    const locked = !!(u && mockState.secDone && mockState.secDone[u]);
+    const locked = !!(state.lesson && state.lesson.program === "hsk2" && u && mockState.secDone && mockState.secDone[u]);
     elMockOptions.style.pointerEvents = locked ? "none" : "";
     elMockOptions.style.opacity = locked ? "0.85" : "";
     elMockOptions.querySelectorAll("textarea, input").forEach((el) => { el.readOnly = locked; });
     const sections = []; units.forEach((x) => { const s = x.split("#")[0]; if (!sections.includes(s)) sections.push(s); });
-    if (sections.length < 2 || !u) { bar.innerHTML = ""; bar.classList.add("hidden"); return; }
+    // Chỉ áp dụng cho đề HSK 2.0 (program "hsk2"); HSK 3.0 / YCT giữ nguyên cách nộp cả bài một lần.
+    if (!(state.lesson && state.lesson.program === "hsk2") || sections.length < 2 || !u) { bar.innerHTML = ""; bar.classList.add("hidden"); return; }
     bar.classList.remove("hidden");
     const label = mockUnitLabel(u);
     const done = mockState.secDone && mockState.secDone[u];
@@ -18493,7 +18494,7 @@ const LESSONS = [
     const items = (state.lesson && state.lesson.mockExam) || [];
     const units = mockUnitsOf(items);
     const sections = []; units.forEach((x) => { const s = x.split("#")[0]; if (!sections.includes(s)) sections.push(s); });
-    if (sections.length < 2 || !elMockReviewList) return;
+    if (!(state.lesson && state.lesson.program === "hsk2") || sections.length < 2 || !elMockReviewList) return;
     const div = document.createElement("div");
     div.className = "rounded-lg px-3 py-2.5 text-sm mb-2 mock-sec-summary";
     div.style.background = "var(--jade-soft)";
