@@ -17767,6 +17767,72 @@ const LESSONS = [
     box.classList.remove("hidden");
   }
 
+  /* ===== TỰ LƯU BÀI ĐANG LÀM (Đề thi mô phỏng, HSK 2.0 H4-1…) =====
+     Sau mỗi thao tác, tiến độ (câu đang làm + đáp án) được lưu vào bộ nhớ
+     trình duyệt trên máy học sinh. Nếu trang bị tải lại giữa chừng (chuyển
+     app, tắt màn hình, mất mạng…), mở lại đề sẽ làm tiếp từ chỗ cũ.
+     Bản lưu bị xoá khi Nộp bài hoặc bấm "Làm lại từ đầu"; tự hết hạn sau 14 ngày. */
+  const MOCK_PROGRESS_PREFIX = "cohunglang_mockprog_";
+  const MOCK_PROGRESS_TTL = 14 * 24 * 3600 * 1000;
+  let mockProgressSubmitted = false;
+  function mockProgressKey() {
+    if (!state.lesson || !state.lesson.id) return null;
+    let who = "guest";
+    try { if (currentUser && currentUser.email) who = currentUser.email.toLowerCase(); } catch (e) {}
+    return MOCK_PROGRESS_PREFIX + who + "__" + state.lesson.id;
+  }
+  function saveMockProgress() {
+    if (mockProgressSubmitted) return;
+    const key = mockProgressKey();
+    const items = (state.lesson && state.lesson.mockExam) || [];
+    if (!key || !items.length || !Array.isArray(mockState.answers) || mockState.answers.length !== items.length) return;
+    const touched = mockState.answers.some((a, i) => items[i] && !items[i].isExample && a !== null && a !== "") || Object.keys(mockState.secDone || {}).length > 0;
+    if (!touched) return;
+    try {
+      localStorage.setItem(key, JSON.stringify({ n: items.length, index: mockState.index, answers: mockState.answers,
+        optionOrder: mockState.optionOrder, orderWork: mockState.orderWork, startedAt: mockState.startedAt, secDone: mockState.secDone || {}, savedAt: Date.now() }));
+    } catch (e) {}
+  }
+  function clearMockProgress() {
+    const key = mockProgressKey();
+    if (!key) return;
+    try { localStorage.removeItem(key); } catch (e) {}
+  }
+  function loadMockProgress() {
+    const key = mockProgressKey();
+    const items = (state.lesson && state.lesson.mockExam) || [];
+    if (!key || !items.length) return null;
+    let d = null;
+    try { d = JSON.parse(localStorage.getItem(key) || "null"); } catch (e) { d = null; }
+    if (!d || d.n !== items.length || !Array.isArray(d.answers) || d.answers.length !== items.length) return null;
+    if (Date.now() - (d.savedAt || 0) > MOCK_PROGRESS_TTL) { clearMockProgress(); return null; }
+    return d;
+  }
+  function showMockResumeNote(show) {
+    let el = document.getElementById("mock-resume-note");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "mock-resume-note";
+      el.className = "mb-3 p-3 rounded-lg text-sm";
+      el.style.cssText = "background:#fff7e6;border:1px solid #f2c27b;color:#7a4b00;";
+      elMockActive.insertBefore(el, elMockActive.firstChild);
+    }
+    if (!show) { el.classList.add("hidden"); return; }
+    el.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> Đã khôi phục bài bạn đang làm dở — làm tiếp từ câu đang dừng. ' +
+      '<button type="button" id="btn-mock-resume-reset" class="underline font-semibold ml-1">Làm lại từ đầu</button>';
+    el.classList.remove("hidden");
+    document.getElementById("btn-mock-resume-reset").onclick = () => {
+      if (!window.confirm("Xoá bài đang làm dở và làm lại từ đầu?")) return;
+      clearMockProgress();
+      buildMockExam();
+    };
+  }
+  if (elSubpanelMock) {
+    ["click", "input", "change"].forEach((ev) => elSubpanelMock.addEventListener(ev, () => setTimeout(saveMockProgress, 0), true));
+  }
+  window.addEventListener("pagehide", saveMockProgress);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") saveMockProgress(); });
+
   function buildMockExam() {
     if (mockAudioEl) { mockAudioEl.pause(); mockAudioEl.currentTime = 0; mockAudioEl = null; }
     if (elMockAudioToolbar) { elMockAudioToolbar.pause(); elMockAudioToolbar.removeAttribute("src"); elMockAudioToolbar.controls = false; elMockAudioToolbar.classList.add("hidden"); }
@@ -17786,6 +17852,19 @@ const LESSONS = [
     }
     elMockEmpty.classList.add("hidden");
     elMockActive.classList.remove("hidden");
+    // Khôi phục bài đang làm dở (nếu có) — xem "TỰ LƯU BÀI ĐANG LÀM" ở trên.
+    mockProgressSubmitted = false;
+    mockState.secDone = {};
+    const savedProg = loadMockProgress();
+    if (savedProg) {
+      mockState.answers = savedProg.answers;
+      mockState.index = Math.max(0, Math.min(savedProg.index || 0, items.length - 1));
+      if (Array.isArray(savedProg.optionOrder) && savedProg.optionOrder.length === items.length) mockState.optionOrder = savedProg.optionOrder;
+      if (Array.isArray(savedProg.orderWork) && savedProg.orderWork.length === items.length) mockState.orderWork = savedProg.orderWork;
+      if (savedProg.startedAt) mockState.startedAt = savedProg.startedAt;
+      if (savedProg.secDone && typeof savedProg.secDone === "object") mockState.secDone = savedProg.secDone;
+    }
+    showMockResumeNote(!!savedProg);
     renderMockQuestion();
     try { showMyEssayGrades(); } catch (e) {}
   }
@@ -18113,7 +18192,7 @@ const LESSONS = [
     if (emptyEssay && !window.confirm("Bạn chưa viết xong phần 书写 (viết bài). Vẫn nộp bài?")) return;
     gradeAndShowMockResult();
   });
-  btnMockRestart.addEventListener("click", buildMockExam);
+  btnMockRestart.addEventListener("click", () => { clearMockProgress(); buildMockExam(); });
 
   function gradeAndShowMockResult() {
     if (mockAudioEl) { mockAudioEl.pause(); }
@@ -18173,9 +18252,149 @@ const LESSONS = [
     elMockActive.classList.add("hidden");
     elMockResult.classList.remove("hidden");
 
+    mockProgressSubmitted = true;
+    clearMockProgress(); // đã nộp bài → xoá bản lưu tạm
     saveMockScore(score100, durationMs);
     if (score100 === 100) launchFireworks(elFireworksCanvasMock);
   }
+
+  /* ===== NỘP BÀI THEO TỪNG PHẦN (听力 / 阅读 / 书写) =====
+     Với đề có chia phần (q.section), học sinh làm xong phần nào có thể bấm
+     "Nộp phần …" để xem điểm phần đó ngay; phần đã nộp bị khoá (không sửa
+     được) và hiện đúng/sai từng câu. Phần 书写: câu sắp xếp (完成句子) chấm
+     tự động, bài viết đoạn văn chờ giáo viên chấm. Nộp xong phần cuối cùng →
+     hiện kết quả toàn bài và lưu điểm như cũ. */
+  function mockSectionsOf(items) {
+    const out = [];
+    items.forEach((q) => { if (q.section && !out.includes(q.section)) out.push(q.section); });
+    return out;
+  }
+  function mockSectionStats(sec) {
+    const items = state.lesson.mockExam || [];
+    let total = 0, correct = 0, essays = 0, answered = 0, count = 0;
+    items.forEach((q, i) => {
+      if (q.section !== sec || q.isExample) return;
+      count += 1;
+      const a = mockState.answers[i];
+      if (q.kind === "essay") { essays += 1; if (a && String(a).trim()) answered += 1; return; }
+      if (a !== null && a !== undefined) answered += 1;
+      total += 1;
+      if (a === q.answer) correct += 1;
+    });
+    return { total, correct, essays, answered, count, score: total ? Math.round((correct / total) * 100) : null };
+  }
+  let elMockSectionBar = null;
+  function ensureMockSectionBar() {
+    if (elMockSectionBar) return elMockSectionBar;
+    elMockSectionBar = document.createElement("div");
+    elMockSectionBar.id = "mock-section-bar";
+    elMockSectionBar.className = "mt-4";
+    const row = btnMockPrev && btnMockPrev.parentNode;
+    if (row && row.parentNode) row.parentNode.insertBefore(elMockSectionBar, row.nextSibling);
+    return elMockSectionBar;
+  }
+  function submitMockSection(sec) {
+    const items = state.lesson.mockExam || [];
+    const st = mockSectionStats(sec);
+    const label = MOCK_SECTION_LABELS[sec] || sec;
+    const missing = st.count - st.answered;
+    if (missing > 0 && !window.confirm("Phần " + label + " còn " + missing + " câu chưa làm. Vẫn nộp phần này? (Nộp rồi sẽ không sửa được nữa.)")) return;
+    if (missing === 0 && !window.confirm("Nộp phần " + label + "? Nộp rồi sẽ không sửa được nữa.")) return;
+    if (!mockState.secDone) mockState.secDone = {};
+    mockState.secDone[sec] = { correct: st.correct, total: st.total, score: st.score, essays: st.essays, at: Date.now() };
+    saveMockProgress();
+    const secs = mockSectionsOf(items);
+    if (secs.every((x) => mockState.secDone[x])) {
+      // Phần cuối cùng → chấm và hiện kết quả toàn bài (câu bỏ trống tính sai).
+      gradeAndShowMockResult();
+      showMockSectionSummary();
+      return;
+    }
+    renderMockQuestion();
+  }
+  function goNextMockSection() {
+    const items = state.lesson.mockExam || [];
+    const secs = mockSectionsOf(items);
+    const next = secs.find((x) => !(mockState.secDone || {})[x]);
+    if (!next) return;
+    const idx = items.findIndex((q) => q.section === next);
+    if (idx !== -1) { mockState.index = idx; renderMockQuestion(); }
+  }
+  function sectionScoreHtml(sec, d) {
+    const label = MOCK_SECTION_LABELS[sec] || sec;
+    let h = '<b>' + label + ':</b> ';
+    if (d.total) h += 'đúng <b>' + d.correct + '/' + d.total + '</b> câu · điểm <b>' + d.score + '/100</b>';
+    if (d.essays) h += (d.total ? ' · ' : '') + d.essays + ' bài viết chờ giáo viên chấm';
+    return h;
+  }
+  function updateMockSectionUI() {
+    const items = (state.lesson && state.lesson.mockExam) || [];
+    const secs = mockSectionsOf(items);
+    const bar = ensureMockSectionBar();
+    const q = items[mockState.index];
+    const locked = !!(q && q.section && mockState.secDone && mockState.secDone[q.section]);
+    elMockOptions.style.pointerEvents = locked ? "none" : "";
+    elMockOptions.style.opacity = locked ? "0.85" : "";
+    elMockOptions.querySelectorAll("textarea, input").forEach((el) => { el.readOnly = locked; });
+    if (secs.length < 2 || !q || !q.section) { bar.innerHTML = ""; bar.classList.add("hidden"); return; }
+    bar.classList.remove("hidden");
+    const sec = q.section;
+    const label = MOCK_SECTION_LABELS[sec] || sec;
+    const done = mockState.secDone && mockState.secDone[sec];
+    const box = 'class="rounded-xl border p-3 text-sm text-left" style="border-color:var(--border); background:var(--surface-alt);"';
+    if (!done) {
+      const st = mockSectionStats(sec);
+      bar.innerHTML = '<div ' + box + '><div class="flex flex-wrap items-center justify-between gap-2">' +
+        '<span>Phần <b>' + label + '</b>: đã làm ' + st.answered + '/' + st.count + ' câu</span>' +
+        '<button type="button" id="btn-mock-submit-section" class="px-4 py-2 rounded-xl font-bold text-sm" style="background:var(--accent); color:#fff;"><i class="fa-solid fa-paper-plane mr-1.5"></i>Nộp phần ' + label + ' &amp; xem điểm</button></div></div>';
+      document.getElementById("btn-mock-submit-section").onclick = () => submitMockSection(sec);
+      return;
+    }
+    let fb = "";
+    if (!q.isExample) {
+      if (q.kind === "essay") fb = '<p class="mt-1">Câu này: bài viết đã nộp — chờ giáo viên chấm.</p>';
+      else {
+        const ok = mockState.answers[mockState.index] === q.answer;
+        fb = '<p class="mt-1" style="color:' + (ok ? 'var(--jade)' : 'var(--wrong)') + ';">Câu này: ' + (ok ? '✓ Đúng' : '✗ Sai — đáp án đúng: <b>' + escapeHtml(String(q.answer)) + '</b>') + '</p>';
+      }
+    }
+    const hasNext = secs.some((x) => !mockState.secDone[x]);
+    bar.innerHTML = '<div ' + box + '><p><i class="fa-solid fa-circle-check mr-1" style="color:var(--jade);"></i>Đã nộp — ' + sectionScoreHtml(sec, done) + '</p>' + fb +
+      (hasNext ? '<button type="button" id="btn-mock-next-section" class="mt-2 px-4 py-2 rounded-xl font-bold text-sm" style="background:var(--jade); color:#fff;">Sang phần tiếp theo <i class="fa-solid fa-arrow-right ml-1"></i></button>' : '') + '</div>';
+    const nb = document.getElementById("btn-mock-next-section");
+    if (nb) nb.onclick = goNextMockSection;
+  }
+  function showMockSectionSummary() {
+    const items = (state.lesson && state.lesson.mockExam) || [];
+    const secs = mockSectionsOf(items);
+    if (secs.length < 2 || !elMockReviewList) return;
+    const div = document.createElement("div");
+    div.className = "rounded-lg px-3 py-2.5 text-sm mb-2";
+    div.style.background = "var(--jade-soft)";
+    div.innerHTML = '<p class="font-bold mb-1">Điểm từng phần</p>' + secs.map((sec) => '<p>' + sectionScoreHtml(sec, mockSectionStats(sec)) + '</p>').join("");
+    elMockReviewList.insertBefore(div, elMockReviewList.firstChild);
+  }
+  // Gắn thêm vào renderMockQuestion / renderMockNav có sẵn (không sửa ruột hàm cũ).
+  renderMockQuestion = (function (orig) {
+    return function () { orig.apply(this, arguments); try { updateMockSectionUI(); } catch (e) { console.error(e); } };
+  })(renderMockQuestion);
+  renderMockNav = (function (orig) {
+    return function () {
+      orig.apply(this, arguments);
+      try {
+        if (!elMockNavTabs || !mockState.secDone) return;
+        elMockNavTabs.querySelectorAll(".mock-nav-tab").forEach((tab) => {
+          const sec = Object.keys(MOCK_SECTION_LABELS).find((k) => MOCK_SECTION_LABELS[k] === tab.textContent);
+          if (sec && mockState.secDone[sec]) tab.textContent = tab.textContent + " ✓";
+        });
+      } catch (e) {}
+    };
+  })(renderMockNav);
+  // Nộp cả bài bằng nút "Nộp bài" cũ → vẫn hiện thêm bảng điểm từng phần.
+  gradeAndShowMockResult = (function (orig) {
+    return function () { orig.apply(this, arguments); };
+  })(gradeAndShowMockResult);
+  btnMockSubmit.addEventListener("click", () => { if (!elMockResult.classList.contains("hidden")) { try { if (!document.querySelector("#mock-review-list .font-bold.mb-1")) showMockSectionSummary(); } catch (e) {} } });
 
   // Lưu điểm "Đề thi mô phỏng" theo từng bài học, gộp CHUNG vào cùng bản
   // ghi "cohunglang:scores[lessonId]" (thêm trường con "mockexam") để
