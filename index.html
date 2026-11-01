@@ -548,7 +548,7 @@
         </div>
       </nav>
 
-      <div id="auth-area" class="auth-area flex items-center justify-end w-full"></div>
+      <div id="auth-area" class="auth-area flex items-center justify-end w-full"><button type="button" id="btn-auth-login-open" class="btn-auth-login" onclick="window.__wantLogin=true;this.textContent='Đang tải…';"><i class="fa-solid fa-user"></i> Đăng nhập</button></div>
       </div>
 
     </div>
@@ -1380,11 +1380,13 @@
         <i class="fa-solid fa-lock"></i>
       </div>
       <h3 class="text-base font-extrabold mb-2" style="color:var(--jade);">Mục này chưa được kích hoạt</h3>
+      <p id="auth-locked-who" class="text-xs mb-3 rounded-lg px-3 py-2" style="background:var(--accent-soft); color:var(--ink-soft);"></p>
       <p id="auth-locked-text" class="text-sm mb-5" style="color:var(--ink-soft);">Mục này chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!</p>
       <div class="flex flex-col gap-2.5">
         <a href="https://zalo.me/0914476685" target="_blank" rel="noopener" class="w-full py-2.5 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2" style="background:var(--blue);">
           <i class="fa-solid fa-comment-dots"></i> Nhắn Zalo cho cô
         </a>
+        <button type="button" id="btn-auth-locked-logout" class="w-full py-2.5 rounded-xl font-bold text-sm border" style="border-color:var(--accent); color:var(--accent-strong);">Đăng xuất để đăng nhập lại</button>
         <button type="button" id="btn-auth-locked-close" class="w-full py-2.5 rounded-xl font-bold text-sm border" style="border-color:var(--border); color:var(--ink-soft);">Đã hiểu</button>
       </div>
     </div>
@@ -20705,6 +20707,17 @@ const LESSONS = [
   let currentUser = null;
   let currentPermissions = null;
   let pendingAccessAction = null;
+  let permLoadFailed = false;
+  // Đã đăng nhập nhưng quyền CHƯA tải xong (mạng chậm) → chờ rồi tự mở lại, không báo "chưa kích hoạt" oan.
+  function permsNotReady(retryFn) {
+    if (!currentUser || currentPermissions !== null) return false;
+    if (permLoadFailed) {
+      openLockedModal(null, null, "Không tải được quyền truy cập do mạng chập chờn. Hãy kiểm tra kết nối rồi tải lại trang (F5 / kéo xuống để làm mới).");
+      return true;
+    }
+    pendingAccessAction = retryFn;
+    return true;
+  }
 
   function isAdminUser(user) {
     return !!(user && user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
@@ -20813,6 +20826,7 @@ const LESSONS = [
       openAuthModal();
       return false;
     }
+    if (permsNotReady(retryFn)) return false;
     if (hasTestLevelPermission(folderId, level)) return true;
     openLockedModal(level, "Bài test");
     return false;
@@ -20834,6 +20848,7 @@ const LESSONS = [
       openAuthModal();
       return false;
     }
+    if (permsNotReady(retryFn)) return false;
     const allowed = level ? hasLevelPermission(programId, level) : hasAnyPermissionForProgram(programId);
     if (allowed) return true;
     openLockedModal(level);
@@ -20867,6 +20882,10 @@ const LESSONS = [
       // Tài khoản chưa tồn tại (hoặc Firebase ẩn danh tính vì lý do bảo
       // mật và trả về invalid-credential) → tự động đăng ký (đăng ký ngầm).
       if (code === "auth/user-not-found" || code === "auth/invalid-credential" || code === "auth/invalid-login-credentials") {
+        if (looksLikeEmailTypo(email)) return Promise.reject({ code: "auth/suspect-email" });
+        if (!window.confirm("Email \"" + email + "\" chưa có tài khoản (hoặc sai mật khẩu).\n\nNếu bạn là học sinh cũ: bấm HỦY, kiểm tra lại email/mật khẩu cô đã gửi.\nNếu đây là lần đầu dùng web: bấm OK để tạo tài khoản mới.")) {
+          return Promise.reject({ code: "auth/signup-cancelled" });
+        }
         return window.__fbAuth.createUserWithEmailAndPassword(email, password).catch((err2) => {
           // Email đã tồn tại rồi mà vẫn vào nhánh này → chắc chắn là sai mật khẩu.
           if (err2 && err2.code === "auth/email-already-in-use") {
@@ -20878,8 +20897,18 @@ const LESSONS = [
       return Promise.reject(err);
     });
   }
+  // Email có dấu hiệu gõ sai: đuôi miền viết sai, hoặc dính thêm ký tự sau ".com" (vd dán cả mật khẩu vào ô email)
+  function looksLikeEmailTypo(email) {
+    const e = String(email || "").toLowerCase();
+    if (!/^[^\s@]+@[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,6}$/.test(e)) return true;
+    const dom = e.split("@")[1] || "";
+    const bad = ["gmai.com", "gmial.com", "gamil.com", "gmal.com", "gmaill.com", "gmail.co", "gmail.con", "gmail.cm", "gmail.vn", "gmail.com.vn", "gnail.com", "yahoo.co", "yahoo.con", "hotmail.co", "icloud.co"];
+    return bad.includes(dom);
+  }
   function friendlyAuthError(err) {
     const code = (err && err.code) || "";
+    if (code === "auth/suspect-email") return "Email có vẻ bị gõ sai (ví dụ thiếu chữ, \"gmai.com\" thay vì \"gmail.com\", hoặc dính thêm số phía sau). Hãy kiểm tra lại email cô đã gửi.";
+    if (code === "auth/signup-cancelled") return "Hãy kiểm tra lại email và mật khẩu cô đã gửi cho bạn, rồi thử lại.";
     if (code === "auth/not-configured") return "Firebase chưa được cấu hình (thiếu firebaseConfig trong mã nguồn). Vui lòng liên hệ quản trị viên.";
     if (code === "auth/wrong-password") return "Sai mật khẩu. Vui lòng thử lại hoặc nhắn Zalo cho cô để được hỗ trợ đặt lại.";
     if (code === "auth/invalid-email") return "Email không hợp lệ.";
@@ -20913,9 +20942,14 @@ const LESSONS = [
   /* ---------------- Modal: Nội dung chưa được cấp quyền ---------------- */
   const elAuthLockedOverlay = document.getElementById("auth-locked-overlay");
   const elAuthLockedText = document.getElementById("auth-locked-text");
-  function openLockedModal(level, itemLabel) {
+  function openLockedModal(level, itemLabel, customText) {
     const lbl = itemLabel || "Mục";
-    if (elAuthLockedText) {
+    const who = document.getElementById("auth-locked-who");
+    if (who) who.innerHTML = currentUser && currentUser.email
+      ? 'Bạn đang đăng nhập bằng: <b style="word-break:break-all;">' + currentUser.email + '</b><br>Nếu email này bị gõ sai, hãy bấm <b>Đăng xuất</b> rồi đăng nhập lại bằng đúng email cô đã cấp.'
+      : "";
+    if (customText && elAuthLockedText) { elAuthLockedText.textContent = customText; }
+    else if (elAuthLockedText) {
       elAuthLockedText.textContent = level
         ? lbl + ' "' + level + '" chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!'
         : lbl + " này chưa được kích hoạt cho tài khoản của bạn. Vui lòng liên hệ thầy/cô để mở khoá nhé!";
@@ -20924,6 +20958,10 @@ const LESSONS = [
   }
   function closeLockedModal() { elAuthLockedOverlay.classList.add("hidden"); }
   document.getElementById("btn-auth-locked-close").addEventListener("click", closeLockedModal);
+  document.getElementById("btn-auth-locked-logout").addEventListener("click", () => {
+    closeLockedModal();
+    if (fbReady()) window.__fbAuth.signOut().then(() => openAuthModal());
+  });
 
   /* ---------------- Khu vực trên header: nút Đăng nhập / chip tài khoản ---------------- */
   const elAuthArea = document.getElementById("auth-area");
@@ -20951,9 +20989,16 @@ const LESSONS = [
   function loadCurrentPermissions() {
     if (!currentUser) { currentPermissions = null; return Promise.resolve(); }
     if (!fbReady()) { currentPermissions = {}; return Promise.resolve(); }
-    return window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(currentUser.email.toLowerCase()).get()
+    permLoadFailed = false;
+    const ref = window.__fbDb.collection(PERMISSIONS_COLLECTION).doc(currentUser.email.toLowerCase());
+    const tryLoad = (n) => ref.get()
       .then((snap) => { currentPermissions = snap.exists ? snap.data() : {}; })
-      .catch(() => { currentPermissions = {}; });
+      .catch((err) => {
+        console.warn("[cohunglang] Tải quyền lỗi (lần " + n + "):", err && (err.code || err.message));
+        if (n < 3) return new Promise((r) => setTimeout(r, 1500 * n)).then(() => tryLoad(n + 1));
+        currentPermissions = null; permLoadFailed = true;
+      });
+    return tryLoad(1);
   }
 
   /* ---------------- Khu vực Admin: Cấp quyền học sinh ---------------- */
@@ -21100,6 +21145,7 @@ const LESSONS = [
   function ensureListenAccess(folder, retryFn) {
     if (isAdminUser(currentUser)) return true;
     if (!currentUser) { pendingAccessAction = retryFn; openAuthModal(); return false; }
+    if (permsNotReady(retryFn)) return false;
     if (hasListenPermission(folder.id)) return true;
     openLockedModal(folder.name, "Luyện nghe");
     return false;
@@ -21584,6 +21630,7 @@ const LESSONS = [
   /* ---------------- Khởi động hệ thống đăng nhập ---------------- */
   function initAuth() {
     renderAuthArea(); // hiện nút "Đăng nhập" ngay, không đợi Firebase phản hồi
+    if (window.__wantLogin) { window.__wantLogin = false; openAuthModal(); } // đã bấm Đăng nhập khi trang còn đang tải
     if (!fbReady()) {
       console.warn("[cohunglang] Firebase chưa được cấu hình — xem hướng dẫn ở đầu file HTML (phần firebaseConfig).");
       return;
