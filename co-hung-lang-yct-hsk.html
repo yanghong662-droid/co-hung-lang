@@ -16941,7 +16941,7 @@ const LESSONS = [
         item.writer = HanziWriter.create(box.id, ch, {
           width: boxSize, height: boxSize, padding: Math.max(4, Math.round(boxSize * 0.06)),
           strokeColor: "#C1652E", radicalColor: "#1F4B3D",
-          strokeAnimationSpeed: 1, delayBetweenStrokes: 250,
+          strokeAnimationSpeed: 0.5, delayBetweenStrokes: 500,
           showOutline: true, showCharacter: false,
           onLoadCharDataError: () => { item.failed = true; },
         });
