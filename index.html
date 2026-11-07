@@ -16906,7 +16906,9 @@ const LESSONS = [
     // không giới hạn riêng YCT 1 nữa.
     return !!lesson;
   }
+  let strokeRunId = 0;
   function renderStrokeOrder(w) {
+    strokeRunId++; // dừng vòng lặp viết nét của thẻ trước
     if (!elStrokeSection || !elStrokeGrid) return;
     if (!STROKE_ORDER_SCOPE(state.lesson) || typeof HanziWriter === "undefined" || !w || !w.hanzi) {
       elStrokeSection.classList.add("hidden");
@@ -16924,6 +16926,9 @@ const LESSONS = [
     elCardFront.classList.add("has-strokes");
     const hanziFontPx = parseFloat(getComputedStyle(elHanzi).fontSize) || 64;
     const boxSize = Math.max(48, Math.round(hanziFontPx));
+    // Mỗi lần đổi thẻ từ: huỷ vòng lặp cũ, tạo vòng lặp mới.
+    const runId = ++strokeRunId;
+    const items = [];
     chars.forEach((ch, i) => {
       const box = document.createElement("div");
       box.className = "stroke-char-box";
@@ -16932,14 +16937,40 @@ const LESSONS = [
       box.style.height = boxSize + "px";
       elStrokeGrid.appendChild(box);
       try {
-        const writer = HanziWriter.create(box.id, ch, {
+        const item = { box, failed: false, writer: null };
+        item.writer = HanziWriter.create(box.id, ch, {
           width: boxSize, height: boxSize, padding: Math.max(4, Math.round(boxSize * 0.06)),
           strokeColor: "#C1652E", radicalColor: "#1F4B3D",
-          strokeAnimationSpeed: 1, delayBetweenStrokes: 250, showOutline: true,
+          strokeAnimationSpeed: 1, delayBetweenStrokes: 250,
+          showOutline: true, showCharacter: false,
+          onLoadCharDataError: () => { item.failed = true; },
         });
-        writer.animateCharacter();
+        items.push(item);
       } catch (e) { /* ký tự hiếm chưa có trong bộ dữ liệu nét mở — bỏ qua */ }
     });
+    if (items.length === 0) return;
+    // Viết LẦN LƯỢT từng chữ; viết xong chữ cuối thì dừng 1 chút, xoá hết và lặp lại từ đầu.
+    const alive = () => runId === strokeRunId && items[0].box.isConnected;
+    let idx = 0;
+    const next = () => {
+      if (!alive()) return;
+      while (idx < items.length && items[idx].failed) idx++;
+      if (idx >= items.length) {
+        setTimeout(() => {
+          if (!alive()) return;
+          items.forEach((it) => { if (!it.failed) it.writer.hideCharacter({ duration: 300 }); });
+          idx = 0;
+          setTimeout(next, 700);
+        }, 1500);
+        return;
+      }
+      const it = items[idx++];
+      let done = false;
+      const go = () => { if (done) return; done = true; setTimeout(next, 500); };
+      setTimeout(go, 20000); // phòng khi không tải được dữ liệu nét
+      it.writer.animateCharacter({ onComplete: go });
+    };
+    next();
   }
   function renderDots() {
     elDeckDots.innerHTML = "";
