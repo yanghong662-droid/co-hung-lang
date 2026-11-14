@@ -14770,6 +14770,16 @@ const LESSONS = [
     return shuffled.length > size ? shuffled.slice(0, size) : shuffled;
   }
 
+  // Từ YCT2 Bài 6 (yct2-6) đến hết YCT6: phần Ngữ pháp và Luyện tập KHÔNG
+  // hiện phiên âm pinyin cho từ/câu (tab Từ vựng vẫn giữ pinyin như cũ).
+  const NO_PINYIN_ITEMS = new WeakSet();
+  function isNoPinyinLessonId(id) {
+    const m = /^yct([2-6])-(\d+)$/.exec(id || "");
+    if (!m) return false;
+    return Number(m[1]) > 2 || Number(m[2]) >= 6;
+  }
+  function lessonHidesPinyin(lesson) { return !!(lesson && isNoPinyinLessonId(lesson.id)); }
+
   function buildReviewLesson(groupKey, category) {
     const group = getReviewGroupById(groupKey);
     const lessons = lessonsForReviewGroup(groupKey);
@@ -14777,9 +14787,10 @@ const LESSONS = [
     const allQuiz = [];
     const grammarList = [];
     lessons.forEach((l) => {
-      (l.vocabulary || []).forEach((w) => allVocab.push(w));
+      const hidePy = lessonHidesPinyin(l);
+      (l.vocabulary || []).forEach((w) => { if (hidePy) NO_PINYIN_ITEMS.add(w); allVocab.push(w); });
       (l.quiz || []).forEach((q) => allQuiz.push(q));
-      if (l.grammar) grammarList.push(Object.assign({ lessonLabel: lessonDisplayTitle(l) + (l.level ? " (" + l.level + ")" : "") }, l.grammar));
+      if (l.grammar) grammarList.push(Object.assign({ lessonLabel: lessonDisplayTitle(l) + (l.level ? " (" + l.level + ")" : ""), noPinyin: hidePy }, l.grammar));
     });
     const categoryMeta = REVIEW_CATEGORIES.find((c) => c.key === category);
     const wantVocab = category === "vocab" || category === "all";
@@ -17472,7 +17483,7 @@ const LESSONS = [
         (ex) =>
           '<div class="rounded-xl border px-4 py-3" style="background:var(--surface-alt); border-color:var(--border);">' +
           '<p class="font-hanzi text-lg font-semibold">' + ex.hanzi + "</p>" +
-          '<p class="text-sm mt-1" style="color:var(--blue);">' + ex.pinyin + "</p>" +
+          (g.noPinyin ? "" : '<p class="text-sm mt-1" style="color:var(--blue);">' + ex.pinyin + "</p>") +
           '<p class="text-sm mt-0.5">' + ex.meaning + "</p></div>"
       )
       .join("");
@@ -17521,7 +17532,7 @@ const LESSONS = [
       box.style.borderColor = "var(--border)";
       box.innerHTML =
         '<p class="font-hanzi text-lg font-semibold">' + ex.hanzi + "</p>" +
-        '<p class="text-sm mt-1" style="color:var(--blue);">' + ex.pinyin + "</p>" +
+        (lessonHidesPinyin(state.lesson) ? "" : '<p class="text-sm mt-1" style="color:var(--blue);">' + ex.pinyin + "</p>") +
         '<p class="text-sm mt-0.5">' + ex.meaning + "</p>";
       elExamples.appendChild(box);
     });
@@ -18374,7 +18385,8 @@ const LESSONS = [
       const ex = w.example;
       if (ex && ex.hanzi && ex.meaning && !(ex.hanzi in seen)) {
         seen[ex.hanzi] = true;
-        sentences.push({ hanzi: ex.hanzi, pinyin: ex.pinyin || "", meaning: ex.meaning });
+        const hidePy = lessonHidesPinyin(state.lesson) || NO_PINYIN_ITEMS.has(w);
+        sentences.push({ hanzi: ex.hanzi, pinyin: hidePy ? "" : (ex.pinyin || ""), meaning: ex.meaning });
       }
     });
 
@@ -18421,7 +18433,7 @@ const LESSONS = [
       row.innerHTML =
         '<button type="button" class="rlq-sentence-play play-audio-btn w-9 h-9 shrink-0 rounded-full grid place-items-center" style="background:var(--blue-soft); color:var(--blue);"><i class="fa-solid fa-volume-high"></i></button>' +
         '<div><p class="font-hanzi text-lg font-bold">' + s.hanzi + "</p>" +
-        '<p class="text-sm mt-0.5" style="color:var(--ink-soft);">' + s.pinyin + "</p>" +
+        (s.pinyin ? '<p class="text-sm mt-0.5" style="color:var(--ink-soft);">' + s.pinyin + "</p>" : "") +
         '<p class="text-sm mt-0.5">' + s.meaning + "</p></div>";
       row.querySelector(".rlq-sentence-play").addEventListener("click", () => speak(s.hanzi));
       elRlqPassageList.appendChild(row);
@@ -18680,7 +18692,7 @@ const LESSONS = [
           vq.vocab.map((w) =>
             '<div class="px-3 py-2 rounded-lg border text-center" style="border-color:var(--border); background:var(--surface); min-width:6.5rem;">' +
             '<div class="font-hanzi text-lg font-bold" style="color:var(--jade);">' + escapeHtml(w.hanzi) + "</div>" +
-            '<div class="text-sm" style="color:var(--accent);">' + escapeHtml(w.pinyin) + "</div>" +
+            (lessonHidesPinyin(state.lesson) ? "" : '<div class="text-sm" style="color:var(--accent);">' + escapeHtml(w.pinyin) + "</div>") +
             '<div class="text-xs" style="color:var(--ink-soft);">' + escapeHtml(w.meaning) + "</div></div>"
           ).join("") + "</div></div>";
         elVqVocab.classList.remove("hidden");
