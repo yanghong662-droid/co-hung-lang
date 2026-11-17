@@ -22033,7 +22033,18 @@ const LESSONS = [
   const QUIZ_SCORE_FIXES = [
     // 6/10/2026: hsk3-17 câu 4 (我去 ___ 洗手) đáp án cũ ghi nhầm "洗洗" — em chọn "洗" là đúng.
     { id: "_fix_20261006_hsk3_17", name: "Nguyễn Duy Đức", lessonId: "hsk3-17", from: 90, to: 100 },
+    // 17/11/2026: hsk3-28 (HSK2 Bài 13) Bài tập tổng hợp — đáp án 听力 câu 5–10 ghi nhầm; em đúng cả 6 câu (+6/30 câu).
+    { id: "_fix_20261117_hsk3_28", name: "Phùng Khánh Diệp", lessonId: "hsk3-28", part: "mockexam", from: 77, to: 97 },
   ];
+  // part (tuỳ chọn): phần điểm nằm trong bài, vd "mockexam" = Bài tập tổng hợp; không ghi = điểm trắc nghiệm của bài.
+  function fixScoreRec(rec, f) {
+    rec = Object.assign({}, rec || {});
+    const t = f.part ? (rec[f.part] = Object.assign({}, rec[f.part] || {})) : rec;
+    if (t.bestScore === f.from) t.bestScore = f.to;
+    if (t.lastScore === f.from) t.lastScore = f.to;
+    if (typeof t.bestScore === "number" && t.lastScore > t.bestScore) t.bestScore = t.lastScore;
+    return rec;
+  }
   // Dashboard giáo viên: áp ngay các khoản cộng điểm trên vào bảng (không cần đợi học sinh đăng nhập lại).
   function applyQuizScoreFixesToRows(rows, permMap) {
     try {
@@ -22043,9 +22054,7 @@ const LESSONS = [
         QUIZ_SCORE_FIXES.forEach((f) => {
           if (row.lessonId !== f.lessonId) return;
           if (!((f.email && norm(f.email) === em) || (f.name && nm && norm(f.name) === nm))) return;
-          const rec = row.record = Object.assign({}, row.record || {});
-          if (rec.bestScore === f.from) rec.bestScore = f.to;
-          if (rec.lastScore === f.from) rec.lastScore = f.to;
+          row.record = fixScoreRec(row.record, f);
         });
       });
     } catch (e) { /* bỏ qua */ }
@@ -22066,10 +22075,7 @@ const LESSONS = [
         mine.forEach((f) => {
           if (data[f.id]) return;
           upd[f.id] = true; any = true;
-          const rec = Object.assign({}, data[f.lessonId] || local[f.lessonId] || {});
-          if (rec.bestScore === f.from) rec.bestScore = f.to;
-          if (rec.lastScore === f.from) rec.lastScore = f.to;
-          if (typeof rec.bestScore === "number" && rec.lastScore > rec.bestScore) rec.bestScore = rec.lastScore;
+          const rec = fixScoreRec(data[f.lessonId] || local[f.lessonId], f);
           upd[f.lessonId] = rec; local[f.lessonId] = rec;
         });
         if (!any) return;
